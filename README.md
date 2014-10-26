@@ -157,9 +157,10 @@ Defines the set of services required to run CKAN. Read the [fig.yml reference](h
 ---
 # Usage
 
-1. Clone your code in the `_src` directory
-2. Set the full path of the volumes in fig.yml
-3. Run `up` with Fig or Vagrant
+1. Clone your code in the `_src` directory (see _src/README)
+2. Clone the datapusher in `_service-provider` (see _service-provider/README)
+3. Set the full path of the volumes in fig.yml
+4. Run `up` with Fig or Vagrant
 
 
 ## Using Fig (recommended)

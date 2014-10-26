@@ -1,0 +1,55 @@
+postgres:
+  build: docker/postgres
+  hostname: postgres
+  domainname: localdomain
+  ports:
+    - "5432:5432"
+  environment:
+    - CKAN_PASS=ckan_pass
+    - DATASTORE_PASS=datastore_pass
+
+solr:
+  build: docker/solr
+  hostname: solr
+  domainname: localdomain
+  ports:
+    - "8983:8983"
+  volumes:
+    - /Users/Clement/Documents/git/clementmouchet/ckan-docker/_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
+
+datapusher:
+  build: _service-provider/datapusher
+  hostname: datapusher
+  domainname: localdomain
+  ports:
+    - "8800:8800"
+
+ckan:
+  build: .
+  hostname: ckan
+  domainname: localdomain
+  ports:
+    - "2222:22"
+    - "5000:5000"
+    - "8080:8080"
+  links:
+    - postgres:postgres
+    - solr:solr
+    - datapusher:datapusher
+  command: /sbin/my_init --enable-insecure-key
+  volumes:
+    - /Users/Clement/Documents/git/clementmouchet/ckan-docker/_src:/usr/lib/ckan/default/src
+
+nginx:
+  image: nginx:1.7.6
+  hostname: nginx
+  domainname: localdomain
+  links:
+    - ckan:ckan
+  ports:
+    - "80:80"
+  volumes:
+    - /Users/Clement/Documents/git/clementmouchet/ckan-docker/_etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+
+
+

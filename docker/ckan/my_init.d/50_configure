@@ -1,0 +1,133 @@
+#!/bin/sh
+set -eu
+
+# URL for the primary database, in the format expected by sqlalchemy (required
+# unless linked to a container called 'db')
+: ${DATABASE_URL:=}
+: ${DATASTORE_WRITE_URL:=}
+: ${DATASTORE_READ_URL:=}
+# URL for solr (required unless linked to a container called 'solr')
+: ${SOLR_URL:=}
+# URL for the datapusher (required unless linked to a container called 'datapusher')
+: ${DATAPUSHER_URL:=}
+
+CONFIG="${CKAN_CONFIG}/${CONFIG_FILE}"
+
+abort () {
+  echo "$@" >&2
+  exit 1
+}
+
+write_config () {
+  # update the config dynamic urls
+  echo "Configuring dynamic URLs"
+  "$CKAN_HOME"/bin/paster --plugin=ckan config-tool "$CONFIG" -e \
+      "ckan.site_url            = http://$(hostname -f):8080/" \
+      "sqlalchemy.url           = ${DATABASE_URL}" \
+      "solr_url                 = ${SOLR_URL}" \
+      "ckan.datastore.write_url = ${DATASTORE_WRITE_URL}" \
+      "ckan.datastore.read_url  = ${DATASTORE_READ_URL}" \
+      "ckan.datapusher.url      = ${DATAPUSHER_URL}"
+
+  # apply any custom options
+  if [ -e "$CKAN_CONFIG/$CONFIG_OPTIONS" ]; then
+    echo "Configuring custom options from $CONFIG_OPTIONS"
+    "$CKAN_HOME"/bin/paster --plugin=ckan config-tool "$CONFIG" -f "$CKAN_CONFIG/$CONFIG_OPTIONS"
+  fi
+}
+
+link_postgres_url () {
+  local user=$POSTGRES_ENV_CKAN_USER
+  local pass=$POSTGRES_ENV_CKAN_PASS
+  local db=$POSTGRES_ENV_CKAN_DB
+  local host=postgres
+  local port=$POSTGRES_PORT_5432_TCP_PORT
+  echo "postgresql://${user}:${pass}@${host}:${port}/${db}"
+}
+
+link_datastore_write_url () {
+  local user=$POSTGRES_ENV_CKAN_USER
+  local pass=$POSTGRES_ENV_CKAN_PASS
+  local db=$POSTGRES_ENV_DATASTORE_DB
+  local host=postgres
+  local port=$POSTGRES_PORT_5432_TCP_PORT
+  echo "postgresql://${user}:${pass}@${host}:${port}/${db}"
+}
+
+link_datastore_read_url () {
+  local user=$POSTGRES_ENV_DATASTORE_USER
+  local pass=$POSTGRES_ENV_DATASTORE_PASS
+  local db=$POSTGRES_ENV_DATASTORE_DB
+  local host=postgres
+  local port=$POSTGRES_PORT_5432_TCP_PORT
+  echo "postgresql://${user}:${pass}@${host}:${port}/${db}"
+}
+
+link_solr_url () {
+  local host=solr
+  local port=$SOLR_PORT_8983_TCP_PORT
+  echo "http://${host}:${port}/solr/ckan"
+}
+
+link_datapusher_url () {
+  local host=datapusher
+  local port=$DATAPUSHER_PORT_8800_TCP_PORT
+  echo "http://${host}:${port}/"
+}
+
+# install any extensions in the source directory
+# this is required if you mount a volume as a source directory
+cd $CKAN_HOME/src/
+for module in *
+do
+  if [ -d "$module" ]; then
+    cd $module
+    if [ -e "setup.py" ]; then
+      echo ">>> Installing $module"
+      $CKAN_HOME/bin/pip install -e .
+    fi
+    cd ..
+  fi
+done
+
+# If we don't already have a who.ini symlink create it
+if [ ! -e "$CKAN_CONFIG/who.ini" ]; then
+  echo "WARNING: my_init had to symlink who.ini again, please check that your volumes are set-up correctly"
+  ln -s $CKAN_HOME/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
+fi
+
+# If we don't already have a config file, bootstrap
+if [ ! -e "$CONFIG" ]; then
+  echo "WARNING: my_init had to create a config again, please check that your volumes are set-up correctly"
+  $CKAN_HOME/bin/paster make-config ckan "$CONFIG"
+fi
+
+# We need to override the options every time because if you restart any of the containers
+# they can come back with a different IP address
+if [ -z "$DATABASE_URL" ]; then
+  if ! DATABASE_URL=$(link_postgres_url); then
+    abort "no DATABASE_URL specified and linked container called 'postgres' was not found"
+  fi
+fi
+if [ -z "$DATASTORE_WRITE_URL" ]; then
+  if ! DATASTORE_WRITE_URL=$(link_datastore_write_url); then
+    abort "no DATASTORE_WRITE_URL specified and linked container called 'postgres' was not found"
+  fi
+fi
+if [ -z "$DATASTORE_READ_URL" ]; then
+  if ! DATASTORE_READ_URL=$(link_datastore_read_url); then
+    abort "no DATASTORE_READ_URL specified and linked container called 'postgres' was not found"
+  fi
+fi
+if [ -z "$SOLR_URL" ]; then
+  if ! SOLR_URL=$(link_solr_url); then
+    abort "no SOLR_URL specified and linked container called 'solr' was not found"
+  fi
+fi
+if [ -z "$DATAPUSHER_URL" ]; then
+  if ! DATAPUSHER_URL=$(link_datapusher_url); then
+    abort "no DATAPUSHER_URL specified and linked container called 'datapusher' was not found"
+  fi
+fi
+# update the config
+write_config

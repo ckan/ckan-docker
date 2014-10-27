@@ -9,9 +9,9 @@ _Clone your source code here._
 
 The least you need is CKAN itself
 
-Clone it:
+Clone CKAN:
 
-  clone https://github.com/ckan/ckan.git
+	git clone https://github.com/ckan/ckan.git
 
 ## Extensions
 

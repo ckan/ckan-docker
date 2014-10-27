@@ -9,9 +9,9 @@ _Clone any service providers with their Docker files here if you want to build t
 
 For example, if you want to build the datapusher service yourself:
 
-Clone it:
+Clone datapusher:
 
-	clone https://github.com/clementmouchet/datapusher.git
+	git clone https://github.com/clementmouchet/datapusher.git
 
 
 Tell the fig file to build it:

@@ -39,6 +39,7 @@ ckan:
   command: /sbin/my_init --enable-insecure-key
   volumes:
     - ./_src:/usr/lib/ckan/default/src
+    - ./_etc/ckan/custom_options.ini:/etc/ckan/default/custom_options.ini
 
 nginx:
   image: nginx:1.7.6

@@ -48,10 +48,6 @@ ONBUILD RUN pip_install_req
 RUN ln -s $CKAN_HOME/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
 ONBUILD RUN ln -s $CKAN_HOME/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
 
-# Copy any custom config
-COPY _etc/ckan/ $CKAN_CONFIG/
-ONBUILD COPY _etc/ckan/ $CKAN_CONFIG/
-
 # Make config file
 RUN $CKAN_HOME/bin/paster make-config ckan ${CKAN_CONFIG}/${CONFIG_FILE}
 

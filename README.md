@@ -93,9 +93,9 @@ contains the Docker host if the host cannot run Docker containers natively (OS X
 
 #### Dockerfiles
 
-The Dockerfiles are currently based on `phusion/baseimage:0.9.15`. 
+The Dockerfiles are currently based on `phusion/baseimage:0.9.15`.
 
-SSH is supported using an insecure key which is enabled by default for development purposes. You should disable it in production use for obvious reasons. 
+SSH is supported using an insecure key which is enabled by default for development purposes. You should disable it in production use for obvious reasons.
 
 [Read this to find out more about phusion baseimage](https://phusion.github.io/baseimage-docker/)
 
@@ -115,7 +115,7 @@ It supports the [datastore](http://docs.ckan.org/en/latest/maintaining/datastore
 The Solr container runs version 4.10.1. This can easily be changed by customising SOLR_VERSION in the Dockerfile.
 
 By detault the `schema.xml` of the upstream version (2.3) is copied in the container. This can be overriden at runtime by mounting it as a volume.
-This default path of the volume is `<path to>/_src/ckan/ckan/config/solr/schema.xml` so it mounts the schema corresponding to your version of CKAN.
+This default path of the volume is `_src/ckan/ckan/config/solr/schema.xml` so it mounts the schema corresponding to your version of CKAN.
 
 For example for Fig:
 
@@ -126,12 +126,12 @@ For example for Fig:
       ports:
         - "8983:8983"
       volumes:
-        - <path to>/_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
+        - ./_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
 
-If you need a custom schema, put it in `<full path to>/_solr` and change the path in the fig or vagrant file.
+If you need a custom schema, put it in `<full path to>/_solr` and change the path in the fig or vagrant file, for example:
 
       volumes:
-        - <path to>/_solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
+        - <my path to>/_solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
 
 
 The container is cross version compatible. You need mount the appropriate `schema.xml` as a volume, or build a child image, which will copy the `schema.xml` next to your Dockerfile.

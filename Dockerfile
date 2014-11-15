@@ -7,13 +7,6 @@ RUN locale-gen en_US.UTF-8 && \
 
 RUN apt-get -qq update
 
-ENV HOME /root
-ENV CKAN_HOME /usr/lib/ckan/default
-ENV CKAN_CONFIG /etc/ckan/default
-ENV CONFIG_FILE ckan.ini
-ENV CONFIG_OPTIONS custom_options.ini
-ENV CKAN_DATA /var/lib/ckan
-
 # Install required packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
         python-minimal \
@@ -21,15 +14,26 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
         python-virtualenv \
         libevent-dev \
         libpq-dev \
+        libxml2-dev \
+        libxslt1-dev \
+        build-essential
+
+# Install required packages
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
         apache2 \
         libapache2-mod-wsgi \
         postfix \
-        build-essential \
         git \
-        libxml2-dev \
-        libxslt1-dev \
         libgeos-c1 \
         supervisor
+
+ENV HOME /root
+ENV CKAN_HOME /usr/lib/ckan/default
+ENV CKAN_CONFIG /etc/ckan/default
+ENV CONFIG_FILE ckan.ini
+ENV CONFIG_OPTIONS custom_options.ini
+ENV CKAN_DATA /var/lib/ckan
+ENV CKAN_INI $CKAN_CONFIG/$CONFIG_FILE
 
 # Create directories & virtual env for CKAN
 RUN virtualenv $CKAN_HOME
@@ -42,6 +46,7 @@ ADD docker/ckan/pip_install_req.sh /usr/local/sbin/pip_install_req
 # copy CKAN and any extenstions in the source directory
 ADD _src/ $CKAN_HOME/src/
 ONBUILD ADD _src/ $CKAN_HOME/src/
+RUN $CKAN_HOME/bin/pip install pip==1.4.1
 # install what we've just copied
 RUN pip_install_req
 ONBUILD RUN pip_install_req
@@ -74,7 +79,9 @@ ONBUILD COPY _etc/supervisor/conf.d/ /etc/supervisor/conf.d/
 
 # Configure cron
 COPY _etc/cron.d/ /etc/cron.d/
+RUN chmod 600 -R /etc/cron.d/
 ONBUILD COPY _etc/cron.d/ /etc/cron.d/
+ONBUILD RUN chmod 600 -R /etc/cron.d/
 
 # Configure runit
 ADD docker/ckan/my_init.d/ /etc/my_init.d/
@@ -84,7 +91,7 @@ ADD docker/ckan/svc/ /etc/service/
 CMD ["/sbin/my_init"]
 
 VOLUME ["/usr/lib/ckan", "/etc/ckan"]
-EXPOSE 80 8800
+EXPOSE 8080
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

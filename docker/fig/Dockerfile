@@ -11,7 +11,7 @@ RUN apt-get -qq update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install curl
 
 RUN curl -sSL https://get.docker.com/ | sh
-RUN curl -L https://github.com/docker/fig/releases/download/1.0.0/fig-`uname -s`-`uname -m` > /usr/local/bin/fig; chmod +x /usr/local/bin/fig
+RUN curl -L https://github.com/docker/fig/releases/download/1.0.1/fig-`uname -s`-`uname -m` > /usr/local/bin/fig; chmod +x /usr/local/bin/fig
 ENV DOCKER_HOST unix:///tmp/docker.sock
 
 WORKDIR /src

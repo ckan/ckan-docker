@@ -81,7 +81,6 @@ contains your packages source code (CKAN & extensions). see _src/README
 #### _service-provider
 contains any service providers (e.g. datapusher) with their Dockerfiles. see _service-provider/README.
 
-
 #### docker
 contains the Dockerfiles and any supporting files
 
@@ -93,9 +92,9 @@ contains the Docker host if the host cannot run Docker containers natively (OS X
 
 #### Dockerfiles
 
-The Dockerfiles are currently based on `phusion/baseimage:0.9.15`. 
+The Dockerfiles are currently based on `phusion/baseimage:0.9.15`.
 
-SSH is supported using an insecure key which is enabled by default for development purposes. You should disable it in production use for obvious reasons. 
+SSH is supported using an insecure key which is enabled by default for development purposes. You should disable it in production use for obvious reasons.
 
 [Read this to find out more about phusion baseimage](https://phusion.github.io/baseimage-docker/)
 
@@ -140,7 +139,7 @@ Read the [ckanext-spatial documentation](http://docs.ckan.org/projects/ckanext-s
 
 
 ##### Fig Dockerfile
-The Fig container runs Fig version 1.0 & the latest Docker within a container.
+The Fig container runs Fig version `1.0.1` & the latest Docker within a container.
 
 The Docker socket needs to be mounted as a volume to control Docker on the host. A source folder must be mounted to access the fig definition
 
@@ -165,11 +164,13 @@ Defines the set of services required to run CKAN. Read the [fig.yml reference](h
 
 ## Using Fig (recommended)
 
+#### Option 1: Fig is installed on the Docker host
 _If you have if >= 1.0 installed, just type_
 
 	fig up
 
-_Otherwise, install Fig on your host or use the container provided_
+#### Option 2: Using the fig container
+_Otherwise, you can use the container provided_
 
 Build fig the fig container
 
@@ -177,11 +178,23 @@ Build fig the fig container
 
 Run it
 
-	docker run -it -d --name="fig-cli" -p 2375 -v /var/run/docker.sock:/tmp/docker.sock -v $(pwd):/src fig_container
+	docker run -it -d --name="fig-ckan" -p 2375 -v /var/run/docker.sock:/tmp/docker.sock -v $(pwd):/src fig_container
+
+_In the fig container fig won't work with relative path, because the mount namespace is different, you need to change the relative path to absolute path_
+
+for example, change the `./`:
+
+	volumes:
+	    - ./_src:/usr/lib/ckan/default/src
+
+to an absolute path  to you ckan-docker directory: `/Users/username/git/ckan/ckan-docker/`
+
+	volumes:
+	    - /Users/username/git/ckan/ckan-docker/_src:/usr/lib/ckan/default/src
 
 Build & Run the services defined in `fig.yml`
 
-	docker exec -it fig-cli fig up
+	docker exec -it fig-ckan fig up
 
 If you are using boot2docker, add entries in your hosts file e.g. `192.168.59.103  ckan.localdomain`
 
@@ -226,6 +239,35 @@ If you want to quickly remove all stopped containers
 
 	docker rm $(docker ps -a -q)
 
+---
+## Developping CKAN
+
+### Using paster serve instead of apache for development
+CKAN container starts Apache2 by default and the `ckan.site_url` port is set to `8080` in `50_configure`.
+You can override that permanently in the `custom_options.ini`, or manually in the container, for instance if you want to use paster in a development context.
+
+Example (`paster serve --reload` in debug mode):
+
+	docker exec -it src_ckan_1 /bin/bash
+	supervisorctl stop apache2
+	sed -i -r 's/debug = false/debug = true/' $CKAN_CONFIG/$CONFIG_FILE
+	sed -i -r 's/ckan.localdomain:8080/ckan.localdomain:5000/' $CKAN_CONFIG/$CONFIG_FILE
+	$CKAN_HOME/bin/paster serve --reload $CKAN_CONFIG/$CONFIG_FILE
+
+### Frontend development
+Front end development is also possible (see [Frontend development guidelines](http://docs.ckan.org/en/latest/contributing/frontend/))
+
+Install frontend dependencies:
+
+	docker exec -it src_ckan_1 /bin/bash
+	apt-get update
+	apt-get install -y nodejs npm
+	ln -s /usr/bin/nodejs /usr/bin/node
+	source $CKAN_HOME/bin/activate
+	cd $CKAN_HOME/
+	npm install nodewatch less@1.3.3
+
+Both examples show that development dependencies should only be installed in the containers when required. Since they are not part of the `Dockerfile` they do not persist and only serve the purpose of development. When they are no longuer needed the container can be rebuilt allowing to test the application in a production-like state.
 
 ---
 

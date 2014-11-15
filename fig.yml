@@ -15,7 +15,7 @@ solr:
   ports:
     - "8983:8983"
   volumes:
-    - <path to>/ckan-docker/_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
+    - ./_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
 
 datapusher:
   build: _service-provider/datapusher
@@ -38,7 +38,9 @@ ckan:
     - datapusher:datapusher
   command: /sbin/my_init --enable-insecure-key
   volumes:
-    - <path to>/ckan-docker/_src:/usr/lib/ckan/default/src
+    - ./_src:/usr/lib/ckan/default/src
+    - ./_etc/ckan/custom_options.ini:/etc/ckan/default/custom_options.ini
+    - ./_etc/supervisor/conf.d:/etc/supervisor/conf.d
 
 nginx:
   image: nginx:1.7.6
@@ -49,7 +51,7 @@ nginx:
   ports:
     - "80:80"
   volumes:
-    - <path to>/ckan-docker/_etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+    - ./_etc/nginx/nginx.conf:/etc/nginx/nginx.conf
 
 
 

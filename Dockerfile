@@ -90,7 +90,7 @@ ADD docker/ckan/svc/ /etc/service/
 
 CMD ["/sbin/my_init"]
 
-VOLUME ["/usr/lib/ckan", "/etc/ckan"]
+VOLUME ["/usr/lib/ckan", "/var/lib/ckan", "/etc/ckan"]
 EXPOSE 8080
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

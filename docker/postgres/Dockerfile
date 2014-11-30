@@ -24,9 +24,12 @@ ENV DATASTORE_DB datastore
 ENV DATASTORE_USER datastore_user
 ENV DATASTORE_PASS datastore_pass
 
+ENV PGDATA /etc/postgresql/9.3/main
+RUN mkdir -p $PGDATA && chown -R postgres $PGDATA && chmod -R 700 $PGDATA
+
 # Allow connections from anywhere with valid credentials (md5)
-RUN sed -i -e"s/^#listen_addresses =.*$/listen_addresses = '*'/" /etc/postgresql/9.3/main/postgresql.conf
-RUN echo "host    all    all    0.0.0.0/0    md5" >> /etc/postgresql/9.3/main/pg_hba.conf
+RUN sed -i -e "s|^#listen_addresses =.*$|listen_addresses = '*'|" $PGDATA/postgresql.conf
+RUN echo "host    all    all    0.0.0.0/0    md5" >> $PGDATA/pg_hba.conf
 
 # Configure runit
 RUN touch /configure_db

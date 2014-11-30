@@ -1,9 +1,16 @@
+data:
+  build: docker/data
+  hostname: data
+  domainname: localdomain
+
 postgres:
   build: docker/postgres
   hostname: postgres
   domainname: localdomain
   ports:
     - "5432:5432"
+  volumes_from:
+    - data
   environment:
     - CKAN_PASS=ckan_pass
     - DATASTORE_PASS=datastore_pass
@@ -18,7 +25,7 @@ solr:
     - ./_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
 
 datapusher:
-  build: _service-provider/datapusher
+  build: _service-provider/_datapusher
   hostname: datapusher
   domainname: localdomain
   ports:
@@ -37,13 +44,15 @@ ckan:
     - solr:solr
     - datapusher:datapusher
   command: /sbin/my_init --enable-insecure-key
+  volumes_from:
+    - data
   volumes:
     - ./_src:/usr/lib/ckan/default/src
     - ./_etc/ckan/custom_options.ini:/etc/ckan/default/custom_options.ini
     - ./_etc/supervisor/conf.d:/etc/supervisor/conf.d
 
 nginx:
-  image: nginx:1.7.6
+  build: docker/nginx
   hostname: nginx
   domainname: localdomain
   links:
@@ -51,7 +60,7 @@ nginx:
   ports:
     - "80:80"
   volumes:
-    - ./_etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+    - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
 
 
 

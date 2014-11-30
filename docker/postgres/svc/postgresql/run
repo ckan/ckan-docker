@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 
-if [[ -e /configure_db ]]; then
+if [[ ! -e "$PGDATA/db_configured" ]]; then
   init_db () {
     echo "Configuring CKAN database, PostGIS & datastore"
 
@@ -59,7 +59,7 @@ if [[ -e /configure_db ]]; then
        GRANT SELECT ON TABLES TO $DATASTORE_USER;
 EOF
     # Database configured
-    rm /configure_db
+    touch $PGDATA/db_configured
   }
 else
   init_db () {
@@ -91,20 +91,21 @@ if [[ ! "$(ls -A $PGDATA)" ]]; then
   echo "Initializing PostgreSQL..."
   chown -R postgres $PGDATA
   # postgres initdb
-  setuser postgres /usr/lib/postgresql/9.3/bin/initdb --locale=en_US.UTF-8 --encoding=UNICODE $PGDATA/
+  setuser postgres /usr/lib/postgresql/9.3/bin/initdb --locale=en_US.UTF-8 --encoding=UNICODE $PGDATA
+  mv $PGDATA/*.conf $PGMAIN/
   # Update postgresql.conf settings
-  sed -i -e "s|^#listen_addresses =.*$|listen_addresses = '*'|" $PGDATA/postgresql.conf
-  sed -i -e "s|^#data_directory =.*$|data_directory = '/var/lib/postgresql/9.3/main'|" $PGDATA/postgresql.conf
-  sed -i -e "s|^#hba_file =.*$|hba_file = '/etc/postgresql/9.3/main/pg_hba.conf'|" $PGDATA/postgresql.conf
-  sed -i -e "s|^#ident_file =.*$|ident_file = '/etc/postgresql/9.3/main/pg_ident.conf'|" $PGDATA/postgresql.conf
-  sed -i -e "s|^#external_pid_file =.*$|external_pid_file = '/var/run/postgresql/9.3-main.pid'|" $PGDATA/postgresql.conf
+  sed -i -e "s|^#listen_addresses =.*$|listen_addresses = '*'|" $PGMAIN/postgresql.conf
+  sed -i -e "s|^#data_directory =.*$|data_directory = '/var/lib/postgresql/9.3/main'|" $PGMAIN/postgresql.conf
+  sed -i -e "s|^#hba_file =.*$|hba_file = '/etc/postgresql/9.3/main/pg_hba.conf'|" $PGMAIN/postgresql.conf
+  sed -i -e "s|^#ident_file =.*$|ident_file = '/etc/postgresql/9.3/main/pg_ident.conf'|" $PGMAIN/postgresql.conf
+  sed -i -e "s|^#external_pid_file =.*$|external_pid_file = '/var/run/postgresql/9.3-main.pid'|" $PGMAIN/postgresql.conf
   # Allow connections from anywhere with valid credentials (md5)
-  echo "local   all    postgres            peer" >> $PGDATA/pg_hba.conf
-  echo "host    all    all          0.0.0.0/0    md5" >> $PGDATA/pg_hba.conf
+  echo "local   all    postgres            peer" >> $PGMAIN/pg_hba.conf
+  echo "host    all    all          0.0.0.0/0    md5" >> $PGMAIN/pg_hba.conf
 fi
 
 init_db_when_ready &
 
 # Start PostgreSQL
 echo "Starting PostgreSQL..."
-setuser postgres /usr/lib/postgresql/9.3/bin/postgres -D $PGDATA
+setuser postgres /usr/lib/postgresql/9.3/bin/postgres -D $PGDATA -c config_file=$PGMAIN/postgresql.conf

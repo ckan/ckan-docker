@@ -15,6 +15,8 @@ Docker containers included:
 - Postgres (Postgres 9.3 and PostGIS 2.1, CKAN datastore & spatial extension supported)
 - Solr (4.10.1, custom schemas & spatial extension supported)
 - Fig _[optional]_ (to manage the containers)
+- Data _[optional]_ (to store Postgres data & CKAN FileStore seperately)
+
 
 Other contrib containers:
 
@@ -45,7 +47,6 @@ Other contrib containers:
 	│   ├── ckan
 	│   ├── cron.d
 	│   ├── my_init.d
-	│   ├── nginx
 	│   ├── postfix
 	│   └── supervisor
 	├── _service-provider (any service provider such as datapusher)
@@ -57,7 +58,9 @@ Other contrib containers:
 	│   └── ckanext-...
 	├── docker
 	│   ├── ckan
+	│   ├── data
 	│   ├── fig
+	│   ├── nginx
 	│   ├── insecure_key (baseimage insecure SSH key)
 	│   ├── postgres
 	│   └── solr
@@ -109,6 +112,9 @@ The app container runs the following services
 ##### Postgres Dockerfile
 The database container runs Postgres 9.3 and PostGIS 2.1.
 It supports the [datastore](http://docs.ckan.org/en/latest/maintaining/datastore.html) & [ckanext-spatial](https://github.com/ckan/ckanext-spatial)
+
+##### Data Dockerfile
+The data container is optional but recommended. It exposes two volumes to store the Postgres data `($PGDATA)` & CKAN FileStore. This means you can recreate / app containers without loosing your data.
 
 ##### Solr Dockerfile
 The Solr container runs version 4.10.1. This can easily be changed by customising SOLR_VERSION in the Dockerfile.

@@ -40,10 +40,10 @@ RUN virtualenv $CKAN_HOME
 RUN mkdir -p $CKAN_CONFIG $CKAN_DATA /var/log/ckan
 RUN chown www-data:www-data $CKAN_DATA
 
-# copy CKAN and any extenstions in the source directory
+# copy CKAN and any extensions in the source directory
 ADD docker/ckan/pip_install_req.sh /usr/local/sbin/pip_install_req
 
-# copy CKAN and any extenstions in the source directory
+# copy CKAN and any extensions in the source directory
 ADD _src/ $CKAN_HOME/src/
 ONBUILD ADD _src/ $CKAN_HOME/src/
 RUN $CKAN_HOME/bin/pip install pip==1.4.1

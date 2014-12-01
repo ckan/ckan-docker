@@ -7,7 +7,7 @@ Developing and deploying CKAN with Docker
 
 # Intro
 
-Dockerfiles, Fig service defintition & Vagrantfile to develop & deploy CKAN, Postgres, Solr & datapusher using Docker.
+Dockerfiles, Fig service definition & Vagrantfile to develop & deploy CKAN, Postgres, Solr & datapusher using Docker.
 
 Docker containers included:
 
@@ -15,7 +15,7 @@ Docker containers included:
 - Postgres (Postgres 9.3 and PostGIS 2.1, CKAN datastore & spatial extension supported)
 - Solr (4.10.1, custom schemas & spatial extension supported)
 - Fig _[optional]_ (to manage the containers)
-- Data _[optional]_ (to store Postgres data & CKAN FileStore seperately)
+- Data _[optional]_ (to store Postgres data & CKAN FileStore separately)
 
 
 Other contrib containers:

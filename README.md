@@ -114,7 +114,7 @@ The database container runs Postgres 9.3 and PostGIS 2.1.
 It supports the [datastore](http://docs.ckan.org/en/latest/maintaining/datastore.html) & [ckanext-spatial](https://github.com/ckan/ckanext-spatial)
 
 ##### Data Dockerfile
-The data container is optional but recommended. It exposes two volumes to store the Postgres data `($PGDATA)` & CKAN FileStore. This means you can recreate / app containers without loosing your data.
+The data container is optional but recommended. It exposes two volumes to store the Postgres data `($PGDATA)` & CKAN FileStore. This means you can recreate / app containers without losing your data.
 
 ##### Solr Dockerfile
 The Solr container runs version 4.10.1. This can easily be changed by customising SOLR_VERSION in the Dockerfile.
@@ -246,7 +246,7 @@ If you want to quickly remove all stopped containers
 	docker rm $(docker ps -a -q)
 
 ---
-## Developping CKAN
+## Developing CKAN
 
 ### Using paster serve instead of apache for development
 CKAN container starts Apache2 by default and the `ckan.site_url` port is set to `8080` in `50_configure`.

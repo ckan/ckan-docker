@@ -54,7 +54,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       d.vagrant_vagrantfile = "#{DOCKER_HOST_VAGRANTFILE}"
       d.vagrant_machine = "#{DOCKER_HOST_NAME}"
       # Build the container & run it
-      d.build_dir = "_service-provider/datapusher"
+      d.build_dir = "_service-provider/_datapusher"
       d.build_args = ["--tag=datapusher"]
       d.name = "datapusher"
       d.ports = ["8800:8800"]

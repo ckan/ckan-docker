@@ -1,0 +1,32 @@
+postgres:
+  build: docker/postgres
+  hostname: postgres
+  domainname: localdomain
+  environment:
+    -  CKAN_DB=ckan_test
+    -  CKAN_USER=ckan_default
+    -  CKAN_PASS=pass
+    -  DATASTORE_DB=datastore_test
+    -  DATASTORE_USER=datastore_default
+    -  DATASTORE_PASS=pass
+
+solr:
+  build: docker/solr
+  hostname: solr
+  domainname: localdomain
+
+datapusher:
+  build: _service-provider/_datapusher
+  hostname: datapusher
+  domainname: localdomain
+
+ckan:
+  build: .
+  hostname: ckan
+  domainname: localdomain
+  links:
+    - postgres:postgres
+    - solr:solr
+    - datapusher:datapusher
+  command: /bin/bash -l -c '/usr/lib/ckan/default/src/run_tests.sh'
+

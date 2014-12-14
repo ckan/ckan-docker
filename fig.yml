@@ -38,7 +38,7 @@ ckan:
   ports:
     - "2222:22"
     - "5000:5000"
-    - "8080:8080"
+    - "8080:80"
   links:
     - postgres:postgres
     - solr:solr

@@ -75,7 +75,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       d.name = "ckan"
       d.ports = ["2222:22"]
       d.ports = ["5000:5000"]
-      d.ports = ["8080:8080"]
+      d.ports = ["8080:80"]
       d.link("postgres:postgres")
       d.link("solr:solr")
       d.link("datapusher:datapusher")

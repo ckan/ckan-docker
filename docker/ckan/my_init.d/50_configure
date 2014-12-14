@@ -22,7 +22,7 @@ write_config () {
   # update the config dynamic urls
   echo "Configuring dynamic URLs"
   "$CKAN_HOME"/bin/paster --plugin=ckan config-tool "$CONFIG" -e \
-      "ckan.site_url            = http://$(hostname -f):8080/" \
+      "ckan.site_url            = http://$(hostname -f)" \
       "sqlalchemy.url           = ${DATABASE_URL}" \
       "solr_url                 = ${SOLR_URL}" \
       "ckan.datastore.write_url = ${DATASTORE_WRITE_URL}" \

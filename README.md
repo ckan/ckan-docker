@@ -95,7 +95,7 @@ contains the Docker host if the host cannot run Docker containers natively (OS X
 
 #### Dockerfiles
 
-The Dockerfiles are currently based on `phusion/baseimage:0.9.15`.
+The Dockerfiles are currently based on `phusion/baseimage:0.9.16`.
 
 SSH is supported using an insecure key which is enabled by default for development purposes. You should disable it in production use for obvious reasons.
 

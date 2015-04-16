@@ -14,7 +14,7 @@ Docker containers included:
 - CKAN (should work with any version 2.x)
 - Postgres (Postgres 9.3 and PostGIS 2.1, CKAN datastore & spatial extension supported)
 - Solr (4.10.1, custom schemas & spatial extension supported)
-- Fig _[optional]_ (to manage the containers)
+- Docker-compose _[optional]_ (to manage the containers)
 - Data _[optional]_ (to store Postgres data & CKAN FileStore separately)
 
 
@@ -29,7 +29,7 @@ Other contrib containers:
 |Name			|Version		|Comment										|
 |:--------------|:-------------:|:----------------------------------------------|
 |Docker			|>= 1.3 		|works with Boot2docker 1.3						|
-|Fig 			|>= 1.0 		|on the host or with Dockerfile provided		|
+|Docker-compose		|>= 1.1.0 		|on the host or with Dockerfile provided		|
 |Vagrant		|>= 1.6 		|if you intend to use Vagrant					|
 |OS				|any	 		|as long as you can run Docker 1.3				|
 
@@ -64,7 +64,7 @@ Other contrib containers:
 	│   ├── insecure_key (baseimage insecure SSH key)
 	│   ├── postgres
 	│   └── solr
-	├── fig.yml (CKAN services definition)
+	├── docker-compose.yml (CKAN services definition)
 	└── vagrant
 	    └── docker-host (Linux Docker host if required)
 

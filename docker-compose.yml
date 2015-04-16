@@ -22,7 +22,7 @@ solr:
   ports:
     - "8983:8983"
   volumes:
-    - /home/pyaillet/Projects/Ckan/ckan-docker/_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
+    - ./_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
 
 datapusher:
   build: _service-provider/_datapusher
@@ -47,9 +47,9 @@ ckan:
   volumes_from:
     - data
   volumes:
-    - /home/pyaillet/Projects/Ckan/ckan-docker/_src:/usr/lib/ckan/default/src
-    - /home/pyaillet/Projects/Ckan/ckan-docker/_etc/ckan/custom_options.ini:/etc/ckan/default/custom_options.ini
-    - /home/pyaillet/Projects/Ckan/ckan-docker/_etc/supervisor/conf.d:/etc/supervisor/conf.d
+    - ./_src:/usr/lib/ckan/default/src
+    - ./_etc/ckan/custom_options.ini:/etc/ckan/default/custom_options.ini
+    - ./_etc/supervisor/conf.d:/etc/supervisor/conf.d
 
 nginx:
   build: docker/nginx
@@ -60,7 +60,7 @@ nginx:
   ports:
     - "80:80"
   volumes:
-    - /home/pyaillet/Projects/Ckan/ckan-docker/docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
 
 
 

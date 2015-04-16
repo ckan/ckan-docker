@@ -1,0 +1,66 @@
+data:
+  build: docker/data
+  hostname: data
+  domainname: localdomain
+
+postgres:
+  build: docker/postgres
+  hostname: postgres
+  domainname: localdomain
+  ports:
+    - "5432:5432"
+  volumes_from:
+    - data
+  environment:
+    - CKAN_PASS=ckan_pass
+    - DATASTORE_PASS=datastore_pass
+
+solr:
+  build: docker/solr
+  hostname: solr
+  domainname: localdomain
+  ports:
+    - "8983:8983"
+  volumes:
+    - /home/pyaillet/Projects/Ckan/ckan-docker/_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
+
+datapusher:
+  build: _service-provider/_datapusher
+  hostname: datapusher
+  domainname: localdomain
+  ports:
+    - "8800:8800"
+
+ckan:
+  build: .
+  hostname: ckan
+  domainname: localdomain
+  ports:
+    - "2222:22"
+    - "5000:5000"
+    - "8080:80"
+  links:
+    - postgres:postgres
+    - solr:solr
+    - datapusher:datapusher
+  command: /sbin/my_init --enable-insecure-key
+  volumes_from:
+    - data
+  volumes:
+    - /home/pyaillet/Projects/Ckan/ckan-docker/_src:/usr/lib/ckan/default/src
+    - /home/pyaillet/Projects/Ckan/ckan-docker/_etc/ckan/custom_options.ini:/etc/ckan/default/custom_options.ini
+    - /home/pyaillet/Projects/Ckan/ckan-docker/_etc/supervisor/conf.d:/etc/supervisor/conf.d
+
+nginx:
+  build: docker/nginx
+  hostname: nginx
+  domainname: localdomain
+  links:
+    - ckan:ckan
+  ports:
+    - "80:80"
+  volumes:
+    - /home/pyaillet/Projects/Ckan/ckan-docker/docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+
+
+

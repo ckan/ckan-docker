@@ -8,10 +8,11 @@ RUN locale-gen en_US.UTF-8 && \
 RUN apt-get -qq update
 
 # Install required packages
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install curl
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
+	python-pip
+	
 
-RUN curl -sSL https://get.docker.com/ | sh
-RUN curl -L https://github.com/docker/fig/releases/download/1.0.1/fig-`uname -s`-`uname -m` > /usr/local/bin/fig; chmod +x /usr/local/bin/fig
+RUN pip install -U docker-compose
 ENV DOCKER_HOST unix:///tmp/docker.sock
 
 WORKDIR /src

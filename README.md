@@ -7,14 +7,14 @@ Developing and deploying CKAN with Docker
 
 # Intro
 
-Dockerfiles, Fig service definition & Vagrantfile to develop & deploy CKAN, Postgres, Solr & datapusher using Docker.
+Dockerfiles, Docker-compose service definition & Vagrantfile to develop & deploy CKAN, Postgres, Solr & datapusher using Docker.
 
 Docker containers included:
 
 - CKAN (should work with any version 2.x)
 - Postgres (Postgres 9.3 and PostGIS 2.1, CKAN datastore & spatial extension supported)
 - Solr (4.10.1, custom schemas & spatial extension supported)
-- Fig _[optional]_ (to manage the containers)
+- Docker-compose _[optional]_ (to manage the containers)
 - Data _[optional]_ (to store Postgres data & CKAN FileStore separately)
 
 
@@ -29,7 +29,7 @@ Other contrib containers:
 |Name			|Version		|Comment										|
 |:--------------|:-------------:|:----------------------------------------------|
 |Docker			|>= 1.3 		|works with Boot2docker 1.3						|
-|Fig 			|>= 1.0 		|on the host or with Dockerfile provided		|
+|Docker-compose		|>= 1.1.0 		|on the host or with Dockerfile provided		|
 |Vagrant		|>= 1.6 		|if you intend to use Vagrant					|
 |OS				|any	 		|as long as you can run Docker 1.3				|
 
@@ -59,12 +59,12 @@ Other contrib containers:
 	├── docker
 	│   ├── ckan
 	│   ├── data
-	│   ├── fig
+	│   ├── compose
 	│   ├── nginx
 	│   ├── insecure_key (baseimage insecure SSH key)
 	│   ├── postgres
 	│   └── solr
-	├── fig.yml (CKAN services definition)
+	├── docker-compose.yml (CKAN services definition)
 	└── vagrant
 	    └── docker-host (Linux Docker host if required)
 
@@ -122,7 +122,7 @@ The Solr container runs version 4.10.1. This can easily be changed by customisin
 By detault the `schema.xml` of the upstream version (2.3) is copied in the container. This can be overriden at runtime by mounting it as a volume.
 This default path of the volume is `<path to>/_src/ckan/ckan/config/solr/schema.xml` so it mounts the schema corresponding to your version of CKAN.
 
-For example for Fig:
+For example for Docker-compose:
 
     solr:
       build: docker/solr
@@ -133,7 +133,7 @@ For example for Fig:
       volumes:
         - <path to>/_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
 
-If you need a custom schema, put it in `<full path to>/_solr` and change the path in the fig or vagrant file.
+If you need a custom schema, put it in `<full path to>/_solr` and change the path in the docker-compose or vagrant file.
 
       volumes:
         - <path to>/_solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
@@ -144,18 +144,18 @@ The container is cross version compatible. You need mount the appropriate `schem
 Read the [ckanext-spatial documentation](http://docs.ckan.org/projects/ckanext-spatial/en) to add the required fields to your Solr schema if you use ckanext-spatial
 
 
-##### Fig Dockerfile
-The Fig container runs Fig version `1.0.1` & the latest Docker within a container.
+##### Docker-compose Dockerfile
+The Docker-compose container runs the latests Docker-compose & Docker within a container.
 
-The Docker socket needs to be mounted as a volume to control Docker on the host. A source folder must be mounted to access the fig definition
+The Docker socket needs to be mounted as a volume to control Docker on the host. A source folder must be mounted to access the docker-compose definition
 
-see docker/Fig/Readme to find out how to use
+see docker/compose/Readme to find out how to use
 
 #### Vagrantfile
 Defines VMs provided by Docker, a Virtual Box docker-host is used if the host can't run Docker containers natively. This is an alternative to Boot2Docker.
 
-#### fig.yml
-Defines the set of services required to run CKAN. Read the [fig.yml reference](http://www.fig.sh/yml.html) to understand and edit.
+#### docker-compose.yml
+Defines the set of services required to run CKAN. Read the [docker-compose.yml reference](http://docs.docker.com/compose/yml/) to understand and edit.
 
 
 
@@ -164,29 +164,29 @@ Defines the set of services required to run CKAN. Read the [fig.yml reference](h
 
 1. Clone your code in the `_src` directory (see _src/README)
 2. Clone the datapusher in `_service-provider` (see _service-provider/README)
-3. Set the full path of the volumes in fig.yml
-4. Run `up` with Fig or Vagrant
+3. Set the full path of the volumes in docker-compose.yml
+4. Run `up` with Docker-compose or Vagrant
 
 
-## Using Fig (recommended)
+## Using Docker-compose (recommended)
 
-#### Option 1: Fig is installed on the Docker host
-_If you have if >= 1.0 installed, just type_
+#### Option 1: Docker-compose is installed on the Docker host
+_If you have it installed, just type_
 
-	fig up
+	docker-compose up
 
-#### Option 2: Using the fig container
+#### Option 2: Using the docker-compose container
 _Otherwise, you can use the container provided_
 
-Build fig the fig container
+Build the Docker-compose container
 
-	docker build --tag="fig_container" docker/fig
+	docker build --tag="dockercompose_container" docker/compose
 
 Run it
 
-	docker run -it -d --name="fig-ckan" -p 2375 -v /var/run/docker.sock:/tmp/docker.sock -v $(pwd):/src fig_container
+	docker run -it -d --name="dockercompose-ckan" -p 2375 -v /var/run/docker.sock:/tmp/docker.sock -v $(pwd):/src dockercompose_container
 
-_In the fig container fig won't work with relative path, because the mount namespace is different, you need to change the relative path to absolute path_
+_In the Docker-compose container docker-compose won't work with relative path, because the mount namespace is different, you need to change the relative path to absolute path_
 
 for example, change the `./`:
 
@@ -198,9 +198,9 @@ to an absolute path  to you ckan-docker directory: `/Users/username/git/ckan/cka
 	volumes:
 	    - /Users/username/git/ckan/ckan-docker/_src:/usr/lib/ckan/default/src
 
-Build & Run the services defined in `fig.yml`
+Build & Run the services defined in `docker-compose.yml`
 
-	docker exec -it fig-ckan fig up
+	docker exec -it dockercompose-ckan docker-compose up
 
 If you are using boot2docker, add entries in your hosts file e.g. `192.168.59.103  ckan.localdomain`
 
@@ -235,7 +235,7 @@ SSH insecure key can be disabled by removing the `--enable-insecure-key` option 
 
 ## Managing Docker images & containers
 
-You should use fig to manage your containers & images, this will ensure they are started/stopped in order
+You should use docker-compose to manage your containers & images, this will ensure they are started/stopped in order
 
 If you want to quickly remove all untagged images:
 
@@ -279,5 +279,5 @@ Both examples show that development dependencies should only be installed in the
 
 # Sources
 - [Docker](https://www.docker.com)
-- [Fig](http://www.fig.sh)
+- [Docker-compose](http://docs.docker.com/compose/)
 - [Vagrant Docker provider](https://docs.vagrantup.com/v2/docker/index.html)

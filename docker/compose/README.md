@@ -16,7 +16,7 @@ _Move to the `ckan-docker` directory_
 
 _Build the Docker image from `docker/compose/Dockerfile`, and call it "dockercompose_container"_
 
-	docker build --tag="dockercompose_container" docker/fig
+	docker build --tag="dockercompose_container" docker/compose
 
 - Run it:
 

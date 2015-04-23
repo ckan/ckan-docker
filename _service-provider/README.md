@@ -12,7 +12,7 @@ Clone datapusher in `_datapusher`:
 	git clone https://github.com/ckan/datapusher.git
 
 
-Tell the fig file to build it:
+Configure the service definition (docker-compose.yml) file to build it:
 
 	datapusher:
 			build: _service-provider/_datapusher

@@ -1,6 +1,10 @@
 ckan-docker
 ===========
 
+
+**THIS REPOSITORY IS NOT SUPPORTED. CKAN DOESN'T PROVIDE OFFICIAL DOCKER IMAGE!**
+
+
 Developing and deploying CKAN with Docker
 
 

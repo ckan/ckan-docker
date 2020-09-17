@@ -1,7 +1,0 @@
-#!/bin/bash
-set -eu
-
-# Start Solr
-echo "Starting Solr..."
-cd /opt/solr/example
-java -jar start.jar

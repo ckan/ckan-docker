@@ -1,66 +1,68 @@
-data:
-  build: docker/data
-  hostname: data
-  domainname: localdomain
+version: "3"
 
-postgres:
-  build: docker/postgres
-  hostname: postgres
-  domainname: localdomain
-  ports:
-    - "5432:5432"
-  volumes_from:
-    - data
-  environment:
-    - CKAN_PASS=ckan_pass
-    - DATASTORE_PASS=datastore_pass
+services:
 
-solr:
-  build: docker/solr
-  hostname: solr
-  domainname: localdomain
-  ports:
-    - "8983:8983"
-  volumes:
-    - ./_src/ckan/ckan/config/solr/schema.xml:/opt/solr/example/solr/ckan/conf/schema.xml
+  nginx:
+    container_name: nginx
+    build:
+      context: nginx/
+      dockerfile: Dockerfile
+    links:
+      - ckan
+    ports:
+      - "0.0.0.0:80:80"
+    
+  ckan:
+    container_name: ckan
+    build:
+      context: ckan/
+      dockerfile: Dockerfile
+      args:
+        - TZ=${TZ}
+    env_file:
+      - .env
+    links:
+      - db
+      - solr
+      - redis
+      - datapusher
+    ports:
+      - "0.0.0.0:5000:5000"
+    volumes:
+      - ckan_storage:/var/lib/ckan
+    
+  datapusher:
+    container_name: datapusher
+    build:
+      context: datapusher/
+    ports:
+      - "8800:8800"
 
-datapusher:
-  build: _service-provider/_datapusher
-  hostname: datapusher
-  domainname: localdomain
-  ports:
-    - "8800:8800"
+  db:
+    container_name: db
+    build:
+      context: postgresql/
+      args:
+        - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    environment:
+      - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+     
+  solr:
+    container_name: solr
+    build:
+      context: solr/
+    volumes:
+      - solr_data:/opt/solr/server/solr/ckan/data/index
 
-ckan:
-  build: .
-  hostname: ckan
-  domainname: localdomain
-  ports:
-    - "2222:22"
-    - "5000:5000"
-    - "8080:80"
-  links:
-    - postgres:postgres
-    - solr:solr
-    - datapusher:datapusher
-  command: /sbin/my_init --enable-insecure-key
-  volumes_from:
-    - data
-  volumes:
-    - ./_src:/usr/lib/ckan/default/src
-    - ./_etc/ckan/custom_options.ini:/etc/ckan/default/custom_options.ini
-    - ./_etc/supervisor/conf.d:/etc/supervisor/conf.d
+  redis:
+    container_name: redis
+    image: redis:alpine
 
-nginx:
-  build: docker/nginx
-  hostname: nginx
-  domainname: localdomain
-  links:
-    - ckan:ckan
-  ports:
-    - "80:80"
-  volumes:
-    - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
-
-
-
+volumes:
+  ckan_storage:
+  pg_data:
+  solr_data:

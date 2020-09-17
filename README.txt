@@ -11,7 +11,9 @@ located at the root directory
 - Create/access a CKAN datapusher image rather than use keitaro/base:0.4
 - all username/passwords as environment variables rather than hardcoded
 - "/images" is a good folder name to use to be able to build all versions of CKAN and DataPusher images
-- include an examples folder for examples of adding extentions xloader, harvester, etc
+- include an "/examples" folder for examples of adding extentions xloader, harvester, etc
+- make sure the "dev" path is taken cared of with any changes
+- Create an admin user during the container deployment
 
 
 Helpful Notes:

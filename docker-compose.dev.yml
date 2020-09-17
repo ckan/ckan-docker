@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+  ckan-dev:
+    build:
+      context: ckan/
+      dockerfile: Dockerfile.dev
+      args:
+        - TZ=${TZ}
+    env_file:
+      - .env
+    links:
+      - db
+      - solr
+      - redis
+      - datapusher
+    ports:
+      - "0.0.0.0:${CKAN_PORT}:5000"
+    volumes:
+      - ./src:/srv/app/src_extensions
+      - ckan_storage:/var/lib/ckan
+    
+
+  datapusher:
+    container_name: datapusher
+    build:
+      context: datapusher/
+    ports:
+      - "8800:8800"
+
+  db:
+    container_name: db
+    env_file:
+      - .env
+    build:
+      context: postgresql/
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  solr:
+    container_name: solr
+    build:
+      context: solr/
+    ports:
+      - "8983:8983"
+    volumes:
+      - solr_data:/opt/solr/server/solr/ckan/data/index
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+
+volumes:
+  ckan_storage:
+  pg_data:
+  solr_data:

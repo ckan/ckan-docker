@@ -1,0 +1,4 @@
+Build the images from this directory using:
+
+    docker build -t openknowledge/ckan-dev:2.7 -f 2.7/Dockerfile .
+    docker build -t openknowledge/ckan-dev:2.8 -f 2.8/Dockerfile .

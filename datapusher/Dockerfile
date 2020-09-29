@@ -1,9 +1,7 @@
-FROM keitaro/base:0.4
-
-MAINTAINER Keitaro Inc <info@keitaro.info>
+FROM alpine:3.7
 
 ENV APP_DIR=/srv/app
-ENV GIT_BRANCH 0.0.15
+ENV GIT_BRANCH master
 ENV GIT_URL https://github.com/ckan/datapusher.git
 ENV JOB_CONFIG ${APP_DIR}/datapusher_settings.py
 

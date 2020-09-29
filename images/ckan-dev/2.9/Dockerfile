@@ -1,4 +1,4 @@
-FROM kowhai/ckan-base:2.9
+FROM ckan/ckan-base:testing-only.2.9
 
 LABEL maintainer="brett@kowh.ai"
 

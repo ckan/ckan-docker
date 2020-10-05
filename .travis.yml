@@ -1,9 +1,12 @@
+os: linux
+dist: focal
 sudo: required
+
 services:
   - docker
 
 env:
-  COMPOSE_VERSION: 1.4.1
+  COMPOSE_VERSION: 1.25.5
 
 before_install:
  - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
@@ -12,3 +15,8 @@ before_install:
 
 script:
   - docker-compose up -d --build
+
+after_script:
+  - sleep 12
+  - docker container ls -a
+

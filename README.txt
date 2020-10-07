@@ -8,9 +8,11 @@ Potential ideas/investigations from Keitaro (Marko Bocevski) : https://github.co
 located at the root directory
 - Should we use wheels too? 
 - 2 networks: 1) Frontend 2) Backend
-- Create/access a CKAN datapusher image rather than use keitaro/base:0.4
+- Create/access a CKAN datapusher image rather than build one?
 - all username/passwords as environment variables rather than hardcoded
 - "/images" is a good folder name to use to be able to build all versions of CKAN and DataPusher images
 - include an "/examples" folder for examples of adding extentions xloader, harvester, etc
+
 - make sure the "development mode" path is taken cared of with any changes
 - Create an admin user during the container deployment
+- should there be a datapusher container built? maybe an xloader container?

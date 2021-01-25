@@ -50,8 +50,8 @@ RUN apk add --no-cache tzdata \
     # Create SRC_DIR
     mkdir -p ${SRC_DIR} && \
     # Install pip
-    curl -o ${SRC_DIR}/get-pip.py https://bootstrap.pypa.io/get-pip.py && \
-    python3 ${SRC_DIR}/get-pip.py && \     
+    curl -o ${SRC_DIR}/get-pip.py https://bootstrap.pypa.io/2.7/get-pip.py && \
+    python3 ${SRC_DIR}/get-pip.py 'pip==20.3.3' && \     
     rm -rf ${SRC_DIR}/get-pip.py
 
 # Set up Python3 virtual environment

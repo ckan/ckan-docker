@@ -7,6 +7,8 @@ Potential ideas/investigations from Keitaro (Marko Bocevski) : https://github.co
 - Maybe use build/up time variables loaded via the .env file, runtime variables loaded via a .ckan-env file - both
 located at the root directory
 
+- Look at using ghcr.io (GitHub Packages) to store Docker Images rather than DockerHub
+
 - Should we use wheels too?
 
 - Use Multi Stage Docker builds? 

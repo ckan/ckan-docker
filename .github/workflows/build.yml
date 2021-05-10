@@ -8,6 +8,6 @@ jobs:
     steps: 
     -  uses: actions/checkout@v2
     -  name: Docker NGINX build
-    -  run: |
+       run: |
          docker build ./nginx -t kowhai/ckan-docker-nginx:testing-only
         

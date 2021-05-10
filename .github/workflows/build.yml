@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
     -  uses: actions/checkout@v2
-    -  name: docker nginx build
+    -  name: Docker NGINX build
     -  run: |
          docker build ./nginx -t kowhai/ckan-docker-nginx:testing-only
         

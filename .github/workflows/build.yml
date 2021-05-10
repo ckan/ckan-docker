@@ -10,7 +10,7 @@ jobs:
     -  name: Docker NGINX build
        run: |
          docker build ./nginx -t kowhai/ckan-docker-nginx:testing-only
-    -  name: Docker redis build
+    -  name: Docker postgres build
        run: |
-         docker build redis:alpine
+         docker build ./postgresql -t kowhai/ckan-docker-postgresql:testing-only
         

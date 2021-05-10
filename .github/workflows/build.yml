@@ -1,0 +1,11 @@
+name: Build CKAN Docker
+on: [push, pull_request]
+jobs: 
+  build:  
+    runs-on: ubuntu-latest
+    steps: 
+    -  uses: actions/checkout@v2
+    -  name: docker nginx build
+    -  run: |
+         docker build ./nginx -t kowhai/ckan-docker-nginx:testing-only
+        

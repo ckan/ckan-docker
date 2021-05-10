@@ -1,4 +1,4 @@
-name: Build
+name: Build CKAN Docker 
 
 on: [push, pull_request]
 
@@ -10,4 +10,7 @@ jobs:
     -  name: Docker NGINX build
        run: |
          docker build ./nginx -t kowhai/ckan-docker-nginx:testing-only
+    -  name: Docker redis build
+       run: |
+         docker build redis:alpine
         

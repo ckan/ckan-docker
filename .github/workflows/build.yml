@@ -20,6 +20,7 @@ jobs:
        run: |
          docker build ./datapusher -t kowhai/ckan-docker-datapusher:testing-only
     -  name: Docker CKAN build
+       env:
+         TZ: UTC
        run: |
-         docker build ./ckan -t kowhai/ckan-docker-ckan:testing-only
-        
+         docker build ./ckan -t kowhai/ckan-docker-ckan:testing-only       

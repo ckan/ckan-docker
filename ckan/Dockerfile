@@ -5,7 +5,7 @@ LABEL maintainer="brett@kowh.ai"
 # Set timezone
 RUN TZ=UTC
 RUN echo $TZ > /etc/timezone
-RUN echo $TZ
+RUN cat /etc/timezone
 RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
         cp /usr/share/zoneinfo/${TZ} /etc/localtime ;\
     fi ;

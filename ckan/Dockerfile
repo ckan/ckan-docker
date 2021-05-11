@@ -6,8 +6,8 @@ LABEL maintainer="brett@kowh.ai"
 ARG TZ
 RUN echo $TZ > /etc/timezone
 RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
-        cp /usr/share/zoneinfo/${TZ} /etc/localtime \
-    fi
+        cp /usr/share/zoneinfo/${TZ} /etc/localtime ;\
+    fi ;
 
 # Install any extensions needed by your CKAN instance
 # (Make sure to add the plugins to CKAN__PLUGINS in the .env file)

@@ -23,7 +23,5 @@ jobs:
        env:
          TZ: UTC
        run: |
-         echo ${TZ}
-         ls -l /usr/share/zoneinfo/${TZ} 
-         ls -l /etc/localtime
+         cmp /usr/share/zoneinfo/${TZ} /etc/localtime || echo "files are different"
          docker build ./ckan -t kowhai/ckan-docker-ckan:testing-only       

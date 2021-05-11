@@ -5,6 +5,7 @@ LABEL maintainer="brett@kowh.ai"
 # Set timezone
 ARG TZ
 RUN echo $TZ > /etc/timezone
+RUN echo $TZ
 RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
         cp /usr/share/zoneinfo/${TZ} /etc/localtime ;\
     fi ;

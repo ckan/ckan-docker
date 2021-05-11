@@ -13,4 +13,7 @@ jobs:
     -  name: Docker postgres build
        run: |
          docker build ./postgresql -t kowhai/ckan-docker-postgresql:testing-only
+    -  name: Docker solr build
+       run: |
+         docker build ./solr -t kowhai/ckan-docker-solr:testing-only
         

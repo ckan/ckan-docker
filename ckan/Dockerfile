@@ -3,7 +3,7 @@ FROM ckan/ckan-base:testing-only.2.9
 LABEL maintainer="brett@kowh.ai"
 
 # Set timezone
-RUN TZ=UTC
+ENV TZ=UTC
 RUN echo $TZ > /etc/timezone
 RUN cat /etc/timezone
 RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \

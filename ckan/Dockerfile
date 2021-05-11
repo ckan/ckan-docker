@@ -5,7 +5,8 @@ LABEL maintainer="brett@kowh.ai"
 # Set timezone
 ENV TZ=UTC
 RUN echo $TZ > /etc/timezone
-RUN cat /etc/timezone
+
+# Make sure both files are not exactly the same
 RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
         cp /usr/share/zoneinfo/${TZ} /etc/localtime ;\
     fi ;

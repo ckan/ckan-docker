@@ -24,4 +24,5 @@ jobs:
          TZ: UTC
        run: |
          echo ${TZ}
+         ls -l /usr/share/zoneinfo/
          docker build ./ckan -t kowhai/ckan-docker-ckan:testing-only       

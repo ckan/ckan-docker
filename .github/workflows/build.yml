@@ -19,4 +19,7 @@ jobs:
     -  name: Docker datapusher build
        run: |
          docker build ./datapusher -t kowhai/ckan-docker-datapusher:testing-only
+    -  name: Docker CKAN build
+       run: |
+         docker build ./ckan -t kowhai/ckan-docker-ckan:testing-only
         

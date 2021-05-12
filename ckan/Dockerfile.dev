@@ -3,9 +3,13 @@ FROM ckan/ckan-dev:testing-only.2.9
 LABEL maintainer="brett@kowh.ai"
 
 # Set timezone
-ARG TZ
-RUN cp /usr/share/zoneinfo/$TZ /etc/localtime
-RUN echo $TZ > /etc/timezone
+ENV TZ=UTC
+RUN echo ${TZ} > /etc/timezone
+
+# Make sure both files are not exactly the same
+RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
+        cp /usr/share/zoneinfo/${TZ} /etc/localtime ;\
+    fi ;
 
 # Install any extensions needed by your CKAN instance
 # (Make sure to add the plugins to CKAN__PLUGINS in the .env file)

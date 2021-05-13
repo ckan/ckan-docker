@@ -10,7 +10,7 @@ located at the root directory
 - should there be a datapusher image pre-built like ckan? maybe an xloader image?
 
 
-Difference between ckan-base and ckan-dev
+### Difference between ckan-base and ckan-dev ###
 
 ckan-base
 docker-compose up -d --build

@@ -2,7 +2,8 @@ FROM ckan/ckan-dev:testing-only.2.9
 
 LABEL maintainer="brett@kowh.ai"
 
-# Set timezone
+# Set up environment variables
+ENV APP_DIR=/srv/app
 ENV TZ=UTC
 RUN echo ${TZ} > /etc/timezone
 
@@ -26,7 +27,7 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 # See https://github.com/okfn/docker-ckan#applying-patches
 COPY patches ${APP_DIR}/patches
 
-RUN for d in $APP_DIR/patches/*; do \
+RUN for d in ${APP_DIR}/patches/*; do \
         if [ -d $d ]; then \
             for f in `ls $d/*.patch | sort -g`; do \
                 cd $SRC_DIR/`basename "$d"` && echo "$0: Applying patch $f to $SRC_DIR/`basename $d`"; patch -p1 < "$f" ; \

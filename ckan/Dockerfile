@@ -26,7 +26,9 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
 # See https://github.com/okfn/docker-ckan#applying-patches
-ADD patches ${APP_DIR}/
+RUN ls -l 
+RUN pwd
+ADD ./patches ${APP_DIR}/
 
 RUN for d in ${APP_DIR}/patches/*; do \
         if [ -d $d ]; then \

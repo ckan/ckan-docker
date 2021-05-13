@@ -41,7 +41,7 @@ jobs:
     -  name: Solr build
        uses: docker/build-push-action@v2
        with:
-         context: ./solr
+          context: ./solr
           file: ./solr/Dockerfile
           push: false
           tags: kowhai/ckan-docker-solr:testing-only

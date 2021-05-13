@@ -54,7 +54,6 @@ jobs:
     -  name: CKAN build
        uses: docker/build-push-action@v2
        with:
-          path: ckan 
           context: ./ckan
           file: ./ckan/Dockerfile
           push: false

@@ -27,7 +27,7 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 # runtime mounted ones)
 # See https://github.com/okfn/docker-ckan#applying-patches
 
-RUN cp -pr patches/ ${APP_DIR}/
+ADD patches ${APP_DIR}/
 
 RUN for d in ${APP_DIR}/patches/*; do \
         if [ -d $d ]; then \

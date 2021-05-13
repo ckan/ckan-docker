@@ -54,7 +54,7 @@ jobs:
     -  name: CKAN build
        uses: docker/build-push-action@v2
        with:
-          context: ./ckan
+          context: .
           file: ./ckan/Dockerfile
           push: false
           tags: kowhai/ckan-docker-ckan:testing-only

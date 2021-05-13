@@ -52,7 +52,7 @@ jobs:
     #      tags: kowhai/ckan-docker-datapusher:testing-only
 
     -  name: CKAN build
-       uses: docker/build-push-action@v1
+       uses: docker/build-push-action@v2
        with:
           context: .
           file: ./ckan/Dockerfile

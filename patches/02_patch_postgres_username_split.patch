@@ -1,0 +1,11 @@
+--- ckan/ckanext/datastore/backend/postgres.py	2021-02-18 11:01:56.692267462 +0100
++++ ckan/ckanext/datastore/backend/postgres-patch.py	2021-02-18 13:45:16.033193435 +0100
+@@ -1690,7 +1690,7 @@
+         read only user.
+         '''
+         write_connection = self._get_write_engine().connect()
+-        read_connection_user = sa_url.make_url(self.read_url).username
++        read_connection_user = sa_url.make_url(self.read_url).username.split("@")[0]
+ 
+         drop_foo_sql = u'DROP TABLE IF EXISTS _foo'
+ 

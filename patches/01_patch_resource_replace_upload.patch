@@ -1,0 +1,11 @@
+--- ckan/ckan/logic/action/update.py	2021-02-17 16:46:55.673578728 +0100
++++ ckan/ckan/logic/action/update-edit.py	2021-02-17 16:47:28.905879170 +0100
+@@ -929,7 +929,7 @@
+ 
+     '''
+     model = context['model']
+-    session = model.Session
++    session = model.meta.create_local_session()
+     context['session'] = session
+ 
+     user = context['user']

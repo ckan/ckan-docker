@@ -33,4 +33,3 @@ RUN chown -R ${SOLR_USER}:${SOLR_USER} /opt/solr/server/solr/${SOLR_CORE}
 
 # non-root user for runtime
 USER ${SOLR_USER}:${SOLR_USER}
-

@@ -1,0 +1,12 @@
+Get the NGINX container running                                     <done>
+Add the redis container                                             <done>
+Add the solr container                                              <done>
+Add the db container                                                <done>
+Get a datapusher container working with supervisord                 <done>
+Test the datapusher container works
+Take out ARG's from docker-compose.yml is not needed
+Test with new versions of CKAN (ie: if problems with Python 3.9)
+Create (and push) the datapusher image
+Create the ckan container
+Create the ckanext container
+ 

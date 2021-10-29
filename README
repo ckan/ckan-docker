@@ -1,0 +1,12 @@
+Build ckan-base image (2.9)
+cd /path/to/ckan-docker/ckan/ckan-base
+docker build -t ckan/ckan-base:testing-only.2.9 -f 2.9/Dockerfile .
+ 
+Login to Dockerhub
+docker login --username=kowhai
+(will then ask for a password)
+
+Push image to (ckan) Dockerhub
+docker push ckan/ckan-base:testing-only.2.9
+
+Do the same with 2.8 and 2.7

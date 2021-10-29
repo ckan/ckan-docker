@@ -1,5 +1,10 @@
 version: "3"
 
+volumes:
+  pg_data:
+  solr_data:
+  ckan_storage:
+
 services:
 
   nginx:
@@ -11,7 +16,7 @@ services:
       - ckan
     ports:
       - "0.0.0.0:80:80"
-    
+
   ckan:
     container_name: ckan
     build:
@@ -29,18 +34,13 @@ services:
     ports:
       - "0.0.0.0:${CKAN_PORT}:5000"
     volumes:
-      - ckan_storage:/var/lib/ckan
-    
-  datapusher:
-    container_name: datapusher
-    image: kowhai/datapusher:0.0.17
-    ports:
-      - "8800:8800"
+      - ckan_storage:/var/lib/ckan 
 
   db:
     container_name: db
     build:
-      context: postgresql/
+      context: .
+      dockerfile: postgresql/Dockerfile
       args:
         - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -50,19 +50,31 @@ services:
       - PGDATA=/var/lib/postgresql/data/db
     volumes:
       - pg_data:/var/lib/postgresql/data
-     
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "ckan"]
+
+  datapusher:
+    container_name: datapusher
+    build:
+      context: datapusher
+    ports:
+      - "8800:8800"
+    environment:
+      - DATAPUSHER_REWRITE_RESOURCES=${DATAPUSHER_REWRITE_RESOURCES}
+      - DATAPUSHER_REWRITE_URL=${DATAPUSHER_REWRITE_URL}
+      - CKAN__DATAPUSHER__CALLBACK_URL_BASE=${CKAN__DATAPUSHER__CALLBACK_URL_BASE} 
+      
   solr:
     container_name: solr
     build:
-      context: solr/
+      context: .
+      dockerfile: solr/Dockerfile
+      args:
+        - SOLR_VERSION=${SOLR_VERSION}
+        - CKAN_VERSION=${CKAN_VERSION}        
     volumes:
-      - solr_data:/opt/solr/server/solr/ckan/data/index
+      - solr_data:/opt/solr/server/solr/ckan/data
 
   redis:
     container_name: redis
-    image: redis:alpine
-
-volumes:
-  ckan_storage:
-  pg_data:
-  solr_data:
+    image: redis:${REDIS_VERSION}

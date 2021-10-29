@@ -1,13 +1,35 @@
-FROM postgres:12-alpine
+FROM solr:6.6.6
 
-# Allow connections; we don't map out any ports so only linked docker containers can connect
-RUN echo "host all  all    0.0.0.0/0  md5" >> /var/lib/postgresql/data/pg_hba.conf
+# Enviroment variables
+ENV SOLR_CORE ckan
 
-# Customize default user/pass/db
-ENV POSTGRES_DB ckan
-ENV POSTGRES_USER ckan
-ARG POSTGRES_PASSWORD
-ARG DATASTORE_READONLY_PASSWORD
+# Build Arguments
+ARG CKAN_VERSION
+ARG SOLR_VERSION
 
-# Include datastore setup scripts
-COPY ./postgresql/docker-entrypoint-initdb.d /docker-entrypoint-initdb.d
+# root user for initial config
+USER root
+
+# Create directories
+RUN mkdir -p /opt/solr/server/solr/${SOLR_CORE}/conf && \
+    mkdir -p /opt/solr/server/solr/${SOLR_CORE}/data && \
+    mkdir -p /opt/solr/server/solr/${SOLR_CORE}/data/index
+
+# Add files
+COPY ./solr/solrconfig-${CKAN_VERSION}.xml /opt/solr/server/solr/${SOLR_CORE}/conf/solrconfig.xml
+ADD https://raw.githubusercontent.com/ckan/ckan/ckan-${CKAN_VERSION}/ckan/config/solr/schema.xml \
+https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/${SOLR_VERSION}/solr/server/solr/configsets/basic_configs/conf/currency.xml \
+https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/${SOLR_VERSION}/solr/server/solr/configsets/basic_configs/conf/synonyms.txt \
+https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/${SOLR_VERSION}/solr/server/solr/configsets/basic_configs/conf/stopwords.txt \
+https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/${SOLR_VERSION}/solr/server/solr/configsets/basic_configs/conf/protwords.txt \
+https://raw.githubusercontent.com/apache/lucene-solr/releases/lucene-solr/${SOLR_VERSION}/solr/server/solr/configsets/data_driven_schema_configs/conf/elevate.xml \
+/opt/solr/server/solr/${SOLR_CORE}/conf/
+
+# Create core.properties
+RUN echo name=${SOLR_CORE} > /opt/solr/server/solr/${SOLR_CORE}/core.properties
+
+# Giving ownership to Solr
+RUN chown -R ${SOLR_USER}:${SOLR_USER} /opt/solr/server/solr/${SOLR_CORE}
+
+# non-root user for runtime
+USER ${SOLR_USER}:${SOLR_USER}

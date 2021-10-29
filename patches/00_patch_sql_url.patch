@@ -1,0 +1,11 @@
+--- ckan/ckan/model/__init__.py	2021-02-16 14:47:06.168327441 +0100
++++ ckan/ckan/model/__init__.py	2021-02-16 14:48:00.740780218 +0100
+@@ -266,7 +266,7 @@
+         self.reset_alembic_output()
+         alembic_config = AlembicConfig(self._alembic_ini)
+         alembic_config.set_main_option(
+-            "sqlalchemy.url", str(self.metadata.bind.url)
++            "sqlalchemy.url", str(self.metadata.bind.url).replace('%', '%%')
+         )
+         try:
+             sqlalchemy_migrate_version = self.metadata.bind.execute(

@@ -1,15 +1,13 @@
-FROM nginx:1.19.8-alpine
+FROM postgres:12-alpine
 
-ENV NGINX_DIR=/etc/nginx
+# Allow connections; we don't map out any ports so only linked docker containers can connect
+RUN echo "host all  all    0.0.0.0/0  md5" >> /var/lib/postgresql/data/pg_hba.conf
 
-COPY index.html /usr/share/nginx/html/index.html
+# Customize default user/pass/db
+ENV POSTGRES_DB ckan
+ENV POSTGRES_USER ckan
+ARG POSTGRES_PASSWORD
+ARG DATASTORE_READONLY_PASSWORD
 
-RUN mkdir -p ${NGINX_DIR}/sites-available
-RUN mkdir -p ${NGINX_DIR}/sites-enabled
-
-COPY setup/nginx.conf ${NGINX_DIR}
-COPY setup/sites-available/* ${NGINX_DIR}/sites-available
-
-RUN ln -s ${NGINX_DIR}/sites-available/ckan.conf ${NGINX_DIR}/sites-enabled/ckan.conf
-
-EXPOSE 80
+# Include datastore setup scripts
+COPY ./postgresql/docker-entrypoint-initdb.d /docker-entrypoint-initdb.d

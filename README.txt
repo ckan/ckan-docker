@@ -22,3 +22,6 @@ docker-compose -f docker-compose.dev.yml up -d --build
 docker-compose -f docker-compose.dev.yml build
 docker-compose -f docker-compose.dev.yml up
 
+ARG should be used for sensitive variables so as to keep the values of these variables 
+out of the build and hence will not show with an "inspect image" command
+

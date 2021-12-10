@@ -60,7 +60,7 @@ services:
 
   redis:
     container_name: redis
-    image: redis:alpine
+    image: redis:${REDIS_VERSION}
 
 volumes:
   ckan_storage:

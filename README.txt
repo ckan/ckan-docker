@@ -20,4 +20,3 @@ Use a bind mount for the config file (ckan.ini)
 
 Maybe include a script to replace docker-compose if required
 
-

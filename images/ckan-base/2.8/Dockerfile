@@ -8,7 +8,7 @@ ENV PIP_SRC=${SRC_DIR}
 ENV CKAN_STORAGE_PATH=/var/lib/ckan
 ENV GIT_URL=https://github.com/ckan/ckan.git
 # CKAN version to build
-ENV GIT_BRANCH=ckan-2.8.5
+ENV GIT_BRANCH=ckan-2.8.9
 # Customize these on the .env file if needed
 ENV CKAN_SITE_URL=http://localhost:5000
 ENV CKAN__PLUGINS image_view text_view recline_view datastore datapusher envvars
@@ -46,11 +46,11 @@ RUN apk add --no-cache tzdata \
         python-dev \
         libxml2-dev \
         libxslt-dev \
-        linux-headers && \
+        linux-headers
     # Create SRC_DIR
-    mkdir -p ${SRC_DIR} && \
+    RUN mkdir -p ${SRC_DIR} && \
     # Install pip, supervisord and uwsgi
-    curl -o ${SRC_DIR}/get-pip.py https://bootstrap.pypa.io/2.7/get-pip.py && \
+    curl -o ${SRC_DIR}/get-pip.py https://bootstrap.pypa.io/pip/2.7/get-pip.py && \
     python ${SRC_DIR}/get-pip.py 'pip==20.3.3' && \
     pip install supervisor && \
     mkdir /etc/supervisord.d && \

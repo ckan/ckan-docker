@@ -81,9 +81,11 @@ RUN addgroup -g 92 -S ckan && \
 RUN mkdir -p $CKAN_STORAGE_PATH && \
     chown -R ckan:ckan $CKAN_STORAGE_PATH
 
-COPY 2.7/setup ${APP_DIR}
-COPY 2.7/setup/supervisor.worker.conf /etc/supervisord.d/worker.conf
-COPY 2.7/setup/uwsgi.conf /srv/app/uwsgi.conf
+COPY 2.7/setup/ckan-uwsgi.ini ${APP_DIR}
+COPY 2.7/setup/wsgi.py ${APP_DIR}
+COPY 2.7/setup/prerun.py ${APP_DIR}
+COPY 2.7/setup/start_ckan.sh ${APP_DIR}
+COPY 2.7/setup/supervisord.conf /etc/supervisord.conf
 
 # Create entrypoint directory for children image scripts
 ONBUILD RUN mkdir /docker-entrypoint.d

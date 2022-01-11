@@ -16,14 +16,16 @@ out of the build and hence will not show with an "inspect image" command
 Do we pre-build a CKAN image and use that (and extend) as the base image OR 
     just build it from scratch and while saving to storage what we need to
 
+# docker-compose up -d --build
+# mkdir local
+# docker cp ckan:/srv/app/ckan.ini ./local/ckan.ini
+# docker cp ckan:/srv/app/src ./local/src
+Stop/Remove ckan container
+Start ckan container as follows
 Use a bind mount for the config file (ckan.ini)
-  mkdir local
-  docker cp ckan:/srv/app/ckan.ini ./local/ckan.ini
-  docker cp ckan:/srv/app/src ./local/src
-  stop/remove ckan container
-  docker run -p 0.0.0.0:5000:5000 --net ckan-docker_default --hostname ckan --name ckan \
-      --env-file=./environ --mount type=bind,source=$(pwd)/local/ckan.ini,target=/srv/app/ckan.ini \
-      --mount type=bind,source=$(pwd)/local/src,target=/srv/app/src \
-      -d ckan-docker_ckan
+# docker run -p 0.0.0.0:5000:5000 --net ckan-docker_default --hostname ckan --name ckan \
+        --env-file=./environ --mount type=bind,source=$(pwd)/local/ckan.ini,target=/srv/app/ckan.ini \
+        --mount type=bind,source=$(pwd)/local/src,target=/srv/app/src \
+        -d ckan-docker_ckan
 
 Maybe include a script to replace docker-compose if required

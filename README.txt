@@ -16,6 +16,8 @@ out of the build and hence will not show with an "inspect image" command
 Do we pre-build a CKAN image and use that (and extend) as the base image OR 
     just build it from scratch and while saving to storage what we need to
 
+To use local storage for the ckan.ini file and the CKAN src code, do the following:
+
 # docker-compose up -d --build
 # mkdir local
 # docker cp ckan:/srv/app/ckan.ini ./local/ckan.ini

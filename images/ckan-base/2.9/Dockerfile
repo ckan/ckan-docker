@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.13
 
 # Internal environment variables
 ENV APP_DIR=/srv/app
@@ -8,7 +8,7 @@ ENV PIP_SRC=${SRC_DIR}
 ENV CKAN_STORAGE_PATH=/var/lib/ckan
 ENV GIT_URL=https://github.com/ckan/ckan.git
 # CKAN version to build
-ENV GIT_BRANCH=ckan-2.9.0
+ENV GIT_BRANCH=ckan-2.9.4
 # Customize these on the .env file if needed
 ENV CKAN_SITE_URL=http://localhost:5000
 ENV CKAN__PLUGINS image_view text_view recline_view datastore datapusher envvars
@@ -46,12 +46,13 @@ RUN apk add --no-cache tzdata \
         py3-virtualenv \
         libxml2-dev \
         libxslt-dev \
-        linux-headers && \
-    # Create SRC_DIR
-    mkdir -p ${SRC_DIR} && \
+        linux-headers
+
+# Create SRC_DIR and install pip
+RUN mkdir -p ${SRC_DIR} && \
     # Install pip
-    curl -o ${SRC_DIR}/get-pip.py https://bootstrap.pypa.io/2.7/get-pip.py && \
-    python3 ${SRC_DIR}/get-pip.py 'pip==20.3.3' && \     
+    curl -o ${SRC_DIR}/get-pip.py https://bootstrap.pypa.io/get-pip.py && \
+    python3 ${SRC_DIR}/get-pip.py && \     
     rm -rf ${SRC_DIR}/get-pip.py
 
 # Set up Python3 virtual environment
@@ -62,12 +63,13 @@ RUN cd ${APP_DIR} && \
 # Virtual environment binaries/scripts to be used first
 ENV PATH=${APP_DIR}/bin:${PATH}   
     
-# Install CKAN and uwsgi
+# Install CKAN, uwsgi, ckanext-envvars and generate CKAN config file
 RUN pip3 install -e git+${GIT_URL}@${GIT_BRANCH}#egg=ckan && \ 
     pip3 install uwsgi && \
     cd ${SRC_DIR}/ckan && \
     cp who.ini ${APP_DIR} && \
-    pip install --no-binary :all: -r requirements.txt && \
+    pip3 install -r requirement-setuptools.txt && \
+    pip3 install --no-binary :all: -r requirements.txt && \
     # Install CKAN envvars to support loading config from environment variables
     pip3 install -e git+https://github.com/okfn/ckanext-envvars.git#egg=ckanext-envvars && \
     # Create and update CKAN config
@@ -78,8 +80,10 @@ RUN pip3 install supervisor && \
 mkdir /etc/supervisord.d
 
 # Copy all setup files
-COPY 2.9/setup ${APP_DIR}
-COPY 2.9/setup/supervisor.worker.conf /etc/supervisord.d/worker.conf
+COPY 2.9/setup/ckan-uwsgi.ini ${APP_DIR}
+COPY 2.9/setup/wsgi.py ${APP_DIR}
+COPY 2.9/setup/prerun.py ${APP_DIR}
+COPY 2.9/setup/start_ckan.sh ${APP_DIR}
 COPY 2.9/setup/supervisord.conf /etc/supervisord.conf
 
 # Create a local user and group to run the app

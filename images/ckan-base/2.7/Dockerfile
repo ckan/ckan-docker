@@ -8,7 +8,7 @@ ENV PIP_SRC=${SRC_DIR}
 ENV CKAN_STORAGE_PATH=/var/lib/ckan
 ENV GIT_URL=https://github.com/ckan/ckan.git
 # CKAN version to build
-ENV GIT_BRANCH=ckan-2.7.8
+ENV GIT_BRANCH=ckan-2.7.12
 # Customize these on the .env file if needed
 ENV CKAN_SITE_URL=http://localhost:5000
 ENV CKAN__PLUGINS image_view text_view recline_view datastore datapusher envvars
@@ -46,11 +46,11 @@ RUN apk add --no-cache tzdata \
         python-dev \
         libxml2-dev \
         libxslt-dev \
-        linux-headers && \
+        linux-headers
     # Create SRC_DIR
-    mkdir -p ${SRC_DIR} && \
+    RUN mkdir -p ${SRC_DIR} && \
     # Install pip, supervisord and uwsgi
-    curl -o ${SRC_DIR}/get-pip.py https://bootstrap.pypa.io/2.7/get-pip.py && \
+    curl -o ${SRC_DIR}/get-pip.py https://bootstrap.pypa.io/pip/2.7/get-pip.py && \
     python ${SRC_DIR}/get-pip.py 'pip==20.3.3' && \
     pip install supervisor && \
     mkdir /etc/supervisord.d && \
@@ -81,9 +81,11 @@ RUN addgroup -g 92 -S ckan && \
 RUN mkdir -p $CKAN_STORAGE_PATH && \
     chown -R ckan:ckan $CKAN_STORAGE_PATH
 
-COPY 2.7/setup ${APP_DIR}
-COPY 2.7/setup/supervisor.worker.conf /etc/supervisord.d/worker.conf
-COPY 2.7/setup/uwsgi.conf /srv/app/uwsgi.conf
+COPY 2.7/setup/ckan-uwsgi.ini ${APP_DIR}
+COPY 2.7/setup/wsgi.py ${APP_DIR}
+COPY 2.7/setup/prerun.py ${APP_DIR}
+COPY 2.7/setup/start_ckan.sh ${APP_DIR}
+COPY 2.7/setup/supervisord.conf /etc/supervisord.conf
 
 # Create entrypoint directory for children image scripts
 ONBUILD RUN mkdir /docker-entrypoint.d

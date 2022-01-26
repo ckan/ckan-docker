@@ -33,7 +33,7 @@ services:
     
   datapusher:
     container_name: datapusher
-    image: kowhai/datapusher:0.0.17
+    image: kowhai/datapusher:${DATAPUSHER_VERSION}
     ports:
       - "8800:8800"
 
@@ -60,7 +60,7 @@ services:
 
   redis:
     container_name: redis
-    image: redis:alpine
+    image: redis:${REDIS_VERSION}
 
 volumes:
   ckan_storage:

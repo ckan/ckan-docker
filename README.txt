@@ -31,3 +31,36 @@ Use a bind mount for the config file (ckan.ini)
         -d ckan-docker_ckan
 
 Maybe include a script to replace docker-compose if required
+
+Dev Mode (OKFN)
+
+The differences between Docker dev abd Docker base is as the following:
+
+docker-compose.dev.yml
+    solr: explicitly puts in ports (8983:8983)
+    db: Doesn't pass in environment and arg values
+    ckan: has extra volume bind mount (./src:/srv/app/src_extensions)
+
+Dockerfile.dev
+    Takes the base image and
+        Adds a new directory (SRC_EXTENSIONS_DIR=/srv/app/src_extensions)
+        installs libffi-dev
+        installs dev-requirements.txt
+        runs different start script (start_ckan_development.sh) which installs any extension located in SRC_EXTENSIONS_DIR 
+        runs a typical Dev install
+            pip install -r pip-requirements.txt
+            pip install -r requirements.txt
+            pip install -r dev-requirements.txt
+            python3 setup.py develop
+            ckan config-tool test.ini
+            ckan config-tool $CKAN_INI -s DEFAULT "debug = true"
+            ckan config-tool $CKAN_INI "ckan.plugins = $CKAN__PLUGINS"
+            ckan config-tool $SRC_DIR/ckan/test-core.ini \
+                "sqlalchemy.url = $TEST_CKAN_SQLALCHEMY_URL" \
+                "ckan.datastore.write_url = $TEST_CKAN_DATASTORE_WRITE_URL" \
+                "ckan.datastore.read_url = $TEST_CKAN_DATASTORE_READ_URL" \
+                "solr_url = $TEST_CKAN_SOLR_URL" \
+                "ckan.redis.url = $TEST_CKAN_REDIS_URL"
+
+    All other steps are similar to the base Dockerfile
+

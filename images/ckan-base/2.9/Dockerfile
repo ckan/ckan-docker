@@ -79,12 +79,9 @@ RUN pip3 install -e git+${GIT_URL}@${GIT_BRANCH}#egg=ckan && \
 RUN pip3 install supervisor && \
 mkdir /etc/supervisord.d
 
-# Copy all setup files
-COPY 2.9/setup/ckan-uwsgi.ini ${APP_DIR}
-COPY 2.9/setup/wsgi.py ${APP_DIR}
-COPY 2.9/setup/prerun.py ${APP_DIR}
-COPY 2.9/setup/start_ckan.sh ${APP_DIR}
-COPY 2.9/setup/supervisord.conf /etc/supervisord.conf
+# Copy setup files
+COPY 2.9/setup ${APP_DIR}
+RUN mv ${APP_DIR}/supervisord.conf /etc/supervisord.conf
 
 # Create a local user and group to run the app
 RUN addgroup -g 92 -S ckan && \

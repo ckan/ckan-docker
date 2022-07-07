@@ -16,31 +16,24 @@ then
     done
 fi
 
+# Set the common uwsgi options
+UWSGI_OPTS="--plugins http,python \
+            --socket /tmp/uwsgi.sock \
+            --wsgi-file /srv/app/wsgi.py \
+            --module wsgi:application \
+            --uid 92 --gid 92 \
+            --http 0.0.0.0:5000 \
+            --master --enable-threads \
+            --lazy-apps \
+            -p 2 -L -b 32768 --vacuum \
+            --harakiri 50"
 
-# Check whether http basic auth password protection is enabled and enable basicauth routing on uwsgi respecfully
 if [ $? -eq 0 ]
 then
-  if [ "$PASSWORD_PROTECT" = true ]
-  then
-    if [ "$HTPASSWD_USER" ] || [ "$HTPASSWD_PASSWORD" ]
-    then
-      # Generate htpasswd file for basicauth
-      htpasswd -d -b -c /srv/app/.htpasswd $HTPASSWD_USER $HTPASSWD_PASSWORD
-      # Start supervisord
-      supervisord --configuration /etc/supervisord.conf &
-      # Start uwsgi with basicauth
-      sudo -u ckan -EH uwsgi -i ckan-uwsgi.ini
-    else
-      echo "Missing HTPASSWD_USER or HTPASSWD_PASSWORD environment variables. Exiting..."
-      exit 1
-    fi
-  else
     # Start supervisord
     supervisord --configuration /etc/supervisord.conf &
     # Start uwsgi
-    sudo -u ckan -EH uwsgi -i ckan-uwsgi.ini
-  fi
+    sudo -u ckan -EH uwsgi $UWSGI_OPTS
 else
   echo "[prerun] failed...not starting CKAN."
 fi
-

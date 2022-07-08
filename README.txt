@@ -23,4 +23,6 @@ Go through all the new changes in the current repo and use those for the new rep
 - Health Checks https://github.com/ckan/ckan/pull/6812
 - Restarts https://github.com/ckan/ckan/pull/6569
 - Make asure ARGs are used if they are added to compose file
-- 
+- Check out Florian's docs https://github.com/dbca-wa/ckan/blob/dbca2022/doc/maintaining/installing/install-from-docker-compose.rst
+- Check out Florian's repo https://github.com/dbca-wa/ckan/tree/dbca2022
+

@@ -2,12 +2,25 @@
 # This repo will be actively worked on from now.
 # This file will be my ToDo list of things to take care of
 
-- have the ckan-docker repo for the "get CKAN up on Docker" repo
-- create a new repo (maybe 'ckan-docker-dev') for a Dev orientated approach
-- get rid of the "patches/" stuff like in OKFN
-- Get rid of 2.8 and 2.7. We should only support Docker on CKAN 2.9 (or latest stable which will soon be 2.10)
-- Get rid of nginx, just provide instructions on how to add it
-- Use pre-built CKAN base images, eventually move them over to an official CKAN DockerHub repo with the correct tags
-- No extensions but provide instructions on how to add to a Dockerfile
-- no hard-coded container names, use environment variables
+ckan/ckan-docker-base: For the base images Dockerfiles (prod and dev) and related scripts
+ckan/ckan-docker: For the project-oriented image template (prod and dev). Patching only done in Dev ### This repo!
 
+All the other images should live in separate repos
+
+1. Solr -           use ckan-solr   (https://github.com/ckan/ckan-solr)
+2. PostgreSQL -     use current method (base image: postgres:12-alpine from DockerHub, enhanced in a Dockerfile) 
+                    ### This may change to be more like Solr though
+3. Redis -          use current method (DockerHub image: redis:${REDIS_VERSION} specified as a compose service in the compose file)
+4. nginx -          base image: nginx:1.19.8-alpine from DockerHub, enhanced in a Dockerfile)
+5. DataPusher -     built from the actual datapusher repo (https://github.com/ckan/datapusher)
+6. CKAN Worker -    add new (ckan worker) container in the compose setup
+
+Versions 2.9 and 2.10 (when it's out) only. Plan the repo layout for having multiple versions - OKFN could used as an example
+
+Go through all the new changes in the current repo and use those for the new repo if they make sense
+- Francesco's PR https://github.com/ckan/ckan/pull/4635 which is a beauty!
+- use FROM ubuntu:focal for ckan
+- Health Checks https://github.com/ckan/ckan/pull/6812
+- Restarts https://github.com/ckan/ckan/pull/6569
+- Make asure ARGs are used if they are added to compose file
+- 

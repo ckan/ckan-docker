@@ -1,15 +1,13 @@
-FROM nginx:alpine
+FROM nginx:stable-alpine
 
 ENV NGINX_DIR=/etc/nginx
-
-COPY setup/index.html /usr/share/nginx/html/index.html
 
 RUN mkdir -p ${NGINX_DIR}/sites-available
 RUN mkdir -p ${NGINX_DIR}/sites-enabled
 
-COPY setup/nginx.conf ${NGINX_DIR}
+COPY setup/index.html /usr/share/nginx/html/index.html
 COPY setup/sites-available/* ${NGINX_DIR}/sites-available
 
 RUN ln -s ${NGINX_DIR}/sites-available/ckan.conf ${NGINX_DIR}/sites-enabled/ckan.conf
 
-EXPOSE 80
+EXPOSE 81

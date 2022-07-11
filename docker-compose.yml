@@ -7,62 +7,62 @@ services:
     build:
       context: nginx/
       dockerfile: Dockerfile
-    links:
-      - ckan
+    #links:
+    #  - ckan
     ports:
-      - "0.0.0.0:80:80"
+      - "0.0.0.0:81:80"
     
-  ckan:
-    container_name: ckan
-    build:
-      context: ckan/
-      dockerfile: Dockerfile
-      args:
-        - TZ=${TZ}
-    env_file:
-      - .env
-    links:
-      - db
-      - solr
-      - redis
-      - datapusher
-    ports:
-      - "0.0.0.0:${CKAN_PORT}:5000"
-    volumes:
-      - ckan_storage:/var/lib/ckan
+  #ckan:
+  #  container_name: ckan
+  #  build:
+  #    context: ckan/
+  #    dockerfile: Dockerfile
+  #    args:
+  #      - TZ=${TZ}
+  #  env_file:
+  #    - .env
+  #  links:
+  #    - db
+  #    - solr
+  #    - redis
+  #    - datapusher
+  #  ports:
+  #    - "0.0.0.0:${CKAN_PORT}:5000"
+  #  volumes:
+  #    - ckan_storage:/var/lib/ckan
     
-  datapusher:
-    container_name: datapusher
-    image: kowhai/datapusher:${DATAPUSHER_VERSION}
-    ports:
-      - "8800:8800"
+  #datapusher:
+  #  container_name: datapusher
+  #  image: kowhai/datapusher:${DATAPUSHER_VERSION}
+  #  ports:
+  #    - "8800:8800"
 
-  db:
-    container_name: db
-    build:
-      context: postgresql/
-      args:
-        - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
-        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    environment:
-      - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - PGDATA=/var/lib/postgresql/data/db
-    volumes:
-      - pg_data:/var/lib/postgresql/data
+  #db:
+  #  container_name: db
+  #  build:
+  #    context: postgresql/
+  #    args:
+  #     - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #  environment:
+  #    - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
+  #   - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #    - PGDATA=/var/lib/postgresql/data/db
+  #  volumes:
+  #    - pg_data:/var/lib/postgresql/data
      
-  solr:
-    container_name: solr
-    build:
-      context: solr/
-    volumes:
-      - solr_data:/opt/solr/server/solr/ckan/data/index
+  #solr:
+  #  container_name: solr
+  #  build:
+  #    context: solr/
+  #  volumes:
+  #    - solr_data:/opt/solr/server/solr/ckan/data/index
 
   redis:
     container_name: redis
     image: redis:${REDIS_VERSION}
 
-volumes:
-  ckan_storage:
-  pg_data:
-  solr_data:
+#volumes:
+#  ckan_storage:
+#  pg_data:
+#  solr_data:

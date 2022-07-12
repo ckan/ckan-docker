@@ -1,7 +1,8 @@
 FROM alpine:3.13
 
+ARG DATAPUSHER_VERSION
 ENV APP_DIR=/srv/app
-ENV GIT_BRANCH 0.0.17
+ENV GIT_BRANCH ${DATAPUSHER_VERSION}
 ENV GIT_URL https://github.com/ckan/datapusher.git
 ENV JOB_CONFIG ${APP_DIR}/datapusher_settings.py
 

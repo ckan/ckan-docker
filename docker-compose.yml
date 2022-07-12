@@ -19,31 +19,29 @@ services:
     ports:
       - "0.0.0.0:81:80"
     
-  #ckan:
-  #  container_name: ckan
-  #  build:
-  #    context: ckan/
-  #    dockerfile: Dockerfile
-  #    args:
-  #      - TZ=${TZ}
-  #  env_file:
-  #    - .env
-  #depends_on:
-  #    db:
-  #      condition: service_healthy
-  #    solr:
-  #      condition: service_healthy
-  #    redis:
-  #      condition: service_healthy
-  #  ports:
-  #    - "0.0.0.0:${CKAN_PORT}:5000"
-  #volumes:
-  #    - ckan_config:/etc/ckan
-  #    - ckan_home:/usr/lib/ckan
-  #    - ckan_storage:/var/lib/ckan
-  #restart: unless-stopped
-  #healthcheck:
-  #    test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
+  ckan:
+    container_name: ${CKAN_CONTAINER_NAME}
+    build:
+      context: ckan/
+      dockerfile: Dockerfile
+      args:
+        - TZ=${TZ}
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "0.0.0.0:${CKAN_PORT}:5000"
+    volumes:
+      - ckan_config:/etc/ckan
+      - ckan_home:/usr/lib/ckan
+      - ckan_storage:/var/lib/ckan
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
     
   datapusher:
     container_name: ${DATAPUSHER_CONTAINER_NAME}
@@ -54,6 +52,8 @@ services:
     ports:
       - "8800:8800"
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]
 
   db:
     container_name: ${POSTGRESQL_CONTAINER_NAME}

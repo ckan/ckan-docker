@@ -26,6 +26,8 @@ services:
       dockerfile: Dockerfile
       args:
         - TZ=${TZ}
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy

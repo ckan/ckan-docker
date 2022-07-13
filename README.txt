@@ -14,7 +14,8 @@ All the other images should live in separate repos
                     latest image to used is redis:6
 4. nginx -          base image: nginx:1.19.8-alpine from DockerHub, enhanced in a Dockerfile)
 5. DataPusher -     built from the actual datapusher repo (https://github.com/ckan/datapusher)
-6. CKAN Worker -    add new (ckan worker) container in the compose setup
+6. CKAN -           built from the ckan/ckan-base:2.9.5 base image (which is built from the ckan/ckan-docker-base repo)
+7. CKAN Worker -    add new (ckan worker) container in the compose setup
 
 Versions 2.9 and 2.10 (when it's out) only. Plan the repo layout for having multiple versions - OKFN could used as an example
 

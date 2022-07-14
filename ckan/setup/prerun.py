@@ -11,6 +11,7 @@ except ImportError:
 
 import time
 import re
+import json
 
 ckan_ini = os.environ.get("CKAN_INI", "/srv/app/ckan.ini")
 
@@ -72,7 +73,7 @@ def check_solr_connection(retry=None):
         sys.exit(1)
 
     url = os.environ.get("CKAN_SOLR_URL", "")
-    search_url = "{url}/select/?q=*&wt=json".format(url=url)
+    search_url = '{url}/schema/name?wt=json'.format(url=url)
 
     try:
         connection = urlopen(search_url)
@@ -82,7 +83,13 @@ def check_solr_connection(retry=None):
         time.sleep(10)
         check_solr_connection(retry=retry - 1)
     else:
-        eval(connection.read())
+        import re                                                                                                                                                      
+        conn_info = connection.read()                                                                                                                                  
+        schema_name = json.loads(conn_info)                                                                                                                            
+        if 'ckan' in schema_name['name']:                                                                                                                              
+            print('[prerun] Succesfully connected to solr and CKAN schema loaded')                                                                                     
+        else:                                                                                                                                                          
+            print('[prerun] Succesfully connected to solr, but CKAN schema not found')
 
 
 def init_db():

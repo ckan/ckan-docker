@@ -29,6 +29,7 @@ Go through all the new changes in the current repo and use those for the new rep
 - Check out Florian's repo https://github.com/dbca-wa/ckan/tree/dbca2022
 - Documentation to be re-done from scratch...anything that could be useful can be mentioned here eg: local storage for ckan.ini
 
+- Had to update the prerun.py script as it was failing on check_solr_connection
 
 ToDo (workarounds to fix)
 

@@ -14,9 +14,9 @@ services:
     build:
       context: nginx/
       dockerfile: Dockerfile
-    #depends_on:
-    #  ckan:
-    #    condition: service_healthy
+    depends_on:
+      ckan:
+        condition: service_healthy
     ports:
       - "0.0.0.0:81:80"
     

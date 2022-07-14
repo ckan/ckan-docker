@@ -28,3 +28,9 @@ Go through all the new changes in the current repo and use those for the new rep
 - Check out Florian's docs https://github.com/dbca-wa/ckan/blob/dbca2022/doc/maintaining/installing/install-from-docker-compose.rst
 - Check out Florian's repo https://github.com/dbca-wa/ckan/tree/dbca2022
 - Documentation to be re-done from scratch...anything that could be useful can be mentioned here eg: local storage for ckan.ini
+
+
+ToDo (workarounds to fix)
+
+1. nginx - what caching should I implement?
+2. DataPusher - needed to use a custom requirements.txt (see https://github.com/ckan/datapusher/pull/251)

@@ -52,6 +52,8 @@ services:
       context: datapusher/
       args:
        - DATAPUSHER_VERSION=${DATAPUSHER_VERSION}
+    env_file:
+      - .env
     ports:
       - "8800:8800"
     restart: unless-stopped

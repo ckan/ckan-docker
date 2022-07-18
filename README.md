@@ -15,20 +15,13 @@
 
 ## Overview
 
-This is a set of Docker images and configuration files to run a CKAN site.
+This is a set of configuration and setup files to run a CKAN site.
 
-| CKAN version | Docker tag production | Docker tag development | Notes |
-| --- | --- | --- | --- |
-| 2.7 | `openknowledge/ckan-base:2.7` | `openknowledge/ckan-dev:2.7` | |
-| 2.8 | `openknowledge/ckan-base:2.8` | `openknowledge/ckan-dev:2.8` | |
-| 2.9 | `openknowledge/ckan-base:2.9` | `openknowledge/ckan-dev:2.9` | If you need Python 2 images use the `2.9-py2` tags (not recommended) |
-| master | `openknowledge/ckan-base:master` | `openknowledge/ckan-dev:master` | The `master` images are updated daily so they might be slightly out of date |
+The CKAN images use are from the official CKAN [ckan-docker](https://github.com/ckan/ckan-docker) repo
 
+The non-CKAN images are as follows:
 
-It includes the following images, all based on [Alpine Linux](https://alpinelinux.org/):
-
-* CKAN: modified from keitaro/ckan (see [CKAN Images](#ckan-images)) for more details). File uploads are stored in a named volume.
-* DataPusher: modified from keitaro/datapusher
+* DataPusher: modified from the datapusher image build configuration from the [OKFN docker-ckan](https://github.com/okfn/docker-ckan) repo
 * PostgreSQL: Official PostgreSQL image. Database files are stored in a named volume.
 * Solr: CKAN's [pre-configured Solr image](https://github.com/ckan/ckan-solr). Index data is stored in a named volume.
 * Redis: standard Redis image

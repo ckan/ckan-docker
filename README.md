@@ -61,22 +61,9 @@ See [CKAN Images](#ckan-images) for more details of what happens when using deve
 
 You can use the paster template in much the same way as a source install, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
 
-    docker-compose -f docker-compose.dev.yml exec ckan-dev /bin/bash -c "paster --plugin=ckan create -t ckanext ckanext-myext -o /srv/app/src_extensions"
-
-From CKAN 2.9 onwards, the `paster` command used for common CKAN administration tasks has been replaced with the `ckan` command. You can create an extension as the previous version by executing the command inside the CKAN container and setting the mounted `src/` folder as output:
-
     docker-compose -f docker-compose.dev.yml exec ckan-dev /bin/bash -c "ckan generate extension --output-dir /srv/app/src_extensions"
 
 The new extension will be created in the `src/` folder. You might need to change the owner of its folder to have the appropiate permissions.
-
-
-### Running the debugger (pdb / ipdb)
-
-To run a container and be able to add a breakpoint with `pdb` or `ipdb`, run the `ckan-dev` container with the `--service-ports` option:
-
-    docker-compose -f docker-compose.dev.yml run --service-ports ckan-dev
-
-This will start a new container, displaying the standard output in your terminal. If you add a breakpoint in a source file in the `src` folder (`import pdb; pdb.set_trace()`) you will be able to inspect it in this terminal next time the code is executed.
 
 
 ## CKAN images
@@ -85,19 +72,19 @@ This will start a new container, displaying the standard output in your terminal
 
 The Docker images used to build your CKAN project are located in the `ckan/` folder. There are two Docker files:
 
-* `Dockerfile`: this is based on `openknowledge/ckan-base` (with the `Dockerfile` on the `/ckan-base/<version>` folder), an image with CKAN with all its dependencies, properly configured and running on [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) (production setup)
-* `Dockerfile.dev`: this is based on `openknowledge/ckan-dev` (with the `Dockerfile` on the `/ckan-dev/<version>` folder), wich extends `openknowledge/ckan-base` to include:
+* `Dockerfile`: this is based on `ckan/ckan-base:<version>`, a base image located in the DockerHub repository, that has CKAN installed along with all its dependencies, properly configured and running on [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) (production setup)
+* `Dockerfile.dev`:  this is based on `ckan/ckan-base:<version>-dev` also located located in the DockerHub repository, and extends `ckan/ckan-base:<version>` to include:
 
-  * Any extension cloned on the `src` folder will be installed in the CKAN container when booting up Docker Compose (`docker-compose up`). This includes installing any requirements listed in a `requirements.txt` (or `pip-requirements.txt`) file and running `python setup.py develop`.
+  * Any extension cloned on the `src` folder will be installed in the derived CKAN container when booting up Docker Compose (`docker-compose up`). This includes installing any requirements listed in a `requirements.txt` (or `pip-requirements.txt`) file and running `python setup.py develop`.
   * The CKAN image used will development requirements needed to run the tests .
-  * CKAN will be started running on the paster development server, with the `--reload` option to watch changes in the extension files.
+  * CKAN will be started running `ckan -c /srv/app/ckan.ini run`.
   * Make sure to add the local plugins to the `CKAN__PLUGINS` env var in the `.env` file.
 
 From these two base images you can build your own customized image tailored to your project, installing any extensions and extra requirements needed.
 
 ### Extending the base images
 
-To perform extra initialization steps you can add scripts to your custom images and copy them to the `/docker-entrypoint.d` folder (The folder should be created for you when you build the image). Any `*.sh` and `*.py` file in that folder will be executed just after the main initialization script ([`prerun.py`](https://github.com/okfn/docker-ckan/blob/master/ckan-base/setup/prerun.py)) is executed and just before the web server and supervisor processes are started.
+To perform extra initialization steps you can add scripts to your custom images and copy them to the `/docker-entrypoint.d` folder (The folder should be created for you when you build the image). Any `*.sh` and `*.py` file in that folder will be executed just after the main initialization script ([`prerun.py`](https://github.com/ckan/ckan-docker-base/blob/main/ckan-2.9/base/setup/prerun.py)) is executed and just before the web server and supervisor processes are started.
 
 For instance, consider the following custom image:
 
@@ -116,13 +103,13 @@ We want to install an extension like [ckanext-validation](https://github.com/fri
 #!/bin/bash
 
 # Create DB tables if not there
-paster --plugin=ckanext-validation validation init-db -c $CKAN_INI
+ckan -c $CKAN_INI validation init-db 
 ```
 
-And then in our `Dockerfile` we install the extension and copy the initialization scripts:
+And then in our `Dockerfile.dev` file we install the extension and copy the initialization scripts:
 
 ```Dockerfile
-FROM openknowledge/ckan-dev:2.9
+FROM ckan/ckan-base:2.9.5-dev
 
 RUN pip install -e git+https://github.com/frictionlessdata/ckanext-validation.git#egg=ckanext-validation && \
     pip install -r https://raw.githubusercontent.com/frictionlessdata/ckanext-validation/master/requirements.txt

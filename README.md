@@ -17,7 +17,7 @@
 
 This is a set of configuration and setup files to run a CKAN site.
 
-The CKAN images use are from the official CKAN [ckan-docker](https://github.com/ckan/ckan-docker) repo
+The CKAN images used are from the official CKAN [ckan-docker](https://github.com/ckan/ckan-docker) repo
 
 The non-CKAN images are as follows:
 

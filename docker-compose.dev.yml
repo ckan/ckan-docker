@@ -33,8 +33,8 @@ services:
       - ckan_storage:/var/lib/ckan
       - ./src:/srv/app/src_extensions
     restart: unless-stopped
-    #healthcheck:
-    #  test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
     
   datapusher:
     container_name: ${DATAPUSHER_CONTAINER_NAME}

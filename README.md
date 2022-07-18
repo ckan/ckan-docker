@@ -81,22 +81,7 @@ This will start a new container, displaying the standard output in your terminal
 
 ## CKAN images
 
-```
-    +-------------------------+                +----------+
-    |                         |                |          |
-    | openknowledge/ckan-base +---------------->   ckan   | (production)
-    |                         |                |          |
-    +-----------+-------------+                +----------+
-                |
-                |
-    +-----------v------------+                 +----------+
-    |                        |                 |          |
-    | openknowledge/ckan-dev +----------------->   ckan   | (development)
-    |                        |                 |          |
-    +------------------------+                 +----------+
-
-
-```
+![ckan images](https://user-images.githubusercontent.com/54408245/179505115-f92b7a66-e4c6-495c-8f33-8accdb51fce7.png)
 
 The Docker images used to build your CKAN project are located in the `ckan/` folder. There are two Docker files:
 

@@ -5,12 +5,10 @@
 * [Quick start](#quick-start)
 * [Development mode](#development-mode)
    * [Create an extension](#create-an-extension)
-   * [Running the debugger (pdb / ipdb)](#running-the-debugger-pdb--ipdb)
 * [CKAN images](#ckan-images)
    * [Extending the base images](#extending-the-base-images)
    * [Applying patches](#applying-patches)
 * [Known Issues](#known-issues)
-* [License](#license)
 
 
 ## Overview
@@ -32,7 +30,7 @@ The site is configured via env vars (the base CKAN image loads [ckanext-envvars]
 
 Copy the included `.env.example` and rename it to `.env` to modify it depending on your own needs.
 
-Using the default values on the `.env.example` file will get you a working CKAN instance. There is a sysadmin user created by default with the values defined in `CKAN_SYSADMIN_NAME` and `CKAN_SYSADMIN_PASSWORD`(`ckan_admin` and `test1234` by default). I shouldn't be telling you this but obviously don't run any public CKAN instance with the default settings.
+Using the default values on the `.env.example` file will get you a working CKAN instance. There is a sysadmin user created by default with the values defined in `CKAN_SYSADMIN_NAME` and `CKAN_SYSADMIN_PASSWORD`(`ckan_admin` and `test1234` by default). This should be obviously changed before running this setup as a public CKAN instance.
 
 To build the images:
 
@@ -59,11 +57,11 @@ See [CKAN Images](#ckan-images) for more details of what happens when using deve
 
 ### Create an extension
 
-You can use the paster template in much the same way as a source install, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
+You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
 
     docker-compose -f docker-compose.dev.yml exec ckan-dev /bin/bash -c "ckan generate extension --output-dir /srv/app/src_extensions"
 
-The new extension will be created in the `src/` folder. You might need to change the owner of its folder to have the appropiate permissions.
+The new extension files and directories will be created in the `src/` folder. You might need to change the owner of its folder to have the appropiate permissions.
 
 
 ## CKAN images
@@ -103,7 +101,7 @@ We want to install an extension like [ckanext-validation](https://github.com/fri
 #!/bin/bash
 
 # Create DB tables if not there
-ckan -c $CKAN_INI validation init-db 
+ckan -c /srv/app/ckan.ini validation init-db 
 ```
 
 And then in our `Dockerfile.dev` file we install the extension and copy the initialization scripts:
@@ -135,6 +133,7 @@ ckan
 │   │   ├── 03_or_filters.patch
 │   └── ckanext-harvest
 │       └── 01_resubmit_objects.patch
+├── setup
 ├── Dockerfile
 └── Dockerfile.dev
 

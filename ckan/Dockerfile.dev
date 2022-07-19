@@ -16,6 +16,7 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 # - Also make sure all extra configuration options are added to the CKAN config file (ckan.ini)
 #   This can be done by creating an overriding start_ckan_dev_development.sh file:
 #   (https://github.com/ckan/ckan-docker-base/blob/main/ckan-2.9/dev/setup/start_ckan_development.sh) ie: updating the 'ckan config-tool' lines
+#   For more on config-tool please see https://docs.ckan.org/en/latest/maintaining/cli.html#config-tool-tool-for-editing-options-in-a-ckan-config-file
 #   or using Crudini (https://github.com/pixelb/crudini) 
 #
 # For instance:

@@ -45,7 +45,8 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 # to get them mounted in this image at runtime
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
-# runtime mounted ones) 
+# runtime mounted ones)
+
 COPY patches ${APP_DIR}/patches
 
 RUN for d in $APP_DIR/patches/*; do \

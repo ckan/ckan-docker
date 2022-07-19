@@ -29,3 +29,4 @@ NB:  Had to update the prerun.py script as it was failing on check_solr_connecti
 3.  Use Multi-Stage images defined in the docker-compose.yml file...for security reasons really. 
     Also check out https://github.com/ckan/ckan/pull/4635 for Francesco's tests
 4.  CKAN Worker (maybe)
+5.  Implement SSL for the nginx container or include a howto in the docs

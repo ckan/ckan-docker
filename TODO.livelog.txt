@@ -25,7 +25,7 @@ NB:  Had to update the prerun.py script as it was failing on check_solr_connecti
 ### ToDo (remaining things to think about and/or 'to fix') ###
 
 1.  nginx - what caching should I implement?
-2.  DataPusher - needed to use a custom requirements.txt (see https://github.com/ckan/datapusher/pull/251)
+2.  DataPusher - needed to use a custom requirements.txt as the official didn't work (see https://github.com/ckan/datapusher/pull/251)
 3.  Use Multi-Stage images defined in Dockerfile - get the CKAN images down to bare-bones...for security reasons really  
     Also check out https://github.com/ckan/ckan/pull/4635 for Francesco's test stuff
 4.  CKAN Worker (maybe)

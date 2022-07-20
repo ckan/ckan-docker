@@ -141,13 +141,12 @@ ckan
 
 ## pdb
 
+Add these lines to the Dockerfile.dev
+
+
 Debug with pdb (example) - Interact with `docker attach $(docker container ls -qf name=ckan)`
 
 command: `python -m pdb /usr/lib/ckan/venv/bin/ckan --config /srv/app/ckan.ini run --host 0.0.0.0 --passthrough-errors`
-
-tty: true
-
-stdin_open: true
 
 ## Known Issues
 

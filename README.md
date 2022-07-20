@@ -142,7 +142,7 @@ ckan
 ## pdb
 
 Add these lines to the Dockerfile.dev
-
+![pdb](https://user-images.githubusercontent.com/54408245/179964232-9e98a451-5fe9-4842-ba9b-751bcc627730.png)
 
 Debug with pdb (example) - Interact with `docker attach $(docker container ls -qf name=ckan)`
 

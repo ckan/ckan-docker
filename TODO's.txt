@@ -24,9 +24,8 @@ NB:  Had to update the prerun.py script as it was failing on check_solr_connecti
 
 ### ToDo (remaining things to think about and/or 'to fix') ###
 
-1.  nginx - what caching should I implement?
-2.  DataPusher - needed to use a custom requirements.txt as the official didn't work (see https://github.com/ckan/datapusher/pull/251)
-3.  Use Multi-Stage images defined in Dockerfile - get the CKAN images down to bare-bones...for security reasons really
+1.  DataPusher - needed to use a custom requirements.txt as the official didn't work (see https://github.com/ckan/datapusher/pull/251)
+2.  Use Multi-Stage images defined in Dockerfile - get the CKAN images down to bare-bones...for security reasons really
     General Dockerfile flow of stages:
     - base: all prod dependencies, no code yet
     - dev, from base: all dev dependencies, no code yet (in dev, source code is bind-mounted anyway)
@@ -34,5 +33,5 @@ NB:  Had to update the prerun.py script as it was failing on check_solr_connecti
     - test/audit, from source: then COPY --from=dev for dev dependencies, then run tests. Optionally, audit and lint code (if you don't do it on git push already).
     - prod, from source: no change from source stage, but listed last so in case a stage isn't targeted, the builder will default to this stage 
     Also check out https://github.com/ckan/ckan/pull/4635 for Francesco's test stuff
-4.  CKAN Worker (maybe)
-5.  Implement SSL for the nginx container or include a howto in the docs
+3.  CKAN Worker (maybe)
+4.  Implement SSL for the nginx container or include a howto in the docs

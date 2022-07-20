@@ -141,7 +141,7 @@ ckan
 
 ## pdb
 
-Add these lines to the ckan-dev service in the docker-compose.dev.yml
+Add these lines to the `ckan-dev` service in the docker-compose.dev.yml file
 
 ![pdb](https://user-images.githubusercontent.com/54408245/179964232-9e98a451-5fe9-4842-ba9b-751bcc627730.png)
 

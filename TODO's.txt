@@ -15,7 +15,7 @@ All the other images should live in separate repos
 4. nginx -          use a late(ish) nginx image from DockerHub, enhanced in a Dockerfile)
 5. DataPusher -     built from the actual datapusher repo (https://github.com/ckan/datapusher)
 6. CKAN -           built from the ckan/ckan-base:2.9.5 base image (which is built from the ckan/ckan-docker-base repo). Include a .dev option
-7. CKAN Worker -    add new (ckan worker) container in the compose setup
+7. CKAN Worker -    add new (ckan worker) container in the compose setup...maybe have it commented out initially
 
 Versions 2.9 and 2.10 (when it's out) only. Plan the repo layout for having multiple versions - OKFN could used as an example
 
@@ -26,7 +26,13 @@ NB:  Had to update the prerun.py script as it was failing on check_solr_connecti
 
 1.  nginx - what caching should I implement?
 2.  DataPusher - needed to use a custom requirements.txt as the official didn't work (see https://github.com/ckan/datapusher/pull/251)
-3.  Use Multi-Stage images defined in Dockerfile - get the CKAN images down to bare-bones...for security reasons really  
+3.  Use Multi-Stage images defined in Dockerfile - get the CKAN images down to bare-bones...for security reasons really
+    General Dockerfile flow of stages:
+    - base: all prod dependencies, no code yet
+    - dev, from base: all dev dependencies, no code yet (in dev, source code is bind-mounted anyway)
+    - source, from base: add code
+    - test/audit, from source: then COPY --from=dev for dev dependencies, then run tests. Optionally, audit and lint code (if you don't do it on git push already).
+    - prod, from source: no change from source stage, but listed last so in case a stage isn't targeted, the builder will default to this stage 
     Also check out https://github.com/ckan/ckan/pull/4635 for Francesco's test stuff
 4.  CKAN Worker (maybe)
 5.  Implement SSL for the nginx container or include a howto in the docs

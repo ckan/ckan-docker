@@ -44,7 +44,7 @@ A list of what tests to run on the Docker containers to verify they have been bu
 - Check the user name and the uid/gid
 - Check the ports the container is listening on
 - Check an httpget on the URL
-- any command can be executed in the running container every x minutes
--
+- any command can be executed in the running container and can be configured t run every x minutes
+- check processes running as non root 
 -
 

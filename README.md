@@ -153,7 +153,7 @@ command: `python -m pdb /usr/lib/ckan/venv/bin/ckan --config /srv/app/ckan.ini r
 
 ## NGINX
 
-* The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 443. A "self-signed" SSL certificate is generated beforehand and the server certificate and key files are included. The NGINX server_name directive and the CN field in the SSL certificate have been both ser to 'localhost'. This should obviously not be used for production.
+* The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 443. A "self-signed" SSL certificate is generated beforehand and the server certificate and key files are included. The NGINX `server_name` directive and the `CN` field in the SSL certificate have been both set to 'localhost'. This should obviously not be used for production.
 
 ## Known Issues
 

@@ -35,3 +35,16 @@ NB:  Had to update the prerun.py script as it was failing on check_solr_connecti
     Also check out https://github.com/ckan/ckan/pull/4635 for Francesco's test stuff
 3.  CKAN Worker (maybe)
 4.  Implement SSL for the nginx container or include a howto in the docs
+
+
+### Container Canary notes
+
+A list of what tests to run on the Docker containers to verify they have been built correctly
+
+- Check the user name and the uid/gid
+- Check the ports the container is listening on
+- Check an httpget on the URL
+- any command can be executed in the running container and can be configured t run every x minutes
+- check processes running as non root 
+-
+

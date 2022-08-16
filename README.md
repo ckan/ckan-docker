@@ -9,6 +9,7 @@
    * [Extending the base images](#extending-the-base-images)
    * [Applying patches](#applying-patches)
 * [Debugging with pdb](#pdb)
+* [NGINX](#nginx)
 * [Known Issues](#known-issues)
 
 
@@ -24,6 +25,7 @@ The non-CKAN images are as follows:
 * PostgreSQL: Official PostgreSQL image. Database files are stored in a named volume.
 * Solr: CKAN's [pre-configured Solr image](https://github.com/ckan/ckan-solr). Index data is stored in a named volume.
 * Redis: standard Redis image
+* NGINX: latest stable nginx image
 
 The site is configured via env vars (the base CKAN image loads [ckanext-envvars](https://github.com/okfn/ckanext-envvars)), that you can set in the `.env` file.
 
@@ -148,6 +150,10 @@ Add these lines to the `ckan-dev` service in the docker-compose.dev.yml file
 Debug with pdb (example) - Interact with `docker attach $(docker container ls -qf name=ckan)`
 
 command: `python -m pdb /usr/lib/ckan/venv/bin/ckan --config /srv/app/ckan.ini run --host 0.0.0.0 --passthrough-errors`
+
+## NGINX
+
+* The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 443. A "self-signed" SSL certificate is generated beforehand and the server certificate and key files are included. The NGINX server_name directive and the CN field in the SSL certificate have been both ser to 'localhost'. This should obviously not be used for production.
 
 ## Known Issues
 

@@ -18,7 +18,8 @@ services:
       ckan:
         condition: service_healthy
     ports:
-      - "0.0.0.0:81:80"
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
     
   ckan:
     container_name: ${CKAN_CONTAINER_NAME}

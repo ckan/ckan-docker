@@ -1,4 +1,4 @@
-FROM ckan/ckan-base:2.9.5
+FROM ckan/ckan-base:2.9.7
 
 
 # Set up environment variables

@@ -1,5 +1,5 @@
-FROM ckan/ckan-base:2.9.7
-
+FROM ckan/ckan-base:master-4a43842
+#FROM ckan/ckan-base:2.9.7
 
 # Set up environment variables
 ENV APP_DIR=/srv/app

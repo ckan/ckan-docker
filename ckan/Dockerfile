@@ -1,4 +1,4 @@
-FROM ckan/ckan-base:master-4a43842
+FROM ckan/ckan-base:dev-v2.10
 #FROM ckan/ckan-base:2.9.7
 
 # Set up environment variables

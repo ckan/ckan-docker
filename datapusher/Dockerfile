@@ -34,14 +34,8 @@ RUN apk add --no-cache \
 RUN mkdir ${APP_DIR}/src && cd ${APP_DIR}/src && \
     git clone -b ${GIT_BRANCH} --depth=1 --single-branch ${GIT_URL} && \
     cd datapusher && \
-    python3 setup.py install
-
-## Need an custom version of requirements.txt  (with an old release of Werkzeug)
-
-COPY setup/requirements.txt ${APP_DIR}/src/
-    
-RUN  cd ${APP_DIR}/src && \ 
-     pip3 install --no-cache-dir -r requirements.txt
+    python3 setup.py install && \
+    pip3 install --no-cache-dir -r requirements.txt
 
 RUN apk del .build-deps && \
     cp ${APP_DIR}/src/datapusher/deployment/*.* ${APP_DIR} && \

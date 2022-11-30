@@ -1,7 +1,0 @@
-argparse
-ckanserviceprovider==1.0.0
-html5lib==1.0.1
-messytables==0.15.2
-certifi
-requests[security]==2.27.1
-Werkzeug~=2.0.2

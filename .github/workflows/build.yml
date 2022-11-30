@@ -28,7 +28,7 @@ jobs:
           context: ./nginx
           file: ./nginx/Dockerfile
           push: false
-          tags: kowhai/ckan-docker-nginx:testing-only
+          tags: kowhai/ckan-docker-nginx:test-build-only
 
     -  name: PostgreSQL build
        uses: docker/build-push-action@v2
@@ -36,7 +36,7 @@ jobs:
           context: ./postgresql
           file: ./postgresql/Dockerfile
           push: false
-          tags: kowhai/ckan-docker-postgresql:testing-only
+          tags: kowhai/ckan-docker-postgresql:test-build-only
 
     -  name: Solr build
        uses: docker/build-push-action@v2
@@ -44,15 +44,7 @@ jobs:
           context: ./solr
           file: ./solr/Dockerfile
           push: false
-          tags: kowhai/ckan-docker-solr:testing-only
-
-    -  name: DataPusher build
-       uses: docker/build-push-action@v2
-       with:
-          context: ./datapusher
-          file: ./datapusher/Dockerfile
-          push: false
-          tags: kowhai/ckan-docker-datapusher:testing-only
+          tags: kowhai/ckan-docker-solr:test-build-only
 
     -  name: CKAN build
        uses: docker/build-push-action@v2
@@ -60,5 +52,5 @@ jobs:
           context: ./ckan
           file: ./ckan/Dockerfile
           push: false
-          tags: kowhai/ckan-docker-ckan:testing-only
+          tags: kowhai/ckan-docker-ckan:test-build-only
       

@@ -73,7 +73,8 @@ The new extension files and directories will be created in the `src/` folder. Yo
 
 
 ## CKAN images
-![ckan images](https://user-images.githubusercontent.com/54408245/207043322-1f7eb16b-1006-4664-a87b-11320a3c94c8.png)
+![ckan images](https://user-images.githubusercontent.com/54408245/207079416-a01235af-2dea-4425-b6fd-f8c3687dd993.png)
+
 
 
 The Docker image config files used to build your CKAN project are located in the `ckan/` folder. There are two Docker files:

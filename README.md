@@ -21,17 +21,17 @@ The CKAN images used are from the official CKAN [ckan-docker](https://github.com
 
 The non-CKAN images are as follows:
 
-* DataPusher: modified from the datapusher image build configuration from the [OKFN docker-ckan](https://github.com/okfn/docker-ckan) repo
+* DataPusher: CKAN's [pre-configured DataPusher image](https://github.com/ckan/ckan-base/tree/main/datapusher).
 * PostgreSQL: Official PostgreSQL image. Database files are stored in a named volume.
 * Solr: CKAN's [pre-configured Solr image](https://github.com/ckan/ckan-solr). Index data is stored in a named volume.
 * Redis: standard Redis image
-* NGINX: latest stable nginx image
+* NGINX: latest stable nginx image that includes SSL and Non-SSL endpoints
 
-The site is configured via env vars (the base CKAN image loads [ckanext-envvars](https://github.com/okfn/ckanext-envvars)), that you can set in the `.env` file.
+The site is configured using environment variables that you can set in the `.env` file.
 
 ## Quick start
 
-Copy the included `.env.example` and rename it to `.env` to modify it depending on your own needs.
+Copy the included `.env.example` and rename it to `.env` - modify it depending on your own needs.
 
 Using the default values on the `.env.example` file will get you a working CKAN instance. There is a sysadmin user created by default with the values defined in `CKAN_SYSADMIN_NAME` and `CKAN_SYSADMIN_PASSWORD`(`ckan_admin` and `test1234` by default). This should be obviously changed before running this setup as a public CKAN instance.
 
@@ -42,6 +42,8 @@ To build the images:
 To start the containers:
 
 	docker-compose up
+
+At the end of the container start sequence there should be 6 containers running
 
 ## Development mode
 
@@ -153,10 +155,10 @@ command: `python -m pdb /usr/lib/ckan/venv/bin/ckan --config /srv/app/ckan.ini r
 
 ## NGINX
 
-* The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 443. A "self-signed" SSL certificate is generated beforehand and the server certificate and key files are included. The NGINX `server_name` directive and the `CN` field in the SSL certificate have been both set to 'localhost'. This should obviously not be used for production.
+* The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 8443 and an HTTP port (81). A "self-signed" SSL certificate is generated beforehand and the server certificate and key files are included. The NGINX `server_name` directive and the `CN` field in the SSL certificate have been both set to 'localhost'. This should obviously not be used for production.
 
 Creating the SSL cert and key files as follows:
-`openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=DE/ST=Berlin/L=Berlin/O=None/CN=localhost” -keyout ckan-local.key -out ckan-local.crt`
+`openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=DE/ST=Berlin/L=Berlin/O=None/CN=localhost" -keyout ckan-local.key -out ckan-local.crt`
 The `ckan-local.*` files will then need to be moved into the nginx/setup/ directory
 
 ## Known Issues

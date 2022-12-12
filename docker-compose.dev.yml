@@ -26,7 +26,8 @@ services:
       redis:
         condition: service_healthy
     ports:
-      - "0.0.0.0:${CKAN_PORT}:5000"
+      - "0.0.0.0:${CKAN_PORT_HOST}:${CKAN_PORT}"
+
     volumes:
       - ckan_config:/etc/ckan
       - ckan_home:/usr/lib/ckan
@@ -38,12 +39,7 @@ services:
     
   datapusher:
     container_name: ${DATAPUSHER_CONTAINER_NAME}
-    build:
-      context: datapusher/
-      args:
-       - DATAPUSHER_VERSION=${DATAPUSHER_VERSION}
-    ports:
-      - "8800:8800"
+    image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]

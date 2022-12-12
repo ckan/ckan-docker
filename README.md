@@ -89,7 +89,7 @@ The Docker image config files used to build your CKAN project are located in the
 
 ### Extending the base images
 
-You can modify the docker files to build your own customized image tailored to your project, installing any extensions and extra requirements needed. Here is where you would update to build a different CKAN base image ie: CKAN 2.9.7
+You can modify the docker files to build your own customized image tailored to your project, installing any extensions and extra requirements needed. Here is where you would update to use a different CKAN base image ie: CKAN 2.9.7
 
 To perform extra initialization steps you can add scripts to your custom images and copy them to the `/docker-entrypoint.d` folder (The folder should be created for you when you build the image). Any `*.sh` and `*.py` file in that folder will be executed just after the main initialization script ([`prerun.py`](https://github.com/ckan/ckan-docker-base/blob/main/ckan-2.9/base/setup/prerun.py)) is executed and just before the web server and supervisor processes are started.
 

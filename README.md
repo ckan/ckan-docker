@@ -45,6 +45,9 @@ To start the containers:
 
 At the end of the container start sequence there should be 6 containers running
 
+![Screenshot 2022-12-12 at 10 36 21 am](https://user-images.githubusercontent.com/54408245/207012236-f9571baa-4d99-4ffe-bd93-30b11c4829e0.png)
+
+
 ## Development mode
 
 To develop local extensions use the `docker-compose.dev.yml` file:

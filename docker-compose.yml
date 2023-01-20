@@ -1,8 +1,6 @@
 version: "3"
 
 volumes:
-  ckan_config:
-  ckan_home:
   ckan_storage:
   pg_data:
   solr_data:
@@ -39,10 +37,7 @@ services:
         condition: service_healthy
     ports:
       - "0.0.0.0:${CKAN_PORT_HOST}:${CKAN_PORT}" 
-
     volumes:
-      - ckan_config:/etc/ckan
-      - ckan_home:/usr/lib/ckan
       - ckan_storage:/var/lib/ckan
     restart: unless-stopped
     healthcheck:
@@ -75,6 +70,8 @@ services:
   solr:
     container_name: ${SOLR_CONTAINER_NAME}
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
+    volumes:
+      - solr_data:/var/solr
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/"]

@@ -2,8 +2,8 @@
 
 
 * [Overview](#overview)
-* [docker compose vs docker-compose](#docker-compose-vs-docker-compose)
 * [Installing Docker](#installing-docker)
+* [docker compose vs docker-compose](#docker-compose-vs-docker-compose)
 * [Install CKAN plus dependencies](#install-ckan-plus-dependencies)
 * [Development mode](#development-mode)
    * [Create an extension](#create-an-extension)
@@ -33,18 +33,18 @@ The non-CKAN images are as follows:
 
 The site is configured using environment variables that you can set in the `.env` file.
 
-## docker compose vs docker-compose
-
-All Docker Compose commands in this README will use the V2 version of Compose ie: `docker compose`. The older version (V1) 
-used the `docker-compose` command. Please see [Docker Compose](https://docs.docker.com/compose/compose-v2/) for
-more information.
-
 ## Installing Docker
 
 Install Docker by following the following instructions: [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 
 To verify a successful Docker installation, run `docker run hello-world` and `docker version`. These commands should output 
 versions for client and server.
+
+## docker compose vs docker-compose
+
+All Docker Compose commands in this README will use the V2 version of Compose ie: `docker compose`. The older version (V1) 
+used the `docker-compose` command. Please see [Docker Compose](https://docs.docker.com/compose/compose-v2/) for
+more information.
 
 ## Install CKAN plus dependencies
 

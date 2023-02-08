@@ -14,7 +14,6 @@
 * [Datastore and Datapusher](#Datastore-and-datapusher)
 * [NGINX](#nginx)
 * [The ckanext-envvars extension](#envvars)
-* [Known Issues](#known-issues)
 
 
 ## Overview
@@ -48,7 +47,7 @@ more information.
 
 ## Install CKAN plus dependencies
 
-Copy the included `.env.example` and rename it to `.env` - modify it depending on your own needs.
+Copy the included `.env.example` and rename it to `.env`. Modify it depending on your own needs.
 
 Using the default values on the `.env.example` file will get you a working CKAN instance. There is a sysadmin user created by default with the values defined in `CKAN_SYSADMIN_NAME` and `CKAN_SYSADMIN_PASSWORD`(`ckan_admin` and `test1234` by default). This should be obviously changed before running this setup as a public CKAN instance.
 
@@ -59,6 +58,9 @@ To build the images:
 To start the containers:
 
 	docker compose up
+
+This will start up the containers in the current window. By default the containers will log direct to this window with each container
+using a different. You could also use the -d "detach mode" option if you wished to use the current window for something else ie: `docker compose up -d`
 
 At the end of the container start sequence there should be 6 containers running
 
@@ -211,7 +213,3 @@ For example:
 These parameters can be added to the `.env` file 
 
 For more information please see [ckanext-envvars](https://github.com/okfn/ckanext-envvars)
-
-## Known Issues
-
-Running the tests: Running the tests for CKAN or an extension inside the container will delete your current database. We need to patch CKAN core in our image to work around that.

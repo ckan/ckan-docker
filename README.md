@@ -3,8 +3,8 @@
 
 * [Overview](#overview)
 * [docker compose vs docker-compose](#docker-compose-vs-docker-compose)
-* [Quick start](#quick-start)
-* [The ckanext-envvars extension](#envvars)
+* [Installing Docker](#installing-docker)
+* [Install CKAN plus dependencies](#install-ckan-plus-dependencies)
 * [Development mode](#development-mode)
    * [Create an extension](#create-an-extension)
 * [CKAN images](#ckan-images)
@@ -13,6 +13,7 @@
 * [Debugging with pdb](#pdb)
 * [Datastore and Datapusher](#Datastore-and-datapusher)
 * [NGINX](#nginx)
+* [The ckanext-envvars extension](#envvars)
 * [Known Issues](#known-issues)
 
 
@@ -38,7 +39,14 @@ All Docker Compose commands in this README will use the V2 version of Compose ie
 used the `docker-compose` command. Please see [Docker Compose](https://docs.docker.com/compose/compose-v2/) for
 more information.
 
-## Quick start
+## Installing Docker
+
+Install Docker by following the following instructions: [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+
+To verify a successful Docker installation, run `docker run hello-world` and `docker version`. These commands should output 
+versions for client and server.
+
+## Install CKAN plus dependencies
 
 Copy the included `.env.example` and rename it to `.env` - modify it depending on your own needs.
 
@@ -56,25 +64,8 @@ At the end of the container start sequence there should be 6 containers running
 
 ![Screenshot 2022-12-12 at 10 36 21 am](https://user-images.githubusercontent.com/54408245/207012236-f9571baa-4d99-4ffe-bd93-30b11c4829e0.png)
 
-## envvars
+After this step, CKAN should be running at `CKAN_SITE_URL`.
 
-The ckanext-envvars extension is used in the CKAN Docker base repo to build the base images.
-This extension checks for environmental variables conforming to an expected format and updates the corresponding CKAN config settings with its value.
-
-For the extension to correctly identify which env var keys map to the format used for the config object, env var keys should be formatted in the following way:
-
-  All uppercase
-  Replace periods ('.') with two underscores ('__')
-  Keys must begin with 'CKAN' or 'CKANEXT'
-
-For example:
-
-  CKAN__PLUGINS="envvars image_view text_view recline_view datastore datapusher"
-  CKAN__DATAPUSHER__CALLBACK_URL_BASE=http://ckan:5000
-
-These parameters can be added to the `.env` file 
-
-For more information please see [ckanext-envvars](https://github.com/okfn/ckanext-envvars)
 
 ## Development mode
 
@@ -195,12 +186,32 @@ running the latest version of Datapusher.
 
 ## NGINX
 
-* The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 8443 and an HTTP port (81). A "self-signed" SSL certificate is generated beforehand and the server certificate and key files are included. The NGINX `server_name` directive and the `CN` field in the SSL certificate have been both set to 'localhost'. This should obviously not be used for production.
+The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 8443 and an HTTP port (81). A "self-signed" SSL certificate is generated beforehand and the server certificate and key files are included. The NGINX `server_name` directive and the `CN` field in the SSL certificate have been both set to 'localhost'. This should obviously not be used for production.
 
 Creating the SSL cert and key files as follows:
 `openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=DE/ST=Berlin/L=Berlin/O=None/CN=localhost" -keyout ckan-local.key -out ckan-local.crt`
 The `ckan-local.*` files will then need to be moved into the nginx/setup/ directory
 
+## envvars
+
+The ckanext-envvars extension is used in the CKAN Docker base repo to build the base images.
+This extension checks for environmental variables conforming to an expected format and updates the corresponding CKAN config settings with its value.
+
+For the extension to correctly identify which env var keys map to the format used for the config object, env var keys should be formatted in the following way:
+
+  All uppercase
+  Replace periods ('.') with two underscores ('__')
+  Keys must begin with 'CKAN' or 'CKANEXT'
+
+For example:
+
+  * `CKAN__PLUGINS="envvars image_view text_view recline_view datastore datapusher"`
+  * `CKAN__DATAPUSHER__CALLBACK_URL_BASE=http://ckan:5000`
+
+These parameters can be added to the `.env` file 
+
+For more information please see [ckanext-envvars](https://github.com/okfn/ckanext-envvars)
+
 ## Known Issues
 
-* Running the tests: Running the tests for CKAN or an extension inside the container will delete your current database. We need to patch CKAN core in our image to work around that.
+Running the tests: Running the tests for CKAN or an extension inside the container will delete your current database. We need to patch CKAN core in our image to work around that.

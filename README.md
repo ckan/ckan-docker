@@ -60,7 +60,8 @@ To start the containers:
 	docker compose up
 
 This will start up the containers in the current window. By default the containers will log direct to this window with each container
-using a different. You could also use the -d "detach mode" option if you wished to use the current window for something else ie: `docker compose up -d`
+using a different colour. You could also use the -d "detach mode" option ie: `docker compose up -d` if you wished to use the current 
+window for something else.
 
 At the end of the container start sequence there should be 6 containers running
 

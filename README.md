@@ -96,7 +96,7 @@ See [CKAN Images](#ckan-images) for more details of what happens when using deve
 
 You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
 
-    docker compose -f docker-compose.dev.yml exec ckan-dev /bin/bash -c "ckan generate extension --output-dir /srv/app/src"
+    docker compose -f docker-compose.dev.yml exec ckan-dev /bin/sh -c "ckan generate extension --output-dir /srv/app/src"
     
 ![Screenshot 2023-02-22 at 1 17 00 pm](https://user-images.githubusercontent.com/54408245/220617547-59705c09-2a8e-4ef8-ac42-eb645c2a1349.png)
 

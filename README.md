@@ -45,7 +45,7 @@ All Docker Compose commands in this README will use the V2 version of Compose ie
 used the `docker-compose` command. Please see [Docker Compose](https://docs.docker.com/compose/compose-v2/) for
 more information.
 
-## Install CKAN plus dependencies
+## Install (build and run) CKAN plus dependencies
 
 Copy the included `.env.example` and rename it to `.env`. Modify it depending on your own needs.
 

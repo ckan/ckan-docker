@@ -16,7 +16,7 @@
 * [The ckanext-envvars extension](#envvars)
 
 
-## Overview
+## 1.  Overview
 
 This is a set of configuration and setup files to run a CKAN site.
 
@@ -32,20 +32,24 @@ The non-CKAN images are as follows:
 
 The site is configured using environment variables that you can set in the `.env` file.
 
-## Installing Docker
+## 2.  Installing Docker
 
 Install Docker by following the following instructions: [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 
 To verify a successful Docker installation, run `docker run hello-world` and `docker version`. These commands should output 
 versions for client and server.
 
-## docker compose vs docker-compose
+## 3.  docker compose *vs* docker-compose
 
 All Docker Compose commands in this README will use the V2 version of Compose ie: `docker compose`. The older version (V1) 
 used the `docker-compose` command. Please see [Docker Compose](https://docs.docker.com/compose/compose-v2/) for
 more information.
 
-## Install (build and run) CKAN plus dependencies
+## 4.  Install (build and run) CKAN plus dependencies
+
+#### Base mode
+
+Use this if you are a maintainer and will not be making code changes to CKAN or to CKAN extensions
 
 Copy the included `.env.example` and rename it to `.env`. Modify it depending on your own needs.
 
@@ -70,7 +74,9 @@ At the end of the container start sequence there should be 6 containers running
 After this step, CKAN should be running at `CKAN_SITE_URL`.
 
 
-## Development mode
+#### Development mode
+
+Use this mode if you are making code changes to CKAN and either creating new extensions or making code changes to existing extensions. This mode also uses the `.env` file for config options.
 
 To develop local extensions use the `docker-compose.dev.yml` file:
 
@@ -85,7 +91,8 @@ To start the containers:
 See [CKAN Images](#ckan-images) for more details of what happens when using development mode.
 
 
-### Create an extension
+
+##### Create an extension
 
 You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
 
@@ -94,7 +101,7 @@ You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tuto
 The new extension files and directories will be created in the `src/` folder. You might need to change the owner of its folder to have the appropiate permissions.
 
 
-## CKAN images
+## 5. CKAN images
 ![ckan images](https://user-images.githubusercontent.com/54408245/207079416-a01235af-2dea-4425-b6fd-f8c3687dd993.png)
 
 
@@ -109,7 +116,7 @@ The Docker image config files used to build your CKAN project are located in the
   * Make sure to add the local plugins to the `CKAN__PLUGINS` env var in the `.env` file.
 
 
-### Extending the base images
+## 6. Extending the base images
 
 You can modify the docker files to build your own customized image tailored to your project, installing any extensions and extra requirements needed. For example here is where you would update to use a different CKAN base image ie: `ckan/ckan-base:<new version>`
 
@@ -148,7 +155,7 @@ COPY docker-entrypoint.d/* /docker-entrypoint.d/
 
 NB: There are a number of extension examples commented out in the Dockerfile.dev file
 
-### Applying patches
+## 7. Applying patches
 
 When building your project specific CKAN images (the ones defined in the `ckan/` folder), you can apply patches 
 to CKAN core or any of the built extensions. To do so create a folder inside `ckan/patches` with the name of the
@@ -172,7 +179,7 @@ ckan
 
 ```
 
-## pdb
+## 8. pdb
 
 Add these lines to the `ckan-dev` service in the docker-compose.dev.yml file
 
@@ -182,12 +189,12 @@ Debug with pdb (example) - Interact with `docker attach $(docker container ls -q
 
 command: `python -m pdb /usr/lib/ckan/venv/bin/ckan --config /srv/app/ckan.ini run --host 0.0.0.0 --passthrough-errors`
 
-## Datastore and datapusher
+## 9. Datastore and datapusher
 
 The Datastore database and user is created as part of the entrypoint scripts for the db container. There is also a Datapusher container 
 running the latest version of Datapusher.
 
-## NGINX
+## 10. NGINX
 
 The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 8443 and an HTTP port (81). A "self-signed" SSL certificate is generated beforehand and the server certificate and key files are included. The NGINX `server_name` directive and the `CN` field in the SSL certificate have been both set to 'localhost'. This should obviously not be used for production.
 
@@ -195,7 +202,7 @@ Creating the SSL cert and key files as follows:
 `openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=DE/ST=Berlin/L=Berlin/O=None/CN=localhost" -keyout ckan-local.key -out ckan-local.crt`
 The `ckan-local.*` files will then need to be moved into the nginx/setup/ directory
 
-## envvars
+## 11. envvars
 
 The ckanext-envvars extension is used in the CKAN Docker base repo to build the base images.
 This extension checks for environmental variables conforming to an expected format and updates the corresponding CKAN config settings with its value.

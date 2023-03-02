@@ -27,15 +27,30 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 #    pip3 install -U requests[security]
 
 ### Harvester ###
-#RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@master#egg=ckanext-harvest' && \
-#    pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@master#egg=ckanext-harvest' && \
+    pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
 # will also require gather_consumer and fetch_consumer processes running (please see https://github.com/ckan/ckanext-harvest)
+
+
+### resourcedictionary ###
+RUN pip3 install -e 'git+https://github.com/keitaroinc/ckanext-resourcedictionary.git#egg=ckanext-resourcedictionary' && \
+    pip3 install -r ${APP_DIR}/src/ckanext-resourcedictionary/requirements.txt
+
+### Geoview ###
+ RUN pip3 install -e git+https://github.com/ckan/ckanext-geoview.git#egg=ckanext-geoview 
+
+### Spatial ###
+# RUN pip3 install -e git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext-spatial && \
+#     pip3 install -r ${APP_DIR}/src/ckanext-spatial/pip-requirements.txt
 
 ### Scheming ###
 #RUN  pip3 install -e 'git+https://github.com/ckan/ckanext-scheming.git@master#egg=ckanext-scheming'
 
 ### Pages ###
-#RUN  pip3 install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
+RUN  pip3 install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
+
+### PDFView ###
+RUN  pip3 install -e git+https://github.com/ckan/ckanext-pdfview.git#egg=ckanext-pdfview
 
 ### DCAT ###
 #RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v0.0.6#egg=ckanext-dcat && \

@@ -1,4 +1,4 @@
-FROM ckan/ckan-base:ckan-2.10.0-dev
+FROM ckan/ckan-base:ckan-2.10.0
 
 
 # Set up environment variables
@@ -27,8 +27,8 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 #    pip3 install -U requests[security]
 
 ### Harvester ###
-#RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@master#egg=ckanext-harvest' && \
-#    pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@master#egg=ckanext-harvest' && \
+    pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
 # will also require gather_consumer and fetch_consumer processes running (please see https://github.com/ckan/ckanext-harvest)
 
 ### Scheming ###

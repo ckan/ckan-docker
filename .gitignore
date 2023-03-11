@@ -1,6 +1,7 @@
 # generic
 .DS_Store
 .vagrant
+.idea
 
 # code & config
 _service-provider/*

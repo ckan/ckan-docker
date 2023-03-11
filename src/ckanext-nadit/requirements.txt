@@ -1,0 +1,2 @@
+setuptools~=67.6.0
+ckantoolkit~=0.0.7

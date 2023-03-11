@@ -16,6 +16,6 @@ setup(
     entry_points='''
         [ckan.plugins]
         nadit=ckanext.nadit.plugin:NaditPlugin
-        nadit_ckan_harvester=ckanext.nadit.harvesters:NaditCKANHarvester
+        nadit_ckan_harvester=ckanext.nadit.harvesters.ckan_nadit_harvester:NaditCKANHarvester
     '''
 )

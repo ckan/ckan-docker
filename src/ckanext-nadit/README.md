@@ -7,33 +7,16 @@
 
 ## Requirements
 
-**TODO:** For example, you might want to mention here which versions of CKAN this
-extension works with.
-
-If your extension works across different versions you can add the following table:
-
 Compatibility with core CKAN versions:
 
-| CKAN version    | Compatible?   |
-| --------------- | ------------- |
-| 2.6 and earlier | not tested    |
-| 2.7             | not tested    |
-| 2.8             | not tested    |
-| 2.9             | not tested    |
-
-Suggested values:
-
-* "yes"
-* "not tested" - I can't think of a reason why it wouldn't work
-* "not yet" - there is an intention to get it working
-* "no"
+| CKAN version    | Compatible? |
+|-----------------|-------------|
+| 2.8 and earlier | not tested  |
+| 2.9             | yes         |
+| 2.10            | yes         |
 
 
 ## Installation
-
-**TODO:** Add any additional install steps to the list below.
-   For example installing any non-Python dependencies or adding any required
-   config settings.
 
 To install ckanext-nadit:
 
@@ -56,6 +39,10 @@ To install ckanext-nadit:
 
      sudo service apache2 reload
 
+5. If harvesters are not running
+
+     ckan --config=/srv/app/ckan.ini harvester gather-consumer &
+     ckan --config=/srv/app/ckan.ini harvester fetch-consumer
 
 ## Config settings
 
@@ -67,6 +54,12 @@ None at present
 	# (optional, default: 24).
 	ckanext.nadit.some_setting = some_default_value
 
+
+## Developer references
+
+- https://docs.ckan.org/en/2.10/extensions/index.html
+- https://github.com/ckan/ckanext-harvest#the-ckan-harvester
+- https://www.polaz.net/how-to-develop-a-plugin-for-ckan-part-1/
 
 ## Developer installation
 

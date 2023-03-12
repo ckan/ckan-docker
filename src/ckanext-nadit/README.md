@@ -4,6 +4,7 @@
 
 **TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
 
+`tail -f /var/log/*.log`
 
 ## Requirements
 

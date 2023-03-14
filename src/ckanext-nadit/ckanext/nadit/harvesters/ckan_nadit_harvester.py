@@ -5,6 +5,15 @@ from .util import get_single_lang
 import logging
 log = logging.getLogger(__name__)
 
+MULTI_FIELDS = [
+    'display_name', 'title', 'keywords', 'description'
+]
+MULTI_FIELDS_RESOURCE = [
+    'name', 'title', 'keywords', 'description'
+]
+MULTI_FIELDS_ORG = [
+    'display_name', 'title', 'description'
+]
 
 class NaditCKANHarvester(CKANHarvester):
     def info(self):
@@ -30,12 +39,24 @@ class NaditCKANHarvester(CKANHarvester):
         # Indicate that we have modified this dataset
         package_dict['remote_harvest'] = True
 
-        # Obtain title based on language priority
-        log.debug("--modify display name and title--")
-        package_dict['title'] = get_single_lang(package_dict['title'])
-        package_dict['display_name'] = get_single_lang(package_dict['display_name'])
+        # Convert to single strings based on language priority
+        log.debug("--modify multilingual fields--")
+        for fld in MULTI_FIELDS:
+            if fld not in package_dict:
+                continue
+            package_dict[fld] = get_single_lang(package_dict[fld])
+        for res in package_dict['resources']:
+            for fld in MULTI_FIELDS_RESOURCE:
+                if fld not in res:
+                    continue
+                res[fld] = get_single_lang(res[fld])
+        for org in package_dict['organization']:
+            for fld in MULTI_FIELDS_ORG:
+                if fld not in org:
+                    continue
+                org[fld] = get_single_lang(org[fld])
 
-        # Add tags
+        # Remove tags, as they will be added manually
         log.debug("--clear tags--")
         package_dict['tags'] = []
 

@@ -15,6 +15,6 @@ def get_single_lang(p_dict: dict, p_order: list = ['en', 'de', 'fr', 'it']):
     :return:
     """
     for lang in p_order:
-        if lang in p_dict:
+        if lang in p_dict and p_dict[lang]:
             return p_dict[lang]
     return str(p_dict)

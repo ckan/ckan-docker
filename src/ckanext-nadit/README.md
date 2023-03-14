@@ -2,9 +2,7 @@
 
 # ckanext-nadit
 
-**TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
-
-`tail -f /var/log/*.log`
+Custom CKAN harvester for the NADIT project.
 
 ## Requirements
 
@@ -16,10 +14,23 @@ Compatibility with core CKAN versions:
 | 2.9             | yes         |
 | 2.10            | yes         |
 
+## Installation with Docker
 
-## Installation
+We are developing this plugin using the convenient 
+[ckan-docker](https://github.com/datalets/ckan-docker) 
+build system.
 
-To install ckanext-nadit:
+Just clone the folder in the `src` folder at the root.
+
+To see status reports: `tail -f /var/log/*.log`
+
+To refresh the plugin in a running server (from `/srv/app` folder): 
+
+`./start_ckan_development.sh`
+
+## Installation as source
+
+To install ckanext-nadit in your local Python environment:
 
 1. Activate your CKAN virtual environment, for example:
 

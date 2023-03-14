@@ -24,9 +24,7 @@ Just clone the folder in the `src` folder at the root.
 
 To see status reports: `tail -f /var/log/*.log`
 
-To refresh the plugin in a running server (from `/srv/app` folder): 
-
-`./start_ckan_development.sh`
+To refresh a running server: `./start_ckan_development.sh`
 
 ## Installation as source
 

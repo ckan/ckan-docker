@@ -32,9 +32,7 @@ class NaditCKANHarvester(CKANHarvester):
         :param harvest_object: Raw data from harvester
         :return: Modified package_dict
         """
-        log.debug("---modify_package_dict---")
-        log.debug("package_dict")
-        log.debug(package_dict)
+        log.debug("---modify package: [%s]---" % package_dict['id'])
 
         # Indicate that we have modified this dataset
         package_dict['remote_harvest'] = True
@@ -45,16 +43,19 @@ class NaditCKANHarvester(CKANHarvester):
             if fld not in package_dict:
                 continue
             package_dict[fld] = get_single_lang(package_dict[fld])
+        log.debug("--modify multilingual resources--")
         for res in package_dict['resources']:
+            resource = package_dict['resources'][res]
             for fld in MULTI_FIELDS_RESOURCE:
-                if fld not in res:
+                if fld not in resource:
                     continue
-                res[fld] = get_single_lang(res[fld])
-        for org in package_dict['organization']:
-            for fld in MULTI_FIELDS_ORG:
-                if fld not in org:
-                    continue
-                org[fld] = get_single_lang(org[fld])
+                resource[fld] = get_single_lang(resource[fld])
+        log.debug("--modify multilingual organization--")
+        org = package_dict['organization']
+        for fld in MULTI_FIELDS_ORG:
+            if fld not in org:
+                continue
+            org[fld] = get_single_lang(org[fld])
 
         # Remove tags, as they will be added manually
         log.debug("--clear tags--")

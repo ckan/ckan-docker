@@ -6,10 +6,10 @@ import logging
 log = logging.getLogger(__name__)
 
 MULTI_FIELDS = [
-    'display_name', 'title', 'keywords', 'description'
+    'display_name', 'title', 'description'
 ]
 MULTI_FIELDS_RESOURCE = [
-    'name', 'title', 'keywords', 'description'
+    'name', 'title', 'display_name', 'description'
 ]
 MULTI_FIELDS_ORG = [
     'display_name', 'title', 'description'
@@ -43,19 +43,20 @@ class NaditCKANHarvester(CKANHarvester):
             if fld not in package_dict:
                 continue
             package_dict[fld] = get_single_lang(package_dict[fld])
-        log.debug("--modify multilingual resources--")
-        for res in package_dict['resources']:
-            resource = package_dict['resources'][res]
-            for fld in MULTI_FIELDS_RESOURCE:
-                if fld not in resource:
-                    continue
-                resource[fld] = get_single_lang(resource[fld])
+
         log.debug("--modify multilingual organization--")
         org = package_dict['organization']
         for fld in MULTI_FIELDS_ORG:
             if fld not in org:
                 continue
             org[fld] = get_single_lang(org[fld])
+
+        log.debug("--modify multilingual resources--")
+        for res in package_dict['resources']:
+            for fld in MULTI_FIELDS_RESOURCE:
+                if fld not in res:
+                    continue
+                res[fld] = get_single_lang(res[fld])
 
         # Remove tags, as they will be added manually
         log.debug("--clear tags--")

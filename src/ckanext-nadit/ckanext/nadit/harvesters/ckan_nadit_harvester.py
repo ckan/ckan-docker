@@ -3,6 +3,7 @@ from ckanext.harvest.harvesters.ckanharvester import CKANHarvester
 from .util import get_single_lang
 
 import logging
+
 log = logging.getLogger(__name__)
 
 MULTI_FIELDS = [
@@ -14,6 +15,7 @@ MULTI_FIELDS_RESOURCE = [
 MULTI_FIELDS_ORG = [
     'display_name', 'title', 'description'
 ]
+
 
 class NaditCKANHarvester(CKANHarvester):
     def info(self):
@@ -43,6 +45,10 @@ class NaditCKANHarvester(CKANHarvester):
             if fld not in package_dict:
                 continue
             package_dict[fld] = get_single_lang(package_dict[fld])
+
+        # Rename field for CKAN standard format
+        if 'description' in package_dict:
+            package_dict['notes'] = package_dict.pop('description')
 
         log.debug("--modify multilingual organization--")
         org = package_dict['organization']

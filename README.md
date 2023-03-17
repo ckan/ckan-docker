@@ -1,6 +1,6 @@
 <h1 align="center">CKAN Docker Compose - Open Data & GIS</h1>
 <p align="center">
-<a href="https://github.com/OpenDataGIS/ckan"><img src="https://img.shields.io/badge/Docker%20CKAN-2.10.0-brightgreen" alt="CKAN Versions"></a><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+<a href="https://github.com/OpenDataGIS/ckan"><img src="https://img.shields.io/badge/Docker%20CKAN-2.10.0-brightgreen" alt="CKAN Versions"></a><a href="https://opensource.org/licenses/MIT">
 
 
 <p align="center">

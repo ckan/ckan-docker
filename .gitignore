@@ -7,3 +7,4 @@ _service-provider/*
 _solr/schema.xml
 _src/*
 local/*
+.vscode

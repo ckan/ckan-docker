@@ -1,0 +1,14 @@
+--- /ckan/templates/package/read_base.html
++++ /ckan/templates/package/read_base.html
+@@ -23,6 +23,12 @@
+ {% endblock %}
+ 
+ {% block secondary_content %}
++  {{ super() }}
++
++  {% set dataset_extent = pkg.spatial %}
++  {% if dataset_extent %}
++    {% snippet "spatial/snippets/dataset_map_sidebar.html", extent=dataset_extent %}
++  {% endif %}
+ 
+   {% block secondary_help_content %}{% endblock %}

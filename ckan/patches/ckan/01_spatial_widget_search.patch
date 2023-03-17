@@ -1,0 +1,10 @@
+--- /ckan/templates/package/search.html
++++ /ckan/templates/package/search.html
+@@ -70,6 +70,7 @@
+ 
+ 
+ {% block secondary_content %}
++{% snippet "spatial/snippets/spatial_query.html", default_extent="[[26.78,-19.21], [44.08, 5.66]]" %}
+   <div class="filters">
+     <div>
+       {% for facet in facet_titles %}

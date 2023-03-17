@@ -96,26 +96,49 @@ docker network prune # Clear unused networks
 More info about Docker Compose commands at [docker compose reference](https://docs.docker.com/compose/reference/).
 
 ```bash
-# Starts existing containers for a service.
-docker compose start
+# Basic. All containers or specific container: <container>
+## Starts existing containers for a service.
+docker compose start <container>
 
-# Stops running containers without removing them.
-docker compose stop
+## Restarts existing containers/container for a service.
+docker compose restart <container>
 
-# Pauses running containers of a service.
-docker compose pause
+## Stops running containers without removing them.
+docker compose stop <container>
 
-# Unpauses paused containers of a service.
-docker compose unpause
+## Pauses running containers of a service.
+docker compose pause <container>
 
-# Lists containers.
+## Unpauses paused containers of a service.
+docker compose unpause <container>
+
+# Display the logs of a container. Is it possible to retrieve only the last n seconds or other
+docker logs [--since 60s]  <container> -f 
+
+## Lists containers.
 docker compose ps
 
-# Builds, (re)creates, starts, and attaches to containers for a service.
-docker compose up
+## Remove all docker compose project
+docker compose rm <container>
 
+
+# Build.
+## Builds, (re)creates, starts, and attaches to containers for a service.
+docker compose [-f <docker compose-file>] up
+
+## Build & up all the containers.
+docker compose [-f <docker compose-file>] up -d --build
+
+## To avoid using a cache of the previous build while creating a new image.
+docker compose [-f <docker compose-file>] build --no-cache
+
+## Build a project with a specific Docker Compose prefix.
+docker compose [-f <docker compose-file>] -p <my_project> up -d --build
+
+
+# Down
 # Stops containers and removes containers, networks, volumes, and images created by up.
-docker compose down
+docker compose [-p <my_project>] down
 ```
 
 ## Install (build and run) CKAN plus dependencies
@@ -165,15 +188,6 @@ To start the containers:
 	docker compose -f docker-compose.dev.yml up
 
 See [CKAN Images](#ckan-images) for more details of what happens when using development mode.
-
-**docker/docker compose commands**
-  * `docker compose [-f <docker compose-file>] up -d --build`: to build & up all the containers.
-  * `docker compose [-f <docker compose-file>] build --no-cache`: to avoid using a cache of the previous build while creating a new image.
-  * `docker compose -p <my_project> up -d --build`: to build a project with a specific Docker Compose prefix.
-  * `docker compose restart <container>`: to restart only a specific container.
-  * `docker compose rm`: to remove all docker compose project.
-  * `docker compose [-p <my_project>] down`: to down all containers
-  * `docker logs --since 60s  <container> -f `: to display the logs of a container for the last n seconds.
 
 
 #### Create an extension

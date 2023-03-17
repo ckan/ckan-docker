@@ -33,8 +33,7 @@ The non-CKAN images are as follows:
 The site is configured using environment variables that you can set in the `.env` file.
 
 >**Warning**:<br>
-> This is the **install from Docker Compose**. To see the install from source, check it out: [`ckan/doc/repository/installations/ckan_source.md`](https://github.com/OpenDataGIS/ckan/blob/16dbe5da5ca0fd28d595ba2049e4d47e52c40c0f/doc/repository/installations/ckan_source.md)
-
+>This is a **custom installation of Docker Compose** with specific extensions for spatial data and [GeoDCAT-AP](https://github.com/SEMICeu/GeoDCAT-AP)/[INSPIRE](https://github.com/INSPIRE-MIF/technical-guidelines) metadata [profiles](https://en.wikipedia.org/wiki/Geospatial_metadata). For official installations, please have a look: CKAN documentation: Installation
 
 ### ckan-docker roadmap
 Information about extensions installed in the `main` image. More info described in the [Extending the base images](#extending-the-base-images)

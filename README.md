@@ -13,13 +13,9 @@
     <a href="#applying-patches">Applying patches</a> •
     <a href="#ckan-docker-addons">Addons</a>
 </p>
-[](#ckan-images)
 
 **Requirements**:
-* Linux 64 bit system
-
->**Note**<br>
-> Tested successfully on **Debian GNU/Linux 11 (bullseye)**
+* [Docker](https://docs.docker.com/get-docker/)
 
 ## Overview
 Contains Docker images for the different components of CKAN Cloud and a Docker compose environment (based on [ckan](https://github.com/ckan/ckan)) for development and testing Open Data portals.
@@ -266,16 +262,34 @@ ckan
 
 ```
 
->**Note**:
+>**Note**:<br>
 > Git diff is a command to output the changes between two sources inside the Git repository. The data sources can be two different branches, commits, files, etc.
-> * Show changes between working directory and staging area
->   `git diff > mypatch.patch`
-> * 
+> * Show changes between working directory and staging area:
+>   `git diff > [file.patch]`
+> * Shows any changes between the staging area and the repository:
+>   `git diff --staged [file]`
 
 
 ## ckan-docker addons
 ### VSCode dev containers
-TODO: Info
+The [Visual Studio Code Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) extension is a powerful tool that enables developers to use a container as a complete development environment. With this extension, developers can open any folder inside a container and take advantage of the full range of features provided by Visual Studio Code. To do this, developers create a `devcontainer.json `file in their project that specifies how to access or create a development container with a predefined tool and runtime stack. This allows developers to work in an isolated environment, ensuring that the development environment is consistent across team members and that project dependencies are easy to manage.
+
+![Developing inside a Container](https://code.visualstudio.com/assets/docs/devcontainers/containers/architecture-containers.png)
+
+1. Install [VSCode](https://code.visualstudio.com/).
+
+1. Install the[ Remote Development extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) for VSCode. 
+
+3. In your project directory, create a file named `devcontainer.json.` This file will contain the configuration for your `dev container`.
+
+4. In the `devcontainer.json` file, specify the Docker image that you want to use for your `dev container`. 
+
+5. Specify any additional configuration settings for your `dev container`, such as environment variables, ports to expose, and startup commands.
+
+6. Open your project in a `dev container` by using the Remote Development extension in VSCode. You can do this by clicking the `Open Folder in Container` button in the command palette or by opening the folder using the `Remote-Containers: Open Folder in Container` command. Also you can attach to an active container `Attach to Running Container`.
+
+7. VSCode will start a new container based on the configuration settings in your `devcontainer.json` file. Once the container is started, you can work on your project just like you would on your local machine.
+
 
 ### pdb
 Add these lines to the `ckan-dev` service in the docker compose.dev.yml file
@@ -320,13 +334,11 @@ For more information please see [ckanext-envvars](https://github.com/okfn/ckanex
 
 
 ### ckan-pycsw
-[ckan-pycsw](https://github.com/mjanez/ckan-pycsw) is a docker compose environment (based on pycsw) for development and testing with CKAN Open Data portals.[^4]
-
-Docker compose environment (based on [pycsw](https://github.com/geopython/pycsw)) for development and testing with CKAN Open Data portals.
+[ckan-pycsw](https://github.com/mjanez/ckan-pycsw) is a docker compose environment (based on [pycsw](https://github.com/geopython/pycsw)) for development and testing with CKAN Open Data portals.[^4]
 
 Available components:
 * **pycsw**: The pycsw app. An [OARec](https://ogcapi.ogc.org/records) and [OGC CSW](https://opengeospatial.org/standards/cat) server implementation written in Python.
-* **ckan2pycsw**: Software to achieve interoperability with the open data portals based on CKAN. To do this, ckan2pycsw reads data from an instance using the CKAN API, generates ISO-19115/ISO-19139 metadata using [pygeometa](https://geopython.github.io/pygeometa/), and populates a [pycsw](https://pycsw.org/) instance that exposes the metadata using CSW and OAI-PMH.
+* **ckan2pycsw**: Software to achieve interoperability with the open data portals based on CKAN. To do this, ckan2pycsw reads data from an instance using the CKAN API, generates ISO-19115/ISO-19139 metadata using [pygeometa](https://geopython.github.io/pygeometa/), or a custom schema that is based on a customized CKAN schema, and populates a [pycsw](https://pycsw.org/) instance that exposes the metadata using CSW and OAI-PMH.
 
 
 [^1]: Development environment.

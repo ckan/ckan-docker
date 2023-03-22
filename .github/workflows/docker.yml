@@ -21,6 +21,9 @@ jobs:
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+        with:
+          context: ./ckan
+          file: ./ckan/Dockerfile
       -
         name: Checkout
         uses: actions/checkout@v1

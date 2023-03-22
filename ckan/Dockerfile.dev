@@ -1,4 +1,5 @@
-FROM ckan/ckan-base:2.9.7-dev
+# syntax = edrevo/dockerfile-plus
+INCLUDE+ Dockerfile
 
 # Set up environment variables
 ENV APP_DIR=/srv/app

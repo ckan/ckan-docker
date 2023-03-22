@@ -149,10 +149,10 @@ ckan.harvest.mq.hostname = redis
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
 ckan.views.default_views = image_view text_view recline_view harvest ckan_harvester wmts_view geojson_view geo_view shp_view pdf_view
-ckanext.geoview.geojson.max_file_size = 100000000
 ckanext.geoview.ol_viewer.formats = wms wfs geojson gml kml
 ckanext.geoview.shp_viewer.srid = 3857
 ckanext.geoview.shp_viewer.encoding = UTF-8
+ckanext.geoview.geojson.max_file_size = 100000000
 
 # Customize which text formats the text_view plugin will show
 ckan.preview.json_formats = json jsonld

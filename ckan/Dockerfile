@@ -54,7 +54,7 @@ RUN apk add --no-cache tzdata \
         linux-headers \
         openssl-dev \
         libffi-dev \
-        cargo && \
+        cargo \
     # Set up PROJ
         geos-dev \ 
         proj \

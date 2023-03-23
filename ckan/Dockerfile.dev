@@ -1,5 +1,5 @@
 # syntax = edrevo/dockerfile-plus
-INCLUDE+ Dockerfile
+INCLUDE+ Dockerfile.spatial-vanilla
 
 # Set up environment variables
 ENV APP_DIR=/srv/app
@@ -25,54 +25,10 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 #
 # For instance:
 #
-### XLoader ###
-#RUN pip3 install -e 'git+https://github.com/ckan/ckanext-xloader.git@master#egg=ckanext-xloader' && \ 
-#    pip3 install -r ${APP_DIR}/src/ckanext-xloader/requirements.txt && \
-#    pip3 install -U requests[security]
-
-
 ###TODO: XLoader ###
-RUN pip3 install -e 'git+https://github.com/ckan/ckanext-xloader.git@master#egg=ckanext-xloader' && \ 
-    pip3 install -r ${APP_DIR}/src/ckanext-xloader/requirements.txt && \
-    pip3 install -U requests[security]
-
-### Harvester ###
-RUN echo "ckan/ckanext-harvester" && \
-    pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@master#egg=ckanext-harvest' && \
-    pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
-# will also require gather_consumer and fetch_consumer processes running (please see https://github.com/ckan/ckanext-harvest)
-
-### Resource dictionary-Fix version ###
-RUN echo "mjanez/ckanext-resourcedictionary" && \
-    pip3 install -e git+https://github.com/mjanez/ckanext-resourcedictionary.git#egg=ckanext-resourcedictionary && \
-    pip3 install -r ${APP_DIR}/src/ckanext-resourcedictionary/requirements.txt
-
-### Geoview ###
-RUN echo "ckan/ckanext-geoview" && \
-    pip3 install -e git+https://github.com/ckan/ckanext-geoview.git#egg=ckanext-geoview 
-
-### Spatial ### Check solr geoindexing: https://docs.ckan.org/projects/ckanext-spatial/en/latest/spatial-search.html // https://github.com/ckan/ckanext-spatial/issues/195
-#TODO: 2.10 support reqs: https://github.com/ckan/ckanext-spatial/pull/308
-RUN echo "ckan/ckanext-spatial" && \
-    pip3 install -e git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext-spatial && \
-    pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-spatial/bae9290395b252ee8e40056256fa694569d1d78b/requirements.txt
-
-### Scheming-GeoDCAT-AP extended version ###
-RUN echo "mjanez/ckanext-scheming (GeoDCAT-AP extended version)" && \
-    pip3 install -e git+https://github.com/mjanez/ckanext-scheming.git#egg=ckanext-scheming 
-
-### Pages ###
-RUN echo "ckan/ckanext-pages" && \
-    pip3 install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
-
-### PDFView ###
-RUN echo "ckan/ckanext-pdfview" && \
-    pip3 install -e git+https://github.com/ckan/ckanext-pdfview.git#egg=ckanext-pdfview
-
-### DCAT-GeoDCAT-AP extended version ###
-RUN echo "mjanez/ckanext-dcat (GeoDCAT-AP extended version)" && \
-    pip3 install -e git+https://github.com/mjanez/ckanext-dcat.git#egg=ckanext-dcat && \
-    pip3 install -r https://raw.githubusercontent.com/mjanez/ckanext-dcat/master/requirements.txt
+# RUN pip3 install -e 'git+https://github.com/ckan/ckanext-xloader.git@master#egg=ckanext-xloader' && \ 
+#     pip3 install -r ${APP_DIR}/src/ckanext-xloader/requirements.txt && \
+#     pip3 install -U requests[security]
 
 ###TODO: ckanext-visualize
 #https://github.com/keitaroinc/ckanext-visualize

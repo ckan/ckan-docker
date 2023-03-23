@@ -1,4 +1,4 @@
-name: Build CKAN Docker 
+name: Build CKAN Docker auxiliary images 
 
 on:
   # Trigger the workflow on push or pull request,
@@ -45,12 +45,3 @@ jobs:
           file: ./solr/Dockerfile
           push: false
           tags: kowhai/ckan-docker-solr:test-build-only
-
-    -  name: CKAN build
-       uses: docker/build-push-action@v2
-       with:
-          context: ./ckan
-          file: ./ckan/Dockerfile
-          push: false
-          tags: kowhai/ckan-docker-ckan:test-build-only
-      

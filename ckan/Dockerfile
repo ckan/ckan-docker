@@ -120,9 +120,9 @@ RUN pip3 install -e 'git+https://github.com/ckan/ckanext-xloader.git@0.12.2#egg=
     pip3 install -r ${APP_DIR}/src/ckanext-xloader/requirements.txt && \
     pip3 install -U requests[security]
 
-### Harvester - v1.5.0 ###
+### Harvester - v1.5.1 ###
 RUN echo "ckan/ckanext-harvest" && \
-    pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.0#egg=ckanext-harvest' && \
+    pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.1#egg=ckanext-harvest' && \
     pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
 
 ### Geoview - v0.0.20 ###

@@ -18,13 +18,32 @@ Compatibility with core CKAN versions:
 
 We are developing this plugin using the convenient 
 [ckan-docker](https://github.com/datalets/ckan-docker) 
-build system.
+build system, with installation as follows:
 
-Just clone the folder in the `src` folder at the root.
+(1) Clone the folder in the `src` folder at the CKAN root. 
 
-To see status reports: `tail -f /var/log/*.log`
+The full path might be `/opt/docker/ckan/src/ckanext-nadit`
 
-To refresh a running server: `./start_ckan_development.sh`
+(2) Add the project to your plugins list.
+
+`CKAN__PLUGINS="envvars image_view... harvest nadit nadit_ckan_harvester"`
+
+(3) Install plugin dependencies. 
+
+(Should be done automatically by CKAN's build scripts)
+
+(4) Make sure the default [CKAN Harvester](https://github.com/ckan/ckanext-harvest#ckanext-harvest---remote-harvesting-extension) is set up correctly.
+
+(Making sure that `gather_consumer` and `fetch_consumer` processes are set up to run automatically, such as with [this supervisord script](https://github.com/datalets/ckan-docker/blob/766accecf7538ad6344620c75a526325723d0695/ckan/setup/consumers.conf))
+
+(5) Create your first harvester by navigating to https://yourckansite.tld/harvest, select the "Nadit plugin for CKAN" Option and enter an appropriate URL. In the case of opendata.swiss this is https://ckan.opendata.swiss/
+
+
+
+#### Tips:
+
+- To see status reports: `tail -f /var/log/*.log`
+- To refresh a running server: `./start_ckan_development.sh`
 
 ## Installation as source
 

@@ -47,6 +47,9 @@ COPY setup/consumers.conf /etc/supervisord.d/
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
 
+RUN pip3 install -e git+https://gitlab.com/seismist/ckanext-nadit.git@v0.0.1#egg=ckanext-nadit && \
+    pip3 install -r https://gitlab.com/seismist/ckanext-nadit/-/raw/main/requirements.txt
+
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
 

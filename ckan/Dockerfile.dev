@@ -11,6 +11,10 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
         cp /usr/share/zoneinfo/${TZ} /etc/localtime ;\
     fi ;
 
+# Setup background task manager (Supervisor)
+COPY setup/supervisord.conf /etc/supervisord.d/
+COPY setup/consumers.conf /etc/supervisord.d/
+
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
 # - Also make sure all extra configuration options are added to the CKAN config file (ckan.ini)
@@ -27,12 +31,9 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 #    pip3 install -U requests[security]
 
 ### Harvester ###
-RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@master#egg=ckanext-harvest' && \
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.3#egg=ckanext-harvest' && \
     pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
 # will also require gather_consumer and fetch_consumer processes running (please see https://github.com/ckan/ckanext-harvest)
-
-COPY setup/supervisord.conf /etc/supervisord.d/
-COPY setup/consumers.conf /etc/supervisord.d/
 
 ### Scheming ###
 #RUN  pip3 install -e 'git+https://github.com/ckan/ckanext-scheming.git@master#egg=ckanext-scheming'
@@ -41,14 +42,14 @@ COPY setup/consumers.conf /etc/supervisord.d/
 #RUN  pip3 install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
 
 ### DCAT ###
-#RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v0.0.6#egg=ckanext-dcat && \
-#     pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v0.0.6/requirements.txt
+RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.4.0#egg=ckanext-dcat && \
+     pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.4.0/requirements.txt
 
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
 
-RUN pip3 install -e git+https://gitlab.com/seismist/ckanext-nadit.git@v0.0.1#egg=ckanext-nadit && \
-    pip3 install -r https://gitlab.com/seismist/ckanext-nadit/-/raw/main/requirements.txt
+RUN pip3 install -e git+https://git.fhgr.ch/resto/ckanext-nadit.git@main#egg=ckanext-nadit && \
+    pip3 install -r https://git.fhgr.ch/resto/ckanext-nadit/-/raw/main/requirements.txt
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)

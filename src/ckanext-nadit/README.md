@@ -1,4 +1,4 @@
-[![Tests](https://github.com/datalets/ckanext-nadit/workflows/Tests/badge.svg?branch=main)](https://github.com/datalets/ckanext-nadit/actions)
+[![Tests](https://git.fhgr.ch/resto/ckanext-nadit/badges/main/pipeline.svg)](https://git.fhgr.ch/resto/ckanext-nadit/)
 
 # ckanext-nadit
 
@@ -38,9 +38,7 @@ The full path might be `/opt/docker/ckan/src/ckanext-nadit`
 
 (5) Create your first harvester by navigating to https://yourckansite.tld/harvest, select the "Nadit plugin for CKAN" Option and enter an appropriate URL. In the case of opendata.swiss this is https://ckan.opendata.swiss/
 
-
-
-#### Tips:
+**Tips:**
 
 - To see status reports: `tail -f /var/log/*.log`
 - To refresh a running server: `./start_ckan_development.sh`
@@ -62,20 +60,24 @@ To install ckanext-nadit in your local Python environment:
 
 3. Add `nadit` to the `ckan.plugins` setting in your CKAN
    config file (by default the config file is located at
-   `/etc/ckan/default/ckan.ini`).
+   `/etc/ckan/default/ckan.ini`). For example, the full 
+   configuration we use is:
+
+   `CKAN__PLUGINS="envvars image_view text_view recline_view datastore datapusher dcat dcat_rdf_harvester dcat_json_harvester dcat_json_interface structured_data harvest nadit nadit_ckan_harvester"`
 
 4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
 
-     sudo service apache2 reload
+   `sudo service apache2 reload`
 
-5. If harvesters are not running
+5. Ensure that harvester jobs are running (e.g. in your supervisord)
+   ```
+   ckan --config=/srv/app/ckan.ini harvester gather-consumer &
+   ckan --config=/srv/app/ckan.ini harvester fetch-consumer
+   ```
 
-     ckan --config=/srv/app/ckan.ini harvester gather-consumer &
-     ckan --config=/srv/app/ckan.ini harvester fetch-consumer
+## Plugin config settings
 
-## Config settings
-
-None at present
+None at present.
 
 **TODO:** Document any optional config settings here. For example:
 

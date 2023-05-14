@@ -14,6 +14,7 @@
 * [Datastore and Datapusher](#Datastore-and-datapusher)
 * [NGINX](#nginx)
 * [The ckanext-envvars extension](#envvars)
+* [The CKAN_SITE_URL parameter](#CKAN_SITE_URL)
 
 
 ## 1.  Overview
@@ -228,3 +229,7 @@ For example:
 These parameters can be added to the `.env` file 
 
 For more information please see [ckanext-envvars](https://github.com/okfn/ckanext-envvars)
+
+## 12. CKAN_SITE_URL
+
+For convenience the CKAN_SITE_URL parameter should be set in the .env file. For development it can be set to http://localhost:5000 and non-development set to https://localhost:8443

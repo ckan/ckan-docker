@@ -53,10 +53,12 @@ To install ckanext-nadit in your local Python environment:
 
 2. Clone the source and install it on the virtualenv
 
+```
     git clone https://github.com/datalets/ckanext-nadit.git
     cd ckanext-nadit
     pip install -e .
 	pip install -r requirements.txt
+```
 
 3. Add `nadit` to the `ckan.plugins` setting in your CKAN
    config file (by default the config file is located at

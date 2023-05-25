@@ -15,6 +15,7 @@
 * [NGINX](#nginx)
 * [The ckanext-envvars extension](#envvars)
 * [The CKAN_SITE_URL parameter](#CKAN_SITE_URL)
+* [Changing the base image](#Changing-the-base-image)
 
 
 ## 1.  Overview
@@ -233,3 +234,8 @@ For more information please see [ckanext-envvars](https://github.com/okfn/ckanex
 ## 12. CKAN_SITE_URL
 
 For convenience the CKAN_SITE_URL parameter should be set in the .env file. For development it can be set to http://localhost:5000 and non-development set to https://localhost:8443
+
+## 13. Changing the base image
+
+The base image used in the CKAN Dockerfile and Dockerfile.dev can be changed so a different DockerHub image is used eg: ckan/ckan-base:2.9.9
+could be used instead of ckan/ckan-base:2.10.1

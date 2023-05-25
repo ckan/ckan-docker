@@ -1,5 +1,4 @@
-FROM ckan/ckan-base:ckan-2.10.0-dev
-
+FROM ckan/ckan-base:ckan-2.9.8-dev
 
 # Set up environment variables
 ENV APP_DIR=/srv/app
@@ -31,7 +30,7 @@ COPY setup/consumers.conf /etc/supervisord.d/
 #    pip3 install -U requests[security]
 
 ### Harvester ###
-RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.3#egg=ckanext-harvest' && \
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.4#egg=ckanext-harvest' && \
     pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
 # will also require gather_consumer and fetch_consumer processes running (please see https://github.com/ckan/ckanext-harvest)
 
@@ -42,8 +41,8 @@ RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.3#egg=
 #RUN  pip3 install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
 
 ### DCAT ###
-RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.4.0#egg=ckanext-dcat && \
-     pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.4.0/requirements.txt
+RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.0#egg=ckanext-dcat && \
+     pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.5.0/requirements.txt
 
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime

@@ -209,3 +209,4 @@ if __name__ == "__main__":
         init_datastore_db()
         check_solr_connection()
         create_sysadmin()
+        

@@ -2,7 +2,39 @@
 
 # ckanext-nadit
 
-Custom CKAN harvester for the NADIT project.
+A custom CKAN data harvester for the NADIT project.
+
+## Usage
+
+Firstly, make sure that you have created at least one Organization.
+
+(1) Access the plugin through the `/harvest` URL on your server. For example, if you are running a development server it is likely to be http://ckan:5000/harvest/
+
+(2) Click **Add harvest source**, and fill out the form as follows:
+
+- URL: the CKAN site we are harvesting. Example: https://ckan.opendata.swiss
+- Title: a short descriptive tag for this harvester. Example: `BFS - Tourism`
+- Description: your notes on this workflow, key contacts, etc.
+- Source type: "NADIT plugin for CKAN"
+- Update frequency: set to anything other than Manual to automate harvests
+- Organization: choose from one of the CKAN orgs
+- Configuration: this is an optional bit of JSON to filter the harvester, as you may not want to mirror the entire CKAN instance. Example: 
+
+```
+{
+"organizations_filter_include": ["openglam"],
+"groups_filter_include": ["culture", "tourism"],
+"force_all": true
+}
+```
+
+Multiple organizations or groups can be included in this way.
+
+### Further references
+
+See Harvesting chapter in the [Opendata.swiss Handbook](https://handbook.opendata.swiss/de/content/publizieren/publikationsvarianten/harvesting.html#harvesting-einrichten) (German only) and docs for [ckanext-harvest](https://github.com/ckan/ckanext-harvest#the-ckan-harvester).
+
+_TODO: in the future, we can add a link next to "Add Dataset", or to the Administer CKAN page._
 
 ## Requirements
 

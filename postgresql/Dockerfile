@@ -4,9 +4,10 @@ FROM postgres:12-alpine
 RUN echo "host all  all    0.0.0.0/0  md5" >> /var/lib/postgresql/data/pg_hba.conf
 
 # Customize default user/pass/db
-ENV POSTGRES_DB ckan
-ENV POSTGRES_USER ckan
+ENV POSTGRES_DB admindb
+ENV POSTGRES_USER admindbuser
 ARG POSTGRES_PASSWORD
+ARG CKAN_DB_PASSWORD
 ARG DATASTORE_READONLY_PASSWORD
 
 # Include extra setup scripts (eg datastore)

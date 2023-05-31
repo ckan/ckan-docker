@@ -12,6 +12,9 @@ services:
     build:
       context: nginx/
       dockerfile: Dockerfile
+    networks:
+      - frontend
+      - backend
     depends_on:
       ckan:
         condition: service_healthy
@@ -26,6 +29,8 @@ services:
       dockerfile: Dockerfile
       args:
         - TZ=${TZ}
+    networks:
+      - backend
     env_file:
       - .env
     depends_on:
@@ -35,8 +40,6 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    ports:
-      - "0.0.0.0:${CKAN_PORT_HOST}:${CKAN_PORT}" 
     volumes:
       - ckan_storage:/var/lib/ckan
     restart: unless-stopped
@@ -45,6 +48,8 @@ services:
     
   datapusher:
     container_name: ${DATAPUSHER_CONTAINER_NAME}
+    networks:
+      - backend
     image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
     restart: unless-stopped
     healthcheck:
@@ -57,18 +62,24 @@ services:
       args:
        - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+       - CKAN_DB_PASSWORD=${CKAN_DB_PASSWORD}
+    networks:
+      - backend
     environment:
       - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - CKAN_DB_PASSWORD=${CKAN_DB_PASSWORD}
       - PGDATA=/var/lib/postgresql/data/db
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "ckan"]
+      test: ["CMD", "pg_isready", "-U", "admindbuser", "-d", "admindb"]
      
   solr:
     container_name: ${SOLR_CONTAINER_NAME}
+    networks:
+      - backend
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
     volumes:
       - solr_data:/var/solr
@@ -78,7 +89,13 @@ services:
 
   redis:
     container_name: ${REDIS_CONTAINER_NAME}
+    networks:
+      - backend
     image: redis:${REDIS_VERSION}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "-e", "QUIT"]
+    
+networks:
+  frontend:
+  backend:

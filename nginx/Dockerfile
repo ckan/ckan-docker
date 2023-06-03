@@ -12,8 +12,6 @@ COPY setup/default.conf ${NGINX_DIR}/conf.d/
 
 RUN mkdir -p ${NGINX_DIR}/certs
 
-EXPOSE 81
-
 ENTRYPOINT \
   openssl req \
     -subj '/C=DE/ST=Berlin/L=Berlin/O=None/CN=localhost' \

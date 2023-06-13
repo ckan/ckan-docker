@@ -43,14 +43,10 @@ services:
     container_name: ${POSTGRESQL_CONTAINER_NAME}
     build:
       context: postgresql/
-      args:
-       - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
-       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     environment:
-      - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - CKAN_DB_PASSWORD=${CKAN_DB_PASSWORD}
-      - PGDATA=/var/lib/postgresql/data/db
+      - DATASTORE_READONLY_PASSWORD
+      - POSTGRES_PASSWORD
+      - CKAN_DB_PASSWORD
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped

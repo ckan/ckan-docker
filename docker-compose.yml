@@ -68,7 +68,6 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
-      - PGDATA
       - CKAN_DB_USER
       - CKAN_DB_PASSWORD
       - CKAN_DB

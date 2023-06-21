@@ -18,12 +18,12 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 #   This can be done by creating an overriding start_ckan_dev_development.sh file:
 #   (https://github.com/ckan/ckan-docker-base/blob/main/ckan-2.9/dev/setup/start_ckan_development.sh) ie: updating the 'ckan config-tool' lines
 #   For more on config-tool please see https://docs.ckan.org/en/latest/maintaining/cli.html#config-tool-tool-for-editing-options-in-a-ckan-config-file
-#   or using Crudini (https://github.com/pixelb/crudini) 
+#   or using Crudini (https://github.com/pixelb/crudini)
 #
 # For instance:
 #
 ### XLoader ###
-#RUN pip3 install -e 'git+https://github.com/ckan/ckanext-xloader.git@master#egg=ckanext-xloader' && \ 
+#RUN pip3 install -e 'git+https://github.com/ckan/ckanext-xloader.git@master#egg=ckanext-xloader' && \
 #    pip3 install -r ${APP_DIR}/src/ckanext-xloader/requirements.txt && \
 #    pip3 install -U requests[security]
 
@@ -38,9 +38,13 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 ### Pages ###
 #RUN  pip3 install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
 
+### Harvest ###
+RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git@v1.5.1#egg=ckanext-harvest && \
+    pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-harvest/v1.5.1/requirements.txt
+
 ### DCAT ###
-#RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v0.0.6#egg=ckanext-dcat && \
-#     pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v0.0.6/requirements.txt
+RUN pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.1#egg=ckanext-dcat && \
+    pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.5.1/requirements.txt
 
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime

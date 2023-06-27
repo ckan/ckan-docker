@@ -47,10 +47,10 @@ To temporary patch the CKAN configuration for the duration of a test you can use
     def test_some_action():
         pass
 """
-import ckanext.newextension.plugin as plugin
+import ckanext.aorc_mirror.plugin as plugin
 
 
-@pytest.mark.ckan_config("ckan.plugins", "newextension")
+@pytest.mark.ckan_config("ckan.plugins", "aorc_mirror")
 @pytest.mark.usefixtures("with_plugins")
 def test_plugin():
-    assert plugin_loaded("newextension")
+    assert plugin_loaded("aorc_mirror")

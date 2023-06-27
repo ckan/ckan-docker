@@ -1,4 +1,4 @@
-ckan.module("newextension-module", function ($, _) {
+ckan.module("aorc_mirror-module", function ($, _) {
   "use strict";
   return {
     options: {

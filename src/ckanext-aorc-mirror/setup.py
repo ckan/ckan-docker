@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from importlib.metadata import entry_points
 from setuptools import setup
 
 setup(
@@ -15,6 +16,6 @@ setup(
     },
     entry_points="""
         [ckan.plugins]
-        example_newextension=ckanext.newextension.plugin:ExampleNewExtensionPlugin
+        aorc_mirror=ckanext.aorc_mirror.plugin:AorcMirrorPlugin
     """,
 )

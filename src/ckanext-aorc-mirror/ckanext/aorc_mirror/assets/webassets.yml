@@ -1,0 +1,14 @@
+# aorc_mirror-js:
+#   filter: rjsmin
+#   output: ckanext-aorc_mirror/%(version)s-aorc_mirror.js
+#   contents:
+#     - js/aorc_mirror.js
+#   extra:
+#     preload:
+#       - base/main
+
+# aorc_mirror-css:
+#   filter: cssrewrite
+#   output: ckanext-aorc_mirror/%(version)s-aorc_mirror.css
+#   contents:
+#     - css/aorc_mirror.css

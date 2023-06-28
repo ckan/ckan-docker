@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from importlib.metadata import entry_points
 from setuptools import setup
 
 setup(

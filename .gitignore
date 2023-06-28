@@ -10,3 +10,6 @@ local/*
 
 # env file
 .env
+
+# Compiled python
+*.pyc

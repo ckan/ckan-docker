@@ -6,10 +6,6 @@
         <td class="dataset-details">{{ pkg_dict.spatial_resolution }}</td>
     </tr>
     <tr>
-        <th scope="row" class="dataset-label">{{_("Temporal Resolution") }}</th>
-        <td class="dataset-details">{{ pkg_dict.temporal_resolution }}</td>
-    </tr>
-    <tr>
         <th scope="row" class="dataset-label">{{_("Last Modified") }}</th>
         <td class="dataset-details">{{ pkg_dict.last_modified }}</td>
     </tr>
@@ -54,23 +50,15 @@
         <td class="dataset-details">{{ pkg_dict.command_list }}</td>
     </tr>
     <tr>
-        <th scope="row" class="dataset-label">{{_("Source Dataset") }}</th>
-        <td class="dataset-details">{{ pkg_dict.source_dataset }}</td>
+        <th scope="row" class="dataset-label">{{_("Mirror Datasets") }}</th>
+        <td class="dataset-details">{{ pkg_dict.mirror_datasets }}</td>
     </tr>
     <tr>
-        <th scope="row" class="dataset-label">{{_("RFC Alias") }}</th>
-        <td class="dataset-details">{{ pkg_dict.rfc_alias }}</td>
+        <th scope="row" class="dataset-label">{{_("Location Name") }}</th>
+        <td class="dataset-details">{{ pkg_dict.location_name }}</td>
     </tr>
     <tr>
-        <th scope="row" class="dataset-label">{{_("RFC Full Name") }}</th>
-        <td class="dataset-details">{{ pkg_dict.rfc_full_name }}</td>
-    </tr>
-    <tr>
-        <th scope="row" class="dataset-label">{{_("RFC Parent Organization") }}</th>
-        <td class="dataset-details">{{ pkg_dict.rfc_parent_organization }}</td>
-    </tr>
-    <tr>
-        <th scope="row" class="dataset-label">{{_("RFC Extent (WKT)") }}</th>
-        <td class="dataset-details">{{ pkg_dict.rfc_wkt }}</td>
+        <th scope="row" class="dataset-label">{{_("Location Extent (WKT)") }}</th>
+        <td class="dataset-details">{{ pkg_dict.location_wkt }}</td>
     </tr>
 {% endblock %}

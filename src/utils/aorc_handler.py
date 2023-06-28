@@ -38,12 +38,12 @@ class AORCHandler:
         self.common_fields_dt = ["last_modified"]
         self.common_fields_list = ["command_list"]
         self.time_period_fields_dt = ["start_time", "end_time"]
-        self.duration_fields_simple = ["temporal_resolution"]
-        self.rfc_fields_simple = ["rfc_alias", "rfc_full_name", "rfc_wkt"]
+        self.time_resolution_duration_fields_simple = ["temporal_resolution"]
+        self.rfc_fields_simple = ["rfc_alias", "rfc_full_name", "rfc_parent_organization", "rfc_wkt"]
         self.additional_resource_common_fields = ["compress_format", "access_rights"]
-        self.fields_simple = (
-            self.fields_dt
-        ) = self.fields_list = self.fields_json = self.additional_resource_fields = []
+        self.location_fields_simple = ["location_name", "location_wkt"]
+        self.fields_simple = self.fields_dt = self.fields_list = self.fields_json = self.additional_resource_fields = []
+        self.fields_ignore_missing = []
 
     def _register_dict_handler(self) -> None:
         psycopg2.extensions.register_adapter(dict, psycopg2.extras.Json)
@@ -83,6 +83,15 @@ class AORCHandler:
                     json_field: [
                         toolkit.get_converter("convert_to_json_if_string"),
                         toolkit.get_validator("json_object"),
+                        toolkit.get_converter("convert_to_extras"),
+                    ]
+                }
+            )
+        for ignore_missing_field in self.fields_ignore_missing:
+            schema.update(
+                {
+                    ignore_missing_field: [
+                        toolkit.get_validator("ignore_missing"),
                         toolkit.get_converter("convert_to_extras"),
                     ]
                 }
@@ -133,6 +142,15 @@ class AORCHandler:
                     json_field: [
                         toolkit.get_converter("convert_from_extras"),
                         toolkit.get_validator("json_object"),
+                    ]
+                }
+            )
+        for ignore_missing_field in self.fields_ignore_missing:
+            schema.update(
+                {
+                    ignore_missing_field: [
+                        toolkit.get_converter("convert_from_extras"),
+                        toolkit.get_validator("ignore_missing"),
                     ]
                 }
             )

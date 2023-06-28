@@ -1,0 +1,34 @@
+{% extends "package/snippets/package_basic_fields.html" %}
+
+{% block package_basic_fields_custom %}
+    {{ form.input('spatial_resolution', label=_('Spatial Resolution'), id='field-spatial_resolution', placeholder=_('Spatial resolution (in meters)'), value=data.spatial_resolution, error=errors.spatial_resolution, classes=['control-medium'])}}
+    {{ form.input('last_modified', label=_('Last Modified'), id='field-last_modified', placeholder=_('Last modified'), value=data.last_modified, error=errors.last_modified, classes=['control-medium'])}}
+    {{ form.input('start_time', label=_('Start Time'), id='field-start_time', placeholder=_('Start time'), value=data.start_time, error=errors.start_time, classes=['control-medium'])}}
+    {{ form.input('end_time', label=_('End Time'), id='field-end_time', placeholder=_('End time'), value=data.end_time, error=errors.end_time, classes=['control-medium'])}}
+    {{ form.input('docker_file', label=_('Docker File'), id='field-docker_file', placeholder=_('Dockerfile URL'), value=data.docker_file, error=errors.docker_file, classes=['control-medium'])}}
+    {{ form.input('compose_file', label=_('Compose File'), id='field-compose_file', placeholder=_('Compose file URL'), value=data.compose_file, error=errors.compose_file, classes=['control-medium'])}}
+    {{ form.input('docker_image', label=_('Docker Image'), id='field-docker_image', placeholder=_('Docker image URL'), value=data.docker_image, error=errors.docker_image, classes=['control-medium'])}}
+    {{ form.input('git_repo', label=_('Git Repo'), id='field-git_repo', placeholder=_('Git repo URL'), value=data.git_repo, error=errors.git_repo, classes=['control-medium'])}}
+    {{ form.input('docker_repo', label=_('Docker Repo'), id='field-docker_repo', placeholder=_('Docker repo URL'), value=data.docker_repo, error=errors.docker_repo, classes=['control-medium'])}}
+    {{ form.input('commit_hash', label=_('Git Commit'), id='field-commit_hash', placeholder=_('Git commit hash'), value=data.commit_hash, error=errors.commit_hash, classes=['control-medium'])}}
+    {{ form.input('digest_hash', label=_('Docker Image Digest'), id='field-digest_hash', placeholder=_('Docker image digest hash'), value=data.digest_hash, error=errors.digest_hash, classes=['control-medium'])}}
+    {{ form.input('command_list', label=_('Command List'), id='field-command_list', placeholder=_('Command list'), value=data.command_list, error=errors.command_list, classes=['control-medium'])}}
+    {{ form.input('composite_datasets', label=_('Composite Datasets'), id='field-composite_datasets', placeholder=_('Composite datasets'), value=data.composite_datasets, error=errors.composite_datasets, classes=['control-medium'])}}
+    {{ form.input('transposition_region_name', label=_('Transposition Region Name'), id='field-transposition_region_name', placeholder=_('Transposition region name'), value=data.transposition_region_name, error=errors.transposition_region_name, classes=['control-medium'])}}
+    {{ form.input('transposition_region_wkt', label=_('Transposition Region WKT'), id='field-transposition_region_wkt', placeholder=_('Transposition region WKT'), value=data.transposition_region_wkt, error=errors.transposition_region_wkt, classes=['control-medium'])}}
+    {{ form.input('watershed_region_name', label=_('Watershed Region Name'), id='field-watershed_region_name', placeholder=_('Watershed region name'), value=data.watershed_region_name, error=errors.watershed_region_name, classes=['control-medium'])}}
+    {{ form.input('watershed_region_wkt', label=_('Watershed Region WKT'), id='field-watershed_region_wkt', placeholder=_('Watershed region WKT'), value=data.watershed_region_wkt, error=errors.watershed_region_wkt, classes=['control-medium'])}}
+    {% if pkg_dict.max_precipitation_point_name %}
+        {{ form.input('max_precipitation_point_name', label=_('Maximum Precipitation Point Name'), id='field-max_precipitation_point_name', placeholder=_('Maximum precipitation point name'), value=data.max_precipitation_point_name, error=errors.max_precipitation_point_name, classes=['control-medium'])}}
+    {% endif %}
+    {{ form.input('max_precipitation_point_wkt', label=_('Maximum Precipitation Point WKT'), id='field-max_precipitation_point_wkt', placeholder=_('Maximum precipitation point WKT'), value=data.max_precipitation_point_wkt, error=errors.max_precipitation_point_wkt, classes=['control-medium'])}}
+    {{ form.input('image', label=_('Preview Image'), id='field-image', placeholder=_('Preview image'), value=data.image, error=errors.image, classes=['control-medium'])}}
+    {{ form.input('cell_count', label=_('Watershed Gridded Cell Size'), id='field-cell_count', placeholder=_('Cell count'), value=data.cell_count, error=errors.cell_count, classes=['control-medium'])}}
+    {{ form.input('mean_precipitation', label=_('Mean Precipitation'), id='field-mean_precipitation', placeholder=_('Mean precipitation (inches)'), value=data.mean_precipitation, error=errors.mean_precipitation, classes=['control-medium'])}}
+    {{ form.input('max_precipitation', label=_('Maximum Precipitation'), id='field-max_precipitation', placeholder=_('Max precipitation (inches)'), value=data.max_precipitation, error=errors.max_precipitation, classes=['control-medium'])}}
+    {{ form.input('min_precipitation', label=_('Minimum Precipitation'), id='field-min_precipitation', placeholder=_('Min precipitation (inches)'), value=data.min_precipitation, error=errors.min_precipitation, classes=['control-medium'])}}
+    {{ form.input('sum_precipitation', label=_('Total Precipitation'), id='field-sum_precipitation', placeholder=_('Sum precipitation (inches)'), value=data.sum_precipitation, error=errors.sum_precipitation, classes=['control-medium'])}}
+    {% if pkg_dict.normalized_mean_precipitation %}
+        {{ form.input('normalized_mean_precipitation', label=_('Normalized Mean Precipitation'), id='field-normalized_mean_precipitation', placeholder=_('Normalized mean precipitation (inches)'), value=data.normalized_mean_precipitation, error=errors.normalized_mean_precipitation, classes=['control-medium'])}}
+    {% endif %}
+{% endblock %}

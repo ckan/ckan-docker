@@ -16,21 +16,31 @@ from utils.aorc_handler import AORCDatasetClass, AORCHandler
 class MirrorHandler(AORCHandler):
     def __init__(
         self,
-        class_name: AORCDatasetClass = AORCDatasetClass.MIRROR,
-        read_template: str = "package/mirror_read.html",
-        edit_template: str = "package/mirror_edit.html",
-        resource_form_template: str = "package/snippets/mirror_resource_form.html",
+        class_name: AORCDatasetClass = AORCDatasetClass.TRANSPOSITION,
+        read_template: str = "package/transposition_read.html",
+        edit_template: str = "package/transposition_edit.html",
+        resource_form_template: str = "package/snippets/transposition_resource_form.html",
     ) -> None:
         super().__init__(class_name, read_template, edit_template, resource_form_template)
         self._validate_class()
         self.fields_simple = [
             *self.common_fields_simple,
-            *self.time_resolution_duration_fields_simple,
-            *self.rfc_fields_simple,
+            "transposition_region_name",
+            "transposition_region_wkt",
+            "watershed_region_name",
+            "watershed_region_wkt",
+            "max_precipitation_point_wkt",
+            "image",
+            "cell_count",
+            "mean_precipitation",
+            "max_precipitation",
+            "min_precipitation",
+            "sum_precipitation",
         ]
         self.fields_dt = [*self.common_fields_dt, *self.time_period_fields_dt]
         self.fields_list = self.common_fields_list
-        self.fields_json = ["source_dataset"]
+        self.fields_json = ["composite_datasets"]
+        self.ignore_missing_fields = ["normalized_mean_precipitation", "max_precipitation_point_name"]
         self.additional_resource_fields = self.additional_resource_common_fields
 
     def _validate_class(self):
@@ -42,7 +52,7 @@ class MirrorHandler(AORCHandler):
             raise ValueError(f"Handler used for dataseet with class {dataset_type}, not {self.class_name.value}")
 
 
-class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
+class AorcTranspositionPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
 
@@ -53,25 +63,25 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def update_config(self, config_: CKANConfig):
         toolkit.add_template_directory(config_, "templates")
         toolkit.add_public_directory(config_, "public")
-        toolkit.add_resource("assets", "aorc_mirror")
+        toolkit.add_resource("assets", "aorc_transposition")
 
     def create_package_schema(self):
-        schema: Schema = super(AorcMirrorPlugin, self).create_package_schema()
+        schema: Schema = super(AorcTranspositionPlugin, self).create_package_schema()
         return self.handler.modify_schema(schema)
 
     def update_package_schema(self):
-        schema: Schema = super(AorcMirrorPlugin, self).update_package_schema()
+        schema: Schema = super(AorcTranspositionPlugin, self).update_package_schema()
         return self.handler.modify_schema(schema)
 
     def show_package_schema(self) -> Schema:
-        schema: Schema = super(AorcMirrorPlugin, self).show_package_schema()
+        schema: Schema = super(AorcTranspositionPlugin, self).show_package_schema()
         return self.handler.show_schema(schema)
 
     def is_fallback(self) -> bool:
         return False
 
     def package_types(self) -> list[str]:
-        return ["aorc:MirrorDataset"]
+        return ["aorc:TranspositionDataset"]
 
     def edit_template(self, package_type: str) -> str:
         self.handler.validate_name(package_type)

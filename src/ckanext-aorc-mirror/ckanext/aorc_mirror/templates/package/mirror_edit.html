@@ -1,2 +1,7 @@
-<h1>Testing</h1>
-<h3>Mirror Edit</h3>
+{% extends 'package/edit_base.html' %}
+
+{% block primary_content_inner %}
+    {% block form %}
+	{{- h.snippet('package/snippets/mirror_package_form.html', pkg_dict=pkg_dict, **form_vars) -}}
+  {% endblock %}
+{% endblock %}

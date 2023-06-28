@@ -1,0 +1,149 @@
+from enum import Enum
+from typing import cast
+import psycopg2
+
+import ckan.plugins.toolkit as toolkit
+from ckan.types import Schema
+
+
+class AORCDatasetClass(Enum):
+    MIRROR = "aorc:MirrorDataset"
+    COMPOSITE = "aorc:CompositeDataset"
+    TRANSPOSITION = "aorc:TranspositionDataset"
+
+
+class AORCHandler:
+    def __init__(
+        self,
+        class_name: AORCDatasetClass,
+        read_template: str,
+        edit_template: str,
+        resource_form_template: str,
+    ) -> None:
+        self._register_dict_handler()
+        self.class_name = class_name
+        self.read_template = read_template
+        self.edit_template = edit_template
+        self.resource_form_template = resource_form_template
+        self.common_fields_simple = [
+            "spatial_resolution",
+            "docker_file",
+            "compose_file",
+            "docker_image",
+            "git_repo",
+            "docker_repo",
+            "commit_hash",
+            "digest_hash",
+        ]
+        self.common_fields_dt = ["last_modified"]
+        self.common_fields_list = ["command_list"]
+        self.time_period_fields_dt = ["start_time", "end_time"]
+        self.duration_fields_simple = ["temporal_resolution"]
+        self.rfc_fields_simple = ["rfc_alias", "rfc_full_name", "rfc_wkt"]
+        self.additional_resource_common_fields = ["compress_format", "access_rights"]
+        self.fields_simple = (
+            self.fields_dt
+        ) = self.fields_list = self.fields_json = self.additional_resource_fields = []
+
+    def _register_dict_handler(self) -> None:
+        psycopg2.extensions.register_adapter(dict, psycopg2.extras.Json)
+
+    def modify_schema(self, schema: Schema) -> Schema:
+        for simple_field in self.fields_simple:
+            schema.update(
+                {
+                    simple_field: [
+                        toolkit.get_validator("not_empty"),
+                        toolkit.get_converter("convert_to_extras"),
+                    ]
+                }
+            )
+        for dt_field in self.fields_dt:
+            schema.update(
+                {
+                    dt_field: [
+                        toolkit.get_validator("isodate"),
+                        toolkit.get_converter("convert_to_extras"),
+                    ]
+                }
+            )
+        for list_field in self.fields_list:
+            schema.update(
+                {
+                    list_field: [
+                        toolkit.get_validator("not_empty"),
+                        toolkit.get_converter("as_list"),
+                        toolkit.get_converter("convert_to_extras"),
+                    ]
+                }
+            )
+        for json_field in self.fields_json:
+            schema.update(
+                {
+                    json_field: [
+                        toolkit.get_converter("convert_to_json_if_string"),
+                        toolkit.get_validator("json_object"),
+                        toolkit.get_converter("convert_to_extras"),
+                    ]
+                }
+            )
+        resource_schema = cast(Schema, schema["resources"])
+        for additional_field in self.additional_resource_fields:
+            resource_schema.update(
+                {
+                    additional_field: [
+                        toolkit.get_validator("not_empty"),
+                        toolkit.get_converter("convert_to_extras"),
+                    ]
+                }
+            )
+        return schema
+
+    def show_schema(self, schema: Schema) -> Schema:
+        for simple_field in self.fields_simple:
+            schema.update(
+                {
+                    simple_field: [
+                        toolkit.get_converter("convert_from_extras"),
+                        toolkit.get_validator("not_empty"),
+                    ]
+                }
+            )
+        for dt_field in self.fields_dt:
+            schema.update(
+                {
+                    dt_field: [
+                        toolkit.get_converter("convert_from_extras"),
+                        toolkit.get_validator("isodate"),
+                    ]
+                }
+            )
+        for list_field in self.fields_list:
+            schema.update(
+                {
+                    list_field: [
+                        toolkit.get_converter("convert_from_extras"),
+                        toolkit.get_validator("list_of_strings"),
+                    ]
+                }
+            )
+        for json_field in self.fields_json:
+            schema.update(
+                {
+                    json_field: [
+                        toolkit.get_converter("convert_from_extras"),
+                        toolkit.get_validator("json_object"),
+                    ]
+                }
+            )
+        resource_schema = cast(Schema, schema["resources"])
+        for additonal_field in self.additional_resource_fields:
+            resource_schema.update(
+                {
+                    additonal_field: [
+                        toolkit.get_converter("convert_from_extras"),
+                        toolkit.get_validator("not_empty"),
+                    ]
+                }
+            )
+        return schema

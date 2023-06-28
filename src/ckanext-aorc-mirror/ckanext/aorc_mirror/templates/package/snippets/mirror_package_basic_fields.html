@@ -1,0 +1,21 @@
+{% extends "package/snippets/package_basic_fields.html" %}
+
+{% block package_basic_fields_custom %}
+    {{ form.input('spatial_resolution', label=_('Spatial Resolution'), id='field-spatial_resolution', placeholder=_('Spatial resolution (in meters)'), value=data.spatial_resolution, error=errors.spatial_resolution, classes=['control-medium'])}}
+    {{ form.input('temporal_resolution', label=_('Temporal Resolution'), id='field-temporal_resolution', placeholder=_('Temporal resolution (duration)'), value=data.temporal_resolution, error=errors.temporal_resolution, classes=['control-medium'])}}
+    {{ form.input('last_modified', label=_('Last Modified'), id='field-last_modified', placeholder=_('Last modified'), value=data.last_modified, error=errors.last_modified, classes=['control-medium'])}}
+    {{ form.input('start_time', label=_('Start Time'), id='field-start_time', placeholder=_('Start time'), value=data.start_time, error=errors.start_time, classes=['control-medium'])}}
+    {{ form.input('end_time', label=_('End Time'), id='field-end_time', placeholder=_('End time'), value=data.end_time, error=errors.end_time, classes=['control-medium'])}}
+    {{ form.input('docker_file', label=_('Docker File'), id='field-docker_file', placeholder=_('Dockerfile URL'), value=data.docker_file, error=errors.docker_file, classes=['control-medium'])}}
+    {{ form.input('compose_file', label=_('Compose File'), id='field-compose_file', placeholder=_('Compose file URL'), value=data.compose_file, error=errors.compose_file, classes=['control-medium'])}}
+    {{ form.input('docker_image', label=_('Docker Image'), id='field-docker_image', placeholder=_('Docker image URL'), value=data.docker_image, error=errors.docker_image, classes=['control-medium'])}}
+    {{ form.input('git_repo', label=_('Git Repo'), id='field-git_repo', placeholder=_('Git repo URL'), value=data.git_repo, error=errors.git_repo, classes=['control-medium'])}}
+    {{ form.input('docker_repo', label=_('Docker Repo'), id='field-docker_repo', placeholder=_('Docker repo URL'), value=data.docker_repo, error=errors.docker_repo, classes=['control-medium'])}}
+    {{ form.input('commit_hash', label=_('Git Commit'), id='field-commit_hash', placeholder=_('Git commit hash'), value=data.commit_hash, error=errors.commit_hash, classes=['control-medium'])}}
+    {{ form.input('digest_hash', label=_('Docker Image Digest'), id='field-digest_hash', placeholder=_('Docker image digest hash'), value=data.digest_hash, error=errors.digest_hash, classes=['control-medium'])}}
+    {{ form.input('command_list', label=_('Command List'), id='field-command_list', placeholder=_('Command list'), value=data.command_list, error=errors.command_list, classes=['control-medium'])}}
+    {{ form.input('source_dataset', label=_('Source Dataset'), id='field-source_dataset', placeholder=_('Source dataset'), value=data.source_dataset, error=errors.source_dataset, classes=['control-medium'])}}
+    {{ form.input('rfc_alias', label=_('RFC Alias'), id='field-rfc_alias', placeholder=_('RFC Alias'), value=data.rfc_alias, error=errors.rfc_alias, classes=['control-medium'])}}
+    {{ form.input('rfc_full_name', label=_('RFC Full Name'), id='field-rfc_full_name', placeholder=_('RFC Full Name'), value=data.rfc_full_name, error=errors.rfc_full_name, classes=['control-medium'])}}
+    {{ form.input('rfc_wkt', label=_('RFC Extent WKT'), id='field-rfc_wkt', placeholder=_('RFC WKT'), value=data.rfc_wkt, error=errors.rfc_wkt, classes=['control-medium'])}}
+{% endblock %}

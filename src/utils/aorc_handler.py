@@ -1,3 +1,4 @@
+import datetime
 from enum import Enum
 from typing import cast
 import psycopg2
@@ -12,16 +13,22 @@ class AORCDatasetClass(Enum):
     TRANSPOSITION = "aorc:TranspositionDataset"
 
 
+def datetime_to_string(dt: datetime.datetime) -> str:
+    return dt.isoformat()
+
+
 class AORCHandler:
     def __init__(
         self,
         class_name: AORCDatasetClass,
+        new_template: str,
         read_template: str,
         edit_template: str,
         resource_form_template: str,
     ) -> None:
         self._register_dict_handler()
         self.class_name = class_name
+        self.new_template = new_template
         self.read_template = read_template
         self.edit_template = edit_template
         self.resource_form_template = resource_form_template
@@ -63,6 +70,7 @@ class AORCHandler:
                 {
                     dt_field: [
                         toolkit.get_validator("isodate"),
+                        datetime_to_string,
                         toolkit.get_converter("convert_to_extras"),
                     ]
                 }
@@ -124,6 +132,7 @@ class AORCHandler:
                     dt_field: [
                         toolkit.get_converter("convert_from_extras"),
                         toolkit.get_validator("isodate"),
+                        datetime_to_string,
                     ]
                 }
             )
@@ -133,6 +142,7 @@ class AORCHandler:
                     list_field: [
                         toolkit.get_converter("convert_from_extras"),
                         toolkit.get_validator("list_of_strings"),
+                        toolkit.get_converter("convert_to_json_if_string"),
                     ]
                 }
             )

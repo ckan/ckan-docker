@@ -17,11 +17,12 @@ class CompositeHandler(AORCHandler):
     def __init__(
         self,
         class_name: AORCDatasetClass = AORCDatasetClass.COMPOSITE,
+        new_template: str = "",
         read_template: str = "package/composite_read.html",
         edit_template: str = "package/composite_edit.html",
         resource_form_template: str = "package/snippets/composite_resource_form.html",
     ) -> None:
-        super().__init__(class_name, read_template, edit_template, resource_form_template)
+        super().__init__(class_name, new_template, read_template, edit_template, resource_form_template)
         self._validate_class()
         self.fields_simple = [*self.common_fields_simple, *self.location_fields_simple]
         self.fields_dt = [*self.common_fields_dt, *self.time_period_fields_dt]
@@ -33,8 +34,9 @@ class CompositeHandler(AORCHandler):
             raise ValueError(f"Handler created for incorrect AORC class: {self.class_name}")
 
     def validate_name(self, dataset_type: str):
-        if dataset_type != self.class_name.value:
-            raise ValueError(f"Handler used for dataseet with class {dataset_type}, not {self.class_name.value}")
+        clean_dataset = dataset_type.replace("_", ":")
+        if clean_dataset != self.class_name.value:
+            raise ValueError(f"Handler used for dataset with class {dataset_type}, not {self.class_name.value}")
 
 
 class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
@@ -66,7 +68,7 @@ class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         return False
 
     def package_types(self) -> list[str]:
-        return ["aorc:CompositeDataset"]
+        return ["aorc_CompositeDataset"]
 
     def edit_template(self, package_type: str) -> str:
         self.handler.validate_name(package_type)

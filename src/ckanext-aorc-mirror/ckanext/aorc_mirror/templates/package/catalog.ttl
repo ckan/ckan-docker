@@ -1,0 +1,100 @@
+@prefix aorc: <https://raw.githubusercontent.com/Dewberry/blobfish/v0.9/semantics/rdf/aorc.ttl> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Ontology
+aorc: a owl:Ontology .
+
+# Classes
+aorc:CommandList a owl:Class ;
+    rdfs:comment"A list of commands to be interpreted by a software agent" ;
+    rdfs:subClassOf rdf:List .
+
+aorc:CompositeDataset a owl:Class ;
+    rdfs:comment"An AORC dataset which is the resultant product of stitching together multiple AORC datasets into one spatially continuous dataset"
+    rdfs:subClassOf dcat:Dataset .
+
+aorc:DockerCompose a owl:Class ;
+    rdfs:comment"A file which dictates what containers are used and what modifications are done to these containers when they are orchestrated together. This includes what local data is copied to the container and what other containers are on the same network" ;
+    rdfs:subClassOf schema:SoftwareSourceCode .
+
+aorc:DockerContainer a owl:Class ;
+    rdfs:comment"A container which is a modified copy of a docker image" ;
+    rdfs:subClassOf schema:SoftwareApplication .
+
+aorc:DockerImage a owl:Class ;
+    rdfs:comment"A set of instructions for constructing a computing environment that can be reused and modified for individual use" ;
+    rdfs:subClassOf schema:SoftwareSourceCode .
+
+aorc:DockerProcess a owl:Class ;
+    rdfs:comment"An activity started by a docker container" ;
+    rdfs:subClassOf prov:Activity .
+
+aorc:MirrorDataset a owl:Class ;
+    rdfs:comment"An AORC dataset which has been downloaded from its original web address to a secondary location" ;
+    rdfs:subClassOf dcat:Dataset .
+
+aorc:RFC a owl:Class ;
+    rdfs:comment"A River Forecast Center; an office under the National Oceanic and Atmospheric Administration" ;
+    rdfs:subClassOf dct:Location,
+        org:OrganizationalUnit .
+
+aorc:SourceDataset a owl:Class ;
+    rdfs:comment"An AORC dataset which is located at its original web address" ;
+    rdfs:subClassOf dcat:Dataset .
+
+aorc:TranspositionDataset a owl:Class ;
+    rdfs:comment"A dataset which is the resultant product of stochaistic storm transposition modeling using AORC precipitation data summarized over a specified time window and geographic location" ;
+    rdfs:subClassOf dcat:Dataset .
+
+# Object Properties
+aorc:hasRFC a owl:ObjectProperty ;
+    rdfs:comment "Indicates association with an RFC which denotes the RFC as the office responsible for the subject and denotes the spatial coverage of the RFC as the spatial coverage of the subject" ;
+    rdfs:range aorc:RFC .
+    rdfs:subPropertyOf dct:spatial,
+        org:unitOf .
+
+aorc:maxPrecipitationPoint a owl:ObjectProperty ;
+    rdfs:comment "The spatial location at which the greatest precipitation occurred over a given spatial and temporal coverage value." ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range dct:Location ;
+    rdfs:subClassOf dct:spatial .
+
+aorc:normalizedBy a owl:ObjectProperty ;
+    rdfs:comment "Indicates the dataset from which values were pulled for the overlapping time period and spatial location, and then subsequently used as the denominator in a division operation with the subject dataset values used as the numerator to yield normalized values" ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range dcat:Dataset .
+
+aorc:transpositionRegion a owl:ObjectProperty ;
+    rdfs:comment "Indicates the transposition region to which the subject dataset refers" ;
+    rdfs:domain: aorc:TranspositionDataset ;
+    rdfs:range: dct:Location ;
+    rdfs:subPropertyOf dct:spatial .
+
+aorc:watershedRegion a owl:ObjectProperty ;
+    rdfs:comment "Indicates the watershed region to which the subject dataset refers" ;
+    rdfs:domain: aorc:TranspositionDataset ;
+    rdfs:range: dct:Location ;
+    rdfs:subPropertyOf dct:spatial .
+
+# Data Properties
+aorc:cellCount a owl:DatatypeProperty ;
+    rdfs:comment "Count of cells of a given spatial gridded dataset which comprise a given region" .
+
+aorc:maxPrecipitation a owl:DatatypeProperty ;
+    rdfs:comment "Maximum precipitation value in inches for a given region over a given period of time" .
+
+aorc:meanPrecipitation a owl:DatatypeProperty ;
+    rdfs:comment "Mean precipitation value in inches for a given region over a given period of time" .
+
+aorc:normalizedMeanPrecipitation a owl:DatatypeProperty ;
+    rdfs:comment "Mean precipitation value in inches for a given region over a given period of time, normalized by a given dataset" .
+
+aorc:sumPrecipitation a owl:DatatypeProperty ;
+    rdfs:comment "Total precipitation in inches over a given region over a given period of time" .

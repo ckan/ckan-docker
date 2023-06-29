@@ -1,8 +1,41 @@
+import datetime
 import requests
+from urllib.parse import quote
 import logging
 
 
-def add_data(api_key: str, base_url: str, dataset_id: str, **kwargs) -> int:
+def add_mirror_dataset(api_key: str, base_url: str, dataset_id: str) -> int:
+    mirror_data = {"title": dataset_id.capitalize(), "type": "aorc_MirrorDataset", "url": quote(dataset_id)}
+    simple_fields = [
+        "spatial_resolution",
+        "docker_file",
+        "compose_file",
+        "docker_image",
+        "git_repo",
+        "docker_repo",
+        "commit_hash",
+        "digest_hash",
+        "temporal_resolution",
+        "rfc_alias",
+        "rfc_full_name",
+        "rfc_parent_organization",
+        "rfc_wkt",
+    ]
+    for simple in simple_fields:
+        mirror_data[simple] = "test"
+    dt_fields = ["last_modified", "start_time", "end_time"]
+    for dt in dt_fields:
+        mirror_data[dt] = datetime.datetime.today().isoformat()
+    list_fields = ["command_list"]
+    for l in list_fields:
+        mirror_data[l] = ["command_1", "command_2", "command_3"]
+    json_fields = ["source_dataset"]
+    for j in json_fields:
+        mirror_data[j] = {"id": 1}
+    add_dataset(api_key, base_url, dataset_id, **mirror_data)
+
+
+def add_dataset(api_key: str, base_url: str, dataset_id: str, **kwargs) -> int:
     url = f"{base_url}/api/3/action/package_create"
     headers = {"Authorization": api_key, "Content-Type": "application/json"}
     data = {
@@ -44,6 +77,7 @@ if __name__ == "__main__":
     logging.basicConfig(handlers=[logging.StreamHandler()], level=logging.INFO)
     api_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJDalRlaUVtTWc5TlRsR1g0SWNudDlaNGxGMWxTUWcxRW1Ta3l0aTVVMW5nIiwiaWF0IjoxNjg3ODk2NzI3fQ.7dzvPq9BXAnVmA9_82SFQ9nwuz7qSdqjYrZRe5BZlSY"
     base_url = "http://localhost:5000/"
-    dataset_id = "mirror_dataset_demo"
-    add_data(api_key, base_url, dataset_id, title="Demo Mirror Dataset", type="aorc:MirrorDataset")
+    dataset_id = "dataset_demo"
+    # add_dataset(api_key, base_url, dataset_id, title="Demo Dataset", type="dataset")
+    # add_mirror_dataset(api_key, base_url, dataset_id)
     show_package(base_url, dataset_id)

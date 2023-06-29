@@ -15,6 +15,6 @@ setup(
     },
     entry_points="""
         [ckan.plugins]
-        aorc_tranposition=ckanext.aorc_transposition.plugin:AorcTranspositionPlugin
+        aorc_transposition=ckanext.aorc_transposition.plugin:AorcTranspositionPlugin
     """,
 )

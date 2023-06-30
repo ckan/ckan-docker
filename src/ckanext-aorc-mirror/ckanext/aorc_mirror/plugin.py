@@ -182,6 +182,9 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
         temporal_resolution_literal = Literal(dataset["temporal_resolution"], datatype=XSD.duration)
         g.add((mirror_dataset_uri, DCAT.temporalResolution, temporal_resolution_literal))
+
+        self._handle_resources(dataset["resources"], mirror_dataset_uri, g)
+
         return mirror_dataset_uri
 
     def _handle_ckan_mirror_data(self, results: dict[str, list[dict]]) -> Graph:

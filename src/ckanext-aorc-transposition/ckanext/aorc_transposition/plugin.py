@@ -266,6 +266,8 @@ class AorcTranspositionPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetFor
                 )
             )
 
+        self._handle_resources(dataset["resources"], transposition_dataset_uri, g)
+
         return transposition_dataset_uri
 
     def _handle_ckan_transposition_data(self, results: dict[str, list[dict]]) -> Graph:

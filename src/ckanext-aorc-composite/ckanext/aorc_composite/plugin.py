@@ -169,6 +169,9 @@ class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
         last_modification = Literal(dataset["last_modified"], datatype=XSD.dateTime)
         g.add((composite_dataset_uri, DCTERMS.modified, last_modification))
+
+        self._handle_resources(dataset["resources"], composite_dataset_uri, g)
+
         return composite_dataset_uri
 
     def _handle_ckan_composite_data(self, results: dict[str, list[dict]]) -> Graph:

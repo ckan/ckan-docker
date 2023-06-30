@@ -6,11 +6,12 @@ from typing import Any
 
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-from rdflib import PROV, DCAT, RDF, XSD, DCTERMS, SKOS, ORG, RDFS, Graph, URIRef, BNode, Namespace, Literal
-from rdflib.collection import Collection
 from ckan.config.middleware import CKANConfig
 from ckan.types import Schema
+from flask import make_response
 from flask.blueprints import Blueprint
+from rdflib import DCAT, DCTERMS, ORG, PROV, RDF, RDFS, SKOS, XSD, BNode, Graph, Literal, Namespace, URIRef
+from rdflib.collection import Collection
 
 sys.path.append("/srv/app/src_extensions")
 
@@ -67,7 +68,7 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     def _bind_to_namespaces(self, g: Graph) -> None:
         g.bind("aorc", self.AORC)
-        g.bind("schema", self.SCHEMA)
+        g.bind("schema", self.SCHEMA, replace=True)
         g.bind("geo", self.GEO)
         g.bind("locn", self.LOCN)
         g.bind("dct", DCTERMS)
@@ -107,6 +108,87 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         else:
             raise ValueError("There is not exactly one node with type 'aorc:SourceDataset' in the graph.")
 
+    def _parse_mirror_dataset(self, g: Graph, dataset: dict) -> URIRef:
+        mirror_dataset_uri = URIRef(f"{self.base_url}/aorc_MirrorDataset/{dataset['url']}")
+        g.add((mirror_dataset_uri, RDF.type, DCAT.Dataset))
+
+        docker_process_b_node = BNode()
+        g.add((docker_process_b_node, RDF.type, self.AORC.DockerProcess))
+        g.add((mirror_dataset_uri, PROV.wasGeneratedBy, docker_process_b_node))
+
+        if dataset.get("docker_file"):
+            docker_container_node = URIRef(dataset["docker_file"])
+        else:
+            docker_container_node = BNode()
+        g.add((docker_container_node, RDF.type, self.AORC.DockerContainer))
+        g.add((docker_process_b_node, PROV.used, docker_container_node))
+
+        command_list = dataset["command_list"].split(" ")
+        command_list_b_node = BNode()
+        command_list_collection = Collection(g, command_list_b_node)
+        for command in command_list:
+            command_literal = Literal(command, datatype=XSD.string)
+            command_list_collection.append(command_literal)
+        g.add((docker_process_b_node, PROV.wasStartedBy, command_list_b_node))
+
+        docker_compose_uri = URIRef(dataset["compose_file"])
+        g.add((docker_compose_uri, RDF.type, self.AORC.DockerCompose))
+        g.add((docker_container_node, PROV.wasStartedBy, docker_compose_uri))
+
+        commit_hash_literal = Literal(dataset["commit_hash"], datatype=XSD.string)
+        github_url = Literal(dataset["git_repo"], datatype=XSD.string)
+        g.add((docker_compose_uri, self.SCHEMA.sha256, commit_hash_literal))
+        g.add((docker_compose_uri, self.SCHEMA.codeRepository, github_url))
+
+        docker_image_uri = URIRef(dataset["docker_image"])
+        g.add((docker_image_uri, RDF.type, self.AORC.DockerImage))
+        g.add((docker_compose_uri, DCTERMS.source, docker_image_uri))
+
+        digest_hash_literal = Literal(dataset["digest_hash"], datatype=XSD.string)
+        docker_hub_url = Literal(dataset["docker_repo"], datatype=XSD.string)
+        g.add((docker_image_uri, self.SCHEMA.sha256, digest_hash_literal))
+        g.add((docker_image_uri, self.SCHEMA.codeRepository, docker_hub_url))
+
+        # source_dataset_b_node = self._parse_source_dataset(dataset["source_dataset"])
+        source_dataset_b_node = BNode()
+        g.add((source_dataset_b_node, RDF.type, self.AORC.SourceDataset))
+        g.add((mirror_dataset_uri, DCTERMS.source, source_dataset_b_node))
+
+        rfc_b_node = BNode()
+        rfc_alias_literal = Literal(dataset["rfc_alias"], datatype=XSD.string)
+        rfc_name_literal = Literal(dataset["rfc_full_name"], datatype=XSD.string)
+        g.add((rfc_b_node, SKOS.altLabel, rfc_alias_literal))
+        g.add((rfc_b_node, SKOS.prefLabel, rfc_name_literal))
+        g.add((rfc_b_node, RDF.type, self.AORC.RFC))
+        g.add((mirror_dataset_uri, self.AORC.hasRFC, rfc_b_node))
+
+        rfc_geom_b_node = BNode()
+        rfc_geom_wkt_literal = Literal(dataset["rfc_wkt"], datatype=self.GEO.wktLiteral)
+        g.add((rfc_geom_b_node, RDF.type, self.LOCN.Geometry))
+        g.add((rfc_b_node, self.LOCN.geometry, rfc_geom_b_node))
+        g.add((rfc_geom_b_node, self.GEO.asWKT, rfc_geom_wkt_literal))
+
+        rfc_org_uri = URIRef(dataset["rfc_parent_organization"])
+        g.add((rfc_b_node, ORG.unitOf, rfc_org_uri))
+
+        period_of_time_b_node = BNode()
+        start_literal = Literal(dataset["start_time"], datatype=XSD.dateTime)
+        end_literal = Literal(dataset["end_time"], datatype=XSD.dateTime)
+        g.add((period_of_time_b_node, RDF.type, DCTERMS.PeriodOfTime))
+        g.add((period_of_time_b_node, DCAT.startDate, start_literal))
+        g.add((period_of_time_b_node, DCAT.endDate, end_literal))
+        g.add((mirror_dataset_uri, DCTERMS.temporal, period_of_time_b_node))
+
+        spatial_resolution_literal = Literal(dataset["spatial_resolution"], datatype=XSD.numeric)
+        g.add((mirror_dataset_uri, DCAT.spatialResolutionInMeters, spatial_resolution_literal))
+
+        last_modification = Literal(dataset["last_modified"], datatype=XSD.dateTime)
+        g.add((mirror_dataset_uri, DCTERMS.modified, last_modification))
+
+        temporal_resolution_literal = Literal(dataset["temporal_resolution"], datatype=XSD.duration)
+        g.add((mirror_dataset_uri, DCAT.temporalResolution, temporal_resolution_literal))
+        return mirror_dataset_uri
+
     def _handle_ckan_mirror_data(self, results: dict[str, list[dict]]) -> Graph:
         g = Graph()
         self._bind_to_namespaces(g)
@@ -115,85 +197,8 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         g.add((catalog_uri, RDF.type, DCAT.Catalog))
 
         for dataset in results.get("results", []):
-            mirror_dataset_uri = URIRef(f"{self.base_url}/aorc_MirrorDataset/{dataset['url']}")
-            g.add((mirror_dataset_uri, RDF.type, DCAT.Dataset))
+            mirror_dataset_uri = self._parse_mirror_dataset(g, dataset)
             g.add((catalog_uri, DCAT.dataset, mirror_dataset_uri))
-
-            docker_process_b_node = BNode()
-            g.add((docker_process_b_node, RDF.type, self.AORC.DockerProcess))
-            g.add((mirror_dataset_uri, PROV.wasGeneratedBy, docker_process_b_node))
-
-            if dataset.get("docker_file"):
-                docker_container_node = URIRef(dataset["docker_file"])
-            else:
-                docker_container_node = BNode()
-            g.add((docker_container_node, RDF.type, self.AORC.DockerContainer))
-            g.add((docker_process_b_node, PROV.used, docker_container_node))
-
-            command_list = dataset["command_list"][1:-1].split(",")
-            command_list_b_node = BNode()
-            command_list_collection = Collection(g, command_list_b_node)
-            for command in command_list:
-                command_literal = Literal(command, datatype=XSD.string)
-                command_list_collection.append(command_literal)
-            g.add((docker_process_b_node, PROV.wasStartedBy, command_list_b_node))
-
-            docker_compose_uri = URIRef(dataset["compose_file"])
-            g.add((docker_compose_uri, RDF.type, self.AORC.DockerCompose))
-            g.add((docker_container_node, PROV.wasStartedBy, docker_compose_uri))
-
-            commit_hash_literal = Literal(dataset["commit_hash"], datatype=XSD.string)
-            github_url = Literal(dataset["git_repo"], datatype=XSD.string)
-            g.add((docker_compose_uri, self.SCHEMA.sha256, commit_hash_literal))
-            g.add((docker_compose_uri, self.SCHEMA.codeRepository, github_url))
-
-            docker_image_uri = URIRef(dataset["docker_image"])
-            g.add((docker_image_uri, RDF.type, self.AORC.DockerImage))
-            g.add((docker_compose_uri, DCTERMS.source, docker_image_uri))
-
-            digest_hash_literal = Literal(dataset["digest_hash"], datatype=XSD.string)
-            docker_hub_url = Literal(dataset["docker_repo"], datatype=XSD.string)
-            g.add((docker_image_uri, self.SCHEMA.sha256, digest_hash_literal))
-            g.add((docker_image_uri, self.SCHEMA.codeRepository, docker_hub_url))
-
-            # source_dataset_b_node = self._parse_source_dataset(dataset["source_dataset"])
-            source_dataset_b_node = BNode()
-            g.add((source_dataset_b_node, RDF.type, self.AORC.SourceDataset))
-            g.add((mirror_dataset_uri, DCTERMS.source, source_dataset_b_node))
-
-            rfc_b_node = BNode()
-            rfc_alias_literal = Literal(dataset["rfc_alias"], datatype=XSD.string)
-            rfc_name_literal = Literal(dataset["rfc_full_name"], datatype=XSD.string)
-            g.add((rfc_b_node, SKOS.altLabel, rfc_alias_literal))
-            g.add((rfc_b_node, SKOS.prefLabel, rfc_name_literal))
-            g.add((rfc_b_node, RDF.type, self.AORC.RFC))
-
-            rfc_geom_b_node = BNode()
-            rfc_geom_wkt_literal = Literal(dataset["rfc_wkt"], datatype=self.GEO.wktLiteral)
-            g.add((rfc_geom_b_node, RDF.type, self.LOCN.Geometry))
-            g.add((rfc_b_node, self.LOCN.geometry, rfc_geom_b_node))
-            g.add((rfc_geom_b_node, self.GEO.asWKT, rfc_geom_wkt_literal))
-
-            rfc_org_uri = URIRef(dataset["rfc_parent_organization"])
-            g.add((rfc_b_node, ORG.unitOf, rfc_org_uri))
-
-            period_of_time_b_node = BNode()
-            start_literal = Literal(dataset["start_time"], datatype=XSD.dateTime)
-            end_literal = Literal(dataset["end_time"], datatype=XSD.dateTime)
-            g.add((period_of_time_b_node, RDF.type, DCTERMS.PeriodOfTime))
-            g.add((period_of_time_b_node, DCAT.startDate, start_literal))
-            g.add((period_of_time_b_node, DCAT.endDate, end_literal))
-            g.add((mirror_dataset_uri, DCTERMS.temporal, period_of_time_b_node))
-
-            spatial_resolution_literal = Literal(dataset["spatial_resolution"], datatype=XSD.numeric)
-            g.add((mirror_dataset_uri, DCAT.spatialResolutionInMeters, spatial_resolution_literal))
-
-            last_modification = Literal(dataset["last_modified"], datatype=XSD.dateTime)
-            g.add((mirror_dataset_uri, DCTERMS.modified, last_modification))
-
-            temporal_resolution_literal = Literal(dataset["temporal_resolution"], datatype=XSD.duration)
-            g.add((mirror_dataset_uri, DCAT.temporalResolution, temporal_resolution_literal))
-
         return g
 
     def update_config(self, config_: CKANConfig):
@@ -237,14 +242,26 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     def prepare_dataset_blueprint(self, package_type: str, blueprint: Blueprint) -> Blueprint:
         self.handler.validate_name(package_type)
-        blueprint.add_url_rule(f"/{self.catalog_fn}", view_func=self.testing_view)
+        blueprint.add_url_rule(f"/{self.catalog_fn}", view_func=self.view_catalog_ttl)
+        blueprint.add_url_rule(f"/<_id>/test", view_func=self.view_dataset_ttl)
         return blueprint
 
-    def testing_view(self, package_type: str):
+    def view_catalog_ttl(self, package_type: str):
         self.handler.validate_name(package_type)
         result = toolkit.get_action("package_search")(
             data_dict={"fq": "type:aorc_MirrorDataset", "rows": 1000}  # Adjust the number of rows as needed
         )
         catalog_ttl = self._handle_ckan_mirror_data(result).serialize(format="ttl")
         # Change to flask.Response class to manually set content type / mime type
-        return catalog_ttl
+        resp = make_response(catalog_ttl, {"Content-Type": "text/plain; charset=utf-8"})
+        return resp
+
+    def view_dataset_ttl(self, package_type: str, _id: str):
+        self.handler.validate_name(package_type)
+        result = toolkit.get_action("package_show")(data_dict={"id": _id})
+        g = Graph()
+        self._bind_to_namespaces(g)
+        self._parse_mirror_dataset(g, result)
+        dataset_ttl = g.serialize(format="ttl")
+        resp = make_response(dataset_ttl, {"Content-Type": "text/plain; charset=utf-8"})
+        return resp

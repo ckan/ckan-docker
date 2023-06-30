@@ -17,6 +17,12 @@ def datetime_to_string(dt: datetime.datetime) -> str:
     return dt.isoformat()
 
 
+def reformat_command_list(command_list: str) -> str:
+    commands = command_list[1:-1].split(",")
+    command_string = " ".join(commands)
+    return command_string
+
+
 class AORCHandler:
     def __init__(
         self,
@@ -46,7 +52,12 @@ class AORCHandler:
         self.common_fields_list = ["command_list"]
         self.time_period_fields_dt = ["start_time", "end_time"]
         self.time_resolution_duration_fields_simple = ["temporal_resolution"]
-        self.rfc_fields_simple = ["rfc_alias", "rfc_full_name", "rfc_parent_organization", "rfc_wkt"]
+        self.rfc_fields_simple = [
+            "rfc_alias",
+            "rfc_full_name",
+            "rfc_parent_organization",
+            "rfc_wkt",
+        ]
         self.additional_resource_common_fields = ["compress_format", "access_rights"]
         self.location_fields_simple = ["location_name", "location_wkt"]
         self.fields_simple = self.fields_dt = self.fields_list = self.fields_json = self.additional_resource_fields = []
@@ -142,7 +153,7 @@ class AORCHandler:
                     list_field: [
                         toolkit.get_converter("convert_from_extras"),
                         toolkit.get_validator("list_of_strings"),
-                        toolkit.get_converter("convert_to_json_if_string"),
+                        reformat_command_list,
                     ]
                 }
             )

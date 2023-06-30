@@ -4,6 +4,53 @@ from urllib.parse import quote
 import logging
 
 
+def add_transposition_dataset(api_key: str, base_url: str, dataset_id: str) -> int:
+    transposition_data = {
+        "title": dataset_id.capitalize(),
+        "type": "aorc_TranspositionDataset",
+        "url": quote(dataset_id),
+    }
+    simple_fields = [
+        "spatial_resolution",
+        "docker_file",
+        "compose_file",
+        "docker_image",
+        "git_repo",
+        "docker_repo",
+        "commit_hash",
+        "digest_hash",
+        "transposition_region_name",
+        "transposition_region_wkt",
+        "watershed_region_name",
+        "watershed_region_wkt",
+        "max_precipitation_point_name",
+        "max_precipitation_point_wkt",
+        "image",
+        "cell_count",
+        "mean_precipitation",
+        "max_precipitation",
+        "min_precipitation",
+        "sum_precipitation",
+        "normalized_mean_precipitation",
+    ]
+    for simple in simple_fields:
+        transposition_data[simple] = "test"
+    dt_fields = ["last_modified", "start_time", "end_time"]
+    for dt in dt_fields:
+        transposition_data[dt] = datetime.datetime.today().isoformat()
+    transposition_data["composite_normalized_datasets"] = {
+        "https://example.org/aorc_CompositeDataset/dataset_1": None,
+        "https://example.org/aorc_CompositeDataset/dataset_2": "https://example.org/atlas14_data/dataset_2",
+        "https://example.org/aorc_CompositeDataset/dataset_3": None,
+    }
+    transposition_data["command_list"] = [
+        "command_1",
+        "command_2",
+        "command_3",
+    ]
+    return add_dataset(api_key, base_url, dataset_id, **transposition_data)
+
+
 def add_composite_dataset(api_key: str, base_url: str, dataset_id: str) -> int:
     composite_data = {"title": dataset_id.capitalize(), "type": "aorc_CompositeDataset", "url": quote(dataset_id)}
     simple_fields = [
@@ -33,7 +80,7 @@ def add_composite_dataset(api_key: str, base_url: str, dataset_id: str) -> int:
         "command_2",
         "command_3",
     ]
-    add_dataset(api_key, base_url, dataset_id, **composite_data)
+    return add_dataset(api_key, base_url, dataset_id, **composite_data)
 
 
 def add_mirror_dataset(api_key: str, base_url: str, dataset_id: str) -> int:
@@ -62,7 +109,7 @@ def add_mirror_dataset(api_key: str, base_url: str, dataset_id: str) -> int:
     json_fields = ["source_dataset"]
     for j in json_fields:
         mirror_data[j] = {"id": 1}
-    add_dataset(api_key, base_url, dataset_id, **mirror_data)
+    return add_dataset(api_key, base_url, dataset_id, **mirror_data)
 
 
 def add_dataset(api_key: str, base_url: str, dataset_id: str, **kwargs) -> int:
@@ -106,9 +153,10 @@ def show_package(base_url: str, dataset_id: str) -> dict:
 if __name__ == "__main__":
     logging.basicConfig(handlers=[logging.StreamHandler()], level=logging.INFO)
     api_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJDalRlaUVtTWc5TlRsR1g0SWNudDlaNGxGMWxTUWcxRW1Ta3l0aTVVMW5nIiwiaWF0IjoxNjg3ODk2NzI3fQ.7dzvPq9BXAnVmA9_82SFQ9nwuz7qSdqjYrZRe5BZlSY"
-    base_url = "http://localhost:5000"
-    dataset_id = "composite_dataset_demo"
+    base_url = "http://localhost:5000/"
+    dataset_id = "transposition_dataset_demo"
     # add_dataset(api_key, base_url, dataset_id, title="Demo Dataset", type="dataset")
     # add_mirror_dataset(api_key, base_url, dataset_id)
-    add_composite_dataset(api_key, base_url, dataset_id)
+    # add_composite_dataset(api_key, base_url, dataset_id)
+    add_transposition_dataset(api_key, base_url, dataset_id)
     show_package(base_url, dataset_id)

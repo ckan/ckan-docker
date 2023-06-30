@@ -18,7 +18,7 @@
     {{ form.input('transposition_region_wkt', label=_('Transposition Region WKT'), id='field-transposition_region_wkt', placeholder=_('Transposition region WKT'), value=data.transposition_region_wkt, error=errors.transposition_region_wkt, classes=['control-medium'])}}
     {{ form.input('watershed_region_name', label=_('Watershed Region Name'), id='field-watershed_region_name', placeholder=_('Watershed region name'), value=data.watershed_region_name, error=errors.watershed_region_name, classes=['control-medium'])}}
     {{ form.input('watershed_region_wkt', label=_('Watershed Region WKT'), id='field-watershed_region_wkt', placeholder=_('Watershed region WKT'), value=data.watershed_region_wkt, error=errors.watershed_region_wkt, classes=['control-medium'])}}
-    {% if pkg_dict.max_precipitation_point_name %}
+    {% if data.max_precipitation_point_name %}
         {{ form.input('max_precipitation_point_name', label=_('Maximum Precipitation Point Name'), id='field-max_precipitation_point_name', placeholder=_('Maximum precipitation point name'), value=data.max_precipitation_point_name, error=errors.max_precipitation_point_name, classes=['control-medium'])}}
     {% endif %}
     {{ form.input('max_precipitation_point_wkt', label=_('Maximum Precipitation Point WKT'), id='field-max_precipitation_point_wkt', placeholder=_('Maximum precipitation point WKT'), value=data.max_precipitation_point_wkt, error=errors.max_precipitation_point_wkt, classes=['control-medium'])}}
@@ -28,7 +28,7 @@
     {{ form.input('max_precipitation', label=_('Maximum Precipitation'), id='field-max_precipitation', placeholder=_('Max precipitation (inches)'), value=data.max_precipitation, error=errors.max_precipitation, classes=['control-medium'])}}
     {{ form.input('min_precipitation', label=_('Minimum Precipitation'), id='field-min_precipitation', placeholder=_('Min precipitation (inches)'), value=data.min_precipitation, error=errors.min_precipitation, classes=['control-medium'])}}
     {{ form.input('sum_precipitation', label=_('Total Precipitation'), id='field-sum_precipitation', placeholder=_('Sum precipitation (inches)'), value=data.sum_precipitation, error=errors.sum_precipitation, classes=['control-medium'])}}
-    {% if pkg_dict.normalized_mean_precipitation %}
+    {% if data.normalized_mean_precipitation %}
         {{ form.input('normalized_mean_precipitation', label=_('Normalized Mean Precipitation'), id='field-normalized_mean_precipitation', placeholder=_('Normalized mean precipitation (inches)'), value=data.normalized_mean_precipitation, error=errors.normalized_mean_precipitation, classes=['control-medium'])}}
     {% endif %}
 {% endblock %}

@@ -218,14 +218,15 @@ This extension checks for environmental variables conforming to an expected form
 
 For the extension to correctly identify which env var keys map to the format used for the config object, env var keys should be formatted in the following way:
 
-  All uppercase
-  Replace periods ('.') with two underscores ('__')
-  Keys must begin with 'CKAN' or 'CKANEXT'
+  All uppercase  
+  Replace periods ('.') with two underscores ('__')  
+  Keys must begin with 'CKAN' or 'CKANEXT', if they do not you can prepend them with '`CKAN___`' 
 
 For example:
 
   * `CKAN__PLUGINS="envvars image_view text_view recline_view datastore datapusher"`
   * `CKAN__DATAPUSHER__CALLBACK_URL_BASE=http://ckan:5000`
+  * `CKAN___BEAKER__SESSION__SECRET=CHANGE_ME`
 
 These parameters can be added to the `.env` file 
 

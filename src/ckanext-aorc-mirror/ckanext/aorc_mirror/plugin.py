@@ -110,7 +110,7 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     def _parse_mirror_dataset(self, g: Graph, dataset: dict) -> URIRef:
         mirror_dataset_uri = URIRef(f"{self.base_url}/aorc_MirrorDataset/{dataset['url']}")
-        g.add((mirror_dataset_uri, RDF.type, DCAT.Dataset))
+        g.add((mirror_dataset_uri, RDF.type, self.AORC.MirrorDataset))
 
         docker_process_b_node = BNode()
         g.add((docker_process_b_node, RDF.type, self.AORC.DockerProcess))
@@ -243,7 +243,7 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def prepare_dataset_blueprint(self, package_type: str, blueprint: Blueprint) -> Blueprint:
         self.handler.validate_name(package_type)
         blueprint.add_url_rule(f"/{self.catalog_fn}", view_func=self.view_catalog_ttl)
-        blueprint.add_url_rule(f"/<_id>/test", view_func=self.view_dataset_ttl)
+        blueprint.add_url_rule(f"/<_id>.ttl", view_func=self.view_dataset_ttl)
         return blueprint
 
     def view_catalog_ttl(self, package_type: str):

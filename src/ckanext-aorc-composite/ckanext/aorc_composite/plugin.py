@@ -87,8 +87,9 @@ class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
             access_rights_b_node = BNode()
             access_rights_literal = Literal(resource["access_rights"], datatype=XSD.string)
-            g.add((access_rights_b_node, RDF.type, DCTERMS.accessRights))
+            g.add((access_rights_b_node, RDF.type, DCTERMS.RightsStatement))
             g.add((access_rights_b_node, RDFS.label, access_rights_literal))
+            g.add((resource_uri, DCTERMS.accessRights, access_rights_b_node))
 
             file_format_uri = URIRef(resource["format"])
             g.add((resource_uri, DCTERMS.FileFormat, file_format_uri))

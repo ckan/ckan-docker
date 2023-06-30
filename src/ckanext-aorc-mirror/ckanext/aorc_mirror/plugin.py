@@ -90,8 +90,9 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
             access_rights_b_node = BNode()
             access_rights_literal = Literal(resource["access_rights"], datatype=XSD.string)
-            g.add((access_rights_b_node, RDF.type, DCTERMS.accessRights))
+            g.add((access_rights_b_node, RDF.type, DCTERMS.RightsStatement))
             g.add((access_rights_b_node, RDFS.label, access_rights_literal))
+            g.add((resource_uri, DCTERMS.accessRights, access_rights_b_node))
 
             file_format_uri = URIRef(resource["format"])
             g.add((resource_uri, DCTERMS.FileFormat, file_format_uri))
@@ -99,14 +100,8 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             compress_format_uri = URIRef(resource["compress_format"])
             g.add((resource_uri, DCAT.compressFormat, compress_format_uri))
 
-    def _parse_source_dataset(self, json_ld_str: str) -> BNode:
-        source_graph = Graph()
-        source_graph.parse(data=json_ld_str, format="json-ld")
-        dataset_nodes = list(source_graph.subjects(RDF.type, self.AORC.SourceDataset))
-        if len(dataset_nodes) == 1:
-            return dataset_nodes[0]
-        else:
-            raise ValueError("There is not exactly one node with type 'aorc:SourceDataset' in the graph.")
+    def _parse_source_dataset(self, g: Graph, json_ld_str: str):
+        g.parse(data=json_ld_str, format="json-ld")
 
     def _parse_mirror_dataset(self, g: Graph, dataset: dict) -> URIRef:
         mirror_dataset_uri = URIRef(f"{self.base_url}/aorc_MirrorDataset/{dataset['url']}")

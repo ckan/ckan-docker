@@ -10,20 +10,16 @@ from ckan.config.middleware import CKANConfig
 from ckan.types import Schema
 from flask import make_response
 from flask.blueprints import Blueprint
-from rdflib import DCAT, DCTERMS, PROV, RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
+from rdflib import DCAT, DCTERMS, PROV, RDF, RDFS, XSD, BNode, Graph, Literal, URIRef
 from rdflib.collection import Collection
 
 sys.path.append("/srv/app/src_extensions")
 
-from utils.aorc_handler import AORCDatasetClass, AORCHandler
+from utils import AORCDatasetClass, AORCHandler, AORC
+from utils.constants import GEO, LOCN, SCHEMA
 
 
 class CompositeHandler(AORCHandler):
-    AORC = Namespace("https://raw.githubusercontent.com/Dewberry/blobfish/v0.9/semantics/rdf/aorc.ttl")
-    SCHEMA = Namespace("https://schema.org")
-    LOCN = Namespace("http://www.w3.org/ns/locn#")
-    GEO = Namespace("http://www.opengis.net/ont/geosparql#")
-
     def __init__(
         self,
         class_name: AORCDatasetClass = AORCDatasetClass.COMPOSITE,
@@ -50,11 +46,6 @@ class CompositeHandler(AORCHandler):
 
 
 class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
-    AORC = Namespace("https://raw.githubusercontent.com/Dewberry/blobfish/v0.9/semantics/rdf/aorc.ttl")
-    SCHEMA = Namespace("https://schema.org")
-    LOCN = Namespace("http://www.w3.org/ns/locn#")
-    GEO = Namespace("http://www.opengis.net/ont/geosparql#")
-
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
 
@@ -66,10 +57,10 @@ class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         self.catalog_endpoint = f"{self.base_url}/aorc_CompositeDataset/{self.catalog_fn}"
 
     def _bind_to_namespaces(self, g: Graph) -> None:
-        g.bind("aorc", self.AORC)
-        g.bind("schema", self.SCHEMA, replace=True)
-        g.bind("geo", self.GEO)
-        g.bind("locn", self.LOCN)
+        g.bind("aorc", AORC)
+        g.bind("schema", SCHEMA, replace=True)
+        g.bind("geo", GEO)
+        g.bind("locn", LOCN)
         g.bind("dct", DCTERMS)
         g.bind("dcat", DCAT)
         g.bind("prov", PROV)
@@ -77,39 +68,19 @@ class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         g.bind("rdf", RDF)
         g.bind("rdfs", RDFS)
 
-    def _handle_resources(self, resources: list[dict], dataset_uri: URIRef, g: Graph):
-        for resource in resources:
-            resource_uri = URIRef(f"{str(dataset_uri)}/resource/{resource['id']}")
-            g.add((resource_uri, RDF.type, DCAT.Distribution))
-
-            download_url_literal = Literal(resource["url"], datatype=XSD.string)
-            g.add((resource_uri, DCAT.downloadURL, download_url_literal))
-
-            access_rights_b_node = BNode()
-            access_rights_literal = Literal(resource["access_rights"], datatype=XSD.string)
-            g.add((access_rights_b_node, RDF.type, DCTERMS.RightsStatement))
-            g.add((access_rights_b_node, RDFS.label, access_rights_literal))
-            g.add((resource_uri, DCTERMS.accessRights, access_rights_b_node))
-
-            file_format_uri = URIRef(resource["format"])
-            g.add((resource_uri, DCTERMS.FileFormat, file_format_uri))
-
-            compress_format_uri = URIRef(resource["compress_format"])
-            g.add((resource_uri, DCAT.compressFormat, compress_format_uri))
-
     def _parse_composite_dataset(self, g: Graph, dataset: dict) -> URIRef:
         composite_dataset_uri = URIRef(f"{self.base_url}/aorc_CompositeDataset/{dataset['url']}")
-        g.add((composite_dataset_uri, RDF.type, self.AORC.CompositeDataset))
+        g.add((composite_dataset_uri, RDF.type, AORC.CompositeDataset))
 
         docker_process_b_node = BNode()
-        g.add((docker_process_b_node, RDF.type, self.AORC.DockerProcess))
+        g.add((docker_process_b_node, RDF.type, AORC.DockerProcess))
         g.add((composite_dataset_uri, PROV.wasGeneratedBy, docker_process_b_node))
 
         if dataset.get("docker_file"):
             docker_container_node = URIRef(dataset["docker_file"])
         else:
             docker_container_node = BNode()
-        g.add((docker_container_node, RDF.type, self.AORC.DockerContainer))
+        g.add((docker_container_node, RDF.type, AORC.DockerContainer))
         g.add((docker_process_b_node, PROV.used, docker_container_node))
 
         command_list = dataset["command_list"].split(" ")
@@ -123,38 +94,38 @@ class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         mirror_dataset_url_list = dataset["mirror_datasets"].split(" ")
         for mirror_dataset_url in mirror_dataset_url_list:
             mirror_dataset_uri = URIRef(mirror_dataset_url)
-            g.add((mirror_dataset_uri, RDF.type, self.AORC.MirrorDataset))
+            g.add((mirror_dataset_uri, RDF.type, AORC.MirrorDataset))
             g.add((composite_dataset_uri, DCTERMS.source, mirror_dataset_uri))
 
         docker_compose_uri = URIRef(dataset["compose_file"])
-        g.add((docker_compose_uri, RDF.type, self.AORC.DockerCompose))
+        g.add((docker_compose_uri, RDF.type, AORC.DockerCompose))
         g.add((docker_container_node, PROV.wasStartedBy, docker_compose_uri))
 
         commit_hash_literal = Literal(dataset["commit_hash"], datatype=XSD.string)
         github_url = Literal(dataset["git_repo"], datatype=XSD.string)
-        g.add((docker_compose_uri, self.SCHEMA.sha256, commit_hash_literal))
-        g.add((docker_compose_uri, self.SCHEMA.codeRepository, github_url))
+        g.add((docker_compose_uri, SCHEMA.sha256, commit_hash_literal))
+        g.add((docker_compose_uri, SCHEMA.codeRepository, github_url))
 
         docker_image_uri = URIRef(dataset["docker_image"])
-        g.add((docker_image_uri, RDF.type, self.AORC.DockerImage))
+        g.add((docker_image_uri, RDF.type, AORC.DockerImage))
         g.add((docker_compose_uri, DCTERMS.source, docker_image_uri))
 
         digest_hash_literal = Literal(dataset["digest_hash"], datatype=XSD.string)
         docker_hub_url = Literal(dataset["docker_repo"], datatype=XSD.string)
-        g.add((docker_image_uri, self.SCHEMA.sha256, digest_hash_literal))
-        g.add((docker_image_uri, self.SCHEMA.codeRepository, docker_hub_url))
+        g.add((docker_image_uri, SCHEMA.sha256, digest_hash_literal))
+        g.add((docker_image_uri, SCHEMA.codeRepository, docker_hub_url))
 
         location_b_node = BNode()
         location_name_literal = Literal(dataset["location_name"], datatype=XSD.string)
         g.add((location_b_node, RDF.type, DCTERMS.Location))
-        g.add((location_b_node, self.LOCN.geographicName, location_name_literal))
+        g.add((location_b_node, LOCN.geographicName, location_name_literal))
         g.add((composite_dataset_uri, DCTERMS.spatial, location_b_node))
 
         location_geom_b_node = BNode()
-        location_geom_wkt_literal = Literal(dataset["location_wkt"], datatype=self.GEO.wktLiteral)
-        g.add((location_geom_b_node, RDF.type, self.LOCN.Geometry))
-        g.add((location_geom_b_node, self.GEO.asWKT, location_geom_wkt_literal))
-        g.add((location_b_node, self.LOCN.geometry, location_geom_b_node))
+        location_geom_wkt_literal = Literal(dataset["location_wkt"], datatype=GEO.wktLiteral)
+        g.add((location_geom_b_node, RDF.type, LOCN.Geometry))
+        g.add((location_geom_b_node, GEO.asWKT, location_geom_wkt_literal))
+        g.add((location_b_node, LOCN.geometry, location_geom_b_node))
 
         period_of_time_b_node = BNode()
         start_literal = Literal(dataset["start_time"], datatype=XSD.dateTime)
@@ -170,7 +141,7 @@ class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         last_modification = Literal(dataset["last_modified"], datatype=XSD.dateTime)
         g.add((composite_dataset_uri, DCTERMS.modified, last_modification))
 
-        self._handle_resources(dataset["resources"], composite_dataset_uri, g)
+        self.handler.handle_resources(dataset["resources"], composite_dataset_uri, g)
 
         return composite_dataset_uri
 
@@ -230,7 +201,7 @@ class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def view_catalog_ttl(self, package_type: str):
         self.handler.validate_name(package_type)
         result = toolkit.get_action("package_search")(
-            data_dict={"fq": "type:aorc_CompositeDataset", "rows": 1000}  # Adjust the number of rows as needed
+            data_dict={"fq": f"type:{package_type}", "rows": 1000}  # Adjust the number of rows as needed
         )
         catalog_ttl = self._handle_ckan_composite_data(result).serialize(format="ttl")
         # Change to flask.Response class to manually set content type / mime type

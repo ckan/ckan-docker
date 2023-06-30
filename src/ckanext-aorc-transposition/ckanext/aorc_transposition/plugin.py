@@ -12,12 +12,13 @@ from ckan.config.middleware import CKANConfig
 from ckan.types import Schema
 from flask import make_response
 from flask.blueprints import Blueprint
-from rdflib import DCAT, DCTERMS, FOAF, PROV, RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
+from rdflib import DCAT, DCTERMS, FOAF, PROV, RDF, RDFS, XSD, BNode, Graph, Literal, URIRef
 from rdflib.collection import Collection
 
 sys.path.append("/srv/app/src_extensions")
 
-from utils.aorc_handler import AORCDatasetClass, AORCHandler
+from utils import AORCHandler, AORC, AORCDatasetClass
+from utils.constants import LOCN, SCHEMA, GEO
 
 
 class TranspositionHandler(AORCHandler):
@@ -62,11 +63,6 @@ class TranspositionHandler(AORCHandler):
 
 
 class AorcTranspositionPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
-    AORC = Namespace("https://raw.githubusercontent.com/Dewberry/blobfish/v0.9/semantics/rdf/aorc.ttl")
-    SCHEMA = Namespace("https://schema.org")
-    LOCN = Namespace("http://www.w3.org/ns/locn#")
-    GEO = Namespace("http://www.opengis.net/ont/geosparql#")
-
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
 
@@ -88,10 +84,10 @@ class AorcTranspositionPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetFor
         return
 
     def _bind_to_namespaces(self, g: Graph) -> None:
-        g.bind("aorc", self.AORC)
-        g.bind("schema", self.SCHEMA, replace=True)
-        g.bind("geo", self.GEO)
-        g.bind("locn", self.LOCN)
+        g.bind("aorc", AORC)
+        g.bind("schema", SCHEMA, replace=True)
+        g.bind("geo", GEO)
+        g.bind("locn", LOCN)
         g.bind("dct", DCTERMS)
         g.bind("dcat", DCAT)
         g.bind("foaf", FOAF)
@@ -100,52 +96,32 @@ class AorcTranspositionPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetFor
         g.bind("rdf", RDF)
         g.bind("rdfs", RDFS)
 
-    def _handle_resources(self, resources: list[dict], dataset_uri: URIRef, g: Graph):
-        for resource in resources:
-            resource_uri = URIRef(f"{str(dataset_uri)}/resource/{resource['id']}")
-            g.add((resource_uri, RDF.type, DCAT.Distribution))
-
-            download_url_literal = Literal(resource["url"], datatype=XSD.string)
-            g.add((resource_uri, DCAT.downloadURL, download_url_literal))
-
-            access_rights_b_node = BNode()
-            access_rights_literal = Literal(resource["access_rights"], datatype=XSD.string)
-            g.add((access_rights_b_node, RDF.type, DCTERMS.RightsStatement))
-            g.add((access_rights_b_node, RDFS.label, access_rights_literal))
-            g.add((resource_uri, DCTERMS.accessRights, access_rights_b_node))
-
-            file_format_uri = URIRef(resource["format"])
-            g.add((resource_uri, DCTERMS.FileFormat, file_format_uri))
-
-            compress_format_uri = URIRef(resource["compress_format"])
-            g.add((resource_uri, DCAT.compressFormat, compress_format_uri))
-
     def _parse_composite_datasets(self, g: Graph, transposition_dataset_uri: URIRef, composite_datasets_str: str):
         composite_datasets_dict = loads(composite_datasets_str)
         for composite_dataset_url, normalization_data_download_url in composite_datasets_dict.items():
             composite_dataset_uri = URIRef(composite_dataset_url)
-            g.add((composite_dataset_uri, RDF.type, self.AORC.CompositeDataset))
+            g.add((composite_dataset_uri, RDF.type, AORC.CompositeDataset))
             g.add((transposition_dataset_uri, DCTERMS.source, composite_dataset_uri))
             if normalization_data_download_url:
                 normalization_dataset_b_node = BNode()
                 normalization_data_download_url_literal = Literal(normalization_data_download_url, datatype=XSD.anyURI)
                 g.add((normalization_dataset_b_node, RDF.type, DCAT.Dataset))
                 g.add((normalization_dataset_b_node, DCAT.downloadURL, normalization_data_download_url_literal))
-                g.add((composite_dataset_uri, self.AORC.normalizedBy, normalization_dataset_b_node))
+                g.add((composite_dataset_uri, AORC.normalizedBy, normalization_dataset_b_node))
 
     def _parse_transposition_dataset(self, g: Graph, dataset: dict) -> URIRef:
         transposition_dataset_uri = URIRef(f"{self.base_url}/aorc_TranspositionDataset/{dataset['url']}")
-        g.add((transposition_dataset_uri, RDF.type, self.AORC.TranspositionDataset))
+        g.add((transposition_dataset_uri, RDF.type, AORC.TranspositionDataset))
 
         docker_process_b_node = BNode()
-        g.add((docker_process_b_node, RDF.type, self.AORC.DockerProcess))
+        g.add((docker_process_b_node, RDF.type, AORC.DockerProcess))
         g.add((transposition_dataset_uri, PROV.wasGeneratedBy, docker_process_b_node))
 
         if dataset.get("docker_file"):
             docker_container_node = URIRef(dataset["docker_file"])
         else:
             docker_container_node = BNode()
-        g.add((docker_container_node, RDF.type, self.AORC.DockerContainer))
+        g.add((docker_container_node, RDF.type, AORC.DockerContainer))
         g.add((docker_process_b_node, PROV.used, docker_container_node))
 
         command_list = dataset["command_list"].split(" ")
@@ -159,60 +135,60 @@ class AorcTranspositionPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetFor
         self._parse_composite_datasets(g, transposition_dataset_uri, dataset["composite_normalized_datasets"])
 
         docker_compose_uri = URIRef(dataset["compose_file"])
-        g.add((docker_compose_uri, RDF.type, self.AORC.DockerCompose))
+        g.add((docker_compose_uri, RDF.type, AORC.DockerCompose))
         g.add((docker_container_node, PROV.wasStartedBy, docker_compose_uri))
 
         commit_hash_literal = Literal(dataset["commit_hash"], datatype=XSD.string)
         github_url = Literal(dataset["git_repo"], datatype=XSD.string)
-        g.add((docker_compose_uri, self.SCHEMA.sha256, commit_hash_literal))
-        g.add((docker_compose_uri, self.SCHEMA.codeRepository, github_url))
+        g.add((docker_compose_uri, SCHEMA.sha256, commit_hash_literal))
+        g.add((docker_compose_uri, SCHEMA.codeRepository, github_url))
 
         docker_image_uri = URIRef(dataset["docker_image"])
-        g.add((docker_image_uri, RDF.type, self.AORC.DockerImage))
+        g.add((docker_image_uri, RDF.type, AORC.DockerImage))
         g.add((docker_compose_uri, DCTERMS.source, docker_image_uri))
 
         digest_hash_literal = Literal(dataset["digest_hash"], datatype=XSD.string)
         docker_hub_url = Literal(dataset["docker_repo"], datatype=XSD.string)
-        g.add((docker_image_uri, self.SCHEMA.sha256, digest_hash_literal))
-        g.add((docker_image_uri, self.SCHEMA.codeRepository, docker_hub_url))
+        g.add((docker_image_uri, SCHEMA.sha256, digest_hash_literal))
+        g.add((docker_image_uri, SCHEMA.codeRepository, docker_hub_url))
 
         watershed_b_node = BNode()
         watershed_name_literal = Literal(dataset["watershed_region_name"])
         g.add((watershed_b_node, RDF.type, DCTERMS.Location))
-        g.add((watershed_b_node, self.LOCN.geographicName, watershed_name_literal))
-        g.add((transposition_dataset_uri, self.AORC.watershedRegion, watershed_b_node))
+        g.add((watershed_b_node, LOCN.geographicName, watershed_name_literal))
+        g.add((transposition_dataset_uri, AORC.watershedRegion, watershed_b_node))
 
         watershed_geom_b_node = BNode()
-        watershed_geom_wkt_literal = Literal(dataset["watershed_region_wkt"], datatype=self.GEO.wktLiteral)
-        g.add((watershed_geom_b_node, RDF.type, self.LOCN.Geometry))
-        g.add((watershed_geom_b_node, self.GEO.asWKT, watershed_geom_wkt_literal))
-        g.add((watershed_b_node, self.LOCN.geometry, watershed_geom_b_node))
+        watershed_geom_wkt_literal = Literal(dataset["watershed_region_wkt"], datatype=GEO.wktLiteral)
+        g.add((watershed_geom_b_node, RDF.type, LOCN.Geometry))
+        g.add((watershed_geom_b_node, GEO.asWKT, watershed_geom_wkt_literal))
+        g.add((watershed_b_node, LOCN.geometry, watershed_geom_b_node))
 
         transposition_b_node = BNode()
         transposition_name_literal = Literal(dataset["transposition_region_name"])
         g.add((transposition_b_node, RDF.type, DCTERMS.Location))
-        g.add((transposition_b_node, self.LOCN.geographicName, transposition_name_literal))
-        g.add((transposition_dataset_uri, self.AORC.transpositionRegion, transposition_b_node))
+        g.add((transposition_b_node, LOCN.geographicName, transposition_name_literal))
+        g.add((transposition_dataset_uri, AORC.transpositionRegion, transposition_b_node))
 
         transposition_geom_b_node = BNode()
-        transposition_geom_wkt_literal = Literal(dataset["transposition_region_wkt"], datatype=self.GEO.wktLiteral)
-        g.add((transposition_geom_b_node, RDF.type, self.LOCN.Geometry))
-        g.add((transposition_geom_b_node, self.GEO.asWKT, transposition_geom_wkt_literal))
-        g.add((transposition_b_node, self.LOCN.geometry, transposition_geom_b_node))
+        transposition_geom_wkt_literal = Literal(dataset["transposition_region_wkt"], datatype=GEO.wktLiteral)
+        g.add((transposition_geom_b_node, RDF.type, LOCN.Geometry))
+        g.add((transposition_geom_b_node, GEO.asWKT, transposition_geom_wkt_literal))
+        g.add((transposition_b_node, LOCN.geometry, transposition_geom_b_node))
 
         max_precip_b_node = BNode()
         g.add((max_precip_b_node, RDF.type, DCTERMS.Location))
-        g.add((transposition_dataset_uri, self.AORC.maxPrecipitationPoint, max_precip_b_node))
+        g.add((transposition_dataset_uri, AORC.maxPrecipitationPoint, max_precip_b_node))
 
         if dataset.get("max_precipitation_point_name"):
             max_precip_name_literal = Literal(dataset["max_precipitation_point_name"])
-            g.add((transposition_b_node, self.LOCN.geographicName, max_precip_name_literal))
+            g.add((transposition_b_node, LOCN.geographicName, max_precip_name_literal))
 
         max_precip_geom_b_node = BNode()
-        max_precip_geom_wkt_literal = Literal(dataset["max_precipitation_point_wkt"], datatype=self.GEO.wktLiteral)
-        g.add((max_precip_geom_b_node, RDF.type, self.LOCN.Geometry))
-        g.add((max_precip_geom_b_node, self.GEO.asWKT, max_precip_geom_wkt_literal))
-        g.add((max_precip_b_node, self.LOCN.geometry, max_precip_geom_b_node))
+        max_precip_geom_wkt_literal = Literal(dataset["max_precipitation_point_wkt"], datatype=GEO.wktLiteral)
+        g.add((max_precip_geom_b_node, RDF.type, LOCN.Geometry))
+        g.add((max_precip_geom_b_node, GEO.asWKT, max_precip_geom_wkt_literal))
+        g.add((max_precip_b_node, LOCN.geometry, max_precip_geom_b_node))
 
         period_of_time_b_node = BNode()
         start_literal = Literal(dataset["start_time"], datatype=XSD.dateTime)
@@ -240,19 +216,19 @@ class AorcTranspositionPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetFor
         g.add((transposition_dataset_uri, DCTERMS.modified, last_modification))
 
         cell_count_literal = Literal(dataset["cell_count"], datatype=XSD.integer)
-        g.add((transposition_dataset_uri, self.AORC.cellCount, cell_count_literal))
+        g.add((transposition_dataset_uri, AORC.cellCount, cell_count_literal))
 
         mean_precipitation_literal = Literal(dataset["mean_precipitation"], datatype=XSD.float)
-        g.add((transposition_dataset_uri, self.AORC.meanPrecipitation, mean_precipitation_literal))
+        g.add((transposition_dataset_uri, AORC.meanPrecipitation, mean_precipitation_literal))
 
         max_precipitation_literal = Literal(dataset["max_precipitation"], datatype=XSD.float)
-        g.add((transposition_dataset_uri, self.AORC.maxPrecipitation, max_precipitation_literal))
+        g.add((transposition_dataset_uri, AORC.maxPrecipitation, max_precipitation_literal))
 
         min_precipitation_literal = Literal(dataset["min_precipitation"], datatype=XSD.float)
-        g.add((transposition_dataset_uri, self.AORC.minPrecipitation, min_precipitation_literal))
+        g.add((transposition_dataset_uri, AORC.minPrecipitation, min_precipitation_literal))
 
         sum_precipitation_literal = Literal(dataset["sum_precipitation"], datatype=XSD.float)
-        g.add((transposition_dataset_uri, self.AORC.sumPrecipitation, sum_precipitation_literal))
+        g.add((transposition_dataset_uri, AORC.sumPrecipitation, sum_precipitation_literal))
 
         if dataset.get("normalized_mean_precipitation"):
             normalized_mean_precipitation_literal = Literal(
@@ -261,12 +237,12 @@ class AorcTranspositionPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetFor
             g.add(
                 (
                     transposition_dataset_uri,
-                    self.AORC.normalizedMeanPrecipitation,
+                    AORC.normalizedMeanPrecipitation,
                     normalized_mean_precipitation_literal,
                 )
             )
 
-        self._handle_resources(dataset["resources"], transposition_dataset_uri, g)
+        self.handler.handle_resources(dataset["resources"], transposition_dataset_uri, g)
 
         return transposition_dataset_uri
 
@@ -326,7 +302,7 @@ class AorcTranspositionPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetFor
     def view_catalog_ttl(self, package_type: str):
         self.handler.validate_name(package_type)
         result = toolkit.get_action("package_search")(
-            data_dict={"fq": "type:aorc_TranspositionDataset", "rows": 1000}  # Adjust the number of rows as needed
+            data_dict={"fq": f"type:{package_type}", "rows": 1000}  # Adjust the number of rows as needed
         )
         catalog_ttl = self._handle_ckan_transposition_data(result).serialize(format="ttl")
         # Change to flask.Response class to manually set content type / mime type

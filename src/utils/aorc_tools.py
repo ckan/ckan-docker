@@ -1,10 +1,13 @@
+from __future__ import annotations
+
 import datetime
 from enum import Enum
 from typing import cast
-import psycopg2
 
 import ckan.plugins.toolkit as toolkit
+import psycopg2
 from ckan.types import Schema
+from rdflib import DCAT, DCTERMS, RDF, RDFS, XSD, BNode, Graph, Literal, URIRef
 
 
 class AORCDatasetClass(Enum):
@@ -65,6 +68,26 @@ class AORCHandler:
 
     def _register_dict_handler(self) -> None:
         psycopg2.extensions.register_adapter(dict, psycopg2.extras.Json)
+
+    def handle_resources(self, resources: list[dict], dataset_uri: URIRef, g: Graph):
+        for resource in resources:
+            resource_uri = URIRef(f"{str(dataset_uri)}/resource/{resource['id']}")
+            g.add((resource_uri, RDF.type, DCAT.Distribution))
+
+            download_url_literal = Literal(resource["url"], datatype=XSD.string)
+            g.add((resource_uri, DCAT.downloadURL, download_url_literal))
+
+            access_rights_b_node = BNode()
+            access_rights_literal = Literal(resource["access_rights"], datatype=XSD.string)
+            g.add((access_rights_b_node, RDF.type, DCTERMS.RightsStatement))
+            g.add((access_rights_b_node, RDFS.label, access_rights_literal))
+            g.add((resource_uri, DCTERMS.accessRights, access_rights_b_node))
+
+            file_format_uri = URIRef(resource["format"])
+            g.add((resource_uri, DCTERMS.FileFormat, file_format_uri))
+
+            compress_format_uri = URIRef(resource["compress_format"])
+            g.add((resource_uri, DCAT.compressFormat, compress_format_uri))
 
     def modify_schema(self, schema: Schema) -> Schema:
         for simple_field in self.fields_simple:

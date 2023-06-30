@@ -4,6 +4,38 @@ from urllib.parse import quote
 import logging
 
 
+def add_composite_dataset(api_key: str, base_url: str, dataset_id: str) -> int:
+    composite_data = {"title": dataset_id.capitalize(), "type": "aorc_CompositeDataset", "url": quote(dataset_id)}
+    simple_fields = [
+        "spatial_resolution",
+        "docker_file",
+        "compose_file",
+        "docker_image",
+        "git_repo",
+        "docker_repo",
+        "commit_hash",
+        "digest_hash",
+        "location_name",
+        "location_wkt",
+    ]
+    for simple in simple_fields:
+        composite_data[simple] = "test"
+    dt_fields = ["last_modified", "start_time", "end_time"]
+    for dt in dt_fields:
+        composite_data[dt] = datetime.datetime.today().isoformat()
+    composite_data["mirror_datasets"] = [
+        "https://example.org/aorc_MirrorDataset/dataset_1",
+        "https://example.org/aorc_MirrorDataset/dataset_2",
+        "https://example.org/aorc_MirrorDataset/dataset_3",
+    ]
+    composite_data["command_list"] = [
+        "command_1",
+        "command_2",
+        "command_3",
+    ]
+    add_dataset(api_key, base_url, dataset_id, **composite_data)
+
+
 def add_mirror_dataset(api_key: str, base_url: str, dataset_id: str) -> int:
     mirror_data = {"title": dataset_id.capitalize(), "type": "aorc_MirrorDataset", "url": quote(dataset_id)}
     simple_fields = [
@@ -26,9 +58,7 @@ def add_mirror_dataset(api_key: str, base_url: str, dataset_id: str) -> int:
     dt_fields = ["last_modified", "start_time", "end_time"]
     for dt in dt_fields:
         mirror_data[dt] = datetime.datetime.today().isoformat()
-    list_fields = ["command_list"]
-    for l in list_fields:
-        mirror_data[l] = ["command_1", "command_2", "command_3"]
+    mirror_data["command_list"] = ["command_1", "command_2", "command_3"]
     json_fields = ["source_dataset"]
     for j in json_fields:
         mirror_data[j] = {"id": 1}
@@ -76,8 +106,9 @@ def show_package(base_url: str, dataset_id: str) -> dict:
 if __name__ == "__main__":
     logging.basicConfig(handlers=[logging.StreamHandler()], level=logging.INFO)
     api_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJDalRlaUVtTWc5TlRsR1g0SWNudDlaNGxGMWxTUWcxRW1Ta3l0aTVVMW5nIiwiaWF0IjoxNjg3ODk2NzI3fQ.7dzvPq9BXAnVmA9_82SFQ9nwuz7qSdqjYrZRe5BZlSY"
-    base_url = "http://localhost:5000/"
-    dataset_id = "dataset_demo"
+    base_url = "http://localhost:5000"
+    dataset_id = "composite_dataset_demo"
     # add_dataset(api_key, base_url, dataset_id, title="Demo Dataset", type="dataset")
     # add_mirror_dataset(api_key, base_url, dataset_id)
+    add_composite_dataset(api_key, base_url, dataset_id)
     show_package(base_url, dataset_id)

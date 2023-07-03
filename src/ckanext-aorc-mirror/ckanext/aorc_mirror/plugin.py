@@ -34,10 +34,10 @@ class MirrorHandler(AORCHandler):
             *self.common_fields_simple,
             *self.time_resolution_duration_fields_simple,
             *self.rfc_fields_simple,
+            "source_dataset",
         ]
         self.fields_dt = [*self.common_fields_dt, *self.time_period_fields_dt]
         self.fields_list = self.common_fields_list
-        self.fields_json = ["source_dataset"]
         self.additional_resource_fields = self.additional_resource_common_fields
 
     def _validate_class(self):

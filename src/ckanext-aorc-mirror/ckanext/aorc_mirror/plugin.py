@@ -66,7 +66,7 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         g.bind("aorc", AORC)
         g.bind("schema", SCHEMA, replace=True)
         g.bind("geo", GEO)
-        g.bind("locn", LOCN)
+        g.bind("locn", LOCN, replace=True)
         g.bind("dct", DCTERMS)
         g.bind("dcat", DCAT)
         g.bind("prov", PROV)
@@ -76,8 +76,32 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         g.bind("rdf", RDF)
         g.bind("rdfs", RDFS)
 
-    def _parse_source_dataset(self, g: Graph, json_ld_str: str):
-        g.parse(data=json_ld_str, format="json-ld")
+    def _add_source_dataset(
+        self, g: Graph, ttl_str: str, target_node: URIRef, rfc_alias_literal: Literal, start_date_literal: Literal
+    ):
+        g.parse(data=ttl_str, format="ttl")
+
+        query = """
+            SELECT ?node ?sd ?alias
+            WHERE {
+                ?node a aorc:SourceDataset .
+                ?node dct:temporal ?t .
+                ?node aorc:hasRFC ?rfc .
+                ?t dcat:startDate ?sd .
+                ?rfc skos:altLabel ?alias .
+            }
+            """
+        source_results = g.query(query)
+        node = None
+        for row in source_results:
+            bnode, start_date, alias = row
+            if start_date == start_date_literal and alias == rfc_alias_literal:
+                if node != None:
+                    raise ValueError(
+                        f"Expected only one match source dataset, found at least one more for {rfc_alias_literal} and {start_date_literal}"
+                    )
+                node = bnode
+        g.add((target_node, DCTERMS.source, node))
 
     def _parse_mirror_dataset(self, g: Graph, dataset: dict) -> URIRef:
         mirror_dataset_uri = URIRef(f"{self.base_url}/aorc_MirrorDataset/{dataset['url']}")
@@ -120,11 +144,6 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         g.add((docker_image_uri, SCHEMA.sha256, digest_hash_literal))
         g.add((docker_image_uri, SCHEMA.codeRepository, docker_hub_url))
 
-        # source_dataset_b_node = self._parse_source_dataset(dataset["source_dataset"])
-        source_dataset_b_node = BNode()
-        g.add((source_dataset_b_node, RDF.type, AORC.SourceDataset))
-        g.add((mirror_dataset_uri, DCTERMS.source, source_dataset_b_node))
-
         rfc_b_node = BNode()
         rfc_alias_literal = Literal(dataset["rfc_alias"], datatype=XSD.string)
         rfc_name_literal = Literal(dataset["rfc_full_name"], datatype=XSD.string)
@@ -158,6 +177,8 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
         temporal_resolution_literal = Literal(dataset["temporal_resolution"], datatype=XSD.duration)
         g.add((mirror_dataset_uri, DCAT.temporalResolution, temporal_resolution_literal))
+
+        self._add_source_dataset(g, dataset["source_dataset"], mirror_dataset_uri, rfc_alias_literal, start_literal)
 
         self.handler.handle_resources(dataset["resources"], mirror_dataset_uri, g)
 
@@ -216,8 +237,8 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     def prepare_dataset_blueprint(self, package_type: str, blueprint: Blueprint) -> Blueprint:
         self.handler.validate_name(package_type)
-        blueprint.add_url_rule(f"/{self.catalog_fn}", view_func=self.view_catalog_ttl)
-        blueprint.add_url_rule(f"/<_id>.ttl", view_func=self.view_dataset_ttl)
+        blueprint.add_url_rule(f"{self.catalog_fn}", view_func=self.view_catalog_ttl)
+        blueprint.add_url_rule(f"<_id>.ttl", view_func=self.view_dataset_ttl)
         return blueprint
 
     def view_catalog_ttl(self, package_type: str):

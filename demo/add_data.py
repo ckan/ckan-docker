@@ -1,4 +1,5 @@
 import datetime
+import json
 import requests
 from urllib.parse import quote
 import logging
@@ -150,13 +151,31 @@ def show_package(base_url: str, dataset_id: str) -> dict:
     return response.status_code
 
 
+def add_dataset_json(api_key: str, base_url: str, json_path: str) -> int:
+    url = f"{base_url}/api/3/action/package_create"
+    headers = {"Authorization": api_key, "Content-Type": "application/json"}
+    with open(json_path, "r") as f:
+        data = json.load(f)
+    # data["source_dataset"] = {"test": 1}
+    response = requests.post(url, headers=headers, json=data)
+    logging.info(response.json())
+    return response.status_code
+
+
 if __name__ == "__main__":
+    import os
+    from dotenv import load_dotenv
+
+    load_dotenv()
+
     logging.basicConfig(handlers=[logging.StreamHandler()], level=logging.INFO)
-    api_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJDalRlaUVtTWc5TlRsR1g0SWNudDlaNGxGMWxTUWcxRW1Ta3l0aTVVMW5nIiwiaWF0IjoxNjg3ODk2NzI3fQ.7dzvPq9BXAnVmA9_82SFQ9nwuz7qSdqjYrZRe5BZlSY"
+
+    api_key = os.environ["API_KEY"]
     base_url = "http://localhost:5000/"
-    dataset_id = "transposition_dataset_demo"
-    # add_dataset(api_key, base_url, dataset_id, title="Demo Dataset", type="dataset")
+    # dataset_id = "bb"
+    # add_dataset(api_key, base_url, dataset_id, title="BB", type="dataset")
     # add_mirror_dataset(api_key, base_url, dataset_id)
     # add_composite_dataset(api_key, base_url, dataset_id)
-    add_transposition_dataset(api_key, base_url, dataset_id)
-    show_package(base_url, dataset_id)
+    # add_transposition_dataset(api_key, base_url, dataset_id)
+    # show_package(base_url, "mirror_dataset_demo")
+    add_dataset_json(api_key, base_url, "mirror_CB_197902.json")

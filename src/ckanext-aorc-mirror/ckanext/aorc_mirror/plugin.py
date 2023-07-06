@@ -180,7 +180,9 @@ class AorcMirrorPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
         self._add_source_dataset(g, dataset["source_dataset"], mirror_dataset_uri, rfc_alias_literal, start_literal)
 
-        self.handler.handle_resources(dataset["resources"], mirror_dataset_uri, g)
+        self.handler.handle_resources(
+            dataset["resources"], mirror_dataset_uri, f"{self.base_url}/aorc_MirrorDataset/{dataset['url'].lower()}", g
+        )
 
         return mirror_dataset_uri
 

@@ -141,7 +141,12 @@ class AorcCompositePlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         last_modification = Literal(dataset["last_modified"], datatype=XSD.dateTime)
         g.add((composite_dataset_uri, DCTERMS.modified, last_modification))
 
-        self.handler.handle_resources(dataset["resources"], composite_dataset_uri, g)
+        self.handler.handle_resources(
+            dataset["resources"],
+            composite_dataset_uri,
+            f"{self.base_url}/aorc_CompositeDataset/{dataset['url'].lower()}",
+            g,
+        )
 
         return composite_dataset_uri
 

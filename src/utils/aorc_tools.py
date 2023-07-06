@@ -69,10 +69,11 @@ class AORCHandler:
     def _register_dict_handler(self) -> None:
         psycopg2.extensions.register_adapter(dict, psycopg2.extras.Json)
 
-    def handle_resources(self, resources: list[dict], dataset_uri: URIRef, g: Graph):
+    def handle_resources(self, resources: list[dict], dataset_uri: URIRef, dataset_url: str, g: Graph):
         for resource in resources:
-            resource_uri = URIRef(f"{str(dataset_uri)}/resource/{resource['id']}")
+            resource_uri = URIRef(f"{dataset_url}/resource/{resource['id']}")
             g.add((resource_uri, RDF.type, DCAT.Distribution))
+            g.add((dataset_uri, DCAT.distribution, resource_uri))
 
             download_url_literal = Literal(resource["url"], datatype=XSD.string)
             g.add((resource_uri, DCAT.downloadURL, download_url_literal))

@@ -242,7 +242,12 @@ class AorcTranspositionPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetFor
                 )
             )
 
-        self.handler.handle_resources(dataset["resources"], transposition_dataset_uri, g)
+        self.handler.handle_resources(
+            dataset["resources"],
+            transposition_dataset_uri,
+            f"{self.base_url}/aorc_TranspositionDataset/{dataset['url'].lower()}",
+            g,
+        )
 
         return transposition_dataset_uri
 

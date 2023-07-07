@@ -87,8 +87,9 @@ class AORCHandler:
             file_format_uri = URIRef(resource["format"])
             g.add((resource_uri, DCTERMS.FileFormat, file_format_uri))
 
-            compress_format_uri = URIRef(resource["compress_format"])
-            g.add((resource_uri, DCAT.compressFormat, compress_format_uri))
+            if resource.get("compress_format"):
+                compress_format_uri = URIRef(resource["compress_format"])
+                g.add((resource_uri, DCAT.compressFormat, compress_format_uri))
 
     def modify_schema(self, schema: Schema) -> Schema:
         for simple_field in self.fields_simple:

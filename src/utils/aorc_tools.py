@@ -61,7 +61,7 @@ class AORCHandler:
             "rfc_parent_organization",
             "rfc_wkt",
         ]
-        self.additional_resource_common_fields = ["compress_format", "access_rights"]
+        self.additional_resource_common_fields = ["access_rights"]
         self.location_fields_simple = ["location_name", "location_wkt"]
         self.fields_simple = self.fields_dt = self.fields_list = self.fields_json = self.additional_resource_fields = []
         self.fields_ignore_missing = []

@@ -38,7 +38,7 @@ class MirrorHandler(AORCHandler):
         ]
         self.fields_dt = [*self.common_fields_dt, *self.time_period_fields_dt]
         self.fields_list = self.common_fields_list
-        self.additional_resource_fields = self.additional_resource_common_fields
+        self.additional_resource_fields = [*self.additional_resource_common_fields, "compress_format"]
 
     def _validate_class(self):
         if self.class_name != AORCDatasetClass.MIRROR:

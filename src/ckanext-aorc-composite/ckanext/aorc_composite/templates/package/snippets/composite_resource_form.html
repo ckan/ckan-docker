@@ -2,6 +2,5 @@
 
 {% block metadata_fields %}
 {{ super() }}
-{{ form.input('compress_format', id='field-compress_format', label=_('Compress Format'), placeholder=_('eg. application/zip'), value=data.compress_format, error=errors.compress_format, classes=[]) }}
 {{ form.input('access_rights', id='field-access_rights', label=_('Access Rights'), placeholder=_('eg. public'), value=data.access_rights, error=errors.access_rights, classes=[]) }}
 {% endblock %}

@@ -244,4 +244,4 @@ could be used instead of ckan/ckan-base:2.10.1
 
 ## 14. Replacing DataPusher with XLoader
 
-Check out the wiki page for this:https://github.com/ckan/ckan-docker/wiki/Replacing-DataPusher-with-XLoader
+Check out the wiki page for this: https://github.com/ckan/ckan-docker/wiki/Replacing-DataPusher-with-XLoader

@@ -16,6 +16,7 @@
 * [The ckanext-envvars extension](#envvars)
 * [The CKAN_SITE_URL parameter](#CKAN_SITE_URL)
 * [Changing the base image](#Changing-the-base-image)
+* [Replacing DataPusher with XLoader](#Replacing-DataPusher-with-XLoader)
 
 
 ## 1.  Overview
@@ -240,3 +241,7 @@ For convenience the CKAN_SITE_URL parameter should be set in the .env file. For 
 
 The base image used in the CKAN Dockerfile and Dockerfile.dev can be changed so a different DockerHub image is used eg: ckan/ckan-base:2.9.9
 could be used instead of ckan/ckan-base:2.10.1
+
+## 14. Replacing DataPusher with XLoader
+
+Check out the wiki page for this:https://github.com/ckan/ckan-docker/wiki/Replacing-DataPusher-with-XLoader

@@ -165,6 +165,7 @@ def add_dataset_json(api_key: str, base_url: str, json_path: str) -> int:
 if __name__ == "__main__":
     import os
     from dotenv import load_dotenv
+    from pathlib import Path
 
     load_dotenv()
 
@@ -178,4 +179,6 @@ if __name__ == "__main__":
     # add_composite_dataset(api_key, base_url, dataset_id)
     # add_transposition_dataset(api_key, base_url, dataset_id)
     # show_package(base_url, "mirror_dataset_demo")
-    add_dataset_json(api_key, base_url, "mirror_CB_197902.json")
+
+    for path in Path("data").glob("*.json"):
+        add_dataset_json(api_key, base_url, path)

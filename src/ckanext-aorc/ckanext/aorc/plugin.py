@@ -355,7 +355,11 @@ class MirrorHandler(BaseHandler):
         )
         if len(source_results) > 1:
             raise ValueError(
-                f"Expected only one match source dataset, found at least one more for {rfc_alias_literal} and {start_date_literal}"
+                f"Expected one match source dataset, found at least one more for {rfc_alias_literal} and {start_date_literal}"
+            )
+        elif len(source_results) == 0:
+            raise ValueError(
+                f"Expected one match source dataset, found zero for {rfc_alias_literal} and {start_date_literal}"
             )
         for row in source_results:
             g.add((target_node, DCTERMS.source, row.node))

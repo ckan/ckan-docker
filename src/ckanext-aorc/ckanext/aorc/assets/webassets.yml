@@ -1,0 +1,14 @@
+# aorc-js:
+#   filter: rjsmin
+#   output: ckanext-aorc/%(version)s-aorc.js
+#   contents:
+#     - js/aorc.js
+#   extra:
+#     preload:
+#       - base/main
+
+# aorc-css:
+#   filter: cssrewrite
+#   output: ckanext-aorc/%(version)s-aorc.css
+#   contents:
+#     - css/aorc.css

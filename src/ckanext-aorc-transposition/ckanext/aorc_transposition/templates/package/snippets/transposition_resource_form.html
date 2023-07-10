@@ -1,6 +1,0 @@
-{% extends "package/snippets/resource_form.html" %}
-
-{% block metadata_fields %}
-{{ super() }}
-{{ form.input('access_rights', id='field-access_rights', label=_('Access Rights'), placeholder=_('eg. public'), value=data.access_rights, error=errors.access_rights, classes=[]) }}
-{% endblock %}

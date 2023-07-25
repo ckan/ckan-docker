@@ -237,9 +237,9 @@ For more information please see [ckanext-envvars](https://github.com/okfn/ckanex
 
 For convenience the CKAN_SITE_URL parameter should be set in the .env file. For development it can be set to http://localhost:5000 and non-development set to https://localhost:8443
 
-## 13. Create and Manager users
+## 13. Manage new users
 
-1. Create a user on host, For example to create a new user called 'admin'
+1. Create a new user from the Docker host, for example to create a new user called 'admin'
 
    `docker exec -it <container-id> ckan -c ckan.ini user add admin email=admin@localhost`
 
@@ -247,15 +247,13 @@ For convenience the CKAN_SITE_URL parameter should be set in the .env file. For 
 
    `docker exec -it <container-id> ckan -c ckan.ini user remove admin`
 
-2. Create a user within the ckan container, For example to create a new user called 'admin'   
+2. Create a new user from within the ckan container. You will need to get a session on the running container
 
    `ckan -c ckan.ini user add admin email=admin@localhost`
 
    To delete the 'admin' user
 
    `ckan -c ckan.ini user remove admin`
-
-3. Update one of the initialisation scripts eg: `start_ckan.sh` or `prerun.py`  
 
 ## 14. Changing the base image
 

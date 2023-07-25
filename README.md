@@ -237,11 +237,31 @@ For more information please see [ckanext-envvars](https://github.com/okfn/ckanex
 
 For convenience the CKAN_SITE_URL parameter should be set in the .env file. For development it can be set to http://localhost:5000 and non-development set to https://localhost:8443
 
-## 13. Changing the base image
+## 13. Create and Manager users
+
+1. Create a user on host, For example to create a new user called 'admin'
+
+   `docker exec -it <container-id> ckan -c ckan.ini user add admin email=admin@localhost`
+
+   To delete the 'admin' user
+
+   `docker exec -it <container-id> ckan -c ckan.ini user remove admin`
+
+2. Create a user within the ckan container, For example to create a new user called 'admin'   
+
+   `ckan -c ckan.ini user add admin email=admin@localhost`
+
+   To delete the 'admin' user
+
+   `ckan -c ckan.ini user remove admin`
+
+3. Update one of the initialisation scripts eg: `start_ckan.sh` or `prerun.py`  
+
+## 14. Changing the base image
 
 The base image used in the CKAN Dockerfile and Dockerfile.dev can be changed so a different DockerHub image is used eg: ckan/ckan-base:2.9.9
 could be used instead of ckan/ckan-base:2.10.1
 
-## 14. Replacing DataPusher with XLoader
+## 15. Replacing DataPusher with XLoader
 
 Check out the wiki page for this: https://github.com/ckan/ckan-docker/wiki/Replacing-DataPusher-with-XLoader

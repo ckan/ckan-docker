@@ -43,18 +43,15 @@ services:
     container_name: ${POSTGRESQL_CONTAINER_NAME}
     build:
       context: postgresql/
-      args:
-       - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
-       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     environment:
-      - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - PGDATA=/var/lib/postgresql/data/db
+      - DATASTORE_READONLY_PASSWORD
+      - POSTGRES_PASSWORD
+      - CKAN_DB_PASSWORD
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "ckan"]
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
      
   solr:
     container_name: ${SOLR_CONTAINER_NAME}

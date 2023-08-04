@@ -44,9 +44,15 @@ services:
     build:
       context: postgresql/
     environment:
-      - DATASTORE_READONLY_PASSWORD
+      - POSTGRES_USER
       - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - CKAN_DB_USER
       - CKAN_DB_PASSWORD
+      - CKAN_DB
+      - DATASTORE_READONLY_USER
+      - DATASTORE_READONLY_PASSWORD
+      - DATASTORE_DB
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped

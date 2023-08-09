@@ -50,6 +50,21 @@ more information.
 
 ## 4.  Install (build and run) CKAN plus dependencies
 
+#### Generate Randomised passwords mode
+
+For additional security it may be a better option to generate randomised passwords for the database users and the for the initial CKAN application sysadmin user. Here are the users that will have randomised
+ passwords generated:
+
+* The Postgres system superuser (user=POSTGRES_USER , password=POSTGRES_PASSWORD)
+* The database user that owns the CKAN database (user=CKAN_DB_USER , password=CKAN_DB_PASSWORD)
+* The database user that has read-access to the Datastore database (user=DATASTORE_READONLY_USER , password=DATASTORE_READONLY_PASSWORD)
+* The CKAN application System Administrator user (user=CKAN_SYSADMIN_NAME ,password=CKAN_SYSADMIN_PASSWORD)
+
+You will need to generate the passwords. You can do this by running `generate_passwords.sh` before building the local images and containers. This will create a password file called .pw. 
+You will then need to rename the docker-compose-use-generated-passwords.yml file to docker-compose.yml. You may wish to save the docker-compose.yml file beforehand.
+
+You can then carry on with the Base mode instructions disregarding details about the sysadmin user
+
 #### Base mode
 
 Use this if you are a maintainer and will not be making code changes to CKAN or to CKAN extensions

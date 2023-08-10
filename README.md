@@ -60,10 +60,13 @@ For additional security it may be a better option to generate randomised passwor
 * The database user that has read-access to the Datastore database (user=DATASTORE_READONLY_USER , password=DATASTORE_READONLY_PASSWORD)
 * The CKAN application System Administrator user (user=CKAN_SYSADMIN_NAME ,password=CKAN_SYSADMIN_PASSWORD)
 
-You will need to generate the passwords. You can do this by running `generate_passwords.sh` before building the local images and containers. This will create a password file called .pw. 
-You will then need to rename the docker-compose-use-generated-passwords.yml file to docker-compose.yml. You may wish to save the docker-compose.yml file beforehand.
+You can do this by the following:
 
-You can then carry on with the Base mode instructions disregarding details about the sysadmin user
+* remove all containers, images, networks, volumes plus run a `docker system prune`
+* generate the passwords by running `generate_passwords.sh` this will create a file called `.pw`
+* rename the `docker-compose-use-generated-passwords.yml` file to `docker-compose.yml`. You may wish to save the docker-compose.yml file beforehand.
+* rename the `.env.use-generated-passwords` file to `.env`. You should save the .env file beforehand.
+* build and run the docker compose stack as per normal. The ckan_admin user password will be located in the .pw file
 
 #### Base mode
 

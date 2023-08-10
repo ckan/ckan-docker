@@ -55,10 +55,10 @@ more information.
 For additional security it may be a better option to generate randomised passwords for the database users and the for the initial CKAN application sysadmin user. Here are the users that will have randomised
  passwords generated:
 
-* The Postgres system superuser (user=POSTGRES_USER , password=POSTGRES_PASSWORD)
-* The database user that owns the CKAN database (user=CKAN_DB_USER , password=CKAN_DB_PASSWORD)
-* The database user that has read-access to the Datastore database (user=DATASTORE_READONLY_USER , password=DATASTORE_READONLY_PASSWORD)
-* The CKAN application System Administrator user (user=CKAN_SYSADMIN_NAME ,password=CKAN_SYSADMIN_PASSWORD)
+* The Postgres system superuser (user=`POSTGRES_USER` , password=`POSTGRES_PASSWORD`)
+* The database user that owns the CKAN database (user=`CKAN_DB_USER` , password=C`KAN_DB_PASSWORD`)
+* The database user that has read-access to the Datastore database (user=`DATASTORE_READONLY_USER` , password=`DATASTORE_READONLY_PASSWORD`)
+* The CKAN application System Administrator user (user=`CKAN_SYSADMIN_NAME` ,password=`CKAN_SYSADMIN_PASSWORD`)
 
 You can do this by the following:
 
@@ -66,7 +66,7 @@ You can do this by the following:
 * generate the passwords by running `generate_passwords.sh` this will create a file called `.pw`
 * rename the `docker-compose-use-generated-passwords.yml` file to `docker-compose.yml`. You may wish to save the docker-compose.yml file beforehand.
 * rename the `.env.use-generated-passwords` file to `.env`. You should save the .env file beforehand.
-* build and run the docker compose stack as per normal. The ckan_admin user password will be located in the .pw file
+* build and run the docker compose stack as per normal. The `ckan_admin user password` will be located in the `.pw` file
 
 #### Base mode
 

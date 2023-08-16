@@ -66,7 +66,7 @@ You can do this by the following:
 * generate the passwords by running `generate_passwords.sh` this will create a file called `.pw`
 * rename the `docker-compose-use-generated-passwords.yml` file to `docker-compose.yml`. You may wish to save the docker-compose.yml file beforehand.
 * rename the `.env.use-generated-passwords` file to `.env`. You should save the .env file beforehand.
-* build and run the docker compose stack as per normal. The `ckan_admin user password` will be located in the `.pw` file
+* build and run the docker compose stack as per normal. The `ckan_admin` user password will be located in the `.pw` file
 
 #### Base mode
 

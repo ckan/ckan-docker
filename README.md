@@ -263,3 +263,13 @@ could be used instead of ckan/ckan-base:2.10.1
 ## 15. Replacing DataPusher with XLoader
 
 Check out the wiki page for this: https://github.com/ckan/ckan-docker/wiki/Replacing-DataPusher-with-XLoader
+
+Copying and License
+-------------------
+
+This material is copyright (c) 2006-2023 Open Knowledge Foundation and contributors.
+
+It is open and licensed under the GNU Affero General Public License (AGPL) v3.0
+whose full text may be found at:
+
+http://www.fsf.org/licensing/licenses/agpl-3.0.html

@@ -1,6 +1,5 @@
 # Docker Compose setup for CKAN
 
-
 * [Overview](#overview)
 * [Installing Docker](#installing-docker)
 * [docker compose vs docker-compose](#docker-compose-vs-docker-compose)
@@ -45,8 +44,7 @@ versions for client and server.
 ## 3.  docker compose *vs* docker-compose
 
 All Docker Compose commands in this README will use the V2 version of Compose ie: `docker compose`. The older version (V1) 
-used the `docker-compose` command. Please see [Docker Compose](https://docs.docker.com/compose/compose-v2/) for
-more information.
+used the `docker-compose` command. Please see [Docker Compose](https://docs.docker.com/compose/compose-v2/) for more information.
 
 ## 4.  Install (build and run) CKAN plus dependencies
 

@@ -6,7 +6,7 @@ fn = ".pw"
 vn = {}
 
 pwvars = ["POSTGRES_PASSWORD", "CKAN_DB_PASSWORD", "DATASTORE_READONLY_PASSWORD","CKAN_SYSADMIN_PASSWORD", \
-            "CKAN___BEAKER__SESSION__SECRET","CKAN___API_TOKEN__JWT__ENCODE__SECRET"]
+            "CKAN___BEAKER__SESSION__SECRET"]
 
 print("\n[setup_passwords] attempting to setup secure passwords")
 
@@ -19,18 +19,24 @@ with open(fn, 'w') as f:
       vn[pwvar] = pw
 
 
+# Set up the environment variables from the values in the .pw file
 POSTGRES_PASSWORD = vn["POSTGRES_PASSWORD"]
 CKAN_DB_PASSWORD = vn["CKAN_DB_PASSWORD"]
 DATASTORE_READONLY_PASSWORD = vn["DATASTORE_READONLY_PASSWORD"]
 CKAN_SYSADMIN_PASSWORD = vn["CKAN_SYSADMIN_PASSWORD"]
 CKAN___BEAKER__SESSION__SECRET = vn["CKAN___BEAKER__SESSION__SECRET"]
-CKAN___API_TOKEN__JWT__ENCODE__SECRET = vn["CKAN___API_TOKEN__JWT__ENCODE__SECRET"]
-CKAN___API_TOKEN__JWT__DECODE__SECRET = vn["CKAN___API_TOKEN__JWT__ENCODE__SECRET"]
 
-# Write the same secret for decoding as encoding
+# The API_TOKEN is a JWT token, which is a special case
+jwtpw = secrets.token_urlsafe(plen)
+
 with open(fn, 'a') as f:
-    f.write(f"CKAN___API_TOKEN__JWT__DECODE__SECRET={CKAN___API_TOKEN__JWT__DECODE__SECRET}\n")
+    f.write(f"CKAN___API_TOKEN__JWT__ENCODE__SECRET=string:" + str(jwtpw) + "\n")
+    f.write(f"CKAN___API_TOKEN__JWT__DECODE__SECRET=string:" + str(jwtpw) + "\n")
 
+CKAN___API_TOKEN__JWT__ENCODE__SECRET = "string:" + str(jwtpw)
+CKAN___API_TOKEN__JWT__DECODE__SECRET = "string:" + str(jwtpw)
+
+# Now the database URL's which include the password generated above
 CKAN_DB_USER = os.environ.get('CKAN_DB_USER')
 CKAN_DB = os.environ.get('CKAN_DB')
 DATASTORE_DB_USER = os.environ.get('DATASTORE_DB_USER')

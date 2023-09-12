@@ -16,7 +16,7 @@ then
 fi
 
 # Run the prerun script to init CKAN and create the default admin user
-sudo -u ckan -EH python3 prerun.py
+python3 prerun.py
 
 echo "Set up ckan.datapusher.api_token in the CKAN config file"
 ckan config-tool $CKAN_INI "ckan.datapusher.api_token=$(ckan -c $CKAN_INI user token add ckan_admin datapusher | tail -n 1 | tr -d '\t')"
@@ -51,7 +51,7 @@ then
     # Start supervisord
     supervisord --configuration /etc/supervisord.conf &
     # Start uwsgi
-    sudo -u ckan -EH uwsgi $UWSGI_OPTS
+    uwsgi $UWSGI_OPTS
 else
   echo "[prerun] failed...not starting CKAN."
 fi

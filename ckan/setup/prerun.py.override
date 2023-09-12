@@ -194,6 +194,13 @@ def create_sysadmin():
         subprocess.call(command)
         print("[prerun] Made user {0} a sysadmin".format(name))
 
+        # cleanup permissions
+        # We're running as root before pivoting to uwsgi and dropping privs
+        data_dir = "%s/storage" % os.environ['CKAN_STORAGE_PATH']
+
+        command = ["chown", "-R", "ckan:ckan", data_dir]
+        subprocess.call(command)
+        print("[prerun] Ensured storage directory is owned by ckan")
 
 if __name__ == "__main__":
 

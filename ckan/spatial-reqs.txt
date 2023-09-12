@@ -1,0 +1,13 @@
+ckantoolkit
+lxml>=2.3
+argparse
+pyparsing>=2.1.10
+requests>=1.1.0
+six
+cython==0.29.36; python_version < '3.9'
+pyproj==2.6.1; python_version < '3.9'
+pyproj @ git+https://github.com/pyproj4/pyproj.git@main; python_version >= '3.9'
+
+Shapely==2.0.1
+OWSLib==0.28.1
+geojson==3.0.1

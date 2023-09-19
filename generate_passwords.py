@@ -1,54 +1,89 @@
 import base64
 import os
 import secrets
+import logging
 
-fn = ".pw"
-vn = {}
+# Password length set to 16 characters
+plen = 16
 
-pwvars = ["POSTGRES_PASSWORD", "CKAN_DB_PASSWORD", "DATASTORE_READONLY_PASSWORD","CKAN_SYSADMIN_PASSWORD", \
-            "CKAN___BEAKER__SESSION__SECRET"]
+def generate_passwords(variables):
+    passwords = {}
+    for variable in variables:
+        password = secrets.token_urlsafe(plen)
+        passwords[variable] = password
+    return passwords
 
-print("\n[setup_passwords] attempting to setup secure passwords")
+def write_passwords_to_file(passwords, filename):
+    try:
+        with open(filename, 'w') as f:
+            for variable, password in passwords.items():
+                if variable == "CKAN___API_TOKEN__JWT__SECRET" :
+                    # Prepend 'string:' to the API token secret
+                    prepended_apitoken = "string:" + passwords['CKAN___API_TOKEN__JWT__SECRET']
+                    f.write(f"CKAN___API_TOKEN__JWT__ENCODE__SECRET={prepended_apitoken}\n")
+                    os.environ['CKAN___API_TOKEN__JWT__ENCODE__SECRET'] = prepended_apitoken
+                    f.write(f"CKAN___API_TOKEN__JWT__DECODE__SECRET={prepended_apitoken}\n")
+                    os.environ['CKAN___API_TOKEN__JWT__DECODE__SECRET'] = prepended_apitoken
+                else:
+                    f.write(f"{variable}={password}\n")
+                    os.environ[variable] = password
+        print(f"[generate_passwords] Passwords written to '{filename}' successfully.")
+    except Exception as e:
+        logging.error(f"Failed to write passwords to '{filename}': {str(e)}")
 
-with open(fn, 'w') as f:
-    plen = 16
-    f.truncate(0)
-    for pwvar in pwvars:
-      pw = secrets.token_urlsafe(plen)
-      f.write(f"{pwvar}={pw}\n")
-      vn[pwvar] = pw
+def write_urls_to_file(filename):
+    try:
+        with open(filename, 'a') as f:
+            CKAN_DB_USER = os.environ.get('CKAN_DB_USER')
+            CKAN_DB_PASSWORD = os.environ.get('CKAN_DB_PASSWORD')
+            CKAN_DB = os.environ.get('CKAN_DB')
+            DATASTORE_READONLY_USER = os.environ.get('DATASTORE_READONLY_USER')
+            DATASTORE_READONLY_PASSWORD = os.environ.get('DATASTORE_READONLY_PASSWORD')
+            DATASTORE_DB = os.environ.get('DATASTORE_DB')
+            POSTGRES_HOST = os.environ.get('POSTGRES_HOST')
+            f.write(f"CKAN_SQLALCHEMY_URL=postgresql://{CKAN_DB_USER}:{CKAN_DB_PASSWORD}@{POSTGRES_HOST}/{CKAN_DB}\n")
+            f.write(f"CKAN_DATASTORE_WRITE_URL=postgresql://{CKAN_DB_USER}:{CKAN_DB_PASSWORD}@{POSTGRES_HOST}/{DATASTORE_DB}\n") 
+            f.write(f"CKAN_DATASTORE_READ_URL=postgresql://{DATASTORE_READONLY_USER}:{DATASTORE_READONLY_PASSWORD}@{POSTGRES_HOST}/{DATASTORE_DB}\n")
+        print(f"[generate_passwords] Database URL's written to '{filename}' successfully.")
+    except Exception as e:
+        logging.error(f"Failed to write database URL's to '{filename}': {str(e)}")
 
+def main():
+    pwvars = [
+        "POSTGRES_PASSWORD",
+        "CKAN_DB_PASSWORD",
+        "DATASTORE_READONLY_PASSWORD",
+        "CKAN_SYSADMIN_PASSWORD",
+        "CKAN___BEAKER__SESSION__SECRET",
+        "CKAN___API_TOKEN__JWT__SECRET",
+    ]
 
-# Set up the environment variables from the values in the .pw file
-POSTGRES_PASSWORD = vn["POSTGRES_PASSWORD"]
-CKAN_DB_PASSWORD = vn["CKAN_DB_PASSWORD"]
-DATASTORE_READONLY_PASSWORD = vn["DATASTORE_READONLY_PASSWORD"]
-CKAN_SYSADMIN_PASSWORD = vn["CKAN_SYSADMIN_PASSWORD"]
-CKAN___BEAKER__SESSION__SECRET = vn["CKAN___BEAKER__SESSION__SECRET"]
+    vn = generate_passwords(pwvars)
 
-# The API_TOKEN is a JWT token, which is a special case
-jwtpw = secrets.token_urlsafe(plen)
+    # Write database passwords to .dbpw
+    db_passwords = [
+        "POSTGRES_PASSWORD",
+        "CKAN_DB_PASSWORD",
+        "DATASTORE_READONLY_PASSWORD",
+    ]
+    write_passwords_to_file({variable: vn[variable] for variable in db_passwords}, ".dbpw")
 
-with open(fn, 'a') as f:
-    f.write(f"CKAN___API_TOKEN__JWT__ENCODE__SECRET=string:" + str(jwtpw) + "\n")
-    f.write(f"CKAN___API_TOKEN__JWT__DECODE__SECRET=string:" + str(jwtpw) + "\n")
+    # Write CKAN passwords to .ckpw
+    ck_passwords = [
+        "CKAN_DB_PASSWORD",
+        "DATASTORE_READONLY_PASSWORD",
+        "CKAN_SYSADMIN_PASSWORD",
+        "CKAN___BEAKER__SESSION__SECRET",
+        "CKAN___API_TOKEN__JWT__SECRET",
+    ]
+    write_passwords_to_file({variable: vn[variable] for variable in ck_passwords}, ".ckpw")
 
-CKAN___API_TOKEN__JWT__ENCODE__SECRET = "string:" + str(jwtpw)
-CKAN___API_TOKEN__JWT__DECODE__SECRET = "string:" + str(jwtpw)
+    write_urls_to_file(".ckpw")
 
-# Now the database URL's which include the password generated above
-CKAN_DB_USER = os.environ.get('CKAN_DB_USER')
-CKAN_DB = os.environ.get('CKAN_DB')
-DATASTORE_DB_USER = os.environ.get('DATASTORE_DB_USER')
-DATASTORE_READONLY_USER = os.environ.get('DATASTORE_READONLY_USER')
-DATASTORE_DB = os.environ.get('DATASTORE_DB')
-POSTGRES_HOST = os.environ.get('POSTGRES_HOST')
+    print("\nThe CKAN_SYSADMIN_PASSWORD password is: " + vn['CKAN_SYSADMIN_PASSWORD'] + "\n")
 
-# Now write out the Database URL's
-with open(fn, 'a') as f:
-    f.write(f"CKAN_SQLALCHEMY_URL=postgresql://{CKAN_DB_USER}:{CKAN_DB_PASSWORD}@{POSTGRES_HOST}/{CKAN_DB}\n")
-    f.write(f"CKAN_DATASTORE_WRITE_URL=postgresql://{CKAN_DB_USER}:{CKAN_DB_PASSWORD}@{POSTGRES_HOST}/{DATASTORE_DB}\n") 
-    f.write(f"CKAN_DATASTORE_READ_URL=postgresql://{DATASTORE_READONLY_USER}:{DATASTORE_READONLY_PASSWORD}@{POSTGRES_HOST}/{DATASTORE_DB}\n") 
+    # Rest of your code
 
-print("[setup_passwords] password file: '.pw' created successfully")
-print("\nThe CKAN_SYSADMIN_PASSWORD password is: " + CKAN_SYSADMIN_PASSWORD + "\n")
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    main()

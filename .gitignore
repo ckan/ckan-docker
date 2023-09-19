@@ -10,5 +10,6 @@ local/*
 
 # Docker Compose environment and password files
 .env
-.pw
+.ckpw
+.dbpw
 docker-compose.yml.ORIG

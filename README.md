@@ -48,36 +48,51 @@ used the `docker-compose` command. Please see [Docker Compose](https://docs.dock
 
 ## 4.  Install (build and run) CKAN plus dependencies
 
-#### Generate Randomised passwords mode
+#### Generate randomised passwords mode (secure/default mode)
 
-For additional security it may be a better option to generate randomised passwords for the database users and the for the initial CKAN application sysadmin user. Here are the users that will have randomised
- passwords generated:
+For additional security the default option is to run in "secure" mode. To do this a script will need to be run to generate randomised passwords for the database users and for the initial CKAN application sysadmin user (ckan_admin). It will also generate some other parameters detailed below:
 
-* The Postgres system superuser (user=`POSTGRES_USER` , password=`POSTGRES_PASSWORD`)
-* The database user that owns the CKAN database (user=`CKAN_DB_USER` , password=C`KAN_DB_PASSWORD`)
-* The database user that has read-access to the Datastore database (user=`DATASTORE_READONLY_USER` , password=`DATASTORE_READONLY_PASSWORD`)
-* The CKAN application System Administrator user (user=`CKAN_SYSADMIN_NAME` ,password=`CKAN_SYSADMIN_PASSWORD`)
+Here are the users that will have randomised passwords generated:
+* The Postgres system superuser (user: `POSTGRES_USER` , password: `POSTGRES_PASSWORD`)
+* The database user that owns the CKAN database (user: `CKAN_DB_USER` , password: `CKAN_DB_PASSWORD`)
+* The database user that has read-access to the Datastore database (user: `DATASTORE_READONLY_USER` , password: `DATASTORE_READONLY_PASSWORD`)
+* The CKAN application System Administrator user (user: `CKAN_SYSADMIN_NAME` ,password: `CKAN_SYSADMIN_PASSWORD`)
+
+There are other configuration parameters that will also have random secrets generated. They are as follows:
+* `CKAN___BEAKER__SESSION__SECRET`
+* `CKAN___API_TOKEN__JWT__ENCODE__SECRET`
+* `CKAN___API_TOKEN__JWT__DECODE__SECRET`
+
+Also, database URL's will need to include these new passwords so the values for this configuration parameters will be added to the generated (CKAN) file
+* `CKAN_SQLALCHEMY_URL`
+* `CKAN_DATASTORE_WRITE_URL`
+* `CKAN_DATASTORE_READ_URL`
 
 You can do this by the following:
 
-* remove all containers, images, networks, volumes plus run a `docker system prune`
-* generate the passwords by running `generate_passwords.sh` this will create a file called `.pw`
-* rename the `docker-compose-use-generated-passwords.yml` file to `docker-compose.yml`. You may wish to save the docker-compose.yml file beforehand.
-* rename the `.env.use-generated-passwords` file to `.env`. You should save the .env file beforehand.
-* build and run the docker compose stack as per normal. The `ckan_admin` user password will be located in the `.pw` file
+* generate the passwords by running `generate_passwords.sh` this will create two files: `.ckpw` and `.dbpw`
+* by default the `docker-compose.yml` file is set to secure mode.
+* if you make any subsequent changes to the `docker-compose.yml` file you can always revert back to the original file by referencing `docker-compose.secure.yml`
+* by default the `.env` file is set to secure mode.
+* if you make changes to the `.env` file you can always revert back to the original file by referencing `.env.secure`
+* build and run the docker compose stack as per normal. 
+* the `ckan_admin` user password will be located in the `.ckpw` file. It will also be displayed on the terminal when running `generate_passwords.sh`
 
-#### Base mode
+#### Insecure mode (the old legacy mode)
 
-Use this if you are a maintainer and will not be making code changes to CKAN or to CKAN extensions
+Use this if you do not wish to use secure passwords ie: how it used to be
 
-Copy the included `.env.example` and rename it to `.env`. Modify it depending on your own needs.
+Copy the included `.env.insecure` to `.env`. Modify it depending on your own needs. It's wise to keep the original `.env.secure` file in case
+you need to revert back to it or reference from it
+
+Copy the included `docker-compose.insecure.yml` and to `docker-compose.yml`. Modify it depending on your own needs. 
 
 Please note that when accessing CKAN directly (via a browser) ie: not going through NGINX you will need to make sure you have "ckan" set up
 to be an alias to localhost in the local hosts file. Either that or you will need to change the `.env` entry for CKAN_SITE_URL
 
 Using the default values on the `.env.example` file will get you a working CKAN instance. There is a sysadmin user created by default with the values defined in `CKAN_SYSADMIN_NAME` and `CKAN_SYSADMIN_PASSWORD`(`ckan_admin` and `test1234` by default). This should be obviously changed before running this setup as a public CKAN instance.
 
-To build the images:
+### To build the images:
 
 	docker compose build
 
@@ -99,6 +114,11 @@ After this step, CKAN should be running at `CKAN_SITE_URL`.
 #### Development mode
 
 Use this mode if you are making code changes to CKAN and either creating new extensions or making code changes to existing extensions. This mode also uses the `.env` file for config options.
+
+Again, the default for Development mode is secure. Please see the section above on Secure mode. There are 2 reference compose `.yml` files
+
+* `docker-compose.dev.secure.yml` - this is the same as the default file `docker-compose.dev.yml`
+* `docker-compose.dev.insecure.yml` - to be used if the insecure (ie: legacy) config is to be used
 
 To develop local extensions use the `docker-compose.dev.yml` file:
 

@@ -1,5 +1,6 @@
 version: "3"
 
+
 volumes:
   ckan_storage:
   pg_data:
@@ -7,15 +8,35 @@ volumes:
 
 services:
 
-  ckan-dev:
+  nginx:
+    container_name: ${NGINX_CONTAINER_NAME}
+    build:
+      context: nginx/
+      dockerfile: Dockerfile
+    networks:
+      - webnet
+      - ckannet
+    depends_on:
+      ckan:
+        condition: service_healthy
+    ports:
+      - "0.0.0.0:${NGINX_SSLPORT_HOST}:${NGINX_SSLPORT}"
+    
+  ckan:
     container_name: ${CKAN_CONTAINER_NAME}
     build:
       context: ckan/
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       args:
         - TZ=${TZ}
+    networks:
+      - ckannet
+      - dbnet
+      - solrnet
+      - redisnet
     env_file:
       - .env
+      - .ckpw
     depends_on:
       db:
         condition: service_healthy
@@ -23,17 +44,17 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    ports:
-      - "0.0.0.0:${CKAN_PORT_HOST}:${CKAN_PORT}"
     volumes:
       - ckan_storage:/var/lib/ckan
-      - ./src:/srv/app/src_extensions
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
     
   datapusher:
     container_name: ${DATAPUSHER_CONTAINER_NAME}
+    networks:
+      - ckannet
+      - dbnet
     image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
     restart: unless-stopped
     healthcheck:
@@ -43,16 +64,17 @@ services:
     container_name: ${POSTGRESQL_CONTAINER_NAME}
     build:
       context: postgresql/
+    networks:
+      - dbnet
     environment:
       - POSTGRES_USER
-      - POSTGRES_PASSWORD
       - POSTGRES_DB
       - CKAN_DB_USER
-      - CKAN_DB_PASSWORD
       - CKAN_DB
       - DATASTORE_READONLY_USER
-      - DATASTORE_READONLY_PASSWORD
       - DATASTORE_DB
+    env_file:
+      - .dbpw
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -61,6 +83,8 @@ services:
      
   solr:
     container_name: ${SOLR_CONTAINER_NAME}
+    networks:
+      - solrnet
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
     volumes:
       - solr_data:/var/solr
@@ -71,6 +95,18 @@ services:
   redis:
     container_name: ${REDIS_CONTAINER_NAME}
     image: redis:${REDIS_VERSION}
+    networks:
+      - redisnet
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "-e", "QUIT"]
+    
+networks:
+  webnet:
+  ckannet:
+  solrnet:
+    internal: true
+  dbnet:
+    internal: true
+  redisnet:
+    internal: true

@@ -72,6 +72,7 @@ You can do this by the following:
 
 * generate the passwords by running `generate_passwords.sh` this will create two files: `.ckpw` and `.dbpw`
 * by default the `docker-compose.yml` file is set to secure mode.
+* You need to make a copy of `.env.secure` as `.env`
 * if you make any subsequent changes to the `docker-compose.yml` file you can always revert back to the original file by referencing `docker-compose.secure.yml`
 * by default the `.env` file is set to secure mode.
 * if you make changes to the `.env` file you can always revert back to the original file by referencing `.env.secure`

@@ -8,7 +8,7 @@ volumes:
 services:
 
   ckan-dev:
-    container_name: ${CKAN_CONTAINER_NAME}
+    container_name: ckan-dev
     build:
       context: ckan/
       dockerfile: Dockerfile.dev
@@ -27,7 +27,7 @@ services:
       - "0.0.0.0:${CKAN_PORT_HOST}:${CKAN_PORT}"
     volumes:
       - ckan_storage:/var/lib/ckan
-      - ./src:/srv/app/src_extensions
+      - .ckan/src:/srv/app/src_extensions
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]

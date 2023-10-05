@@ -7,4 +7,9 @@ _service-provider/*
 _solr/schema.xml
 _src/*
 local/*
+
+# Docker Compose environment and password files
 .env
+.ckpw
+.dbpw
+docker-compose.yml.ORIG

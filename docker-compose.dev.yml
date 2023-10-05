@@ -27,11 +27,11 @@ services:
       - "0.0.0.0:${CKAN_PORT_HOST}:${CKAN_PORT}"
     volumes:
       - ckan_storage:/var/lib/ckan
-      - .ckan/src:/srv/app/src_extensions
+      - ./ckan/src:/srv/app/src_extensions
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
-    
+
   datapusher:
     container_name: ${DATAPUSHER_CONTAINER_NAME}
     image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
@@ -58,7 +58,7 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
-     
+
   solr:
     container_name: ${SOLR_CONTAINER_NAME}
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}

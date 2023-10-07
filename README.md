@@ -7,6 +7,7 @@
 * [Install CKAN plus dependencies](#install-ckan-plus-dependencies)
 * [Development mode](#development-mode)
    * [Create an extension](#create-an-extension)
+   * [Running HTTPS on development mode](#running-https-on-development-mode)
 * [CKAN images](#ckan-images)
    * [Extending the base images](#extending-the-base-images)
    * [Applying patches](#applying-patches)
@@ -96,11 +97,6 @@ To start the containers:
 
 See [CKAN Images](#ckan-images) for more details of what happens when using development mode.
 
-In dev mode, the `docker-compose.dev.yml` file intentionally excludes the specification of `container_names:`. This omission serves the purpose of facilitating the concurrent execution of multiple containers on the same host without necessitating updates to the container name for each project. For instance, duplicating the ckan-docker/ directory enables the simultaneous operation of more than one CKAN container.
-
-It is important to note that any container port that is configured to be mapped to the host will require the host port to be adjusted on a per-project basis. This adjustment is imperative to mitigate conflicts arising from port allocation.
-
-
 
 ##### Create an extension
 
@@ -112,6 +108,18 @@ You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tuto
 
 
 The new extension files and directories are created in the `/srv/app/src_extensions/` folder in the running container. They will also exist in the local src/ directory as local `/src` directory is mounted as `/srv/app/src_extensions/` on the ckan container. You might need to change the owner of its folder to have the appropiate permissions.
+
+##### Running HTTPS on development mode
+
+Sometimes is useful to run your local development instance under HTTPS, for instance if you are using authentication extensions like [ckanext-saml2auth](https://github.com/keitaroinc/ckanext-saml2auth). To enable it, set the following in your `.env` file:
+
+  USE_HTTPS_FOR_DEV=true
+
+and update the site URL setting:
+
+  CKAN_SITE_URL=https://localhost:5000
+
+After recreating the `ckan-dev` container, you should be able to access CKAN at https://localhost:5000
 
 
 ## 5. CKAN images

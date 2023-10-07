@@ -97,6 +97,7 @@ To start the containers:
 
 See [CKAN Images](#ckan-images) for more details of what happens when using development mode.
 
+
 ##### Create an extension
 
 You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:

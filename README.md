@@ -254,6 +254,10 @@ COPY certificate/my_cert.pem /usr/share/nginx/certificates/fullchain.pem
 COPY certificate/my_key.pem /usr/share/nginx/certificates/privkey.pem
 ```
 
+> Note: In case you remove the CKAN containers, retain the volume `ssl_cert`,
+> which contains the SSL certificate. This will avoid requesting a new one for the same domain,
+> in case you redeploy CKAN (prevents exceeding Let's Encrypt rate limit).
+
 ## 11. envvars
 
 The ckanext-envvars extension is used in the CKAN Docker base repo to build the base images.

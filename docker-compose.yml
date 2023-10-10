@@ -5,6 +5,7 @@ volumes:
   ckan_storage:
   pg_data:
   solr_data:
+  ssl_cert:
 
 services:
 
@@ -19,6 +20,8 @@ services:
         - EMAIL=${CKAN_CERT_EMAIL}
         - SSL_CERT_OPTIONS=${CKAN_CERT_OPTIONS}
         - SSL_CERT_RENEW=${CKAN_CERT_RENEW_INTERVAL}
+    volumes:
+      - ssl_cert:/etc/letsencrypt
     networks:
       - webnet
       - ckannet

@@ -1,0 +1,14 @@
+# auscope_theme-js:
+#   filter: rjsmin
+#   output: ckanext-auscope_theme/%(version)s-auscope_theme.js
+#   contents:
+#     - js/auscope_theme.js
+#   extra:
+#     preload:
+#       - base/main
+
+# auscope_theme-css:
+#   filter: cssrewrite
+#   output: ckanext-auscope_theme/%(version)s-auscope_theme.css
+#   contents:
+#     - css/auscope_theme.css

@@ -1,0 +1,3 @@
+[submodule "ckan/src/ckanext-oidc-pkce"]
+	path = ckan/src/ckanext-oidc-pkce
+	url = https://github.com/AuScope/ckanext-oidc-pkce.git

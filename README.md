@@ -15,7 +15,7 @@
 * [Datastore and Datapusher](#Datastore-and-datapusher)
 * [NGINX](#nginx)
 * [The ckanext-envvars extension](#envvars)
-* [The CKAN_SITE_URL parameter](#CKAN_SITE_URL)
+* [Connecting directly to CKAN](#connecting-directly)
 * [Changing the base image](#Changing-the-base-image)
 * [Replacing DataPusher with XLoader](#Replacing-DataPusher-with-XLoader)
 
@@ -113,11 +113,15 @@ The new extension files and directories are created in the `/srv/app/src_extensi
 
 Sometimes is useful to run your local development instance under HTTPS, for instance if you are using authentication extensions like [ckanext-saml2auth](https://github.com/keitaroinc/ckanext-saml2auth). To enable it, set the following in your `.env` file:
 
+```
   USE_HTTPS_FOR_DEV=true
+```
 
 and update the site URL setting:
 
-  CKAN_SITE_URL=https://localhost:5000
+```
+  CKAN_SITE_URL=https://${CKAN_DOMAIN}:${CKAN_PORT_HOST}
+```
 
 After recreating the `ckan-dev` container, you should be able to access CKAN at https://localhost:5000
 
@@ -167,7 +171,7 @@ ckan -c /srv/app/ckan.ini validation init-db
 And then in our `Dockerfile.dev` file we install the extension and copy the initialization scripts:
 
 ```Dockerfile
-FROM ckan/ckan-base:2.9.7-dev
+FROM ckan/ckan-base:2.10.1-dev
 
 RUN pip install -e git+https://github.com/frictionlessdata/ckanext-validation.git#egg=ckanext-validation && \
     pip install -r https://raw.githubusercontent.com/frictionlessdata/ckanext-validation/master/requirements.txt
@@ -175,7 +179,7 @@ RUN pip install -e git+https://github.com/frictionlessdata/ckanext-validation.gi
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 ```
 
-NB: There are a number of extension examples commented out in the Dockerfile.dev file
+> Note: There are a number of extension examples commented out in the Dockerfile.dev file
 
 ## 7. Applying patches
 
@@ -218,11 +222,37 @@ running the latest version of Datapusher.
 
 ## 10. NGINX
 
-The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 8443. A "self-signed" SSL certificate is generated as part of the ENTRYPOINT. The NGINX `server_name` directive and the `CN` field in the SSL certificate have been both set to 'localhost'. This should obviously not be used for production.
+The base Docker Compose configuration uses NGINX as the front-end (ie: reverse proxy) and
+SSL terminator. It accepts HTTPS connections on ports 80 and 443 (port 80 gets redirected to 443).
+A "self-signed" SSL certificate is generated when NGINX starts, unless you provide your own
+certificate and key (see below). This should obviously not be used for production.
 
-Creating the SSL cert and key files as follows:
-`openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=DE/ST=Berlin/L=Berlin/O=None/CN=localhost" -keyout ckan-local.key -out ckan-local.crt`
-The `ckan-local.*` files will then need to be moved into the nginx/setup/ directory
+NGINX can automatically obtain a [Let's Encrypt](https://letsencrypt.org/getting-started/)
+SSL certificate and renew it periodically, if you configure the  value `CKAN_AUTO_CERT` in
+the `.env` file. The hostname and the email address to be used in the certificate request
+must be defined in the `.env` file.
+
+> Note: If you are not using a self-signed certificate, you must define the domain name on
+> which CKAN will be published in the variable `CKAN_DOMAIN` in the `.env` file. If you supply
+> your own certificate, the configured domain name must match the domain name in the certificate.
+
+If you want to use your own SSL certificate with CKAN, you must supply the files
+`fullchain.pem` and `privkey.pem`, respectively. Consider the following folder structure:
+
+```
+nginx
+├── certificate
+│   ├── my_cert.pem
+│   └── my_key.pem
+└── Dockerfile
+```
+
+Then modify the NGINX Dockerfile to use these files:
+
+```
+COPY certificate/my_cert.pem /usr/share/nginx/certificates/fullchain.pem
+COPY certificate/my_key.pem /usr/share/nginx/certificates/privkey.pem
+```
 
 ## 11. envvars
 
@@ -245,9 +275,12 @@ These parameters can be added to the `.env` file
 
 For more information please see [ckanext-envvars](https://github.com/okfn/ckanext-envvars)
 
-## 12. CKAN_SITE_URL
+## 12. Connecting directly
 
-For convenience the CKAN_SITE_URL parameter should be set in the .env file. For development it can be set to http://localhost:5000 and non-development set to https://localhost:8443
+For convenience, in development deployments you can connect directly to the CKAN container
+at http://localhost:5000. In non-development environments you can use https://localhost:443.
+The hostname is defined in variable `CKAN_DOMAIN`, while the port is defined in 
+variable `CKAN_PORT_HOST` in the `.env` file.
 
 ## 13. Manage new users
 

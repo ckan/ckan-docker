@@ -13,14 +13,26 @@ services:
     build:
       context: nginx/
       dockerfile: Dockerfile
+      args:
+        - CKAN_URL=http://ckan:${CKAN_PORT}/
+        - DOMAIN=${CKAN_DOMAIN}
+        - EMAIL=${CKAN_CERT_EMAIL}
+        - SSL_CERT_OPTIONS=${CKAN_CERT_OPTIONS}
+        - SSL_CERT_RENEW=${CKAN_CERT_RENEW_INTERVAL}
     networks:
       - webnet
       - ckannet
+    healthcheck:
+      test: ['CMD', '/opt/status.sh']
+      start_period: 30s
+      interval: 1m
+      timeout: 5s
     depends_on:
       ckan:
         condition: service_healthy
     ports:
-      - "0.0.0.0:${NGINX_SSLPORT_HOST}:${NGINX_SSLPORT}"
+      - "0.0.0.0:${NGINX_PORT_HOST}:80"
+      - "0.0.0.0:${NGINX_SSLPORT_HOST}:443"
     
   ckan:
     container_name: ${CKAN_CONTAINER_NAME}

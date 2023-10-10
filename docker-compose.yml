@@ -20,8 +20,10 @@ services:
         - EMAIL=${CKAN_CERT_EMAIL}
         - SSL_CERT_OPTIONS=${CKAN_CERT_OPTIONS}
         - SSL_CERT_RENEW=${CKAN_CERT_RENEW_INTERVAL}
+        - LETSENCRYPT_DIR=${LETSENCRYPT_DIR}
+        - LETSENCRYPT_DRYRUN=${LETSENCRYPT_DRYRUN}
     volumes:
-      - ssl_cert:/etc/letsencrypt
+      - ssl_cert:${LETSENCRYPT_DIR}
     networks:
       - webnet
       - ckannet

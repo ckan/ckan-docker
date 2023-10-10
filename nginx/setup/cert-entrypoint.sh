@@ -2,6 +2,8 @@
 
 export DOMAIN=${DOMAIN}
 export EMAIL=${EMAIL}
+export LETSENCRYPT_DIR=${LETSENCRYPT_DIR}
+export LETSENCRYPT_DRYRUN=${LETSENCRYPT_DRYRUN}
 
 # Ensure we have a folder for the certificates
 if [ ! -d /usr/share/nginx/certificates ]; then
@@ -18,7 +20,7 @@ if [ ! -f /usr/share/nginx/certificates/fullchain.pem ]; then
     openssl x509 -req -days 365 -in /usr/share/nginx/certificates/cert.csr -signkey /usr/share/nginx/certificates/privkey.pem -out /usr/share/nginx/certificates/fullchain.pem
 fi
 
-if [ -n "$DOMAIN" ] && [ "$DOMAIN" != "localhost" ] && [ -n "$CKAN_AUTO_CERT" ] && ["$CKAN_AUTO_CERT" != "true"]; then
+if [ -n "$DOMAIN" ] && [ "$DOMAIN" != "localhost" ] && ["$CKAN_AUTO_CERT" == "true"]; then
     ### Send certbot emission/renewal to background
     $(while :; do /opt/request.sh; sleep "${SSL_CERT_RENEW:-12h}"; done;) &
 

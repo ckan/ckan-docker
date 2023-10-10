@@ -6,8 +6,7 @@ fi
  
 if [ -n "$DOMAIN" ] && [ "$DOMAIN" != "localhost" ]; then
 	certbot certonly \
-			--config-dir ${LETSENCRYPT_DIR:-/etc/letsencrypt} \
-			--dry-run \
+			--config-dir ${LETSENCRYPT_DIR:-/etc/letsencrypt} ${LETSENCRYPT_DRYRUN:---dry-run} \
 			--agree-tos \
 			--domains "$DOMAIN" \
 			--email $EMAIL \

@@ -236,6 +236,12 @@ must be defined in the `.env` file.
 > which CKAN will be published in the variable `CKAN_DOMAIN` in the `.env` file. If you supply
 > your own certificate, the configured domain name must match the domain name in the certificate.
 
+> Note: Even when you set `CKAN_AUTO_CERT` to `true` to use a Let's Encrypt SSL certificate,
+> NGINX will still use a self-signed certificate and will only do dry runs for requesting a 
+> certificate to avoid the [rate limits](https://letsencrypt.org/docs/rate-limits/) of
+> Let's Encrypt. Once you are satisfied that everything is running as expected, you can comment
+> out the setting `LETSENCRYPT_DRYRUN` in the `.env` file.
+
 If you want to use your own SSL certificate with CKAN, you must supply the files
 `fullchain.pem` and `privkey.pem`, respectively. Consider the following folder structure:
 

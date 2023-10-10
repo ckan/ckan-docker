@@ -1,3 +1,0 @@
-@echo off
-echo Building CKAN containers...
-docker compose -p euh4d-ckan up -d --build --remove-orphans

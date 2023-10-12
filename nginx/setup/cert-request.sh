@@ -6,7 +6,7 @@ fi
  
 if [ -n "$DOMAIN" ] && [ "$DOMAIN" != "localhost" ]; then
 	certbot certonly \
-			--config-dir ${LETSENCRYPT_DIR:-/etc/letsencrypt} ${LETSENCRYPT_DRYRUN:---dry-run} \
+			--config-dir ${LETSENCRYPT_DIR} ${LETSENCRYPT_DRYRUN} \
 			--agree-tos \
 			--domains "$DOMAIN" \
 			--email $EMAIL \
@@ -16,13 +16,13 @@ if [ -n "$DOMAIN" ] && [ "$DOMAIN" != "localhost" ]; then
 			--webroot-path /var/www/html \
 			$SSL_CERT_OPTIONS || true
 
-	if [ -f ${LETSENCRYPT_DIR:-/etc/letsencrypt}/live/$DOMAIN/privkey.pem ]; then
-		chmod +rx ${LETSENCRYPT_DIR:-/etc/letsencrypt}/live
-		chmod +rx ${LETSENCRYPT_DIR:-/etc/letsencrypt}/archive
-		chmod +r  ${LETSENCRYPT_DIR:-/etc/letsencrypt}/archive/${DOMAIN}/fullchain*.pem
-		chmod +r  ${LETSENCRYPT_DIR:-/etc/letsencrypt}/archive/${DOMAIN}/privkey*.pem
-		cp ${LETSENCRYPT_DIR:-/etc/letsencrypt}/live/$DOMAIN/privkey.pem /usr/share/nginx/certificates/privkey.pem
-		cp ${LETSENCRYPT_DIR:-/etc/letsencrypt}/live/$DOMAIN/fullchain.pem /usr/share/nginx/certificates/fullchain.pem
+	if [ -f ${LETSENCRYPT_DIR}/live/$DOMAIN/privkey.pem ]; then
+		chmod +rx ${LETSENCRYPT_DIR}/live
+		chmod +rx ${LETSENCRYPT_DIR}/archive
+		chmod +r  ${LETSENCRYPT_DIR}/archive/${DOMAIN}/fullchain*.pem
+		chmod +r  ${LETSENCRYPT_DIR}/archive/${DOMAIN}/privkey*.pem
+		cp ${LETSENCRYPT_DIR}/live/$DOMAIN/privkey.pem /usr/share/nginx/certificates/privkey.pem
+		cp ${LETSENCRYPT_DIR}/live/$DOMAIN/fullchain.pem /usr/share/nginx/certificates/fullchain.pem
 		echo "Copied new certificate to /usr/share/nginx/certificates"
 	fi
 fi

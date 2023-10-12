@@ -18,12 +18,14 @@ services:
         - CKAN_URL=http://ckan:${CKAN_PORT}/
         - DOMAIN=${CKAN_DOMAIN}
         - EMAIL=${CKAN_CERT_EMAIL}
-        - SSL_CERT_OPTIONS=${CKAN_CERT_OPTIONS}
-        - SSL_CERT_RENEW=${CKAN_CERT_RENEW_INTERVAL}
-        - LETSENCRYPT_DIR=${LETSENCRYPT_DIR}
+        - ORGANISATION=${CKAN_CERT_ORG}
+        - SSL_AUTO_CERT=${CKAN_AUTO_CERT:-true}
+        - SSL_CERT_OPTIONS=${CKAN_CERT_OPTIONS:-}
+        - SSL_CERT_RENEW=${CKAN_CERT_RENEW_INTERVAL:-12h}
+        - LETSENCRYPT_DIR=${LETSENCRYPT_DIR:-/etc/letsencrypt}
         - LETSENCRYPT_DRYRUN=${LETSENCRYPT_DRYRUN}
     volumes:
-      - ssl_cert:${LETSENCRYPT_DIR}
+      - ssl_cert:${LETSENCRYPT_DIR:-/etc/letsencrypt}
     networks:
       - webnet
       - ckannet

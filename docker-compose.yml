@@ -23,7 +23,7 @@ services:
         - SSL_CERT_OPTIONS=${CKAN_CERT_OPTIONS:-}
         - SSL_CERT_RENEW=${CKAN_CERT_RENEW_INTERVAL:-12h}
         - LETSENCRYPT_DIR=${LETSENCRYPT_DIR:-/etc/letsencrypt}
-        - LETSENCRYPT_DRYRUN=${LETSENCRYPT_DRYRUN}
+        - LETSENCRYPT_DRYRUN=${LETSENCRYPT_DRYRUN:- }
     volumes:
       - ssl_cert:${LETSENCRYPT_DIR:-/etc/letsencrypt}
     networks:

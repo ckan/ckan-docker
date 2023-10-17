@@ -7,6 +7,7 @@
 * [Install CKAN plus dependencies](#install-ckan-plus-dependencies)
 * [Development mode](#development-mode)
    * [Create an extension](#create-an-extension)
+   * [Running HTTPS on development mode](#running-https-on-development-mode)
 * [CKAN images](#ckan-images)
    * [Extending the base images](#extending-the-base-images)
    * [Applying patches](#applying-patches)
@@ -15,6 +16,8 @@
 * [NGINX](#nginx)
 * [The ckanext-envvars extension](#envvars)
 * [The CKAN_SITE_URL parameter](#CKAN_SITE_URL)
+* [Changing the base image](#Changing-the-base-image)
+* [Replacing DataPusher with XLoader](#Replacing-DataPusher-with-XLoader)
 
 
 ## 1.  Overview
@@ -95,7 +98,6 @@ To start the containers:
 See [CKAN Images](#ckan-images) for more details of what happens when using development mode.
 
 
-
 ##### Create an extension
 
 You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
@@ -106,6 +108,18 @@ You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tuto
 
 
 The new extension files and directories are created in the `/srv/app/src_extensions/` folder in the running container. They will also exist in the local src/ directory as local `/src` directory is mounted as `/srv/app/src_extensions/` on the ckan container. You might need to change the owner of its folder to have the appropiate permissions.
+
+##### Running HTTPS on development mode
+
+Sometimes is useful to run your local development instance under HTTPS, for instance if you are using authentication extensions like [ckanext-saml2auth](https://github.com/keitaroinc/ckanext-saml2auth). To enable it, set the following in your `.env` file:
+
+  USE_HTTPS_FOR_DEV=true
+
+and update the site URL setting:
+
+  CKAN_SITE_URL=https://localhost:5000
+
+After recreating the `ckan-dev` container, you should be able to access CKAN at https://localhost:5000
 
 
 ## 5. CKAN images
@@ -204,7 +218,7 @@ running the latest version of Datapusher.
 
 ## 10. NGINX
 
-The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 8443 and an HTTP port (81). A "self-signed" SSL certificate is generated beforehand and the server certificate and key files are included. The NGINX `server_name` directive and the `CN` field in the SSL certificate have been both set to 'localhost'. This should obviously not be used for production.
+The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 8443. A "self-signed" SSL certificate is generated as part of the ENTRYPOINT. The NGINX `server_name` directive and the `CN` field in the SSL certificate have been both set to 'localhost'. This should obviously not be used for production.
 
 Creating the SSL cert and key files as follows:
 `openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=DE/ST=Berlin/L=Berlin/O=None/CN=localhost" -keyout ckan-local.key -out ckan-local.crt`
@@ -217,14 +231,15 @@ This extension checks for environmental variables conforming to an expected form
 
 For the extension to correctly identify which env var keys map to the format used for the config object, env var keys should be formatted in the following way:
 
-  All uppercase
-  Replace periods ('.') with two underscores ('__')
-  Keys must begin with 'CKAN' or 'CKANEXT'
+  All uppercase  
+  Replace periods ('.') with two underscores ('__')  
+  Keys must begin with 'CKAN' or 'CKANEXT', if they do not you can prepend them with '`CKAN___`' 
 
 For example:
 
   * `CKAN__PLUGINS="envvars image_view text_view recline_view datastore datapusher"`
   * `CKAN__DATAPUSHER__CALLBACK_URL_BASE=http://ckan:5000`
+  * `CKAN___BEAKER__SESSION__SECRET=CHANGE_ME`
 
 These parameters can be added to the `.env` file 
 
@@ -233,3 +248,40 @@ For more information please see [ckanext-envvars](https://github.com/okfn/ckanex
 ## 12. CKAN_SITE_URL
 
 For convenience the CKAN_SITE_URL parameter should be set in the .env file. For development it can be set to http://localhost:5000 and non-development set to https://localhost:8443
+
+## 13. Manage new users
+
+1. Create a new user from the Docker host, for example to create a new user called 'admin'
+
+   `docker exec -it <container-id> ckan -c ckan.ini user add admin email=admin@localhost`
+
+   To delete the 'admin' user
+
+   `docker exec -it <container-id> ckan -c ckan.ini user remove admin`
+
+2. Create a new user from within the ckan container. You will need to get a session on the running container
+
+   `ckan -c ckan.ini user add admin email=admin@localhost`
+
+   To delete the 'admin' user
+
+   `ckan -c ckan.ini user remove admin`
+
+## 14. Changing the base image
+
+The base image used in the CKAN Dockerfile and Dockerfile.dev can be changed so a different DockerHub image is used eg: ckan/ckan-base:2.9.9
+could be used instead of ckan/ckan-base:2.10.1
+
+## 15. Replacing DataPusher with XLoader
+
+Check out the wiki page for this: https://github.com/ckan/ckan-docker/wiki/Replacing-DataPusher-with-XLoader
+
+Copying and License
+-------------------
+
+This material is copyright (c) 2006-2023 Open Knowledge Foundation and contributors.
+
+It is open and licensed under the GNU Affero General Public License (AGPL) v3.0
+whose full text may be found at:
+
+http://www.fsf.org/licensing/licenses/agpl-3.0.html

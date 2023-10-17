@@ -1,4 +1,5 @@
-FROM ckan/ckan-base:ckan-2.9.8-dev
+FROM ckan/ckan-dev:2.10.1
+
 
 # Set up environment variables
 ENV APP_DIR=/srv/app
@@ -9,10 +10,6 @@ RUN echo ${TZ} > /etc/timezone
 RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
         cp /usr/share/zoneinfo/${TZ} /etc/localtime ;\
     fi ;
-
-# Setup background task manager (Supervisor)
-COPY setup/supervisord.conf /etc/supervisord.d/
-COPY setup/consumers.conf /etc/supervisord.d/
 
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file

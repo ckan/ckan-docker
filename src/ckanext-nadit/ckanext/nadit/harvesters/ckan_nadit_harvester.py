@@ -46,6 +46,22 @@ class NaditCKANHarvester(CKANHarvester):
                 continue
             package_dict[fld] = get_single_lang(package_dict[fld])
 
+        # Additional fields
+        print(harvest_object)
+
+        log.debug("--add language")
+        if 'language' in harvest_object:
+            package_dict['language'] = ",".join(harvest_object['language'])
+        
+        log.debug("--add rights (licenses)")
+        for res in harvest_object['resources']:
+            package_dict['harvest_license'] = res['rights']
+
+        log.debug("--add temporals")
+        log.debug("--add spatial")
+        log.debug("--add contact_points")
+        
+
         # Rename field for CKAN standard format
         if 'description' in package_dict:
             package_dict['notes'] = package_dict.pop('description')

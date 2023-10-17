@@ -30,6 +30,10 @@ Firstly, make sure that you have created at least one Organization.
 
 Multiple organizations or groups can be included in this way.
 
+By setting `force_all` to true, the harvester will gather all remote packages regardless of the modification date. Helpful in development. 
+
+Details of all configuration parameters can be found in the [ckanext-harvest](https://github.com/ckan/ckanext-harvest) README. 
+
 ### Further references
 
 See Harvesting chapter in the [Opendata.swiss Handbook](https://handbook.opendata.swiss/de/content/publizieren/publikationsvarianten/harvesting.html#harvesting-einrichten) (German only) and docs for [ckanext-harvest](https://github.com/ckan/ckanext-harvest#the-ckan-harvester).

@@ -44,9 +44,11 @@ RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
 
+# Copy custom initialization scripts
+COPY docker-entrypoint.d/* /docker-entrypoint.d/
+
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
-
 COPY patches ${APP_DIR}/patches
 
 RUN for d in $APP_DIR/patches/*; do \

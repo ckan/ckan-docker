@@ -1,5 +1,7 @@
 FROM ckan/ckan-base:2.10.1
 
+# Install any extensions needed by your CKAN instance
+# See Dockerfile.dev for more details and examples
 
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/

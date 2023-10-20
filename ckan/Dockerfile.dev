@@ -49,6 +49,8 @@ RUN pip install -e "git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext-
 COPY spatial-reqs.txt /tmp/spatial-reqs.txt
 RUN pip install -r /tmp/spatial-reqs.txt
 
+### Contact extension ###
+RUN pip install -e "git+https://github.com/NaturalHistoryMuseum/ckanext-contact.git#egg=ckanext-contact"
 
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime

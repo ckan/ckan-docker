@@ -1,23 +1,13 @@
 FROM ckan/ckan-dev:2.10.1
 
-
-# Set up environment variables
-ENV APP_DIR=/srv/app
-ENV TZ=UTC
-RUN echo ${TZ} > /etc/timezone
-
-# Make sure both files are not exactly the same
-RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
-        cp /usr/share/zoneinfo/${TZ} /etc/localtime ;\
-    fi ;
-
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
-# - Also make sure all extra configuration options are added to the CKAN config file (ckan.ini)
-#   This can be done by creating an overriding start_ckan_dev_development.sh file:
-#   (https://github.com/ckan/ckan-docker-base/blob/main/ckan-2.9/dev/setup/start_ckan_development.sh) ie: updating the 'ckan config-tool' lines
-#   For more on config-tool please see https://docs.ckan.org/en/latest/maintaining/cli.html#config-tool-tool-for-editing-options-in-a-ckan-config-file
-#   or using Crudini (https://github.com/pixelb/crudini) 
+# - Also make sure all provide all extra configuration options, either by:
+#   * Adding them to the .env file (check the ckanext-envvars syntax for env vars), or
+#   * Adding extra configuration scripts to /docker-entrypoint.d folder) to update
+#      the CKAN config file (ckan.ini) with the `ckan config-tool` command
+#
+# See README > Extending the base images for more details
 #
 # For instance:
 #
@@ -44,12 +34,11 @@ RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.0#egg=cka
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
 
-RUN pip3 install -e git+https://git.fhgr.ch/resto/ckanext-nadit.git@main#egg=ckanext-nadit && \
-    pip3 install -r https://git.fhgr.ch/resto/ckanext-nadit/-/raw/main/requirements.txt
+# Copy custom initialization scripts
+COPY docker-entrypoint.d/* /docker-entrypoint.d/
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
-
 COPY patches ${APP_DIR}/patches
 
 RUN for d in $APP_DIR/patches/*; do \

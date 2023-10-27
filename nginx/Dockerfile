@@ -3,8 +3,7 @@ FROM nginx:stable-alpine
 ENV NGINX_DIR=/etc/nginx
 
 RUN apk update --no-cache && \
-    apk upgrade --no-cache && \
-    apk add --no-cache openssl
+    apk upgrade --no-cache
 
 COPY setup/nginx.conf ${NGINX_DIR}/nginx.conf
 COPY setup/index.html /usr/share/nginx/html/index.html

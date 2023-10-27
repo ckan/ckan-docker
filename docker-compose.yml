@@ -9,6 +9,7 @@ volumes:
 services:
 
   reverse-proxy:
+    container_name: ${TRAEFIK_CONTAINER_NAME}
     # The official v2 Traefik docker image
     image: traefik:v2.10
     # Enables the web UI and tells Traefik to listen to docker
@@ -24,6 +25,7 @@ services:
       #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.myresolver.acme.email=${TRAEFIK_ACME_EMAIL}"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--providers.docker.network=webnet"
     ports:
       # The HTTP port
       - "80:80"

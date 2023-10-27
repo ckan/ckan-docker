@@ -8,6 +8,33 @@ volumes:
 
 services:
 
+  reverse-proxy:
+    # The official v2 Traefik docker image
+    image: traefik:v2.10
+    # Enables the web UI and tells Traefik to listen to docker
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=${TRAEFIK_ACME_EMAIL}"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
   nginx:
     container_name: ${NGINX_CONTAINER_NAME}
     build:
@@ -19,9 +46,12 @@ services:
     depends_on:
       ckan:
         condition: service_healthy
-    ports:
-      - "0.0.0.0:${NGINX_SSLPORT_HOST}:${NGINX_SSLPORT}"
-    
+    labels:
+      - "traefik.http.routers.ckan.rule=Host(`${TRAEFIK_HOST}`)"
+      - "traefik.http.routers.ckan.tls=true"
+      - "traefik.http.routers.ckan.tls.certresolver=myresolver"
+      - "traefik.http.routers.ckan.loadbalancer.server.port=${NGINX_PORT}"
+
   ckan:
     container_name: ${CKAN_CONTAINER_NAME}
     build:
@@ -47,8 +77,8 @@ services:
       - ckan_storage:/var/lib/ckan
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
-    
+      test: [ "CMD", "wget", "-qO", "/dev/null", "http://localhost:5000" ]
+
   datapusher:
     container_name: ${DATAPUSHER_CONTAINER_NAME}
     networks:
@@ -57,7 +87,7 @@ services:
     image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]
+      test: [ "CMD", "wget", "-qO", "/dev/null", "http://localhost:8800" ]
 
   db:
     container_name: ${POSTGRESQL_CONTAINER_NAME}
@@ -79,8 +109,8 @@ services:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
-     
+      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}" ]
+
   solr:
     container_name: ${SOLR_CONTAINER_NAME}
     networks:
@@ -90,7 +120,7 @@ services:
       - solr_data:/var/solr
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/"]
+      test: [ "CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/" ]
 
   redis:
     container_name: ${REDIS_CONTAINER_NAME}
@@ -99,8 +129,8 @@ services:
       - redisnet
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "redis-cli", "-e", "QUIT"]
-    
+      test: [ "CMD", "redis-cli", "-e", "QUIT" ]
+
 networks:
   webnet:
   ckannet:

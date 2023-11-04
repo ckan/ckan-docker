@@ -15,7 +15,7 @@ services:
     # Enables the web UI and tells Traefik to listen to docker
     command:
       #- "--log.level=DEBUG"
-      - "--api.insecure=true"
+      #- "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
@@ -26,34 +26,14 @@ services:
       - "--certificatesresolvers.myresolver.acme.email=${TRAEFIK_ACME_EMAIL}"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--providers.docker.network=webnet"
-    ports:
-      # The HTTP port
-      - "80:80"
-      - "443:443"
-      # The Web UI (enabled by --api.insecure=true)
-      - "8080:8080"
     volumes:
       - "./letsencrypt:/letsencrypt"
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-
-
-  nginx:
-    container_name: ${NGINX_CONTAINER_NAME}
-    build:
-      context: nginx/
-      dockerfile: Dockerfile
-    networks:
-      - webnet
-      - ckannet
+    network_mode: "host"
     depends_on:
       ckan:
         condition: service_healthy
-    labels:
-      - "traefik.http.routers.ckan.rule=Host(`${TRAEFIK_HOST}`)"
-      - "traefik.http.routers.ckan.tls=true"
-      - "traefik.http.routers.ckan.tls.certresolver=myresolver"
-      - "traefik.http.routers.ckan.loadbalancer.server.port=${NGINX_PORT}"
 
   ckan:
     container_name: ${CKAN_CONTAINER_NAME}
@@ -67,6 +47,7 @@ services:
       - dbnet
       - solrnet
       - redisnet
+      - webnet
     env_file:
       - .env
     depends_on:
@@ -81,6 +62,13 @@ services:
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "wget", "-qO", "/dev/null", "http://localhost:5000" ]
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ckan.rule=Host(`${TRAEFIK_HOST}`)
+      - "traefik.http.routers.ckan.tls=true"
+      - "traefik.http.routers.ckan.tls.certresolver=myresolver"
+      - traefik.http.services.ckan.loadbalancer.server.port=${CKAN_PORT_HOST}
+
 
   datapusher:
     container_name: ${DATAPUSHER_CONTAINER_NAME}

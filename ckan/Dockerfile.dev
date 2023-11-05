@@ -37,6 +37,9 @@ FROM ckan/ckan-dev:2.10.1
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 
+### PDF View ###
+RUN pip3 install ckanext-pdfview
+
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
 COPY patches ${APP_DIR}/patches

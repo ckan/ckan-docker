@@ -7,8 +7,14 @@
 #     preload:
 #       - base/main
 
-# auscope_theme-css:
-#   filter: cssrewrite
-#   output: ckanext-auscope_theme/%(version)s-auscope_theme.css
-#   contents:
-#     - css/auscope_theme.css
+auscope_theme-css:
+  contents:
+    - css/auscope_theme.css
+  output: ckanext-auscope_theme/%(version)s-auscope_theme.css
+  filters: cssrewrite
+
+shared_style-css:
+  contents:
+    - /shared/public/shared_style.css
+  output: ckanext-auscope_theme/%(version)s-shared_style.css
+  filters: cssrewrite  

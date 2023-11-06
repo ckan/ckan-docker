@@ -1,0 +1,9 @@
+{% ckan_extends  %}
+
+
+{% block header_logo %}
+  <a class="logo" href="{{ h.url_for('home.index') }}">
+    <img src="{{ h.url_for_static_or_external('base/images/AuScope Logo – Reversed.png') }}" alt="Auscope Logo" title="IGSN" />
+    <span class="logo-text">[ IGSN ]</span>
+ </a>
+{% endblock %}

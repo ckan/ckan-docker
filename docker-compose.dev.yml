@@ -28,6 +28,8 @@ services:
     volumes:
       - ckan_storage:/var/lib/ckan
       - ./ckan/src:/srv/app/src_extensions
+      - ./ckan/src/shared/public:/shared/public
+      - ./ckan/src/shared/templates:/shared/templates
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]

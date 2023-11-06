@@ -1,0 +1,14 @@
+{% ckan_extends %}
+
+{% block footer_links %}
+  <li><a href="{{ h.url_for('home.about') }}">{{ _('About Auscope') }}</a></li>
+{% endblock %}
+
+{% block footer_attribution %}
+  <p>
+    {% trans %}<strong>Powered by</strong>{% endtrans %}
+    <div class="auscope-footer-logo">
+      <a href="https://portal.auscope.org.au/">{{ _('AusCope') }}</a>
+    </div>
+  </p>
+{% endblock %}

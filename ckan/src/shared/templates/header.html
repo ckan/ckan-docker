@@ -1,0 +1,13 @@
+{% ckan_extends %}
+
+{% block header_account_notlogged %}
+<li>{% link_for _('Log in (AAF2)'), named_route='oidc_pkce.login' %}</li>
+<li>{% link_for _('Log in'), named_route='user.login' %}</li>
+{% if h.check_access('user_create') %}
+<li>{% link_for _('Register'), named_route='user.register' %}</li>
+{% endif %} {% endblock %}
+
+
+<a class="btn btn-primary" data-module="modal-contact" data-module-template="" href="" title="">
+    <i class="fas fa-envelope"></i>
+</a>

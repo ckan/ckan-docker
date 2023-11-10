@@ -21,11 +21,11 @@
 
 }
 
-.homepage .hero {
-    background: none;
-    background-color: var(--color-background-default);
-}
-.homepage .module-feeds {
+.homepage .hero, 
+.homepage .module-feeds, 
+.main, 
+.media-grid, 
+.module-grid {
     background: none;
     background-color: var(--color-background-default);
 }

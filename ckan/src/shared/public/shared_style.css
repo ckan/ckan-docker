@@ -2,7 +2,7 @@
   --color-background-default: #f2f2f1;
   --color-aus-royal-blue: #282572;
   --bs-teal: #59c2aa;
-  --bs-gray-300: #d8d9d7;
+  --bs-gray: #d8d9d7;
   --bs-white: #ffffff;
   --color-aus-black: #231f20;
   --bs-font-sans-serif: 'Calibre-light', Arial, sans-serif;
@@ -15,9 +15,9 @@
   --bs-body-font-family: var(--bs-font-sans-serif);
   
   /* Continue with the original settings for font size, weight, and line height */
-  --bs-body-font-size: 17px; /* Keep the original size or update it as needed */
+  --bs-body-font-size: 0.875rem; /* Keep the original size or update it as needed */
   --bs-body-font-weight: 400; /* Keep the original weight or update it as needed */
-  --bs-body-line-height: 1.6em; /* Keep the original line height or update it as needed */
+  --bs-body-line-height: 1.5; /* Keep the original line height or update it as needed */
 
 }
 
@@ -34,20 +34,6 @@
    Typography styles for headers   
 ===================================================== */
 
-p:first-child {
-    margin-top: 0
-}
-
-p:last-child {
-    margin-bottom: 0
-}
-
-@media screen and (max-width: 640px) {
-    .responsive-font-size-h2 {
-        font-size:28px;
-        letter-spacing: .16470588px
-    }
-}
 
 h1,h2,h3 {
     text-rendering: optimizeLegibility
@@ -63,7 +49,7 @@ h1:last-child,h2:last-child,h3:last-child {
 h1 {
     font-weight: 300;
     font-style: normal;
-    font-size: 21px;
+    font-size: 1.313rem;
     line-height: 1.3em;
     text-transform: none
 }
@@ -71,14 +57,14 @@ h1 {
 h2 {
     font-weight: 300;
     font-style: normal;
-    font-size: 34px;
+    font-size: 1.75rem;
     line-height: 1.3em;
     text-transform: none
 }
 
 @media screen and (max-width: 640px) {
     h2 {
-        font-size:28px;
+        font-size:1.75rem;
         letter-spacing: .16470588px
     }
 }
@@ -86,7 +72,7 @@ h2 {
 h3 {
     font-weight: 300;
     font-style: normal;
-    font-size: 21px;
+    font-size: 1.313rem;
     line-height: 1.5em;
     text-transform: none
 }
@@ -189,7 +175,7 @@ h2 strong {
 p em,.tweet-text,.tweet-text a.tweet-url,.tweet-text a {
     color: #7e7caa !important;
     font-style: normal;
-    font-size: 15px !important;
+    font-size: 0.938rem !important;
     line-height: 150% !important
 }
 
@@ -198,7 +184,7 @@ p em a {
 }
 
 hr {
-    background-color: #d9d9d7 !important
+    background-color: var(--bs-gray) !important
 }
 
 /* =====================================================
@@ -314,40 +300,63 @@ hr {
 /* ====================================
    The footer at the bottom of the site
    ==================================== */
+.site-footer {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
 
 .site-footer,
 body {
   background: none;
-  background-color:var(--bs-gray-300);
+  background-color: var(--bs-gray);
 }
-/* The text in the footer. */
+
+/* Text in the Footer */
 .site-footer,
 .site-footer label,
 .site-footer small,
 .site-footer h3,
 .site-footer a {
-  color: var(--color-aus-royal-blue); 
+  color: var(--color-aus-royal-blue);
 }
 
-.site-footer h3,
-.site-footer p{
-  /* white-space: pre-wrap;
-  word-wrap: break-word; */
-  line-height: 1.6em;
-}
+/* Footer Top Blocks Styling */
 .footerBlocksTop {
-    max-width: 140px;
-    height: auto !important;
-}
-.footerBlocksTop strong {
-    font-family: Calibre-Medium;
-    letter-spacing: .035em;
+  max-width: 140px;
+  height: auto !important;
 }
 
+.footerBlocksTop strong {
+  font-family: 'Calibre-Medium', sans-serif;
+  letter-spacing: 0.035em;
+}
+
+/* Footer Link Styling */
 .site-footer a[href] {
   text-decoration: underline;
 }
 
 .site-footer a.social-media-link {
   text-decoration: none;
+}
+
+/* Consistent Box Sizing */
+.site-footer *, .site-footer *::before, .site-footer *::after {
+  box-sizing: border-box;
+}
+
+/* Footer Bottom Styling */
+.footer-bottom {
+  margin: 0;
+  background-color: #b5b5b5; /* Consider using a variable for consistency */
+}
+
+.footer-bottom p {
+  margin-top: 5px;
+}
+
+.footer-bottom em {
+  color: var(--color-aus-royal-blue) !important;
+  font-style: normal;
+  font-size: 0.75rem !important;
 }

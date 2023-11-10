@@ -1,23 +1,229 @@
+:root {
+  --color-background-default: #f2f2f1;
+  --color-aus-royal-blue: #282572;
+  --bs-teal: #59c2aa;
+  --bs-gray-300: #d8d9d7;
+  --bs-white: #ffffff;
+  --color-aus-black: #231f20;
+  --bs-font-sans-serif: 'Calibre-light', Arial, sans-serif;
+  --bs-font-serif: 'Karmina', Georgia, serif;
+  
+  /* If need to have a monospace typeface guideline, update it as needed, otherwise keep the original */
+  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  
+  /* Body font family now uses Arial as the primary typeface */
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  
+  /* Continue with the original settings for font size, weight, and line height */
+  --bs-body-font-size: 17px; /* Keep the original size or update it as needed */
+  --bs-body-font-weight: 400; /* Keep the original weight or update it as needed */
+  --bs-body-line-height: 1.6em; /* Keep the original line height or update it as needed */
+
+}
+
+.homepage .hero {
+    background: none;
+    background-color: var(--color-background-default);
+}
+.homepage .module-feeds {
+    background: none;
+    background-color: var(--color-background-default);
+}
+
+/* =====================================================
+   Typography styles for headers   
+===================================================== */
+
+p:first-child {
+    margin-top: 0
+}
+
+p:last-child {
+    margin-bottom: 0
+}
+
+@media screen and (max-width: 640px) {
+    .responsive-font-size-h2 {
+        font-size:28px;
+        letter-spacing: .16470588px
+    }
+}
+
+h1,h2,h3 {
+    text-rendering: optimizeLegibility
+}
+
+h1:first-child,h2:first-child,h3:first-child {
+    margin-top: 0
+}
+
+h1:last-child,h2:last-child,h3:last-child {
+    margin-bottom: 0
+}
+h1 {
+    font-weight: 300;
+    font-style: normal;
+    font-size: 21px;
+    line-height: 1.3em;
+    text-transform: none
+}
+
+h2 {
+    font-weight: 300;
+    font-style: normal;
+    font-size: 34px;
+    line-height: 1.3em;
+    text-transform: none
+}
+
+@media screen and (max-width: 640px) {
+    h2 {
+        font-size:28px;
+        letter-spacing: .16470588px
+    }
+}
+
+h3 {
+    font-weight: 300;
+    font-style: normal;
+    font-size: 21px;
+    line-height: 1.5em;
+    text-transform: none
+}
+
+h1+h1,h1+h2,h1+h3,h2+h1,h2+h2,h2+h3,h3+h1,h3+h2,h3+h3 {
+    margin-top: 15px
+}
+
+h1 {
+    color: var(--bs-teal)
+}
+
+h1 a {
+    padding-bottom: .05em;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(89,194,170,.3);
+    -webkit-transition: border-color .15s ease-out,color .15s ease-out;
+    -moz-transition: border-color .15s ease-out,color .15s ease-out;
+    -ms-transition: border-color .15s ease-out,color .15s ease-out;
+    -o-transition: border-color .15s ease-out,color .15s ease-out;
+    transition: border-color .15s ease-out,color .15s ease-out
+}
+
+h1 a:hover {
+    color: rgba(89,194,170,.6);
+    border-color: rgba(89,194,170,.15)
+}
+
+h2 {
+    color: var(--color-aus-royal-blue)
+}
+
+h2 a {
+    padding-bottom: .05em;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(40,37,114,.3);
+    -webkit-transition: border-color .15s ease-out,color .15s ease-out;
+    -moz-transition: border-color .15s ease-out,color .15s ease-out;
+    -ms-transition: border-color .15s ease-out,color .15s ease-out;
+    -o-transition: border-color .15s ease-out,color .15s ease-out;
+    transition: border-color .15s ease-out,color .15s ease-out
+}
+
+h2 a:hover {
+    color: rgba(40,37,114,.6);
+    border-color: rgba(40,37,114,.15)
+}
+
+h3 {
+    color: var(--color-aus-black);
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+h3 a {
+    padding-bottom: .05em;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(35,31,32,.3);
+    -webkit-transition: border-color .15s ease-out,color .15s ease-out;
+    -moz-transition: border-color .15s ease-out,color .15s ease-out;
+    -ms-transition: border-color .15s ease-out,color .15s ease-out;
+    -o-transition: border-color .15s ease-out,color .15s ease-out;
+    transition: border-color .15s ease-out,color .15s ease-out
+}
+
+h3 a:hover {
+    color: rgba(35,31,32,.6);
+    border-color: rgba(35,31,32,.15)
+}
+
+@media screen and (max-width: 640px) {
+    h1,h2,h3 {
+        -webkit-hyphens:auto;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto
+    }
+}
+
+a {
+    color: inherit;
+    text-decoration: none
+}
+
+a:active,a:focus {
+    outline: 0
+}
+
+h2 strong {
+    letter-spacing: .03em;
+    color: var(--bs-teal)
+}
+
+
+p em,.tweet-text,.tweet-text a.tweet-url,.tweet-text a {
+    color: #7e7caa !important;
+    font-style: normal;
+    font-size: 15px !important;
+    line-height: 150% !important
+}
+
+p em a {
+    color: #7e7caa !important
+}
+
+hr {
+    background-color: #d9d9d7 !important
+}
+
 /* =====================================================
    The "account masthead" bar across the top of the site
    ===================================================== */
 
 .account-masthead {
-    background-color: #d8d9d7;
+    background: none;
+    background-color: var(--color-background-default);
 }
 /* The "bubble" containing the number of new notifications. */
 .account-masthead .account .notifications a span {
-  background-color: black;
+  background-color: var(--color-aus-black);
+}
+
+.account-masthead .account ul li {
+    border-left: none;
 }
 /* The text and icons in the user account info. */
 .account-masthead .account ul li a {
-  color: black;
+  color: var(--color-aus-black);
 }
-/* The user account info text and icons, when the user's pointer is hovering
-   over them. */
 .account-masthead .account ul li a:hover {
-  color: rgba(255, 255, 255, 0.7);
-  background-color: black;
+  background-color: var(--color-aus-royal-blue);
+  color: var( --bs-white); 
 }
 
 
@@ -26,26 +232,46 @@
    ======================================================================== */
 
 .masthead {
-  background-color: #282572;
+  background: none;
+  background-color: var(--color-background-default);
 }
-/* The "navigation pills" in the masthead (the links to Datasets,
-   Organizations, etc) when the user's pointer hovers over them. */
-.masthead .navigation .nav-pills li a:hover {
-  background-color: rgb(48, 48, 48);
-  color: white;
-}
-/* The "active" navigation pill (for example, when you're on the /dataset page
-   the "Datasets" link is active). */
-.masthead .navigation .nav-pills li.active a {
-  background-color: rgb(74, 74, 74);
-}
-/* The "box shadow" effect that appears around the search box when it
-   has the keyboard cursor's focus. */
-.masthead input[type="text"]:focus {
-  -webkit-box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.7);
-  box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.7);
+.masthead .main-navbar ul li a {
+  color: var(--color-aus-black);
 }
 
+.masthead .main-navbar ul li:hover a,
+.masthead .main-navbar ul li:focus a,
+.masthead .main-navbar ul li.active a ,
+.masthead .main-navbar ul li a:active {
+  background-color: var(--color-aus-royal-blue);
+  color: var( --bs-white); 
+}
+.masthead .main-navbar ul li a.active {
+  color: var( --bs-white); 
+  background-color: var(--color-aus-royal-blue); 
+}
+
+.masthead .navigation .nav-pills li a:hover {
+  background-color: rgb(48, 48, 48);
+  color: var(--color-aus-royal-blue);
+}
+
+.logo-text {
+  font-weight: bold;
+  margin: 10px 0px 0px 10px;
+  font-size: x-large;
+  color: var(--color-aus-royal-blue);
+}
+
+.logo {
+    text-align: center; 
+}
+
+.logo img,
+.logo .logo-text {
+    display: inline-block;
+    vertical-align:middle; 
+}
 
 /* ===========================================
    The content in the middle of the front page
@@ -62,12 +288,12 @@
 }
 /* Change the colors of the "Search Your Data" box. */
 .homepage .module-search .module-content {
-  color: rgb(68, 68, 68);
-  background-color: white;
+  color: var(--color-aus-black);
+  background-color: var( --bs-white);
 }
 /* Change the background color of the "Popular Tags" box. */
 .homepage .module-search .tags {
-  background-color: #59c2aa;
+  background-color: var(--bs-teal);
 }
 /* Remove some padding. This makes the bottom edges of the "Welcome to CKAN"
    and "Search Your Data" boxes line up. */
@@ -79,11 +305,11 @@
 }
 /* Add a border line between the top and bottom halves of the front page. */
 .homepage [role="main"] {
-  border-top: 1px solid rgb(204, 204, 204);
+  border-top: none;
 }
 
 .media-overlay .media-heading {
-  background-color: #59c2aa;
+  background-color: var(--bs-teal);
 }
 /* ====================================
    The footer at the bottom of the site
@@ -91,49 +317,37 @@
 
 .site-footer,
 body {
-  background-color: #282572;
+  background: none;
+  background-color:var(--bs-gray-300);
 }
 /* The text in the footer. */
 .site-footer,
 .site-footer label,
-.site-footer small {
-  color: rgba(255, 255, 255, 0.6);
-}
-/* The link texts in the footer. */
+.site-footer small,
+.site-footer h3,
 .site-footer a {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-aus-royal-blue); 
 }
 
-/* ====================================
-   The logo 
-   ==================================== */
-
-.logo-text {
-  font-weight: normal;
-  margin: 10px 0px 0px 10px;
-  font-size: larger;
-  color:#ffffff;
+.site-footer h3,
+.site-footer p{
+  /* white-space: pre-wrap;
+  word-wrap: break-word; */
+  line-height: 1.6em;
+}
+.footerBlocksTop {
+    max-width: 140px;
+    height: auto !important;
+}
+.footerBlocksTop strong {
+    font-family: Calibre-Medium;
+    letter-spacing: .035em;
 }
 
-.logo {
-    text-align: center; /* This centers the inline-block elements horizontally */
+.site-footer a[href] {
+  text-decoration: underline;
 }
 
-.logo img,
-.logo .logo-text {
-    display: inline-block;
-    vertical-align:middle; /* Align the inline-block elements to the bottom */
+.site-footer a.social-media-link {
+  text-decoration: none;
 }
-
-
-.auscope-footer-logo {
-  margin: 0px;
-  display: block;
-  width: 120px;
-  height: 29px;
-  margin-top: 2px;
-  background: url("/base/images/AuScope Logo – Reversed.png") no-repeat top left;
-  text-indent: -900em;
-  background-size: 120px 29px !important;
-}
-

@@ -31,6 +31,16 @@ FROM ckan/ckan-dev:2.10.1
 #RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v0.0.6#egg=ckanext-dcat && \
 #     pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v0.0.6/requirements.txt
 
+
+# Install any extensions needed by your CKAN instance
+COPY setup/dbca_requirements.sh ${APP_DIR}
+RUN pip3 install pip --upgrade && \
+    chmod +x ${APP_DIR}/dbca_requirements.sh && \
+    ${APP_DIR}/dbca_requirements.sh
+
+COPY setup/dbca_start_ckan_development.sh.override ${APP_DIR}/start_ckan_development.sh
+RUN  chmod +x ${APP_DIR}/start_ckan_development.sh
+
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
 

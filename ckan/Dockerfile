@@ -2,6 +2,10 @@ FROM ckan/ckan-base:2.10.1
 
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples
+COPY setup/dbca_requirements.sh ${APP_DIR}
+RUN pip3 install pip --upgrade && \
+    chmod +x ${APP_DIR}/dbca_requirements.sh && \
+    ${APP_DIR}/dbca_requirements.sh
 
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/

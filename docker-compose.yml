@@ -24,11 +24,14 @@ services:
     
   ckan:
     container_name: ${CKAN_CONTAINER_NAME}
+    image: ${COMPOSE_PROJECT_NAME}-${CKAN_CONTAINER_NAME}
     build:
       context: ckan/
       dockerfile: Dockerfile
       args:
         - TZ=${TZ}
+      platforms:
+        - linux/amd64
     networks:
       - ckannet
       - dbnet
@@ -49,15 +52,38 @@ services:
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
     
-  datapusher:
-    container_name: ${DATAPUSHER_CONTAINER_NAME}
+  ckan-worker:
+    container_name: ${WORKER_CONTAINER_NAME}
+    image: ${COMPOSE_PROJECT_NAME}-${WORKER_CONTAINER_NAME}
+    build:
+      context: ckan/
+      dockerfile: Dockerfile.worker
+      args:
+        - TZ=${TZ}
+        - CKAN_IMAGE=${COMPOSE_PROJECT_NAME}-${CKAN_CONTAINER_NAME}
+      platforms:
+        - linux/amd64
     networks:
       - ckannet
       - dbnet
-    image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
+      - solrnet
+      - redisnet
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ckan:
+        condition: service_started
+    volumes:
+      - ckan_storage:/var/lib/ckan
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
 
   db:
     container_name: ${POSTGRESQL_CONTAINER_NAME}

@@ -1,0 +1,40 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: CKAN Run & Debug",
+            "type": "python",
+            "request": "launch",
+            "module": "pdb",
+            "args": [
+                "-c continue",
+                "/usr/bin/ckan",
+                "--config",
+                "/srv/app/ckan.ini",
+                "run",
+                "--host",
+                "0.0.0.0",
+            ],
+            "jinja": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Python: CKAN Jobs Worker Run & Debug",
+            "type": "python",
+            "request": "launch",
+            "module": "pdb",
+            "args": [
+                "-c continue",
+                "/usr/bin/ckan",
+                "--config",
+                "/srv/app/ckan.ini",
+                "jobs",
+                "worker",
+            ],
+            "justMyCode": true
+        }
+    ]
+}

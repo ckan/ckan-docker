@@ -1,0 +1,152 @@
+---
+ahoyapi: v2
+
+entrypoint:
+  - bash
+  - "-c"
+  - "-e"
+  - |
+    [ -f .env ] && [ -s .env ] && export $(grep -v '^#' .env | xargs) && if [ -f .env.local ] && [ -s .env.local ]; then export $(grep -v '^#' .env.local | xargs); fi
+    bash -e -c "$0" "$@"
+  - "{{cmd}}"
+  - "{{name}}"
+
+commands:
+  init:
+    usage: Initialise the codebase on first-time setup (ahoy init)
+    cmd : |
+      echo "Creating project variables."
+      cp dbca.env .env
+
+      echo "Install local development extensions."
+      sh src/dbca_install_extensions.sh
+  up:
+    usage: Build project.
+    cmd: |
+      docker compose -f $DOCKER_COMPOSE up -d "$@"
+      ahoy info;
+
+  down:
+    usage: Delete project (CAUTION).
+    cmd: |
+      if [ "$1" == "y" ]; then
+        docker compose -f $DOCKER_COMPOSE down --volumes
+      else
+        ahoy confirm "Running this command will destroy your current site, database and build? Are you sure you didn't mean ahoy stop?" &&
+        # Run this if confirm returns true
+        docker compose -f $DOCKER_COMPOSE down --volumes ||
+        # Run this if confirm returns false
+        echo "OK, probably a wise choice..."
+      fi
+
+  build:
+    usage: Build project.
+    cmd: |
+      if [ "$DOCKER_COMPOSE" = "docker-compose.dev.yml" ]; then
+        CKAN_CONTAINER_NAME=ckan-dev
+        WORKER_CONTAINER_NAME=ckan-dev-worker
+      fi
+      docker compose -f $DOCKER_COMPOSE build "$@"
+
+  cli:
+    usage: Start a shell inside container.
+    cmd: |
+      if [ "$DOCKER_COMPOSE" = "docker-compose.dev.yml" ]; then
+        CKAN_CONTAINER_NAME=ckan-dev
+      fi
+      docker compose -f $DOCKER_COMPOSE exec ${1:-$CKAN_CONTAINER_NAME} sh
+
+  run:
+    usage: Run command inside container.
+    cmd: |
+      if [[ $# -eq 2 ]]; then
+        SERVICE=$1
+        COMMAND=$2
+      else
+        if [ "$DOCKER_COMPOSE" = "docker-compose.dev.yml" ]; then
+          CKAN_CONTAINER_NAME=ckan-dev
+        fi
+        SERVICE=$CKAN_CONTAINER_NAME
+        COMMAND=$1
+      fi;
+      docker compose -f $DOCKER_COMPOSE exec -T $SERVICE sh -c "$COMMAND"
+
+  logs:
+    usage: Show Docker logs.
+    cmd: |
+      if [[ $# -eq 2 ]]; then
+        SERVICE=$1
+        TAIL=$2
+      else
+        SERVICE=$1
+        TAIL=100
+      fi;
+      docker compose -f $DOCKER_COMPOSE logs -f --tail=$TAIL $SERVICE
+
+  ps:
+    usage: List running Docker containers.
+    cmd: docker compose -f $DOCKER_COMPOSE ps
+
+  restart:
+    usage: Restart Docker containers.
+    cmd: |
+      docker compose -f $DOCKER_COMPOSE restart "$@"
+      ahoy info;
+
+  stop:
+    usage: Stop Docker containers.
+    cmd: docker compose -f $DOCKER_COMPOSE stop "$@"
+
+  attach:
+    usage: Attach to a running container
+    cmd: docker attach $(docker compose -f $DOCKER_COMPOSE ps -q "$@")
+
+  recreate:
+    usage: Recreate a local container | ahoy recreate ckan
+    cmd: |
+      docker compose -f $DOCKER_COMPOSE up -d --force-recreate --no-deps --build "${1}"
+
+  info:
+    usage: Print information about this project.
+    cmd: |
+      if [ "$DOCKER_COMPOSE" = "docker-compose.dev.yml" ]; then
+        SITE_URL="http://localhost:${CKAN_PORT_HOST}"
+      else
+        SITE_URL="https://localhost:${NGINX_SSLPORT_HOST}"
+      fi
+      echo "Site local URL        : ${SITE_URL}"
+      if [ "$DOCKER_COMPOSE" = "docker-compose.dev.yml" ]; then
+        echo "CKAN DB port on host  : $(docker port $(docker compose -f $DOCKER_COMPOSE ps -q $POSTGRESQL_CONTAINER_NAME) 5432 | cut -d : -f 2)"
+        echo "SOLR port on host     : $(docker port $(docker compose -f $DOCKER_COMPOSE ps -q $SOLR_CONTAINER_NAME) 8983 | cut -d : -f 2)"
+      fi
+
+  db-import:
+    usage: Pipe in a postgres dump file.  `ahoy db-import local.dump`
+    cmd: |
+      if [ -e "$@" ] ; then
+        docker compose -f $DOCKER_COMPOSE exec -T $POSTGRESQL_CONTAINER_NAME sh -c 'pg_restore -U $CKAN_DB_USER -d $CKAN_DB --clean --if-exists -v' < "$@"
+      else echo "Provided sql file" "$@" "does not exist"
+      fi
+
+  db-dump:
+    usage: Dump data out into a file. `ahoy db-dump local.dump`
+    cmd: docker compose -f $DOCKER_COMPOSE exec -T $POSTGRESQL_CONTAINER_NAME sh -c 'pg_dump -U $CKAN_DB_USER -d $CKAN_DB --format=custom -v' > "$@"
+
+  confirm:
+    cmd: read -r -p "${@} [y/N] " response; [ ${response} = "y" ]
+    hide: true
+
+  generate-extension:
+    usage: Generates a new CKAN extension into the src directory
+    cmd: ahoy run cli 'ckan generate extension -o ${SRC_DIR}'
+
+  open:
+    usage: Open the site in your default browser
+    cmd: |
+      if [ "$DOCKER_COMPOSE" = "docker-compose.dev.yml" ]; then
+        SITE_URL="http://localhost:${CKAN_PORT_HOST}"
+      else
+        SITE_URL="http://localhost:${NGINX_PORT_HOST}"
+      fi
+      open $SITE_URL
+

@@ -16,7 +16,7 @@ commands:
     usage: Initialise the codebase on first-time setup (ahoy init)
     cmd : |
       echo "Creating project variables."
-      cp dbca.env .env
+      cp .env.dbca .env
 
       echo "Install local development extensions."
       sh src/dbca_install_extensions.sh

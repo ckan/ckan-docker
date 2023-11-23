@@ -1,0 +1,3 @@
+# Crontab for CKAN cron jobs
+# Example cron job runs the harvester run command every 15 mins
+#*/15 * * * * /usr/bin/ckan -c /srv/app/ckan.ini harvester run >> $APP_DIR/logs/ckan-cron-jobs.log 2>&1

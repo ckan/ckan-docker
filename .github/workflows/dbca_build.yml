@@ -59,7 +59,7 @@ jobs:
          context: ./nginx
          file: ./nginx/Dockerfile
          push: true
-         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-nginx:${{ steps.meta_nginx.outputs.tags }}
+         tags: ${{ steps.meta_nginx.outputs.tags }}
 
     - name: PostgreSQL Build and push Docker image
       uses: docker/build-push-action@v5
@@ -67,7 +67,7 @@ jobs:
          context: ./postgresql
          file: ./postgresql/Dockerfile
          push: true
-         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-postgres:${{ steps.meta_postgres.outputs.tags }}
+         tags: ${{ steps.meta_postgres.outputs.tags }}
 
     - name: CKAN Build and push Docker image
       uses: docker/build-push-action@v5
@@ -75,7 +75,7 @@ jobs:
          context: ./ckan
          file: ./ckan/Dockerfile
          push: true
-         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ckan:${{ steps.meta_ckan.outputs.tags }}
+         tags: ${{ steps.meta_ckan.outputs.tags }}
 
     - name: CKAN Worker Build and push Docker image
       uses: docker/build-push-action@v5
@@ -83,6 +83,6 @@ jobs:
          context: ./ckan
          file: ./ckan/Dockerfile.worker
          push: true
-         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ckan-worker:${{ steps.meta_ckan_worker.outputs.tags }}
-         build-args: CKAN_IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ckan:${{ steps.meta_ckan.outputs.tags }}
+         tags: ${{ steps.meta_ckan_worker.outputs.tags }}
+         build-args: CKAN_IMAGE=${{ steps.meta_ckan.outputs.tags }}
       

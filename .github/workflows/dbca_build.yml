@@ -29,11 +29,29 @@ jobs:
          username: ${{ github.actor }}
          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
+    - name: Extract metadata (tags, labels) for Docker nginx image
+      id: meta_nginx
       uses: docker/metadata-action@v5
       with:
-         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-nginx
+
+    - name: Extract metadata (tags, labels) for Docker postgres image
+      id: meta_postgres
+      uses: docker/metadata-action@v5
+      with:
+         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-postgres
+
+    - name: Extract metadata (tags, labels) for Docker ckan image
+      id: meta_ckan
+      uses: docker/metadata-action@v5
+      with:
+         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ckan
+
+    - name: Extract metadata (tags, labels) for Docker ckan worker image
+      id: meta_ckan_worker
+      uses: docker/metadata-action@v5
+      with:
+         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ckan-worker
 
     - name: NGINX Build and push Docker image
       uses: docker/build-push-action@v5
@@ -41,7 +59,7 @@ jobs:
          context: ./nginx
          file: ./nginx/Dockerfile
          push: true
-         tags: ${{ steps.meta.outputs.tags }}
+         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-nginx:${{ steps.meta_nginx.outputs.tags }}
 
     - name: PostgreSQL Build and push Docker image
       uses: docker/build-push-action@v5
@@ -49,7 +67,7 @@ jobs:
          context: ./postgresql
          file: ./postgresql/Dockerfile
          push: true
-         tags: ${{ steps.meta.outputs.tags }}
+         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-postgres:${{ steps.meta_postgres.outputs.tags }}
 
     - name: CKAN Build and push Docker image
       uses: docker/build-push-action@v5
@@ -57,7 +75,7 @@ jobs:
          context: ./ckan
          file: ./ckan/Dockerfile
          push: true
-         tags: ${{ steps.meta.outputs.tags }}
+         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ckan:${{ steps.meta_ckan.outputs.tags }}
 
     - name: CKAN Worker Build and push Docker image
       uses: docker/build-push-action@v5
@@ -65,5 +83,6 @@ jobs:
          context: ./ckan
          file: ./ckan/Dockerfile.worker
          push: true
-         tags: ${{ steps.meta.outputs.tags }}
+         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ckan-worker:${{ steps.meta_ckan_worker.outputs.tags }}
+         build-args: CKAN_IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ckan:${{ steps.meta_ckan.outputs.tags }}
       

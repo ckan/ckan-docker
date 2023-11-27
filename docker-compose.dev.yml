@@ -16,6 +16,7 @@ services:
       platforms:
         - linux/amd64
     image: ${COMPOSE_PROJECT_NAME}-ckan-dev
+    platform: linux/amd64
     env_file:
       - .env
     depends_on:
@@ -45,6 +46,7 @@ services:
         - CKAN_IMAGE=${COMPOSE_PROJECT_NAME}-ckan-dev
       platforms:
         - linux/amd64
+    platform: linux/amd64
     env_file:
       - .env
     depends_on:
@@ -88,6 +90,7 @@ services:
      
   solr:
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
+    platform: linux/amd64
     volumes:
       - solr_data:/var/solr
     restart: unless-stopped

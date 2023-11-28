@@ -3,6 +3,18 @@ FROM ckan/ckan-base:2.10.1
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples
 
+
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@main#egg=ckanext-gdi-userportal && \
+     pip3 install -r ${APP_DIR}/src/ckanext-gdi-userportal/requirements.txt
+
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-dcat.git@master#egg=ckanext-dcat && \
+     pip3 install -r ${APP_DIR}/src/ckanext-dcat/requirements.txt
+
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-harvest.git@master#egg=ckanext-harvest && \
+     pip3 install -r ${APP_DIR}/src/ckanext-harvest/requirements.txt
+
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-scheming.git@master#egg=ckanext-scheming
+
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 

@@ -12,12 +12,10 @@
    * [Extending the base images](#extending-the-base-images)
    * [Applying patches](#applying-patches)
 * [Debugging with pdb](#pdb)
-* [Datastore and Datapusher](#Datastore-and-datapusher)
 * [NGINX](#nginx)
 * [The ckanext-envvars extension](#envvars)
 * [The CKAN_SITE_URL parameter](#CKAN_SITE_URL)
 * [Changing the base image](#Changing-the-base-image)
-* [Replacing DataPusher with XLoader](#Replacing-DataPusher-with-XLoader)
 
 
 ## 1.  Overview
@@ -28,7 +26,6 @@ The CKAN images used are from the official CKAN [ckan-docker](https://github.com
 
 The non-CKAN images are as follows:
 
-* DataPusher: CKAN's [pre-configured DataPusher image](https://github.com/ckan/ckan-base/tree/main/datapusher).
 * PostgreSQL: Official PostgreSQL image. Database files are stored in a named volume.
 * Solr: CKAN's [pre-configured Solr image](https://github.com/ckan/ckan-solr). Index data is stored in a named volume.
 * Redis: standard Redis image
@@ -211,12 +208,7 @@ Debug with pdb (example) - Interact with `docker attach $(docker container ls -q
 
 command: `python -m pdb /usr/lib/ckan/venv/bin/ckan --config /srv/app/ckan.ini run --host 0.0.0.0 --passthrough-errors`
 
-## 9. Datastore and datapusher
-
-The Datastore database and user is created as part of the entrypoint scripts for the db container. There is also a Datapusher container 
-running the latest version of Datapusher.
-
-## 10. NGINX
+## 9. NGINX
 
 The base Docker Compose configuration uses an NGINX image as the front-end (ie: reverse proxy). It includes HTTPS running on port number 8443. A "self-signed" SSL certificate is generated as part of the ENTRYPOINT. The NGINX `server_name` directive and the `CN` field in the SSL certificate have been both set to 'localhost'. This should obviously not be used for production.
 
@@ -224,7 +216,7 @@ Creating the SSL cert and key files as follows:
 `openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=DE/ST=Berlin/L=Berlin/O=None/CN=localhost" -keyout ckan-local.key -out ckan-local.crt`
 The `ckan-local.*` files will then need to be moved into the nginx/setup/ directory
 
-## 11. envvars
+## 10. envvars
 
 The ckanext-envvars extension is used in the CKAN Docker base repo to build the base images.
 This extension checks for environmental variables conforming to an expected format and updates the corresponding CKAN config settings with its value.
@@ -245,11 +237,11 @@ These parameters can be added to the `.env` file
 
 For more information please see [ckanext-envvars](https://github.com/okfn/ckanext-envvars)
 
-## 12. CKAN_SITE_URL
+## 11. CKAN_SITE_URL
 
 For convenience the CKAN_SITE_URL parameter should be set in the .env file. For development it can be set to http://localhost:5000 and non-development set to https://localhost:8443
 
-## 13. Manage new users
+## 12. Manage new users
 
 1. Create a new user from the Docker host, for example to create a new user called 'admin'
 
@@ -267,14 +259,10 @@ For convenience the CKAN_SITE_URL parameter should be set in the .env file. For 
 
    `ckan -c ckan.ini user remove admin`
 
-## 14. Changing the base image
+## 13. Changing the base image
 
 The base image used in the CKAN Dockerfile and Dockerfile.dev can be changed so a different DockerHub image is used eg: ckan/ckan-base:2.9.9
 could be used instead of ckan/ckan-base:2.10.1
-
-## 15. Replacing DataPusher with XLoader
-
-Check out the wiki page for this: https://github.com/ckan/ckan-docker/wiki/Replacing-DataPusher-with-XLoader
 
 Copying and License
 -------------------

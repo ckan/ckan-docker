@@ -48,16 +48,6 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
-    
-  datapusher:
-    container_name: ${DATAPUSHER_CONTAINER_NAME}
-    networks:
-      - ckannet
-      - dbnet
-    image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]
 
   db:
     container_name: ${POSTGRESQL_CONTAINER_NAME}
@@ -72,9 +62,6 @@ services:
       - CKAN_DB_USER
       - CKAN_DB_PASSWORD
       - CKAN_DB
-      - DATASTORE_READONLY_USER
-      - DATASTORE_READONLY_PASSWORD
-      - DATASTORE_DB
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped

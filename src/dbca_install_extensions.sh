@@ -26,6 +26,9 @@ git clone https://github.com/ckan/ckanext-hierarchy.git
 # Added ckanext-pdfview.
 git clone https://github.com/ckan/ckanext-pdfview.git
 
+# Added ckanext-dcat.
+git clone https://github.com/ckan/ckanext-dcat.git
+
 ## Should have ##
 # Geopusher
 # git clone https://github.com/dbca-wa/ckanext-geopusher.git

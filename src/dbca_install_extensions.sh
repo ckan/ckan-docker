@@ -17,6 +17,9 @@ cd src/
 # ckanext-pages
 git clone https://github.com/ckan/ckanext-pages.git
 
+# ckanext-showcase
+git clone https://github.com/ckan/ckanext-showcase.git
+
 ## Should have ##
 # Geopusher
 # git clone https://github.com/dbca-wa/ckanext-geopusher.git

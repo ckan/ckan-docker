@@ -19,6 +19,6 @@ fi
 #     ckan -c $CKAN_INI db upgrade -p harvest
 # fi
 
-# if [[ $CKAN__PLUGINS == *"pages"* ]]; then
-#     ckan -c $CKAN_INI pages initdb
-# fi
+if [[ $CKAN__PLUGINS == *"pages"* ]]; then
+    ckan -c $CKAN_INI pages initdb
+fi

@@ -14,6 +14,9 @@ cd src/
 # Office Docs
 # git clone https://github.com/dbca-wa/ckanext-officedocs
 
+# ckanext-pages
+git clone https://github.com/ckan/ckanext-pages.git
+
 ## Should have ##
 # Geopusher
 # git clone https://github.com/dbca-wa/ckanext-geopusher.git

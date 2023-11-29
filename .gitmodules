@@ -1,12 +1,16 @@
 [submodule "src/ckanext-gdi-userportal"]
 	path = src/ckanext-gdi-userportal
 	url = git@github.com:GenomicDataInfrastructure/ckanext-gdi-userportal.git
+    branch = main
 [submodule "src/ckanext-dcat"]
 	path = src/ckanext-dcat
 	url = git@github.com:GenomicDataInfrastructure/gdi-userportal-ckanext-dcat.git
+    branch = master
 [submodule "src/ckanext-harvest"]
 	path = src/ckanext-harvest
 	url = git@github.com:GenomicDataInfrastructure/gdi-userportal-ckanext-harvest.git
+    branch = user-portal-v1.5.6
 [submodule "src/ckanext-scheming"]
 	path = src/ckanext-scheming
 	url = git@github.com:GenomicDataInfrastructure/gdi-userportal-ckanext-scheming.git
+    branch = master

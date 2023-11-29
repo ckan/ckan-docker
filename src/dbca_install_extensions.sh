@@ -14,11 +14,14 @@ cd src/
 # Office Docs
 # git clone https://github.com/dbca-wa/ckanext-officedocs
 
-# ckanext-pages
+# Added ckanext-pages.
 git clone https://github.com/ckan/ckanext-pages.git
 
-# ckanext-showcase
+# Added ckanext-showcase.
 git clone https://github.com/ckan/ckanext-showcase.git
+
+# Added ckanext-hierarchy.
+git clone https://github.com/ckan/ckanext-hierarchy.git
 
 ## Should have ##
 # Geopusher

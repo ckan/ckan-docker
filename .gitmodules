@@ -13,4 +13,4 @@
 [submodule "src/ckanext-scheming"]
 	path = src/ckanext-scheming
 	url = git@github.com:GenomicDataInfrastructure/gdi-userportal-ckanext-scheming.git
-    branch = master
+    branch = user-portal-v3.0.0

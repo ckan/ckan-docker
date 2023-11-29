@@ -7,13 +7,13 @@ FROM ckan/ckan-base:2.10.1
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@main#egg=ckanext-gdi-userportal && \
      pip3 install -r ${APP_DIR}/src/ckanext-gdi-userportal/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-dcat.git@@v1.5.1#egg=ckanext-dcat && \
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-dcat.git@user-portal-v1.5.1#egg=ckanext-dcat && \
      pip3 install -r ${APP_DIR}/src/ckanext-dcat/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-harvest.git@v1.5.6#egg=ckanext-harvest && \
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-harvest.git@user-portal-v1.5.6#egg=ckanext-harvest && \
      pip3 install -r ${APP_DIR}/src/ckanext-harvest/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-scheming.git@master#egg=ckanext-scheming
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-scheming.git@user-portal-v3.0.0#egg=ckanext-scheming
 
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/

@@ -5,7 +5,7 @@
 [submodule "src/ckanext-dcat"]
 	path = src/ckanext-dcat
 	url = git@github.com:GenomicDataInfrastructure/gdi-userportal-ckanext-dcat.git
-    branch = master
+    branch = user-portal-v1.5.1
 [submodule "src/ckanext-harvest"]
 	path = src/ckanext-harvest
 	url = git@github.com:GenomicDataInfrastructure/gdi-userportal-ckanext-harvest.git

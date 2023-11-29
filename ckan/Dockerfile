@@ -7,7 +7,7 @@ FROM ckan/ckan-base:2.10.1
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@main#egg=ckanext-gdi-userportal && \
      pip3 install -r ${APP_DIR}/src/ckanext-gdi-userportal/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-dcat.git@master#egg=ckanext-dcat && \
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-dcat.git@@v1.5.1#egg=ckanext-dcat && \
      pip3 install -r ${APP_DIR}/src/ckanext-dcat/requirements.txt
 
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-harvest.git@v1.5.6#egg=ckanext-harvest && \

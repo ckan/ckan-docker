@@ -10,7 +10,7 @@ RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userpo
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-dcat.git@master#egg=ckanext-dcat && \
      pip3 install -r ${APP_DIR}/src/ckanext-dcat/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-harvest.git@master#egg=ckanext-harvest && \
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-harvest.git@v1.5.6#egg=ckanext-harvest && \
      pip3 install -r ${APP_DIR}/src/ckanext-harvest/requirements.txt
 
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-scheming.git@master#egg=ckanext-scheming

@@ -8,3 +8,4 @@ _solr/schema.xml
 _src/*
 local/*
 .env
+venv

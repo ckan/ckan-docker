@@ -1,10 +1,16 @@
 version: "3"
 
-
 volumes:
   ckan_storage:
+    driver: local
   pg_data:
+    driver: local
   solr_data:
+    driver: local
+  fuseki_data:
+    driver: local
+  fuseki_logs:
+    driver: local
 
 services:
 
@@ -13,9 +19,6 @@ services:
     build:
       context: nginx/
       dockerfile: Dockerfile
-    networks:
-      - webnet
-      - ckannet
     depends_on:
       ckan:
         condition: service_healthy
@@ -29,11 +32,6 @@ services:
       dockerfile: Dockerfile
       args:
         - TZ=${TZ}
-    networks:
-      - ckannet
-      - dbnet
-      - solrnet
-      - redisnet
     env_file:
       - .env
     depends_on:
@@ -42,6 +40,8 @@ services:
       solr:
         condition: service_healthy
       redis:
+        condition: service_healthy
+      keycloak:
         condition: service_healthy
     volumes:
       - ckan_storage:/var/lib/ckan
@@ -53,8 +53,6 @@ services:
     container_name: ${POSTGRESQL_CONTAINER_NAME}
     build:
       context: postgresql/
-    networks:
-      - dbnet
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
@@ -62,6 +60,12 @@ services:
       - CKAN_DB_USER
       - CKAN_DB_PASSWORD
       - CKAN_DB
+      - DATASTORE_READONLY_USER
+      - DATASTORE_READONLY_PASSWORD
+      - DATASTORE_DB
+      - KC_DB_USERNAME
+      - KC_DB_PASSWORD
+      - KC_DB_NAME
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -70,8 +74,6 @@ services:
      
   solr:
     container_name: ${SOLR_CONTAINER_NAME}
-    networks:
-      - solrnet
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
     volumes:
       - solr_data:/var/solr
@@ -82,18 +84,34 @@ services:
   redis:
     container_name: ${REDIS_CONTAINER_NAME}
     image: redis:${REDIS_VERSION}
-    networks:
-      - redisnet
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "-e", "QUIT"]
-    
-networks:
-  webnet:
-  ckannet:
-  solrnet:
-    internal: true
-  dbnet:
-    internal: true
-  redisnet:
-    internal: true
+
+  keycloak:
+    build:
+      context: keycloak/
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak/realms:/opt/keycloak/data/import:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - KC_DB_URL
+      - KC_DB_USERNAME
+      - KC_DB_PASSWORD
+      - KEYCLOAK_ADMIN
+      - KEYCLOAK_ADMIN_PASSWORD
+    healthcheck:
+      test: ["CMD", "curl", "-o", "/dev/null", http://localhost:8080/health/ready"]
+  
+  national_catalogue_mock:
+    build: national-node-catalogue-mock/
+    environment:
+      - HARVESTER_URL=${CKAN_SITE_URL}
+    ports:
+      - 8001:8001
+    restart: unless-stopped

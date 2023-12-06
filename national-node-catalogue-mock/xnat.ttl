@@ -1,0 +1,1694 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://xnat.bmia.nl/data/archive> a dcat:Catalog ;
+    dcterms:description "This is an example XNAT catalog description" ;
+    dcterms:title "Example XNAT catalog" ;
+    dcat:dataset <https://xnat.bmia.nl/data/archive/projects/C14GIST>,
+        <https://xnat.bmia.nl/data/archive/projects/C14GIST_EMC>,
+        <https://xnat.bmia.nl/data/archive/projects/C14GIST_NKI>,
+        <https://xnat.bmia.nl/data/archive/projects/C14GIST_UMCG>,
+        <https://xnat.bmia.nl/data/archive/projects/C14GIST_UMCL>,
+        <https://xnat.bmia.nl/data/archive/projects/C14GIST_UMCN>,
+        <https://xnat.bmia.nl/data/archive/projects/Eucansharevre>,
+        <https://xnat.bmia.nl/data/archive/projects/LygatureDemo>,
+        <https://xnat.bmia.nl/data/archive/projects/SAI>,
+        <https://xnat.bmia.nl/data/archive/projects/SAI_EMC>,
+        <https://xnat.bmia.nl/data/archive/projects/SAI_INTM>,
+        <https://xnat.bmia.nl/data/archive/projects/SAI_LBL>,
+        <https://xnat.bmia.nl/data/archive/projects/SAI_MSIO>,
+        <https://xnat.bmia.nl/data/archive/projects/SAI_NKI>,
+        <https://xnat.bmia.nl/data/archive/projects/SAI_RML>,
+        <https://xnat.bmia.nl/data/archive/projects/SAI_UCD>,
+        <https://xnat.bmia.nl/data/archive/projects/ac_zwn>,
+        <https://xnat.bmia.nl/data/archive/projects/ails>,
+        <https://xnat.bmia.nl/data/archive/projects/ails_amc>,
+        <https://xnat.bmia.nl/data/archive/projects/ails_emc>,
+        <https://xnat.bmia.nl/data/archive/projects/ails_mumc>,
+        <https://xnat.bmia.nl/data/archive/projects/ails_rumc>,
+        <https://xnat.bmia.nl/data/archive/projects/ails_umcu>,
+        <https://xnat.bmia.nl/data/archive/projects/amypad>,
+        <https://xnat.bmia.nl/data/archive/projects/amypad_raw>,
+        <https://xnat.bmia.nl/data/archive/projects/aovision>,
+        <https://xnat.bmia.nl/data/archive/projects/approach>,
+        <https://xnat.bmia.nl/data/archive/projects/approach_lumc>,
+        <https://xnat.bmia.nl/data/archive/projects/bbmri-wp3-dev>,
+        <https://xnat.bmia.nl/data/archive/projects/bigreye>,
+        <https://xnat.bmia.nl/data/archive/projects/bigreye_chusj>,
+        <https://xnat.bmia.nl/data/archive/projects/bigreye_emc>,
+        <https://xnat.bmia.nl/data/archive/projects/brain_mri_wml>,
+        <https://xnat.bmia.nl/data/archive/projects/brainmriwml_er>,
+        <https://xnat.bmia.nl/data/archive/projects/brainmriwml_lu>,
+        <https://xnat.bmia.nl/data/archive/projects/brainmriwml_ma>,
+        <https://xnat.bmia.nl/data/archive/projects/brainmriwml_ne>,
+        <https://xnat.bmia.nl/data/archive/projects/brainmriwml_nt>,
+        <https://xnat.bmia.nl/data/archive/projects/brainmriwml_rf>,
+        <https://xnat.bmia.nl/data/archive/projects/brainmriwml_vu>,
+        <https://xnat.bmia.nl/data/archive/projects/caddemen-train>,
+        <https://xnat.bmia.nl/data/archive/projects/caddementia>,
+        <https://xnat.bmia.nl/data/archive/projects/capita_mri>,
+        <https://xnat.bmia.nl/data/archive/projects/cirguidanc_msz>,
+        <https://xnat.bmia.nl/data/archive/projects/cirguidanc_zlz>,
+        <https://xnat.bmia.nl/data/archive/projects/cirguidance>,
+        <https://xnat.bmia.nl/data/archive/projects/cleandist_run>,
+        <https://xnat.bmia.nl/data/archive/projects/cp-tavi>,
+        <https://xnat.bmia.nl/data/archive/projects/ctadist>,
+        <https://xnat.bmia.nl/data/archive/projects/ctradiomiclung>,
+        <https://xnat.bmia.nl/data/archive/projects/cvonexcersion>,
+        <https://xnat.bmia.nl/data/archive/projects/cvonmindaf>,
+        <https://xnat.bmia.nl/data/archive/projects/decsa>,
+        <https://xnat.bmia.nl/data/archive/projects/dolphin>,
+        <https://xnat.bmia.nl/data/archive/projects/dolphin_nki>,
+        <https://xnat.bmia.nl/data/archive/projects/edetect>,
+        <https://xnat.bmia.nl/data/archive/projects/edetect_amc>,
+        <https://xnat.bmia.nl/data/archive/projects/edetect_umcg>,
+        <https://xnat.bmia.nl/data/archive/projects/edetect_umcu>,
+        <https://xnat.bmia.nl/data/archive/projects/egd>,
+        <https://xnat.bmia.nl/data/archive/projects/epad>,
+        <https://xnat.bmia.nl/data/archive/projects/epad_advanced>,
+        <https://xnat.bmia.nl/data/archive/projects/epad_core>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_fcrb_uc1>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_fcrb_uc6>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_fcrb_uc7>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_fcrb_uc8>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc1>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc3>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc4>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc5>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc6>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc7>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc8>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc1>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc3>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc4>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc5>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc6>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc7>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc8>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_ub_uc1>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_ub_uc6>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_umea_uc1>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_umea_uc3>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_umea_uc4>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_umea_uc5>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_umea_uc6>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_umea_uc7>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_umea_uc8>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc1>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc3>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc4>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc5>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc6>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc7>,
+        <https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc8>,
+        <https://xnat.bmia.nl/data/archive/projects/eucanimage>,
+        <https://xnat.bmia.nl/data/archive/projects/eucanimage_emc>,
+        <https://xnat.bmia.nl/data/archive/projects/eucanimage_ub>,
+        <https://xnat.bmia.nl/data/archive/projects/eucanshare>,
+        <https://xnat.bmia.nl/data/archive/projects/glass-nl>,
+        <https://xnat.bmia.nl/data/archive/projects/glass-nl_umcu>,
+        <https://xnat.bmia.nl/data/archive/projects/glass-nl_vumc>,
+        <https://xnat.bmia.nl/data/archive/projects/glass_nl_erasm>,
+        <https://xnat.bmia.nl/data/archive/projects/hebon>,
+        <https://xnat.bmia.nl/data/archive/projects/hebon_emc>,
+        <https://xnat.bmia.nl/data/archive/projects/hebon_nki>,
+        <https://xnat.bmia.nl/data/archive/projects/icss>,
+        <https://xnat.bmia.nl/data/archive/projects/kubus_umcu>,
+        <https://xnat.bmia.nl/data/archive/projects/kubus_vumc>,
+        <https://xnat.bmia.nl/data/archive/projects/leuveneye>,
+        <https://xnat.bmia.nl/data/archive/projects/leuveneye_emc>,
+        <https://xnat.bmia.nl/data/archive/projects/leuveneye_uzl>,
+        <https://xnat.bmia.nl/data/archive/projects/lgg-grow>,
+        <https://xnat.bmia.nl/data/archive/projects/lodoco2sub>,
+        <https://xnat.bmia.nl/data/archive/projects/merlin>,
+        <https://xnat.bmia.nl/data/archive/projects/motiontracking>,
+        <https://xnat.bmia.nl/data/archive/projects/mrclean>,
+        <https://xnat.bmia.nl/data/archive/projects/mrclean_asap>,
+        <https://xnat.bmia.nl/data/archive/projects/mrclean_med>,
+        <https://xnat.bmia.nl/data/archive/projects/mrclean_mri>,
+        <https://xnat.bmia.nl/data/archive/projects/mrcleanasap>,
+        <https://xnat.bmia.nl/data/archive/projects/mrcleandist>,
+        <https://xnat.bmia.nl/data/archive/projects/mrcleanlate>,
+        <https://xnat.bmia.nl/data/archive/projects/mrcleanmed>,
+        <https://xnat.bmia.nl/data/archive/projects/mrcleannoiv>,
+        <https://xnat.bmia.nl/data/archive/projects/orange_ct>,
+        <https://xnat.bmia.nl/data/archive/projects/parelsnoer-ndz>,
+        <https://xnat.bmia.nl/data/archive/projects/presto>,
+        <https://xnat.bmia.nl/data/archive/projects/pride>,
+        <https://xnat.bmia.nl/data/archive/projects/pride_amc>,
+        <https://xnat.bmia.nl/data/archive/projects/pride_nki>,
+        <https://xnat.bmia.nl/data/archive/projects/pride_umcg>,
+        <https://xnat.bmia.nl/data/archive/projects/pride_umcu>,
+        <https://xnat.bmia.nl/data/archive/projects/prostate_segm>,
+        <https://xnat.bmia.nl/data/archive/projects/protrait_nki>,
+        <https://xnat.bmia.nl/data/archive/projects/protrait_test>,
+        <https://xnat.bmia.nl/data/archive/projects/psi-fb>,
+        <https://xnat.bmia.nl/data/archive/projects/psi_ndz09>,
+        <https://xnat.bmia.nl/data/archive/projects/psi_parel_amc>,
+        <https://xnat.bmia.nl/data/archive/projects/psi_parel_lumc>,
+        <https://xnat.bmia.nl/data/archive/projects/psi_parel_vumc>,
+        <https://xnat.bmia.nl/data/archive/projects/psi_parelaaa>,
+        <https://xnat.bmia.nl/data/archive/projects/quick-concept>,
+        <https://xnat.bmia.nl/data/archive/projects/rpsrad>,
+        <https://xnat.bmia.nl/data/archive/projects/stwstrategyhn1>,
+        <https://xnat.bmia.nl/data/archive/projects/stwstrategyps4>,
+        <https://xnat.bmia.nl/data/archive/projects/tcia_glioma>,
+        <https://xnat.bmia.nl/data/archive/projects/ultra>,
+        <https://xnat.bmia.nl/data/archive/projects/ultra_elisab>,
+        <https://xnat.bmia.nl/data/archive/projects/ultra_isala>,
+        <https://xnat.bmia.nl/data/archive/projects/ultra_lumc>,
+        <https://xnat.bmia.nl/data/archive/projects/ultra_mch>,
+        <https://xnat.bmia.nl/data/archive/projects/ultra_mumc>,
+        <https://xnat.bmia.nl/data/archive/projects/ultra_radboud>,
+        <https://xnat.bmia.nl/data/archive/projects/ultra_umcu>,
+        <https://xnat.bmia.nl/data/archive/projects/worc> .
+
+<https://xnat.bmia.nl/data/archive/projects/C14GIST> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Neeltje Steeghs" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "In 2014 the Dutch GIST Consortium (DGC), consisting of the five leading GIST centers in the Netherlands, has initiated the Dutch GIST Registry (DGR). The GIST registry includes a retrospective dataset as well as a prospective dataset. The goal is to couple clinical data to a GIST imaging database using XNAT. This information could be used by investigators from the 5 GIST centers to answer research questions." ;
+    dcterms:identifier "C14GIST"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "GIST imaging database" .
+
+<https://xnat.bmia.nl/data/archive/projects/C14GIST_EMC> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Neeltje Steeghs" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "In 2014 the Dutch GIST Consortium (DGC), consisting of the five leading GIST centers in the Netherlands, has initiated the Dutch GIST Registry (DGR). The GIST registry includes a retrospective dataset as well as a prospective dataset. The goal is to couple clinical data to a GIST imaging database using XNAT. This information could be used by investigators from the 5 GIST centers to answer research questions." ;
+    dcterms:identifier "C14GIST_EMC"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "GIST imaging database EMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/C14GIST_NKI> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Neeltje Steeghs" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "In 2014 the Dutch GIST Consortium (DGC), consisting of the five leading GIST centers in the Netherlands, has initiated the Dutch GIST Registry (DGR). The GIST registry includes a retrospective dataset as well as a prospective dataset. The goal is to couple clinical data to a GIST imaging database using XNAT. This information could be used by investigators from the 5 GIST centers to answer research questions." ;
+    dcterms:identifier "C14GIST_NKI"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "GIST imaging database NKI" .
+
+<https://xnat.bmia.nl/data/archive/projects/C14GIST_UMCG> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Neeltje Steeghs" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """ In 2014 the Dutch GIST Consortium (DGC), consisting of the five leading GIST centers in the Netherlands, has initiated the Dutch GIST Registry (DGR). The GIST registry includes a retrospective dataset as well as a prospective dataset. The goal is to couple clinical data to a GIST imaging database using XNAT. This information could be used by investigators from the 5 GIST centers to answer research questions.\r
+""" ;
+    dcterms:identifier "C14GIST_UMCG"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "GIST imaging database UMCG" .
+
+<https://xnat.bmia.nl/data/archive/projects/C14GIST_UMCL> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Neeltje Steeghs" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "In 2014 the Dutch GIST Consortium (DGC), consisting of the five leading GIST centers in the Netherlands, has initiated the Dutch GIST Registry (DGR). The GIST registry includes a retrospective dataset as well as a prospective dataset. The goal is to couple clinical data to a GIST imaging database using XNAT. This information could be used by investigators from the 5 GIST centers to answer research questions." ;
+    dcterms:identifier "C14GIST_UMCL"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "GIST imaging database UMCL" .
+
+<https://xnat.bmia.nl/data/archive/projects/C14GIST_UMCN> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Neeltje Steeghs" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "In 2014 the Dutch GIST Consortium (DGC), consisting of the five leading GIST centers in the Netherlands, has initiated the Dutch GIST Registry (DGR). The GIST registry includes a retrospective dataset as well as a prospective dataset. The goal is to couple clinical data to a GIST imaging database using XNAT. This information could be used by investigators from the 5 GIST centers to answer research questions." ;
+    dcterms:identifier "C14GIST_UMCN"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "GIST imaging database UMCN" .
+
+<https://xnat.bmia.nl/data/archive/projects/Eucansharevre> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marcel Koek" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Private project for developing the EuCanShare VRE connection to the TraIT XNAT" ;
+    dcterms:identifier "Eucansharevre"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanShare VRE" .
+
+<https://xnat.bmia.nl/data/archive/projects/LygatureDemo> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marinel Cavelaars" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Demo project for Lygature meeting nov. 2016" ;
+    dcterms:identifier "LygatureDemo"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "LygatureDemo" .
+
+<https://xnat.bmia.nl/data/archive/projects/SAI> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Sarcoma Artificial Intelligence (SAI) is a collection of imaging and clinical characteristics for patient with soft-tissue tumors." ;
+    dcterms:identifier "SAI"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Sarcoma Artificial Intelligence" .
+
+<https://xnat.bmia.nl/data/archive/projects/SAI_EMC> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Sarcoma Artificial Intelligence (SAI) is a collection of imaging and clinical characteristics for patient with soft-tissue tumors." ;
+    dcterms:identifier "SAI_EMC"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Sarcoma Artificial Intelligence ErasmusMC Rotterdam" .
+
+<https://xnat.bmia.nl/data/archive/projects/SAI_INTM> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Sarcoma Artificial Intelligence (SAI) is a collection of imaging and clinical characteristics for patient with soft-tissue tumors." ;
+    dcterms:identifier "SAI_INTM"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Sarcoma Artificial Intelligence Institut national du cancer Milan" .
+
+<https://xnat.bmia.nl/data/archive/projects/SAI_LBL> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Sarcoma Artificial Intelligence (SAI) is a collection of imaging and clinical characteristics for patient with soft-tissue tumors." ;
+    dcterms:identifier "SAI_LBL"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Sarcoma Artificial Intelligence Leon Berard Leon" .
+
+<https://xnat.bmia.nl/data/archive/projects/SAI_MSIO> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Sarcoma Artificial Intelligence (SAI) is a collection of imaging and clinical characteristics for patient with soft-tissue tumors." ;
+    dcterms:identifier "SAI_MSIO"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Sarcoma Artificial Intelligence Maria Sklodowska-Curie Institute of Oncology - Warszawa" .
+
+<https://xnat.bmia.nl/data/archive/projects/SAI_NKI> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Sarcoma Artificial Intelligence (SAI) is a collection of imaging and clinical characteristics for patient with soft-tissue tumors." ;
+    dcterms:identifier "SAI_NKI"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Sarcoma Artificial Intelligence NKI Amsterdam" .
+
+<https://xnat.bmia.nl/data/archive/projects/SAI_RML> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Sarcoma Artificial Intelligence (SAI) is a collection of imaging and clinical characteristics for patient with soft-tissue tumors." ;
+    dcterms:identifier "SAI_RML"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Sarcoma Artificial Intelligence Royal Marsden London" .
+
+<https://xnat.bmia.nl/data/archive/projects/SAI_UCD> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Sarcoma Artificial Intelligence (SAI) is a collection of imaging and clinical characteristics for patient with soft-tissue tumors." ;
+    dcterms:identifier "SAI_UCD"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Sarcoma Artificial Intelligence University of California Davis" .
+
+<https://xnat.bmia.nl/data/archive/projects/ac_zwn> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Janne Papma" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging data acquired in patients of the Alzheimer Center Rotterdam (Alzheimercentrum zuidwest Nederland) " ;
+    dcterms:identifier "ac_zwn"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Imaging data Alzheimercentrum" .
+
+<https://xnat.bmia.nl/data/archive/projects/ails> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Maarten Thomeer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Retrospective analysis of atypical iso intense lesions after Primovist injection" ;
+    dcterms:identifier "ails"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "AILS" .
+
+<https://xnat.bmia.nl/data/archive/projects/ails_amc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Maarten Thomeer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Retrospective analysis of atypical iso intense lesions after Primovist injection" ;
+    dcterms:identifier "ails_amc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "AILS_AMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/ails_emc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Maarten Thomeer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Retrospective analysis of atypical iso intense lesions after Primovist injection" ;
+    dcterms:identifier "ails_emc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "AILS_EMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/ails_mumc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Maarten Thomeer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Retrospective analysis of atypical iso intense lesions after Primovist injection" ;
+    dcterms:identifier "ails_mumc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "AILS_MUMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/ails_rumc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Maarten Thomeer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Retrospective analysis of atypical iso intense lesions after Primovist injection" ;
+    dcterms:identifier "ails_rumc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "AILS_RUMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/ails_umcu> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Maarten Thomeer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Retrospective analysis of atypical iso intense lesions after Primovist injection" ;
+    dcterms:identifier "ails_umcu"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "AILS_UMCU" .
+
+<https://xnat.bmia.nl/data/archive/projects/amypad> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Frederik Barkhof" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "AMYloid imaging to Prevent Alzheimer&apos;s Disease" ;
+    dcterms:identifier "amypad"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "AMYPAD" .
+
+<https://xnat.bmia.nl/data/archive/projects/amypad_raw> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Frederik Barkhof" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "AMYloid imaging to Prevent Alzheimer&apos;s Disease" ;
+    dcterms:identifier "amypad_raw"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "AMYPAD_raw" .
+
+<https://xnat.bmia.nl/data/archive/projects/aovision> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Theo Van Walsum" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The project will bring together the expertise of Erasmus MC in Inherited retinal diseases  (IRDs) and AI with the expertise of Imagine Eyes, France, in AO imaging. Longitudinal data of 400 subjects will be acquired at Erasmus MC to develop new and trustworthy AI-based methods that will allow, for the first time, to quantify and manage the IRDs stratification and progression in a clinical environment." ;
+    dcterms:identifier "aovision"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "AOVISION" .
+
+<https://xnat.bmia.nl/data/archive/projects/approach> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Harrie Weinans" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "To capture joint images for the prospective APPROACH cohort." ;
+    dcterms:identifier "approach"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "APPROACH" .
+
+<https://xnat.bmia.nl/data/archive/projects/approach_lumc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Harrie Weinans" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "To capture joint images for the prospective APPROACH cohort." ;
+    dcterms:identifier "approach_lumc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "APPROACH_LUMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/bbmri-wp3-dev> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This collections consists of MR brain images that will be used for development and testing purposes for the pipelines in the BBMRI-WP3 project " ;
+    dcterms:identifier "bbmri-wp3-dev"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "BBMRI-WP3-Develop" .
+
+<https://xnat.bmia.nl/data/archive/projects/bigreye> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Danilo Andrade De Jesus" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description " Data collected within the eye research group of the Biomedical Imaging Group Rotterdam, Erasmus MC." ;
+    dcterms:identifier "bigreye"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "BIGR[eye]" .
+
+<https://xnat.bmia.nl/data/archive/projects/bigreye_chusj> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Danilo Andrade De Jesus" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Data collected within the eye research group of the Biomedical Imaging Group Rotterdam, Erasmus MC." ;
+    dcterms:identifier "bigreye_chusj"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "BIGR[eye] CHUSJ" .
+
+<https://xnat.bmia.nl/data/archive/projects/bigreye_emc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Danilo Andrade De Jesus" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Data collected within the eye research group of the Biomedical Imaging Group Rotterdam, Erasmus MC" ;
+    dcterms:identifier "bigreye_emc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "BIGR[eye] EMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/brain_mri_wml> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This collection will include brain MRI scans on which the amount of white matter lesions (WML) will be quantified. " ;
+    dcterms:identifier "brain_mri_wml"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Brain_MRI_WML" .
+
+<https://xnat.bmia.nl/data/archive/projects/brainmriwml_er> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This collection will include brain MRI scans on which the amount of white matter lesions (WML) will be quantified. " ;
+    dcterms:identifier "brainmriwml_er"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Brain_MRI_WML_ERASMUS" .
+
+<https://xnat.bmia.nl/data/archive/projects/brainmriwml_lu> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Marian Beekman" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This collection will include brain MRI scans on which the amount of white matter lesions (WML) will be quantified. " ;
+    dcterms:identifier "brainmriwml_lu"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Brain_MRI_WML_LLS" .
+
+<https://xnat.bmia.nl/data/archive/projects/brainmriwml_ma> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This collection will include brain MRI scans on which the amount of white matter lesions (WML) will be quantified. " ;
+    dcterms:identifier "brainmriwml_ma"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Brain_MRI_WML_DMS" .
+
+<https://xnat.bmia.nl/data/archive/projects/brainmriwml_ne> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This collection will include brain MRI scans on which the amount of white matter lesions (WML) will be quantified. " ;
+    dcterms:identifier "brainmriwml_ne"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Brain_MRI_WML_NESDA" .
+
+<https://xnat.bmia.nl/data/archive/projects/brainmriwml_nt> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This collection will include brain MRI scans on which the amount of white matter lesions (WML) will be quantified. " ;
+    dcterms:identifier "brainmriwml_nt"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Brain_MRI_WML_NTR" .
+
+<https://xnat.bmia.nl/data/archive/projects/brainmriwml_rf> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This collection will include brain MRI scans on which the amount of white matter lesions (WML) will be quantified. " ;
+    dcterms:identifier "brainmriwml_rf"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Brain_MRI_WML_Erf" .
+
+<https://xnat.bmia.nl/data/archive/projects/brainmriwml_vu> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This collection will include brain MRI scans on which the amount of white matter lesions (WML) will be quantified. " ;
+    dcterms:identifier "brainmriwml_vu"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Brain_MRI_WML_VUMCADC" .
+
+<https://xnat.bmia.nl/data/archive/projects/caddemen-train> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Esther Bron" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The Challenge on Computer-Aided Diagnosis of Dementia based on structural MRI data. By addressing comparability, generalizability, and clinical applicability, we aim to take a step forwards to clinical use of computer-aided diagnosis (CAD) methods for dementia" ;
+    dcterms:identifier "caddemen-train"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "CADDementia-Train" .
+
+<https://xnat.bmia.nl/data/archive/projects/caddementia> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Esther Bron" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The Challenge on Computer-Aided Diagnosis of Dementia based on structural MRI data. By addressing comparability, generalizability, and clinical applicability, we aim to take a step forwards to clinical use of computer-aided diagnosis (CAD) methods for dementia" ;
+    dcterms:identifier "caddementia"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "CADDementia" .
+
+<https://xnat.bmia.nl/data/archive/projects/capita_mri> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ronak Delewi" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Substudy of the Heart-Brain Connection consortium, investigating cardiac output, cerebral perfusion and cognition in patients with severe aortic valve stenosis undergoing transcatheter aortic valve implantation." ;
+    dcterms:identifier "capita_mri"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "CAPITA_MRI" .
+
+<https://xnat.bmia.nl/data/archive/projects/cirguidanc_msz> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Martijn Starmans" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "In this study, we aim to use a non-invasive radiomics alternative to predict the lymph node stage in patients with non-metastatic muscle-invasive bladder cancer. To this end, we will use the already gathered computed tomography (CT) data from the previously performed multicenter CIRGUIDANCE study. We would like to use the Trait XNAT to share the data among the hospitals. " ;
+    dcterms:identifier "cirguidanc_msz"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "CIRGUIDANCERadiomics Maasstad Ziekenhuis" .
+
+<https://xnat.bmia.nl/data/archive/projects/cirguidanc_zlz> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Martijn Starmans" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description " In this study, we aim to use a non-invasive radiomics alternative to predict the lymph node stage in patients with non-metastatic muscle-invasive bladder cancer. To this end, we will use the already gathered computed tomography (CT) data from the previously performed multicenter CIRGUIDANCE study. We would like to use the Trait XNAT to share the data among the hospitals." ;
+    dcterms:identifier "cirguidanc_zlz"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "CIRGUIDANCERadiomics Zuyderland Ziekenhuis" .
+
+<https://xnat.bmia.nl/data/archive/projects/cirguidance> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Martijn Starmans" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description " In this study, we aim to use a non-invasive radiomics alternative to predict the lymph node stage in patients with non-metastatic muscle-invasive bladder cancer. To this end, we will use the already gathered computed tomography (CT) data from the previously performed multicenter CIRGUIDANCE study." ;
+    dcterms:identifier "cirguidance"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "CIRGUIDANCERadiomics" .
+
+<https://xnat.bmia.nl/data/archive/projects/cleandist_run> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Data collection for MrClean Dist runin study." ;
+    dcterms:identifier "cleandist_run"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "MR CLEAN DIST RUNIN" .
+
+<https://xnat.bmia.nl/data/archive/projects/cp-tavi> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Johannes van Lieshout" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Cerebral perfusion in patients with severe aortic valve stenosis undergoing transcatheter aortic valve implantation" ;
+    dcterms:identifier "cp-tavi"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "CP-TAVI" .
+
+<https://xnat.bmia.nl/data/archive/projects/ctadist> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This data was used in the following publication: &quot;K. Hameeteman, S. Rozie, C.T. Metz, R. Manniesing, T. van Walsum, A. van der Lugt, W.J. Niessen and S. Klein, Automatic carotid artery distensibility measurements from CTA using nonrigid registration, Medical Image Analysis, July 2013, vol. 17, pp. 515-524&quot;. See also the website http://ctadist.bigr.nl. A table with risk factors is stored under the fake patient &quot;subject_all&quot;." ;
+    dcterms:identifier "ctadist"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ctadist" .
+
+<https://xnat.bmia.nl/data/archive/projects/ctradiomiclung> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Data for a study on radiomics with the Stanford ePAD system." ;
+    dcterms:identifier "ctradiomiclung"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "CTradiomicslung" .
+
+<https://xnat.bmia.nl/data/archive/projects/cvonexcersion> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Prof. Dr. Wiesje van der Flier" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """De ExCersion-VCI is een studie naar het effect van beweging op de bloeddoorstroming in de hersenen bij pati&#235;nten met vasculaire cognitive stoornissen. De primaire uitkomstmaat van deze studie is ASL-MRI.\r
+Deze studie wordt gesubsidieerd door CVON. """ ;
+    dcterms:identifier "cvonexcersion"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "cvonexcersion" .
+
+<https://xnat.bmia.nl/data/archive/projects/cvonmindaf> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Cornelis Allaart" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Brein MRIs van patiënten met permanent AF" ;
+    dcterms:identifier "cvonmindaf"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "CVON MIND AF" .
+
+<https://xnat.bmia.nl/data/archive/projects/decsa> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ruben Dammers" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The DECSA Study (DExamethasone therapy in symptomatic patients with Chronic Subdural hematoma) compares the effect of initial DXM therapy versus primary surgery on functional outcome and cost-effectiveness, in symptomatic patients with chronic subdural hematoma. We hypothesize that treatment with DXM is as effective as BHC, at lower costs. Secondary objectives are to compare the number of surgical intervention prevented in the intervention (DXM) group, haematoma recurrence and thickness, complications, mortality, quality of life, drug related adverse events, and duration of hospital stay" ;
+    dcterms:identifier "decsa"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "DECSA" .
+
+<https://xnat.bmia.nl/data/archive/projects/dolphin> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Remond Fijneman" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "In this prospective multi-centre observational study, data of 400 metastatic colorectal cancer (mCRC) patients who receive systemic treatment will be collected" ;
+    dcterms:identifier "dolphin"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "DOLPHIN" .
+
+<https://xnat.bmia.nl/data/archive/projects/dolphin_nki> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Remond Fijneman" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "n this prospective multi-centre observational study, data of 400 metastatic colorectal cancer (mCRC) patients who receive systemic treatment will be collected, using the Prospective Dutch ColoRectal Cancer cohort (www.PLCRC.nl) infrastructure." ;
+    dcterms:identifier "dolphin_nki"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "DOLPHIN_NKI" .
+
+<https://xnat.bmia.nl/data/archive/projects/edetect> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Peter van Tintelen" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Early detection of disease in cardiomyopathy mutation carriers " ;
+    dcterms:identifier "edetect"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "eDETECT" .
+
+<https://xnat.bmia.nl/data/archive/projects/edetect_amc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Peter van Tintelen" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Early detection of disease in cardiomyopathy mutation carriers" ;
+    dcterms:identifier "edetect_amc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "eDETECT_AMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/edetect_umcg> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Peter van Tintelen" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Early detection of disease in cardiomyopathy mutation carriers" ;
+    dcterms:identifier "edetect_umcg"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "eDETECT_UMCG" .
+
+<https://xnat.bmia.nl/data/archive/projects/edetect_umcu> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Peter van Tintelen" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Early detection of disease in cardiomyopathy mutation carriers " ;
+    dcterms:identifier "edetect_umcu"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "eDETECT_UMCU" .
+
+<https://xnat.bmia.nl/data/archive/projects/egd> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marion Smits" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """FOR ACCESS TO THE DATASET: Do not request an account directly through the XNAT portal. If you would like to access the dataset please send an email to: servicedesk@health-ri.nl You will then be asked to sign the data usage agreement, and an account will be created for you. ACCESS REQUESTS DIRECTLY THROUGH THE XNAT PORTAL WILL NOT BE CONSIDERED.\r
+\r
+The Erasmus Glioma Database (EGD) is a collection of 774 patients with glioma. For this patients pre-operative imaging, genetic and histological data, and tumor segmentations are available.\r
+\r
+\r
+\r
+\r
+See the license for all conditions: check the file &apos;data_license.pdf&apos; at Resources &gt; PROJECT_DATA\r
+\r
+\r
+\r
+Some scans might have a poor image quality or errors due to registration issues. We have marked this scans as &apos;unacceptable&apos; scan quality.\r
+\r
+This project has received funding from the European Union&#146;s Horizon 2020 research and innovation programme under grant agreement No 952103""" ;
+    dcterms:identifier "egd"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EGD" .
+
+<https://xnat.bmia.nl/data/archive/projects/epad> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Frederik Barkhof" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging data of projects EPAD (European consortium for Prevention of Alzheimer&apos;s Dementia) " ;
+    dcterms:identifier "epad"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EPAD" .
+
+<https://xnat.bmia.nl/data/archive/projects/epad_advanced> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Frederik Barkhof" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging data of projects EPAD (European consortium for Prevention of Alzheimer&apos;s Dementia)" ;
+    dcterms:identifier "epad_advanced"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EPAD_advanced" .
+
+<https://xnat.bmia.nl/data/archive/projects/epad_core> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Frederik Barkhof" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging data of projects EPAD (European consortium for Prevention of Alzheimer&apos;s Dementia) " ;
+    dcterms:identifier "epad_core"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EPAD_core" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_fcrb_uc1> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_fcrb_uc1"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_FCRB_UC1" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_fcrb_uc6> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_fcrb_uc6"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_FCRB_UC6" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_fcrb_uc7> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_fcrb_uc7"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_FCRB_UC7" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_fcrb_uc8> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_fcrb_uc8"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_FCRB_UC8" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc1> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_gumed_uc1"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_GUMED_UC1" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc3> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_gumed_uc3"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_GUMED_UC3" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc4> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_gumed_uc4"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_GUMED_UC4" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc5> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_gumed_uc5"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_GUMED_UC5" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc6> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_gumed_uc6"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_GUMED_UC6" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc7> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_gumed_uc7"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_GUMED_UC7" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_gumed_uc8> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_gumed_uc8"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_GUMED_UC8" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc1> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_kauno_uc1"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_KAUNO_UC1" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc3> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_kauno_uc3"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_KAUNO_UC3" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc4> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_kauno_uc4"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_KAUNO_UC4" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc5> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_kauno_uc5"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_KAUNO_UC5" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc6> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_kauno_uc6"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_KAUNO_UC6" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc7> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_kauno_uc7"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_KAUNO_UC7" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_kauno_uc8> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_kauno_uc8"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_KAUNO_UC8" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_ub_uc1> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_ub_uc1"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UB_UC1" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_ub_uc6> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_ub_uc6"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UB_UC6" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_umea_uc1> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_umea_uc1"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UMEA_UC1" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_umea_uc3> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_umea_uc3"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UMEA_UC3" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_umea_uc4> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_umea_uc4"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UMEA_UC4" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_umea_uc5> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_umea_uc5"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UMEA_UC5" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_umea_uc6> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_umea_uc6"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UMEA_UC6" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_umea_uc7> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_umea_uc7"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UMEA_UC7" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_umea_uc8> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_umea_uc8"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UMEA_UC8" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc1> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_unipi_uc1"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UNIPI_UC1" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc3> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_unipi_uc3"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UNIPI_UC3" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc4> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_unipi_uc4"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UNIPI_UC4" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc5> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_unipi_uc5"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UNIPI_UC5" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc6> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_unipi_uc6"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UNIPI_UC6" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc7> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_unipi_uc7"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UNIPI_UC7" .
+
+<https://xnat.bmia.nl/data/archive/projects/euc_unipi_uc8> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ivan Bocharov" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "euc_unipi_uc8"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanImage_UNIPI_UC8" .
+
+<https://xnat.bmia.nl/data/archive/projects/eucanimage> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Karim Lekadir" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released" ;
+    dcterms:identifier "eucanimage"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EUCanImage_Breast" .
+
+<https://xnat.bmia.nl/data/archive/projects/eucanimage_emc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Martijn Starmans" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "European data sharing" ;
+    dcterms:identifier "eucanimage_emc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EUCanImage_EMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/eucanimage_ub> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Karim Lekadir" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """Within the EuCanImage project (https://eucanimage.eu/), imaging datasets are collected from multiple sites to facilitate the use of AI for cancer research. The BMIA XNAT will be used as main image data storage platform for centralized storage. As first usecase, breast cancer was identified, for which the first datasets will be collected from the University of Barcelona. The data will first be available to partners within the consortium, but will potentially be publicly released.\r
+""" ;
+    dcterms:identifier "eucanimage_ub"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EUCanImage_Breast_UB" .
+
+<https://xnat.bmia.nl/data/archive/projects/eucanshare> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Karim Lekadir" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "euCanSHare is a joint EU-Canada project to establish a cross-border data sharing and multi-cohort cardiovascular research platform. Specifically, the project will integrate data infrastructures, IT solutions and data sources from EU, Canada and other countries into a web-based data access system with functionalities for increased efficiency in cardiovascular data-driven research. euCanSHare integrates more than 35 Canadian and European cohorts making up over 1 million records and actively seeks to expand to other regions. " ;
+    dcterms:identifier "eucanshare"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EuCanShare" .
+
+<https://xnat.bmia.nl/data/archive/projects/glass-nl> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marion Smits" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The GLASS-NL consortium is a collaboration between Dutch medical centers for the longitudinal analysis of low-grade glioma. The imaging collection will host the imaging part of this study, which will contain the regular MR scans performed on patients with (presumed) low-grade glioma. The goal is to be able to quantify tumor development before, during and after surgery and treatment, and to develop predictive imaging biomarkers for genotype and tumor development. " ;
+    dcterms:identifier "glass-nl"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "GLASS-NL" .
+
+<https://xnat.bmia.nl/data/archive/projects/glass-nl_umcu> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marion Smits" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The GLASS-NL consortium is a collaboration between Dutch medical centers for the longitudinal analysis of low-grade glioma. The imaging collection will host the imaging part of this study, which will contain the regular MR scans performed on patients with (presumed) low-grade glioma. The goal is to be able to quantify tumor development before, during and after surgery and treatment, and to develop predictive imaging biomarkers for genotype and tumor development." ;
+    dcterms:identifier "glass-nl_umcu"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "GLASS-NL_UMCU" .
+
+<https://xnat.bmia.nl/data/archive/projects/glass-nl_vumc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marion Smits" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The GLASS-NL consortium is a collaboration between Dutch medical centers for the longitudinal analysis of low-grade glioma. The imaging collection will host the imaging part of this study, which will contain the regular MR scans performed on patients with (presumed) low-grade glioma. The goal is to be able to quantify tumor development before, during and after surgery and treatment, and to develop predictive imaging biomarkers for genotype and tumor development." ;
+    dcterms:identifier "glass-nl_vumc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "GLASS-NL_VUMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/glass_nl_erasm> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marion Smits" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The GLASS-NL consortium is a collaboration between Dutch medical centers for the longitudinal analysis of low-grade glioma. The imaging collection will host the imaging part of this study, which will contain the regular MR scans performed on patients with (presumed) low-grade glioma. The goal is to be able to quantify tumor development before, during and after surgery and treatment, and to develop predictive imaging biomarkers for genotype and tumor development." ;
+    dcterms:identifier "glass_nl_erasm"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "GLASS-NL_ERASMUSMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/hebon> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marjanka Schmidt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "As part of the HEBON Infrastructure project, members of the HEBON consortium (the NKI-AVL, Erasmus MC, and the other university medical centers in the Netherlands) are collecting mammograms from participants in order to incorporate imaging markers for improved individual risk prediction modeling and other research. The imaging database XNAT will host the anonymized mammograms of HEBON participants from the various study sites." ;
+    dcterms:identifier "hebon"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "HEBON" .
+
+<https://xnat.bmia.nl/data/archive/projects/hebon_emc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marjanka Schmidt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "As part of the HEBON Infrastructure project, members of the HEBON consortium (the NKI-AVL, Erasmus MC, and the other university medical centers in the Netherlands) are collecting mammograms from participants in order to incorporate imaging markers for improved individual risk prediction modeling and other research. The imaging database XNAT will host the anonymized mammograms of HEBON participants from the various study sites." ;
+    dcterms:identifier "hebon_emc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "HEBON-Erasmus MC" .
+
+<https://xnat.bmia.nl/data/archive/projects/hebon_nki> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marjanka Schmidt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """As part of the HEBON Infrastructure project, members of the HEBON consortium (the NKI-AVL, Erasmus MC, and the other university medical centers in the Netherlands) are collecting mammograms from participants in order to incorporate imaging markers for improved individual risk prediction modeling and other research. The imaging database XNAT will host the anonymized mammograms of HEBON participants from the various study sites.\r
+""" ;
+    dcterms:identifier "hebon_nki"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "HEBON-NKI-AVL" .
+
+<https://xnat.bmia.nl/data/archive/projects/icss> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """International Carotid Stenting Study (ICSS).\r
+To compare the risks, benefits and cost effectiveness of a treatment policy of referral for carotid stenting compared with referral for carotid surgery. """ ;
+    dcterms:identifier "icss"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ICSS" .
+
+<https://xnat.bmia.nl/data/archive/projects/kubus_umcu> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Niels Raaijmakers" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "111 CT/DOSE/PLAN/STRUCT files of patients in KUBUS head-neck registration study" ;
+    dcterms:identifier "kubus_umcu"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "KUBUS_UMCU" .
+
+<https://xnat.bmia.nl/data/archive/projects/kubus_vumc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Niels Raaijmakers" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "124 CT/DOSE/PLAN/STRUCT radiotherapy files of patients in KUBUS head-neck registration study" ;
+    dcterms:identifier "kubus_vumc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "KUBUS_VUMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/leuveneye> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Danilo Andrade De Jesus" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The Leuven Eye Study stands as one of the largest clinical trials on ocular blood flow in human eye. The creation of this vast database may help integrate the vascular aspects of the diseases into the clinical practice. " ;
+    dcterms:identifier "leuveneye"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Leuven Eye Study" .
+
+<https://xnat.bmia.nl/data/archive/projects/leuveneye_emc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Danilo Andrade De Jesus" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The Leuven Eye Study stands as one of the largest clinical trials on ocular blood flow in human eye. The creation of this vast database may help integrate the vascular aspects of the diseases into the clinical practice. " ;
+    dcterms:identifier "leuveneye_emc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Leuven Eye EMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/leuveneye_uzl> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Danilo Andrade De Jesus" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The Leuven Eye Study stands as one of the largest clinical trials on ocular blood flow in human eye. The creation of this vast database may help integrate the vascular aspects of the diseases into the clinical practice. " ;
+    dcterms:identifier "leuveneye_uzl"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Leuven Eye UZL" .
+
+<https://xnat.bmia.nl/data/archive/projects/lgg-grow> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Marion Smits" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """FOR ACCESS TO THE DATASET: Do not request an account directly through the XNAT portal. If you would like to access the dataset please send an email to: servicedesk@health-ri.nl Please mention that it concerns the EGD-LGG-GROWTH project. You will then be asked to sign the data usage agreement, and an account will be created for you. ACCESS REQUESTS DIRECTLY THROUGH THE XNAT PORTAL WILL NOT BE CONSIDERED.\r
+\r
+The EGD-LGG-GROWTH is a collection of 14 patients from Erasmus MC with LGG who underwent awake surgery for tumor resection, but received no further radio- or chemotherapy. This data can be used for the development of glioma growth models, and to reproduce the results in van Garderen et al. \r
+""" ;
+    dcterms:identifier "lgg-grow"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "EGD-LGG-GROWTH" .
+
+<https://xnat.bmia.nl/data/archive/projects/lodoco2sub> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Arend Mosterd" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "An imaging substudy focusing on pericoronary inflammation in patients with stable coronary artery disease" ;
+    dcterms:identifier "lodoco2sub"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "LoDoCo2 imaging substudy" .
+
+<https://xnat.bmia.nl/data/archive/projects/merlin> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """The ambition of the MERLIN project is to improve in-depth diagnosis and therapeutic follow-up of diseases that impact the\r
+eye&#146;s retina. To do so, the MERLIN partners will deliver a novel medical imaging device able to detect pathological alterations in the retina with highly enhanced sensitivity and specificity.\r
+\r
+The medical applications of this device encompass a wide range of retinal pathologies, including age-related macular degeneration (AMD), as well as chronic vascular conditions, including diabetes. AMD and diabetic retinopathy (DR) are the leading cause of blindness worldwide in people over 55 years of age. Such diseases slowly develop at the microscopic scale in the retina. Using current imaging techniques, it is difficult to detect them at early stage, and it often takes months to assess the effects of treatments. These limitations hinders both the clinical management of patients and the investigation of new therapies.\r
+\r
+In order to overcome these issues, the device developed in MERLIN will for the first time enable doctors to examine the retina with multiple imaging modalities at both the macroscopic and microscopic scales. Modalities will include ultrafast scanning laser ophthalmoscopy (SLO), optical coherence tomography (OCT) and OCT angiography (OCT-A), while ultrahigh resolution will be provided by adaptive optics technology. This unique combination will reveal previously invisible cellular and microvascular retinal detail in 3 dimensions. The project partners will also develop advanced image processing software for the visualization and quantitative analysis of microscopic structures, and conduct experimentations to optimize and validate performance in AMD and DR patients.\r
+\r
+As the feasibility of this diagnostic approach has previously been demonstrated in another European R&amp;D project (FP7 FAMOS, 2012-2017), MERLIN will translate the technology from a preexisting laboratory prototype to a nearly commercial device usable in clinical trials.""" ;
+    dcterms:identifier "merlin"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "merlin" ;
+    dcat:keyword "Coherence",
+        "Laser",
+        "Ophthalmoscope,",
+        "Optical",
+        "Scanning",
+        "Tomography,",
+        "adaptive",
+        "age",
+        "camera,",
+        "degeneration,",
+        "diabetic",
+        "diagnosis.",
+        "early",
+        "macular",
+        "optics,",
+        "related",
+        "retinal",
+        "retinopathie," .
+
+<https://xnat.bmia.nl/data/archive/projects/motiontracking> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This project contains 4D Ultrasound images of the abdomen/liver acquired in 3 three volunteers (pA, pB, pC), each scanned 3 times. Manually tracked landmark points are also available on request. The data was used in the following publication: Vijayan et al, Motion tracking in the liver: Validation of a method based on 4D ultrasound using a nonrigid registration technique, Medical Physics 2014, http://dx.doi.org/10.1118/1.4890091 ." ;
+    dcterms:identifier "motiontracking"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "MotionTracking4DUS" .
+
+<https://xnat.bmia.nl/data/archive/projects/mrclean> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """Patients with acute ischemic stroke scheduled for intra-arterial treatment\r
+Collection baseline CT and CTA, DSA pre and post intervention, follow-up CT  \r
+""" ;
+    dcterms:identifier "mrclean"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "MR CLEAN REGISTRY" .
+
+<https://xnat.bmia.nl/data/archive/projects/mrclean_asap> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "mrclean_asap" ;
+    dcterms:identifier "mrclean_asap"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "mrclean_asap" .
+
+<https://xnat.bmia.nl/data/archive/projects/mrclean_med> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "mrclean_med" ;
+    dcterms:identifier "mrclean_med"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "mrclean_med" .
+
+<https://xnat.bmia.nl/data/archive/projects/mrclean_mri> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Multicenter Randomized Clinical Trial of Endovascular Treatment for Acute. Ischemic Stroke in the Netherlands." ;
+    dcterms:identifier "mrclean_mri"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "MR CLEAN" ;
+    dcat:keyword "CLEAN",
+        "CTA,",
+        "DSA",
+        "MR",
+        "NCCT," .
+
+<https://xnat.bmia.nl/data/archive/projects/mrcleanasap> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "MR CLEAN ASAP" ;
+    dcterms:identifier "mrcleanasap"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "MR CLEAN ASAP" .
+
+<https://xnat.bmia.nl/data/archive/projects/mrcleandist> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "MR CLEAN DIST" ;
+    dcterms:identifier "mrcleandist"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "MR CLEAN DIST" .
+
+<https://xnat.bmia.nl/data/archive/projects/mrcleanlate> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "MR CLEAN LATE" ;
+    dcterms:identifier "mrcleanlate"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "MR CLEAN LATE" .
+
+<https://xnat.bmia.nl/data/archive/projects/mrcleanmed> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "MR CLEAN MED" ;
+    dcterms:identifier "mrcleanmed"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "MR CLEAN MED" .
+
+<https://xnat.bmia.nl/data/archive/projects/mrcleannoiv> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "MR CLEAN NOIV" ;
+    dcterms:identifier "mrcleannoiv"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "MR CLEAN NOIV" .
+
+<https://xnat.bmia.nl/data/archive/projects/orange_ct> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Ronald van Dam" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Preoperative CT and MRI images of patients undergoing open or laparoscopic hemihepactomy." ;
+    dcterms:identifier "orange_ct"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ORANGE_CT" .
+
+<https://xnat.bmia.nl/data/archive/projects/parelsnoer-ndz> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof.dr. Aad  van der Lugt" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "MRI scan collected in patients with neurodegenerative disease in 8 University Medical Centers in the Netherlands. " ;
+    dcterms:identifier "parelsnoer-ndz"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Parelsnoer-NDZ" .
+
+<https://xnat.bmia.nl/data/archive/projects/presto> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Bob Roozenbeek" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Prehospital triage of patients with suspected stroke symptoms (PRESTO): protocol of a prospective observational study " ;
+    dcterms:identifier "presto"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "PRESTO" .
+
+<https://xnat.bmia.nl/data/archive/projects/pride> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Gert Meijer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """PRIDE is short for &#147;PReoperative Image-guided IDentification of response to neoadjuvant chemoradiotherapy in Esophageal cancer&#148;. \r
+The PRIDE trial is a multicenter observational study and is a collaboration between the Netherlands Cancer Institute (NKI), the University Medical Center Groningen (UMCG), the \r
+Academic Medical Center Amsterdam (AMC) and the University Medical Center Utrecht (UMCU). This project is supported by funds of Alpe d&#146;Huzes, partner of the Dutch Cancer Society. \r
+Our aim is to develop a multiparametric prediction model with PET-CT and MRI scans that predicts the response to neoadjuvant chemoradiotherapy in esophageal cancer. Our goal is to include 200 patients amongst the participating centers.""" ;
+    dcterms:identifier "pride"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Pride" .
+
+<https://xnat.bmia.nl/data/archive/projects/pride_amc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Gert Meijer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """PRIDE is short for &#147;PReoperative Image-guided IDentification of response to neoadjuvant chemoradiotherapy in Esophageal cancer&#148;. \r
+The PRIDE trial is a multicenter observational study and is a collaboration between the Netherlands Cancer Institute (NKI), the University Medical Center Groningen (UMCG), the \r
+Academic Medical Center Amsterdam (AMC) and the University Medical Center Utrecht (UMCU). This project is supported by funds of Alpe d&#146;Huzes, partner of the Dutch Cancer Society. \r
+Our aim is to develop a multiparametric prediction model with PET-CT and MRI scans that predicts the response to neoadjuvant chemoradiotherapy in esophageal cancer. Our goal is to include 200 patients amongst the participating centers.""" ;
+    dcterms:identifier "pride_amc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Pride_AMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/pride_nki> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Gert Meijer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """PRIDE is short for &#147;PReoperative Image-guided IDentification of response to neoadjuvant chemoradiotherapy in Esophageal cancer&#148;. \r
+The PRIDE trial is a multicenter observational study and is a collaboration between the Netherlands Cancer Institute (NKI), the University Medical Center Groningen (UMCG), the \r
+Academic Medical Center Amsterdam (AMC) and the University Medical Center Utrecht (UMCU). This project is supported by funds of Alpe d&#146;Huzes, partner of the Dutch Cancer Society. \r
+Our aim is to develop a multiparametric prediction model with PET-CT and MRI scans that predicts the response to neoadjuvant chemoradiotherapy in esophageal cancer. Our goal is to include 200 patients amongst the participating centers.""" ;
+    dcterms:identifier "pride_nki"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Pride_NKI" .
+
+<https://xnat.bmia.nl/data/archive/projects/pride_umcg> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Gert Meijer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """PRIDE is short for &#147;PReoperative Image-guided IDentification of response to neoadjuvant chemoradiotherapy in Esophageal cancer&#148;. \r
+The PRIDE trial is a multicenter observational study and is a collaboration between the Netherlands Cancer Institute (NKI), the University Medical Center Groningen (UMCG), the \r
+Academic Medical Center Amsterdam (AMC) and the University Medical Center Utrecht (UMCU). This project is supported by funds of Alpe d&#146;Huzes, partner of the Dutch Cancer Society. \r
+Our aim is to develop a multiparametric prediction model with PET-CT and MRI scans that predicts the response to neoadjuvant chemoradiotherapy in esophageal cancer. Our goal is to include 200 patients amongst the participating centers.""" ;
+    dcterms:identifier "pride_umcg"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Pride_UMCG" .
+
+<https://xnat.bmia.nl/data/archive/projects/pride_umcu> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Gert Meijer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """PRIDE is short for &#147;PReoperative Image-guided IDentification of response to neoadjuvant chemoradiotherapy in Esophageal cancer&#148;. \r
+The PRIDE trial is a multicenter observational study and is a collaboration between the Netherlands Cancer Institute (NKI), the University Medical Center Groningen (UMCG), the \r
+Academic Medical Center Amsterdam (AMC) and the University Medical Center Utrecht (UMCU). This project is supported by funds of Alpe d&#146;Huzes, partner of the Dutch Cancer Society. \r
+Our aim is to develop a multiparametric prediction model with PET-CT and MRI scans that predicts the response to neoadjuvant chemoradiotherapy in esophageal cancer. Our goal is to include 200 patients amongst the participating centers.""" ;
+    dcterms:identifier "pride_umcu"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "Pride_UMCU" .
+
+<https://xnat.bmia.nl/data/archive/projects/prostate_segm> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Automatic segmentation of the prostate in 3D MR images by atlas matching using localized mutual information" ;
+    dcterms:identifier "prostate_segm"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "prostate_segmentation" .
+
+<https://xnat.bmia.nl/data/archive/projects/protrait_nki> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Hans Langendijk" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Data from training the auto-contouring model developed at NKI" ;
+    dcterms:identifier "protrait_nki"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ProTRAIT_NKI" .
+
+<https://xnat.bmia.nl/data/archive/projects/protrait_test> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "dr. ir.  Marianna Sijtsema" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Test environment for implementing ProTRAIT functionality in Trait " ;
+    dcterms:identifier "protrait_test"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ProTRAIT_test" .
+
+<https://xnat.bmia.nl/data/archive/projects/psi-fb> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Faruk Buyuk" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Testen uploadstrategie " ;
+    dcterms:identifier "psi-fb"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "PSI-FB" .
+
+<https://xnat.bmia.nl/data/archive/projects/psi_ndz09> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr Judith Mannien" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """Betreft: fMRIs van 138 patienten.\r
+Voor de PSI Uitgifte NDZ09 van onderzoeker PP de Deyn: Relationship between functional connectivity, AD conversion and cognitive reserve in the Pearl Neurodegenerative Disease study.""" ;
+    dcterms:identifier "psi_ndz09"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "PSI_NDZ09" .
+
+<https://xnat.bmia.nl/data/archive/projects/psi_parel_amc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof. dr. Ron Balm" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """The &quot;Parel AAA&quot; is one of the biobanks of &quot;Parelsnoer Instituut.&quot; It is focused on patients with an abdominal aortic\r
+aneurysm, which is a local dilatation of the abdominal aorta. These patients will be followed during their treatment\r
+at the department of vascular surgery.""" ;
+    dcterms:identifier "psi_parel_amc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "PSI_ParelAAA_AMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/psi_parel_lumc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof. dr. Ron Balm" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """The &quot;Parel AAA&quot; is one of the biobanks of &quot;Parelsnoer Instituut.&quot; It is focused on patients with an abdominal aortic\r
+aneurysm, which is a local dilatation of the abdominal aorta. These patients will be followed during their treatment\r
+at the department of vascular surgery.\r
+""" ;
+    dcterms:identifier "psi_parel_lumc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "PSI_ParelAAA_LUMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/psi_parel_vumc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof. dr. Ron Balm" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """The &quot;Parel AAA&quot; is one of the biobanks of &quot;Parelsnoer Instituut.&quot; It is focused on patients with an abdominal aortic\r
+aneurysm, which is a local dilatation of the abdominal aorta. These patients will be followed during their treatment\r
+at the department of vascular surgery.""" ;
+    dcterms:identifier "psi_parel_vumc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "PSI_ParelAAA_VUMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/psi_parelaaa> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "prof. dr. Ron Balm" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """The &quot;Parel AAA&quot; is one of the biobanks of &quot;Parelsnoer Instituut.&quot; It is focused on patients with an abdominal aortic\r
+aneurysm, which is a local dilatation of the abdominal aorta. These patients will be followed during their treatment\r
+at the department of vascular surgery. """ ;
+    dcterms:identifier "psi_parelaaa"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "PSI_ParelAAA" .
+
+<https://xnat.bmia.nl/data/archive/projects/quick-concept> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Adriaan Versteeg" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Data sharing platform between QuIC-ConCePT (www.quic-concept.eu) participants for a liver apparent diffusion coefficient (ADC) study. Diffusion-weighted MR images are uploaded so that they can be post-processed at another institution. " ;
+    dcterms:identifier "quick-concept"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "QuIC-ConCePT" .
+
+<https://xnat.bmia.nl/data/archive/projects/rpsrad> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Martijn Starmans" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "The data in this project is used to predict the grade of retroperitioneal sarcoma using radiomics. The XNAT will be used to store the computed tomography scans." ;
+    dcterms:identifier "rpsrad"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "RPSRad" .
+
+<https://xnat.bmia.nl/data/archive/projects/stwstrategyhn1> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr Andre Dekker" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "This collection contains 156 cases of MAASTRO Head and Neck images and RTStruct contours. Where PET exists, the frame of reference UID of the CT has been transferred to the PET. This collection may not be used for commercial purposes. This collection is freely available to browse, download, and use for scientific and educational purposes as outlined in the Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) https://creativecommons.org/licenses/by-nc/3.0/. Please be sure to include the following citation if you make use of this data set : &quot;Aerts, H. J. W. L., Velazquez, E. R., Leijenaar, R. T. H., Parmar, C., Grossmann, P., Carvalho, S., &#133; Lambin, P. (2014, June 3). Decoding tumour phenotype by noninvasive imaging using a quantitative radiomics approach. Nature Communications. Nature Publishing Group. http://doi.org/10.1038/ncomms5006.&quot;" ;
+    dcterms:identifier "stwstrategyhn1"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "STW_STRATEGY_HEADandNECK1" .
+
+<https://xnat.bmia.nl/data/archive/projects/stwstrategyps4> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr Rene Monshouwer" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """This collection contains phantom scans of a Gammex 467 CT phantom (Middletone, WI, USA) for radiomics intra-scanner testing due to X-ray tube exposure. The phantom was scanned with a Philips Brilliance Big Bore CT. Data Usage Policy : This collection may not be used for commercial purposes. This collection is freely available to browse, download, and use for scientific and educational purposes as outlined in the Creative Commons Attribution 3.0 Unported License (https://creativecommons.org/licenses/by/3.0/). Citation: Learning from scanners: bias reduction and feature correction in Radiomics Zhovannik, Ivan et al.\r
+Clinical and Translational Radiation Oncology, 2019\r
+""" ;
+    dcterms:identifier "stwstrategyps4"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "STW-STRATEGY-Phantom_Series4" .
+
+<https://xnat.bmia.nl/data/archive/projects/tcia_glioma> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. ir. Stefan Klein" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Glioma data of The Cancer Imaging Archive" ;
+    dcterms:identifier "tcia_glioma"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "TCIA glioma" .
+
+<https://xnat.bmia.nl/data/archive/projects/ultra> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "MD Rene Post" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging for analyses of pati&#235;nt in RCT ULTRA" ;
+    dcterms:identifier "ultra"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ULTRA" .
+
+<https://xnat.bmia.nl/data/archive/projects/ultra_elisab> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "MD Rene Post" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """Imaging for analyses of pati&#235;nt in RCT ULTRA\r
+""" ;
+    dcterms:identifier "ultra_elisab"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ULTRA_ELISAB" .
+
+<https://xnat.bmia.nl/data/archive/projects/ultra_isala> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "MD Rene Post" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging for analyses of pati&#235;nt in RCT ULTRA" ;
+    dcterms:identifier "ultra_isala"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ULTRA_ISALA" .
+
+<https://xnat.bmia.nl/data/archive/projects/ultra_lumc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "MD Rene Post" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging for analyses of pati&#235;nt in RCT ULTRA" ;
+    dcterms:identifier "ultra_lumc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ULTRA_LUMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/ultra_mch> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "MD Rene Post" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging for analyses of pati&#235;nt in RCT ULTRA" ;
+    dcterms:identifier "ultra_mch"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ULTRA_MCH" .
+
+<https://xnat.bmia.nl/data/archive/projects/ultra_mumc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "MD Rene Post" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging for analyses of pati&#235;nt in RCT ULTRA " ;
+    dcterms:identifier "ultra_mumc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ULTRA_MUMC" .
+
+<https://xnat.bmia.nl/data/archive/projects/ultra_radboud> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "MD Rene Post" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging for analyses of pati&#235;nt in RCT ULTRA" ;
+    dcterms:identifier "ultra_radboud"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ULTRA_RADBOUD" .
+
+<https://xnat.bmia.nl/data/archive/projects/ultra_umcu> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "MD Rene Post" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description "Imaging for analyses of pati&#235;nt in RCT ULTRA" ;
+    dcterms:identifier "ultra_umcu"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "ULTRA_UMCU" .
+
+<https://xnat.bmia.nl/data/archive/projects/worc> a dcat:Dataset ;
+    dcterms:creator [ a vcard:VCard ;
+            vcard:fn "Dr. Martijn Starmans" ;
+            vcard:hasUID <http://example.com> ] ;
+    dcterms:description """This collection contains the WORC Database: imaging data, segmentations, and ground truth labels (e.g. diagnosis, phenotype, genetics) of 930 anonymized patients collected at the Erasmus Medical Center (Rotterdam, the Netherlands) with a variety of tumor types (e.g. liver, soft tissue, lung metastases) as published in the following two papers:\r
+\r
+1) Starmans et al. &quot;Reproducible radiomics through automated machine learning validated on twelve clinical applications&quot;, submitted, preprint available from https://arxiv.org/abs/2108.08618; and \r
+2) Starmans et al. &quot;The WORC* database: MRI and CT scans, segmentations, and clinical labels for 930 patients from six radiomics studies&quot;, submitted, preprint available from https://doi.org/10.1101/2021.08.19.21262238.\r
+\r
+By downloading the data, you agree to the following Data Usage Policy: \r
+\r
+The dataset is freely available under the following license: https://xnat.bmia.nl/data/projects/worc/resources/License/files/WORC_data_license.pdf. This license dictates among others that:\r
+\r
+1) others can remix, adapt and build upon this work only non-commercially;\r
+2) the data may not be redistributed.\r
+3) when using (part of) this dataset, please cite the two above mentioned papers.\r
+\r
+See the license for all conditions (https://xnat.bmia.nl/data/projects/worc/resources/License/files/WORC_data_license.pdf).\r
+\r
+Code to download the data and reproduce the radiomics experiments as detailed in the above papers can be found at https://github.com/MStarmans91/WORCDatabase.\r
+""" ;
+    dcterms:identifier "worc"^^xsd:token ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ] ;
+    dcterms:title "WORC" ;
+    dcat:keyword "artificial",
+        "classification,",
+        "intelligence",
+        "learning,",
+        "machine",
+        "oncology,",
+        "radiomics,",
+        "segmentation," .
+

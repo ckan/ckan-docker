@@ -19,5 +19,10 @@ app.add_middleware(
 def retrieve_catalogue():
     return Response(content=open("catalogue.ttl", "rb").read(), media_type="text/turtle")
 
+
+@app.get("/xnat.ttl")
+def retrieve_catalogue():
+    return Response(content=open("xnat.ttl", "rb").read(), media_type="text/turtle")
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001)

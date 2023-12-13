@@ -30,17 +30,17 @@ CKAN and all the components are configured using environment variables that you 
 
 ### 3.1. Build and start dev environment
 ```bash
-docker compose -f docker-compose.dev.yml up -d --build
+docker compose up -d --build
 ```
 
 ### 3.2. Remove images and volumes
 ```bash
-docker compose -f docker-compose.dev.yml down -v
+docker compose down -v
 ```
 
 ### 3.3. Logs
 ```bash
-docker compose -f docker-compose.dev.yml logs -f
+docker compose logs -f
 ```
 
 ## 4. installing new extensions

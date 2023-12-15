@@ -21,10 +21,12 @@ The non-CKAN images are as follows:
 
 CKAN and all the components are configured using environment variables that you can set in the `.env` file.
 
-## 2. Requirements to run
+## 2. Before running locally
 
-* Docker with compose. `colima` is curently beeing used.
-* Enough computer resources, example: `colima start --arch aarch64 --vm-type=vz --mount-type=virtiofs --vz-rosetta --cpu 4 --memory 10`
+* Install docker with support to docker compose v2.
+  * Ensure you have enough computer resources, if you are using `colima`: `colima start --arch aarch64 --vm-type=vz --mount-type=virtiofs --vz-rosetta --cpu 4 --memory 10`
+* Add `127.0.0.1  keycloak` to `/etc/hosts`.
+* Copy `.env.example` to `.env`.
 
 ## 3. Useful commands
 

@@ -15,8 +15,8 @@ RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userpo
 
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-scheming.git@user-portal-v3.0.0#egg=ckanext-scheming
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-keycloak.git@user-portal-v2.1#egg=ckanext-keycloak && \
-     pip3 install -r ${APP_DIR}/src/ckanext-keycloak/requirements.txt
+RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.3.1#egg=ckanext-oidc-pkce && \
+     pip3 install -r ${APP_DIR}/src/ckanext-oidc-pkce/requirements.txt
 
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/

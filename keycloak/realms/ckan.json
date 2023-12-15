@@ -542,7 +542,7 @@
     "description" : "",
     "rootUrl" : "http://localhost:5500",
     "adminUrl" : "",
-    "baseUrl" : "http://localhost:5500/dashboard",
+    "baseUrl" : "http://localhost:5500/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,

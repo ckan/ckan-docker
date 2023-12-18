@@ -1,4 +1,4 @@
-FROM ckan/ckan-dev:2.10.1
+FROM ckan/ckan-dev:2.10.3
 
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file

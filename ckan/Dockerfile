@@ -18,6 +18,12 @@ RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userpo
 RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.3.1#egg=ckanext-oidc-pkce && \
      pip3 install -r ${APP_DIR}/src/ckanext-oidc-pkce/requirements.txt
 
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@main#egg=ckanext-fairdatapoint && \
+     pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
+
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-civity.git@main#egg=ckanext-civity
+
+
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 
@@ -33,4 +39,4 @@ RUN for d in $APP_DIR/patches/*; do \
         fi ; \
     done
 
-ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations gdi_userportal dcat harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester dcat_json_interface oidc_pkce"
+ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations gdi_userportal dcat harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester dcat_json_interface oidc_pkce fairdatapointharvester"

@@ -1,0 +1,5 @@
+GET http://localhost:5500/api/action/scheming_package_show?type=dataset&id=5eedc478-87b2-4947-8a9a-c90437440079
+
+###
+
+GET http://localhost:5500/api/action/scheming_dataset_schema_show?type=dataset&id=4611e835-ee00-49e8-a97a-9077759ce791

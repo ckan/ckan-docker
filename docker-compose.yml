@@ -10,12 +10,10 @@ services:
     build:
       context: ckan/
       dockerfile: Dockerfile.dev
-      args:
-        - TZ=${TZ}
     env_file:
       - .env
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
       solr:
         condition: service_healthy
@@ -31,10 +29,8 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5500"]
-    extra_hosts:
-      - "catalogue.local.gdi.lu:host-gateway"
 
-  db:
+  postgres:
     build:
       context: postgresql/
     environment:
@@ -44,9 +40,6 @@ services:
       - CKAN_DB_USER
       - CKAN_DB_PASSWORD
       - CKAN_DB
-      - DATASTORE_READONLY_USER
-      - DATASTORE_READONLY_PASSWORD
-      - DATASTORE_DB
       - KC_DB_USERNAME
       - KC_DB_PASSWORD
       - KC_DB_NAME
@@ -55,6 +48,8 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
+    ports:
+      - "5432:5432"
      
   solr:
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
@@ -79,7 +74,7 @@ services:
     volumes:
       - ./keycloak/realms:/opt/keycloak/data/import:ro
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
     environment:
       - KC_DB_URL
@@ -90,11 +85,3 @@ services:
       - KC_HOSTNAME
     healthcheck:
       test: ["CMD", "curl", "-o", "/dev/null", http://localhost:8080/health/ready"]
-  
-  national_catalogue_mock:
-    build: national-node-catalogue-mock/
-    environment:
-      - HARVESTER_URL=${CKAN_SITE_URL}
-    ports:
-      - 8001:8001
-    restart: unless-stopped

@@ -6,10 +6,12 @@ RUN dnf install --installroot /mnt/rootfs curl --releasever 9 --setopt install_w
     rpm --root /mnt/rootfs -e --nodeps setup
 
 # Second stage: build keycloak image
-FROM quay.io/keycloak/keycloak:latest
+FROM quay.io/keycloak/keycloak:23.0.3
 
 # Copy curl from the first stage
 COPY --from=ubi-micro-build /mnt/rootfs /
+
+USER keycloak
 
 # Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true

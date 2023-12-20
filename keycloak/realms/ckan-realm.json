@@ -192,7 +192,7 @@
         "composite" : true,
         "composites" : {
           "client" : {
-            "realm-management" : [ "view-realm", "query-clients", "impersonation", "query-groups", "view-events", "manage-identity-providers", "manage-clients", "view-authorization", "manage-realm", "manage-authorization", "view-identity-providers", "view-users", "create-client", "view-clients", "query-realms", "manage-users", "manage-events", "query-users" ]
+            "realm-management" : [ "view-realm", "query-clients", "impersonation", "query-groups", "view-events", "manage-identity-providers", "manage-clients", "view-authorization", "manage-realm", "manage-authorization", "view-identity-providers", "create-client", "view-users", "query-realms", "view-clients", "manage-users", "manage-events", "query-users" ]
           }
         },
         "clientRole" : true,
@@ -383,6 +383,29 @@
   "webAuthnPolicyPasswordlessAcceptableAaguids" : [ ],
   "webAuthnPolicyPasswordlessExtraOrigins" : [ ],
   "users" : [ {
+    "id" : "52cacbab-c440-4385-9d5f-46aa4930b0e4",
+    "createdTimestamp" : 1703107576892,
+    "username" : "ckan_admin",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "CKAN",
+    "lastName" : "Admin",
+    "email" : "your_email@example.com",
+    "credentials" : [ {
+      "id" : "1c2c2caf-4556-479d-853f-9ed3c0ecb017",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1703107588036,
+      "secretData" : "{\"value\":\"urHSmjggWEph066Ed4l6c2qA63fShCx+ny7PA7pAquw=\",\"salt\":\"Zh3X+GfxGoMiZ1dZv3rnPw==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-ckan" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
     "id" : "900af5fc-4c5c-4333-bcee-9855bfb0991d",
     "createdTimestamp" : 1701295297234,
     "username" : "service-account-ckan",
@@ -1191,7 +1214,7 @@
       "subType" : "authenticated",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-usermodel-property-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-full-name-mapper", "saml-user-attribute-mapper", "saml-role-list-mapper", "oidc-address-mapper", "oidc-usermodel-attribute-mapper", "saml-user-property-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-property-mapper", "saml-role-list-mapper", "saml-user-attribute-mapper", "oidc-full-name-mapper", "oidc-address-mapper", "oidc-usermodel-attribute-mapper", "saml-user-property-mapper" ]
       }
     }, {
       "id" : "1a9c6e95-2a93-47b4-83ee-b414941cac4e",
@@ -1235,7 +1258,7 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-address-mapper", "oidc-full-name-mapper", "saml-role-list-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-attribute-mapper", "oidc-usermodel-attribute-mapper", "saml-user-property-mapper", "oidc-usermodel-property-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-full-name-mapper", "saml-role-list-mapper", "oidc-usermodel-attribute-mapper", "oidc-usermodel-property-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "saml-user-attribute-mapper", "oidc-address-mapper" ]
       }
     }, {
       "id" : "c6451db3-895c-4b82-9b16-3923fc8161f4",
@@ -1841,7 +1864,7 @@
     "cibaInterval" : "5",
     "realmReusableOtpCode" : "false"
   },
-  "keycloakVersion" : "23.0.1",
+  "keycloakVersion" : "23.0.3",
   "userManagedAccessAllowed" : false,
   "clientProfiles" : {
     "profiles" : [ ]

@@ -1,4 +1,4 @@
-FROM ckan/ckan-dev:2.10.1
+FROM ckan/ckan-dev:2.10.3
 
 RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.3.1#egg=ckanext-oidc-pkce && \
      pip3 install -r ${APP_DIR}/src/ckanext-oidc-pkce/requirements.txt

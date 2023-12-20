@@ -21,8 +21,6 @@ RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@main#egg=ckanext-fairdatapoint && \
      pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-civity.git@main#egg=ckanext-civity
-
 
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/

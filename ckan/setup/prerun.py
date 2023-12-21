@@ -27,6 +27,15 @@ def update_plugins():
     subprocess.check_output(cmd, stderr=subprocess.STDOUT)
     print("[prerun] Plugins set.")
 
+def update_database():
+
+    sqlalchemy_url = os.environ.get("CKAN_SQLALCHEMY_URL", "")
+    print(("[prerun] Setting the SqlAlchemy URL in {}:".format(ckan_ini)))
+    print(sqlalchemy_url)
+    cmd = ["ckan", "config-tool", ckan_ini, "sqlalchemy.url = {}".format(sqlalchemy_url)]
+    subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+    print("[prerun] SqlAlchemy URL set.")
+
 
 def check_main_db_connection(retry=None):
 
@@ -202,11 +211,12 @@ if __name__ == "__main__":
     if maintenance:
         print("[prerun] Maintenance mode, skipping setup...")
     else:
+        update_plugins()
+        update_database()
         check_main_db_connection()
         init_db()
-        update_plugins()
-        check_datastore_db_connection()
-        init_datastore_db()
+        #check_datastore_db_connection()
+        #init_datastore_db()
         check_solr_connection()
         create_sysadmin()
         

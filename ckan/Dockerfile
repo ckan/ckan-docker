@@ -36,3 +36,5 @@ RUN for d in $APP_DIR/patches/*; do \
             done ; \
         fi ; \
     done
+
+COPY setup/prerun.py ${APP_DIR}/prerun.py

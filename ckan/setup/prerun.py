@@ -19,7 +19,6 @@ RETRY = 5
 
 
 def update_plugins():
-
     plugins = os.environ.get("CKAN__PLUGINS", "")
     print(("[prerun] Setting the following plugins in {}:".format(ckan_ini)))
     print(plugins)

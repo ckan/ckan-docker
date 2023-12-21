@@ -18,7 +18,7 @@ RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userpo
 RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.3.1#egg=ckanext-oidc-pkce && \
      pip3 install -r ${APP_DIR}/src/ckanext-oidc-pkce/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@main#egg=ckanext-fairdatapoint && \
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@user-portal#egg=ckanext-fairdatapoint && \
      pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
 
 

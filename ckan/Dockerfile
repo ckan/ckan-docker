@@ -36,7 +36,3 @@ RUN for d in $APP_DIR/patches/*; do \
             done ; \
         fi ; \
     done
-
-ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations gdi_userportal dcat harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester dcat_json_interface oidc_pkce fairdatapointharvester"
-ENV CKAN_SOLR_URL = http://test:8983/solr/ckan
-ENV CKAN_SQLALCHEMY_URL=postgresql://ckandbuser:ckandbpassword@test/ckandb

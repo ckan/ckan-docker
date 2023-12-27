@@ -59,6 +59,7 @@ services:
         condition: service_healthy
     volumes:
       - ckan_storage:/var/lib/ckan
+      - ${KEY_DIR}:/keys
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "wget", "-qO", "/dev/null", "http://localhost:5000" ]

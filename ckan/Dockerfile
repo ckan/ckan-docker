@@ -6,8 +6,12 @@ FROM ckan/ckan-base:2.10.3
 ### PDF View ###
 RUN pip3 install ckanext-pdfview
 
+### Cryptography for RS256 ###
+RUN pip3 install cryptography
+
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
+
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)

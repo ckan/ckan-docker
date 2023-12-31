@@ -37,8 +37,8 @@ FROM ckan/ckan-dev:2.10.3
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 
-### PDF View ###
-RUN pip3 install ckanext-pdfview
+### PDF View, Cryptography for RS256, S3 Filestore ###
+RUN pip3 install ckanext-pdfview cryptography ckanext-s3filestore
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)

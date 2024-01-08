@@ -41,4 +41,4 @@ ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets s
 
 COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 
-RUN chown -R ckan:ckan ${CKAN_STORAGE_PATH}
+RUN chown -R ckan:ckan "/var/lib/ckan"

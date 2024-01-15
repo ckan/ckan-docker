@@ -37,8 +37,11 @@ RUN for d in $APP_DIR/patches/*; do \
         fi ; \
     done
 
-ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations gdi_userportal dcat harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester dcat_json_interface oidc_pkce fairdatapointharvester"
+ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations dcat dcat_json_interface harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester fairdatapointharvester oidc_pkce gdi_userportal"
 
 COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 
-RUN chown -R ckan:ckan "/var/lib/ckan"
+# TODO 
+# 1. Remove this comand once the issue is fixed
+# https://github.com/ckan/ckan-docker-base/issues/41
+RUN chmod u+rwx "/var/lib/ckan"

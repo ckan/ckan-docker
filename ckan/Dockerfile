@@ -37,7 +37,7 @@ RUN for d in $APP_DIR/patches/*; do \
         fi ; \
     done
 
-ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations dcat dcat_json_interface harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester fairdatapointharvester oidc_pkce gdi_userportal"
+ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations dcat dcat_json_interface harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester fairdatapointharvester oidc_pkce gdi_userportal activity"
 
 COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 

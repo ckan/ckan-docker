@@ -405,23 +405,6 @@
     "realmRoles" : [ "default-roles-ckan" ],
     "notBefore" : 0,
     "groups" : [ ]
-  }, {
-    "id" : "900af5fc-4c5c-4333-bcee-9855bfb0991d",
-    "createdTimestamp" : 1701295297234,
-    "username" : "service-account-ckan",
-    "enabled" : true,
-    "totp" : false,
-    "emailVerified" : false,
-    "serviceAccountClientId" : "ckan",
-    "credentials" : [ ],
-    "disableableCredentialTypes" : [ ],
-    "requiredActions" : [ ],
-    "realmRoles" : [ "default-roles-ckan" ],
-    "clientRoles" : {
-      "ckan" : [ "uma_protection" ]
-    },
-    "notBefore" : 0,
-    "groups" : [ ]
   } ],
   "scopeMappings" : [ {
     "clientScope" : "offline_access",
@@ -563,15 +546,14 @@
     "clientId" : "ckan",
     "name" : "",
     "description" : "",
-    "rootUrl" : "http://localhost:5500",
+    "rootUrl" : "",
     "adminUrl" : "",
-    "baseUrl" : "http://localhost:5500/",
+    "baseUrl" : "",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "secret" : "wb4nT5D6LxNJm1648QHCrB0XTcsf2zja",
-    "redirectUris" : [ "/*" ],
+    "redirectUris" : [ "http://localhost:4200/*", "http://localhost:5500/*" ],
     "webOrigins" : [ "+" ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -579,16 +561,16 @@
     "standardFlowEnabled" : true,
     "implicitFlowEnabled" : false,
     "directAccessGrantsEnabled" : true,
-    "serviceAccountsEnabled" : true,
-    "authorizationServicesEnabled" : true,
-    "publicClient" : false,
+    "serviceAccountsEnabled" : false,
+    "publicClient" : true,
     "frontchannelLogout" : true,
     "protocol" : "openid-connect",
     "attributes" : {
       "oidc.ciba.grant.enabled" : "false",
       "client.secret.creation.time" : "1701295297",
       "backchannel.logout.session.required" : "true",
-      "post.logout.redirect.uris" : "/*",
+      "post.logout.redirect.uris" : "http://localhost:5500/*##http://localhost:4200/*",
+      "display.on.consent.screen" : "false",
       "oauth2.device.authorization.grant.enabled" : "false",
       "backchannel.logout.revoke.offline.tokens" : "false"
     },
@@ -639,15 +621,7 @@
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "acr", "profile", "roles", "email" ],
-    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ],
-    "authorizationSettings" : {
-      "allowRemoteResourceManagement" : true,
-      "policyEnforcementMode" : "ENFORCING",
-      "resources" : [ ],
-      "policies" : [ ],
-      "scopes" : [ ],
-      "decisionStrategy" : "UNANIMOUS"
-    }
+    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
   }, {
     "id" : "ed6cb8f0-80e0-43a5-bade-3cb5f15f3cc5",
     "clientId" : "realm-management",
@@ -1214,7 +1188,7 @@
       "subType" : "authenticated",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-property-mapper", "saml-role-list-mapper", "saml-user-attribute-mapper", "oidc-full-name-mapper", "oidc-address-mapper", "oidc-usermodel-attribute-mapper", "saml-user-property-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-address-mapper", "saml-user-property-mapper", "saml-user-attribute-mapper", "oidc-full-name-mapper", "oidc-usermodel-attribute-mapper", "saml-role-list-mapper", "oidc-usermodel-property-mapper", "oidc-sha256-pairwise-sub-mapper" ]
       }
     }, {
       "id" : "1a9c6e95-2a93-47b4-83ee-b414941cac4e",
@@ -1258,7 +1232,7 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-full-name-mapper", "saml-role-list-mapper", "oidc-usermodel-attribute-mapper", "oidc-usermodel-property-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "saml-user-attribute-mapper", "oidc-address-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-property-mapper", "saml-user-attribute-mapper", "saml-user-property-mapper", "oidc-full-name-mapper", "oidc-usermodel-attribute-mapper", "saml-role-list-mapper", "oidc-address-mapper" ]
       }
     }, {
       "id" : "c6451db3-895c-4b82-9b16-3923fc8161f4",

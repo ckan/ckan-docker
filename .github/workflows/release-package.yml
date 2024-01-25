@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ghcr.io/${{ github.repository }}
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
   AZURE_WEBAPP_NAME: ckan-test
 
 jobs:

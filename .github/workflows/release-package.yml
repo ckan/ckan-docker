@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ghcr.io/${{ github.repository }}
+  IMAGE_NAME: ghcr.io/genomicdatainfrastructure/gdi-userportal-ckan-docker
   AZURE_WEBAPP_NAME: ckan-test
 
 jobs:

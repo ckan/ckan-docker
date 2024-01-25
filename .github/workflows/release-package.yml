@@ -2,7 +2,7 @@ name: Build and publish a Docker image
 
 on:
   push:
-    branches: ['user-portal-main']
+    branches: ['fix-CD']
   workflow_dispatch:
 
 env:

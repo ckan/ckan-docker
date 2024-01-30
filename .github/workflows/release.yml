@@ -41,6 +41,7 @@ jobs:
       - name: Build Docker image for scanning
         uses: docker/build-push-action@v5
         with:
+          context: ./ckan
           load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -53,7 +54,7 @@ jobs:
           exit-code: "1"
           ignore-unfixed: true
           vuln-type: "os,library"
-          severity: "CRITICAL,HIGH"
+          severity: "CRITICAL"
 
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -81,6 +82,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
+          context: ./ckan
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

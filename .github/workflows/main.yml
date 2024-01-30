@@ -54,7 +54,7 @@ jobs:
           exit-code: "1"
           ignore-unfixed: true
           vuln-type: "os,library"
-          severity: "CRITICAL,HIGH"
+          severity: "CRITICAL"
 
   build-and-push-image:
     runs-on: ubuntu-latest

@@ -2,7 +2,7 @@ name: Publish and Deploy main
 
 on:
   push:
-    branches: ['user-portal-main']
+    branches: ['main']
   workflow_dispatch:
 
 env:
@@ -49,7 +49,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: "${{ env.IMAGE_NAME }}:user-portal-main"
+          image-ref: "${{ env.IMAGE_NAME }}:main"
           format: "table"
           exit-code: "1"
           ignore-unfixed: true
@@ -97,4 +97,4 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: '${{ env.IMAGE_NAME }}:user-portal-main'
+          images: '${{ env.IMAGE_NAME }}:main'

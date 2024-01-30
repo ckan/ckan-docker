@@ -9,10 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Replaced all non-GDI extension locations by their original ones.
+
+### Security
+
 ## [v1.0.0] - 2024-01-30
 
 ### Added
-
 - ckanext-scheming v3.0.0.
 - ckanext-dcat v1.5.1.
 - ckanext-harvest v1.5.6.

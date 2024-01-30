@@ -1,3 +1,7 @@
+![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/actions/workflows/main.yml/badge.svg)
+![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/actions/workflows/release.yml/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GenomicDataInfrastructure_gdi-userportal-ckan-docker&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=GenomicDataInfrastructure_gdi-userportal-ckan-docker)
+[![GitHub contributors](https://img.shields.io/github/contributors/GenomicDataInfrastructure/gdi-userportal-ckan-docker)](https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/graphs/contributors)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
 # CKAN for GDI - User Portal

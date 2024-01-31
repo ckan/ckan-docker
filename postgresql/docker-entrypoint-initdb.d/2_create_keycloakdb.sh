@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# SPDX-FileCopyrightText: 2024 PNED G.I.E.
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 set -e
 
 echo "Creating $KC_DB_NAME for $KC_DB_USERNAME"

@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2024 PNED G.I.E.
+# SPDX-FileContributor: Stichting Health-RI
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 name: Publish and Deploy main
 
 on:

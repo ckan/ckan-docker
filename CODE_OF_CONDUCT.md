@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 Contributor Covenant
+SPDX-FileContributor: PNED G.I.E.
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
 
 # Contributor Covenant Code of Conduct
 

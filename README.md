@@ -1,5 +1,13 @@
+<!--
+SPDX-FileCopyrightText: 2024 PNED G.I.E.
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+[![REUSE status](https://api.reuse.software/badge/github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker)](https://api.reuse.software/info/github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker)
 ![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/actions/workflows/main.yml/badge.svg)
 ![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/actions/workflows/release.yml/badge.svg)
+![example workflow](https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/actions/workflows/test.yml/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GenomicDataInfrastructure_gdi-userportal-ckan-docker&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=GenomicDataInfrastructure_gdi-userportal-ckan-docker)
 [![GitHub contributors](https://img.shields.io/github/contributors/GenomicDataInfrastructure/gdi-userportal-ckan-docker)](https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/graphs/contributors)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
@@ -68,9 +76,8 @@ more information.
 Copying and License
 -------------------
 
-This material is copyright (c) 2006-2023 Open Knowledge Foundation and contributors.
+This work is licensed under multiple licences. Here is a brief summary as of January 2024:
 
-It is open and licensed under the GNU Affero General Public License (AGPL) v3.0
-whose full text may be found at:
-
-http://www.fsf.org/licensing/licenses/agpl-3.0.html
+- All original source code is licensed under [AGPL-3.0-only](./LICENSES/AGPL-3.0-only.txt), copyright (c) 2006-2023 Open Knowledge Foundation and contributors.
+- All documentation is licensed under [CC-BY-4.0](./LICENSES/CC-BY-4.0.txt).
+- For more accurate information, check the individual files.

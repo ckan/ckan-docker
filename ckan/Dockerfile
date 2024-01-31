@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2006-2023 Open Knowledge Foundation and contributors
+# SPDX-FileContributor: PNED G.I.E.
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 FROM ckan/ckan-base:2.10.3
 
 # Install any extensions needed by your CKAN instance

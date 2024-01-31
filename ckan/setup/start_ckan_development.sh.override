@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# SPDX-FileCopyrightText: 2006-2023 Open Knowledge Foundation and contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 # Install any local extensions in the src_extensions volume
 echo "Looking for local extensions to install..."
 echo "Extension dir contents:"

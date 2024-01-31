@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# SPDX-FileCopyrightText: 2006-2023 Open Knowledge Foundation and contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 # Add ckan.datapusher.api_token to the CKAN config file (updated with corrected value later)
 ckan config-tool $CKAN_INI ckan.datapusher.api_token=xxx
 

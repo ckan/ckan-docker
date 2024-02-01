@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 PNED G.I.E.
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 [submodule "src/ckanext-gdi-userportal"]
 	path = src/ckanext-gdi-userportal
 	url = git@github.com:GenomicDataInfrastructure/ckanext-gdi-userportal.git

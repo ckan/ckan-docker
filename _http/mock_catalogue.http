@@ -1,1 +1,5 @@
+# SPDX-FileCopyrightText: 2024 PNED G.I.E.
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 GET http://localhost:8001/catalogue.ttl

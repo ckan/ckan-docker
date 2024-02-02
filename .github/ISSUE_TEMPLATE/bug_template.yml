@@ -1,0 +1,103 @@
+# SPDX-FileCopyrightText: 2024 PNED G.I.E.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: "🐞 Bug Report"
+description: Report the issue you are having
+title: "🐞 BUG REPORT"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🐞 Bug Report 
+
+        We're sorry to hear you're encountering an issue! 🛠️ Your detailed report is crucial in helping us identify and resolve problems quickly.
+
+        Please use this form to provide as much information as possible about the issue. This not only helps us in prompt troubleshooting but also ensures we keep improving the user experience.
+
+        **Quick Links for Your Reference**
+        - [📜 Code of Conduct](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)
+        - [👥 Contribution Guide](https://github.com/GenomicDataInfrastructure/gdi-userportal-frontend/graphs/contributors)
+
+  - type: checkboxes
+    id: duplicates
+    attributes:
+      label: 🔄 Duplicate Check
+      description: Please confirm that this issue has not been reported before.
+      options:
+        - label: "I have searched both open and closed issues and found no similar reports."
+          required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: "🔍 What Happened?"
+      description: "Provide a clear and concise description of the issue."
+      placeholder: "Describe the issue in detail. What did you see or experience?"
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: "👣 Steps to Reproduce"
+      description: "Detail the steps to replicate the problem."
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. Notice the error
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: "📸 Screenshots"
+      description: "If applicable, add screenshots to help illustrate the issue."
+      placeholder: "Drag & drop, paste, or select a file to upload screenshots."
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "📋 Logs"
+      description: "Share any relevant log output or error messages."
+  
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: "🌐 Affected Browsers"
+      description: "Which browsers did you encounter the issue on?"
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Opera
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: "💻 Operating System"
+      description: "Which operating system(s) is affected?"
+      multiple: true
+      options: 
+        - Windows
+        - Linux
+        - macOS
+
+  - type: dropdown
+    id: assignee
+    attributes:
+      label: "🤝 Want to Contribute to the Fix?"
+      description: "Indicate if you're interested in contributing to fixing this issue."
+      multiple: false
+      options:
+        - "No, I can't contribute."
+        - "Yes, I'd like to help fix this."
+      default: 0
+
+  - type: textarea
+    id: anything-else
+    attributes:
+      label: "ℹ️ Additional Information"
+      description: "Share any other relevant information or context."
+      placeholder: "System information, version details, etc."

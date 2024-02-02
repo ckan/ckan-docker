@@ -1,0 +1,51 @@
+# SPDX-FileCopyrightText: 2024 PNED G.I.E.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: "📝 User Story"
+description: Provide a detailed user story including what needs to be done, why, the tasks involved, and the acceptance criteria.
+title: "📝 USER STORY: "
+labels: ["user story"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🚀 User Story
+
+        🌟 A compelling user story does more than outline requirements; it paints a picture of progress, impact, and transformation. 🎨
+
+        Please take a moment to fill in each section with detail and care. Your thorough input enables us to align our efforts closely with our users' real-world needs and expectations.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: "🎯 What? (Story Description)"
+      description: "Describe the desired outcome or goal of this story."
+
+  - type: textarea
+    id: why
+    attributes:
+      label: "💡 Why? (Justification)"
+      description: "Explain the value or benefit this story brings to the project or its users."
+      placeholder: "This is important because..."
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: "🔨 Tasks (Breakdown)"
+      description: "List the tasks or steps needed to achieve the desired outcome of this story."
+      placeholder: "Tasks involved might include..."
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: "✅ Acceptance Criteria"
+      description: "Define clear and testable criteria to determine when this story is completed."
+      placeholder: "This story is considered done when..."
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: "➕ Additional Information"
+      description: "Add any extra notes, links, or screenshots that can help illustrate your story. Your thoroughness can light the way to success!"
+      placeholder: "Think outside the box, every detail adds depth..."

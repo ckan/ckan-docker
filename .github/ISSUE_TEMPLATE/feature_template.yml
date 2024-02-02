@@ -1,0 +1,70 @@
+# SPDX-FileCopyrightText: 2024 PNED G.I.E.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: "✨ Feature Request"
+description: Suggest an idea for this project
+title: "✨ FEATURE: "
+labels: ["feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ✨ Feature Request
+
+        Your ideas are the spark that ignites innovation! 🚀 Thank you for taking the time to share your thoughts and suggestions with us.
+
+        Whether it's a small tweak or a big revolution, every feature request is a step towards making our project more powerful and user-friendly. Please fill out the form below with as much detail as possible to help us understand your vision.
+
+        **Before you start:**
+        - 🔍 Ensure your feature hasn't already been suggested by searching existing issues.
+        - 🎯 Clearly describe the use-case, benefits, and necessity of your proposed feature.
+        - 🔄 Consider if this feature should be broadly implemented or better suited as a plugin.
+
+  - type: checkboxes
+    id: duplicates
+    attributes:
+      label: "🔍 Prior Research"
+      description: "Boost the chances of your feature being accepted by ensuring it hasn't been suggested before."
+      options:
+        - label: "I have searched both 'open' and 'closed' issues to confirm this is not a duplicate."
+          required: true
+
+  - type: textarea
+    id: feature-summary
+    attributes:
+      label: "✏️ Feature Summary"
+      description: "Provide a clear and concise description of the proposed feature."
+      placeholder: "I envision a feature that..."
+
+  - type: textarea
+    id: problem-solution
+    attributes:
+      label: "🎯 Problem & Solution"
+      description: "Detail the problem at hand and how your feature offers a solution."
+      placeholder: "The challenge is... and this feature addresses it by..."
+
+  - type: textarea
+    id: alternatives-considered
+    attributes:
+      label: "🔄 Alternatives Considered"
+      description: "Share any alternative solutions or features you have considered."
+      placeholder: "Alternative approaches include..."
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "📚 Additional Context"
+      description: "Provide any more context, links, or screenshots that can paint a clearer picture of your feature."
+      placeholder: "Here's more context..."
+
+  - type: dropdown
+    id: assignee
+    attributes:
+      label: "🛠️ Willing to Contribute?"
+      description: "Are you interested in contributing to the implementation of this feature?"
+      multiple: false
+      options:
+        - "No, I am just suggesting"
+        - "Yes, I'd like to contribute"
+      default: 0

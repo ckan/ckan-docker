@@ -80,4 +80,5 @@ This work is licensed under multiple licences. Here is a brief summary as of Jan
 
 - All original source code is licensed under [AGPL-3.0-only](./LICENSES/AGPL-3.0-only.txt), copyright (c) 2006-2023 Open Knowledge Foundation and contributors.
 - All documentation is licensed under [CC-BY-4.0](./LICENSES/CC-BY-4.0.txt).
+- github actions workflows are licensed under [Apache-2.0](./LICENSES/Apache-2.txt).
 - For more accurate information, check the individual files.

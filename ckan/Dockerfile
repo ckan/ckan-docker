@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2006-2023 Open Knowledge Foundation and contributors
 # SPDX-FileContributor: PNED G.I.E.
+# SPDX-FileContributor: Stichting Health-RI
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
@@ -25,9 +26,17 @@ RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@user-portal#egg=ckanext-fairdatapoint && \
      pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
 
+# Install Supervisor and cron
+RUN apk update \
+    && apk add --no-cache supervisor cronie \
+    && rm -rf /var/cache/apk/*
+
+# Create log directories for CKAN harvester
+RUN mkdir -p /var/log/ckan/std && chown -R ckan:ckan /var/log/ckan
 
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
+COPY config/ckan_harvesting.conf /etc/supervisord.d/ckan_harvesting.conf
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)

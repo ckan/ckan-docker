@@ -39,6 +39,7 @@ CKAN and all the components are configured using environment variables that you 
   * Ensure you have enough computer resources, if you are using `colima`: `colima start --arch aarch64 --vm-type=vz --mount-type=virtiofs --vz-rosetta --cpu 4 --memory 10`
 * Add `127.0.0.1  keycloak` to `/etc/hosts`.
 * Copy `.env.example` to `.env`.
+* Ensure git submodules are pulled correctly after clone CKAN-DOCKER `git submodule update --init`
 
 ## 3. Useful commands
 

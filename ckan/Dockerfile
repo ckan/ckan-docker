@@ -18,7 +18,10 @@ RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.1#egg=cka
 RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git@v1.5.6#egg=ckanext-harvest && \
     pip3 install -r ${APP_DIR}/src/ckanext-harvest/requirements.txt
 
-RUN pip3 install -e git+https://github.com/ckan/ckanext-scheming.git@release-3.0.0#egg=ckanext-scheming
+RUN git clone https://github.com/CivityNL/ckanext-scheming.git ${APP_DIR}/src/ckanext-scheming && \
+    cd "${APP_DIR}/src/ckanext-scheming" && \
+    git checkout release-3.0.0-civity && \
+    pip3 install -e .
 
 RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.3.1#egg=ckanext-oidc-pkce && \
      pip3 install -r ${APP_DIR}/src/ckanext-oidc-pkce/requirements.txt

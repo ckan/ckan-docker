@@ -22,9 +22,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
-- Replaced all non-GDI extension locations by their original ones.
 
 ### Security
+
+
+## [v1.1.1] - 2024-03-01
+
+### Added
+- chore: #15 add REUSE headers by @brunopacheco1 in #44
+- feat(harvester): Configure automatic CRON job for CKAN Harvester #25 by @hcvdwerf in #45
+
+### Fixed
+- fix: Re-add ckanext scheming  extension from Civity to solved harvester issues
+- fix(theme-fetcher): handle empty iterable in theme reduction process #36 by @hcvdwerf in #48
 
 ## [v1.0.0] - 2024-01-30
 
@@ -39,3 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Unused datastore dependencies.
+
+### Fixed
+- Replaced all non-GDI extension locations by their original ones.

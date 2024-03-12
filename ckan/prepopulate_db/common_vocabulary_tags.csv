@@ -1,0 +1,35 @@
+term,term_translation,lang_code
+http://id.loc.gov/vocabulary/iso639-1/en,English,en
+http://id.loc.gov/vocabulary/iso639-1/nl,Dutch,en
+http://id.loc.gov/vocabulary/iso639-1/de,German,en
+http://id.loc.gov/vocabulary/iso639-1/fr,French,en
+http://id.loc.gov/vocabulary/iso639-1/lb,Luxembourgish,en
+https://publications.europa.eu/resource/authority/language/ENG,English,en
+https://publications.europa.eu/resource/authority/language/LTZ,Luxembourgish,en
+https://publications.europa.eu/resource/authority/language/DEU,German,en
+https://publications.europa.eu/resource/authority/language/FRA,French,en
+http://publications.europa.eu/resource/authority/access-right/PUBLIC,Public,en
+http://publications.europa.eu/resource/authority/access-right/RESTRICTED,Restricted,en
+http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC,Non-public,en
+http://purl.org/adms/status/Completed,Completed,en
+http://purl.org/adms/status/Deprecated,Deprecated,en
+http://purl.org/adms/status/UnderDevelopment,UnderDevelopment,en
+http://purl.org/adms/status/Withdrawn,Withdrawn,en
+http://purl.org/cld/freq/triennial,triennial,en
+http://purl.org/cld/freq/biennial,biennial,en
+http://purl.org/cld/freq/annual,annual,en
+http://purl.org/cld/freq/semiannual,semiannual,en
+http://purl.org/cld/freq/threeTimesAYear,three times a year,en
+http://purl.org/cld/freq/quarterly,quarterly,en
+http://purl.org/cld/freq/bimonthly,bimonthly,en
+http://purl.org/cld/freq/monthly,monthly,en
+http://purl.org/cld/freq/semimonthly,semimonthly,en
+http://purl.org/cld/freq/biweekly,biweekly,en
+http://purl.org/cld/freq/threeTimesAMonth,three times a month,en
+http://purl.org/cld/freq/weekly,weekly,en
+http://purl.org/cld/freq/semiweekly,semiweekly,en
+http://purl.org/cld/freq/threeTimesAWeek,three times a week,en
+http://purl.org/cld/freq/daily,daily,en
+http://purl.org/cld/freq/continuous,continuous,en
+http://purl.org/cld/freq/irregular,irregular,en
+https://bioportal.bioontology.org/ontologies/ICD10CM?p=classes&conceptid=U07.1,COVID-19,en

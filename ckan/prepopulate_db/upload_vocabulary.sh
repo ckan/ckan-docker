@@ -6,4 +6,15 @@
 
 set -e
 
-psql postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:5432/$CKAN_DB -c "\copy public.term_translation FROM  '/prepopulate_db/common_vocabulary_tags.csv' WITH (DELIMITER ',', FORMAT CSV, HEADER TRUE);"
+psql postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:5432/$CKAN_DB <<-EOSQL
+
+  SELECT
+      EXISTS(SELECT 1 FROM public.term_translation) as table_not_empty
+  \gset
+  \if :table_not_empty
+      \echo 'term_translation table is not empty, skipping'
+  \else
+      \copy public.term_translation FROM  '/prepopulate_db/common_vocabulary_tags.csv' WITH (DELIMITER ',', FORMAT CSV, HEADER TRUE);
+  \endif
+
+EOSQL

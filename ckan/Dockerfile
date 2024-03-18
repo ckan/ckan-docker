@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-FROM ckan/ckan-base:2.10.3
+FROM ckan/ckan-base:2.10.4
 
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples

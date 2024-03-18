@@ -12,7 +12,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ghcr.io/genomicdatainfrastructure/gdi-userportal-ckan-docker
-  DOCKER_METADATA_OUTPUT_TAGS:
 
 jobs:
   ort:

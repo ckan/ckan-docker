@@ -6,9 +6,11 @@
 name: Publish and Deploy main
 
 on:
-  push:
-    branches: ['main']
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["Run Tests"]
+    branches: [main]
+    types:
+      - completed
 
 env:
   REGISTRY: ghcr.io
@@ -67,15 +69,16 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
+          context: ./ckan
           push: false
+          load: true
           tags: ${{ steps.tag.outputs.last_tag }}
           labels: ${{ steps.meta.outputs.labels }}
-          load: true
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: "${{ steps.tag.outputs.last_tag }}"
+          image-ref: "${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.last_tag }}"
           format: "table"
           exit-code: "1"
           ignore-unfixed: true
@@ -85,6 +88,7 @@ jobs:
       - name: Push Docker image
         uses: docker/build-push-action@v5
         with:
+          context: ./ckan
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -60,4 +60,5 @@ COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 # TODO 
 # 1. Remove this comand once the issue is fixed
 # https://github.com/ckan/ckan-docker-base/issues/41
-RUN chmod u+rwx "/var/lib/ckan"
+RUN mkdir /var/lib/ckan/storage
+RUN chmod -R u+rwx "/var/lib/ckan"

@@ -19,7 +19,7 @@ RUN git clone https://github.com/CivityNL/ckanext-scheming.git ${APP_DIR}/src/ck
 RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.3.1#egg=ckanext-oidc-pkce && \
      pip3 install -r ${APP_DIR}/src/ckanext-oidc-pkce/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@user-portal#egg=ckanext-fairdatapoint && \
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@v1.0.0#egg=ckanext-fairdatapoint && \
      pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
 
 

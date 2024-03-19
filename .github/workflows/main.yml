@@ -51,13 +51,13 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
+            type=schedule,priority=400
+            type=ref,event=branch,priority=600
+            type=ref,event=pr,priority=500
+            type=semver,pattern={{version}},priority=700
+            type=semver,pattern={{major}}.{{minor}},priority=900
+            type=semver,pattern={{major}},priority=800
+            type=sha,priority=1000
 
       - name: Extract last tag
         id: tag

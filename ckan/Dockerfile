@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-FROM ckan/ckan-base:2.10.3
+FROM ckan/ckan-base:2.10.4
 
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples
@@ -26,7 +26,7 @@ RUN git clone https://github.com/CivityNL/ckanext-scheming.git ${APP_DIR}/src/ck
 RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.3.1#egg=ckanext-oidc-pkce && \
      pip3 install -r ${APP_DIR}/src/ckanext-oidc-pkce/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@user-portal#egg=ckanext-fairdatapoint && \
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@v1.0.0#egg=ckanext-fairdatapoint && \
      pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
 
 # Install Supervisor and cron
@@ -60,4 +60,5 @@ COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 # TODO 
 # 1. Remove this comand once the issue is fixed
 # https://github.com/ckan/ckan-docker-base/issues/41
-RUN chmod u+rwx "/var/lib/ckan"
+RUN mkdir /var/lib/ckan/storage
+RUN chmod -R u+rwx "/var/lib/ckan"

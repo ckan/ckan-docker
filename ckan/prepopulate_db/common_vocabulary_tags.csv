@@ -914,6 +914,8 @@ http://purl.obolibrary.org/obo/GSSO_006601,substance use,en
 http://id.loc.gov/vocabulary/iso639-1/en,English,en
 http://id.loc.gov/vocabulary/iso639-1/en,anglais,fr
 http://id.loc.gov/vocabulary/iso639-1/en,Englisch,de
+http://id.loc.gov/vocabulary/iso639-1/de,German,en
+http://id.loc.gov/vocabulary/iso639-1/nl,Dutch,en
 https://www.wikidata.org/wiki/Q10294,poverty,en
 https://publications.europa.eu/resource/authority/language/FRA,francuski,sh
 https://publications.europa.eu/resource/authority/language/FRA,fransk,da
@@ -1032,6 +1034,7 @@ http://purl.obolibrary.org/obo/DOID_162,cancer,en
 http://www.ebi.ac.uk/efo/EFO_0004352,mortality,en
 http://purl.obolibrary.org/obo/DOID_0080600,COVID-19,en
 https://bioportal.bioontology.org/ontologies/ICD10CM?p=classes&conceptid=U07.1,COVID-19,en
+http://bioportal.bioontology.org/ontologies/ICD10CM?p=classes&conceptid=U07.1,COVID-19,en
 http://publications.europa.eu/resource/authority/access-right/PUBLIC,Public,en
 http://publications.europa.eu/resource/authority/access-right/RESTRICTED,Restricted,en
 http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC,Non-public,en

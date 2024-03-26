@@ -90,19 +90,3 @@ services:
       - KC_HOSTNAME
     healthcheck:
       test: ["CMD", "curl", "-o", "/dev/null", http://localhost:8080/health/ready"]
-      
-  populate_db:
-    container_name: populate_db
-    command:
-      - "/bin/sh"
-      - "/prepopulate_db/upload_vocabulary.sh"
-    depends_on:
-      ckan-dev:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
-    env_file:
-      - .env
-    image: rtdl/psql-client:latest
-    volumes:
-      - ./ckan/prepopulate_db:/prepopulate_db

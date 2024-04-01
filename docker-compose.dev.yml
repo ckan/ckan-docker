@@ -8,6 +8,7 @@ volumes:
 services:
 
   ckan-dev:
+    container_name: ckan-vs-dev
     build:
       context: ckan/
       dockerfile: Dockerfile.dev
@@ -32,12 +33,14 @@ services:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
     
   datapusher:
+    container_name: ckan-vs-datapusher-dev
     image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]
 
   db:
+    container_name: ckan-vs-db
     build:
       context: postgresql/
     environment:
@@ -57,6 +60,7 @@ services:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
      
   solr:
+    container_name: ckan-vs-solr
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
     volumes:
       - solr_data:/var/solr
@@ -65,6 +69,7 @@ services:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/"]
 
   redis:
+    container_name: ckan-vs-redis
     image: redis:${REDIS_VERSION}
     restart: unless-stopped
     healthcheck:

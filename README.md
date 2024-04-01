@@ -94,11 +94,11 @@ The new extension files and directories are created in the `/srv/app/src_extensi
 
 Sometimes is useful to run your local development instance under HTTPS, for instance if you are using authentication extensions like [ckanext-saml2auth](https://github.com/keitaroinc/ckanext-saml2auth). To enable it, set the following in your `.env` file:
 
-  USE_HTTPS_FOR_DEV=true
+    USE_HTTPS_FOR_DEV=true
 
 and update the site URL setting:
 
-  CKAN_SITE_URL=https://localhost:5000
+    CKAN_SITE_URL=https://localhost:5000
 
 After recreating the `ckan-dev` container, you should be able to access CKAN at https://localhost:5000
 

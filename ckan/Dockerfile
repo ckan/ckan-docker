@@ -5,7 +5,7 @@ FROM ckan/ckan-base:2.10.4
 
 ### PDF View, Cryptography for RS256, S3 Filestore ###
 RUN pip3 install ckanext-pdfview cryptography
-RUN  pip3 install -e git+https://github.com/keitaroinc/ckanext-s3filestore.git#egg=ckanext-s3filestore
+RUN pip3 install -e git+https://github.com/keitaroinc/ckanext-s3filestore.git#egg=ckanext-s3filestore
 
 
 # Copy custom initialization scripts

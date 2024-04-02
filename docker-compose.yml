@@ -1,40 +1,12 @@
-version: "3"
-
-
 volumes:
   ckan_storage:
+    external: true
   pg_data:
+    external: true
   solr_data:
+    external: true
 
 services:
-
-  reverse-proxy:
-    container_name: ${TRAEFIK_CONTAINER_NAME}
-    # The official v2 Traefik docker image
-    image: traefik:v2.10
-    # Enables the web UI and tells Traefik to listen to docker
-    command:
-      #- "--log.level=DEBUG"
-      #- "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - "--certificatesresolvers.myresolver.acme.email=${TRAEFIK_ACME_EMAIL}"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-      - "--providers.docker.network=webnet"
-    volumes:
-      - "./letsencrypt:/letsencrypt"
-      # So that Traefik can listen to the Docker events
-      - /var/run/docker.sock:/var/run/docker.sock
-    network_mode: "host"
-    depends_on:
-      ckan:
-        condition: service_healthy
-
   ckan:
     container_name: ${CKAN_CONTAINER_NAME}
     build:
@@ -62,7 +34,7 @@ services:
       - ${KEY_DIR}:/keys
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "wget", "-qO", "/dev/null", "http://localhost:5000" ]
+      test: [ "CMD", "wget", "-qO", "/dev/null", "http://localhost:${CKAN_PORT_HOST}" ]
     labels:
       - traefik.enable=true
       - traefik.http.routers.ckan.rule=Host(`${TRAEFIK_HOST}`)
@@ -124,7 +96,6 @@ services:
       test: [ "CMD", "redis-cli", "-e", "QUIT" ]
 
 networks:
-  webnet:
   ckannet:
   solrnet:
     internal: true

@@ -58,6 +58,11 @@ docker compose down -v
 docker compose logs -f
 ```
 
+### 3.4. Re-index SOLR
+```bash
+ckan -c ckan.ini search-index rebuild
+```
+
 ## 4. installing new extensions
 
 The current agreement is:

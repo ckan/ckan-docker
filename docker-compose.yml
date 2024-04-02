@@ -55,14 +55,17 @@ services:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
     ports:
       - "5432:5432"
-     
+
   solr:
-    image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
+    build:
+      context: src/ckanext-gdi-userportal/solr/
     volumes:
       - solr_data:/var/solr
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/"]
+    ports:
+      - "8983:8983"
 
   redis:
     image: redis:${REDIS_VERSION}

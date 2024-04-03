@@ -24,8 +24,6 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-      keycloak:
-        condition: service_healthy
     ports:
       - "0.0.0.0:${CKAN_PORT_HOST}:${CKAN_PORT}"
     volumes:
@@ -72,24 +70,3 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "-e", "QUIT"]
-
-  keycloak:
-    build:
-      context: keycloak/
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./keycloak/realms:/opt/keycloak/data/import
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      - KC_DB_URL
-      - KC_DB_USERNAME
-      - KC_DB_PASSWORD
-      - KEYCLOAK_ADMIN
-      - KEYCLOAK_ADMIN_PASSWORD
-      - KC_HOSTNAME
-    healthcheck:
-      test: ["CMD", "curl", "-o", "/dev/null", http://localhost:8080/health/ready"]

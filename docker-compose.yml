@@ -43,9 +43,6 @@ services:
       - CKAN_DB_USER
       - CKAN_DB_PASSWORD
       - CKAN_DB
-      - KC_DB_USERNAME
-      - KC_DB_PASSWORD
-      - KC_DB_NAME
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped

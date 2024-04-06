@@ -1,9 +1,9 @@
 volumes:
   ckan_storage:
     external: true
-  pg_data:
+  ckan_pg_data:
     external: true
-  solr_data:
+  ckan_solr_data:
     external: true
 
 services:
@@ -70,7 +70,7 @@ services:
       - DATASTORE_READONLY_PASSWORD
       - DATASTORE_DB
     volumes:
-      - pg_data:/var/lib/postgresql/data
+      - ckan_pg_data:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}" ]
@@ -81,7 +81,7 @@ services:
       - solrnet
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
     volumes:
-      - solr_data:/var/solr
+      - ckan_solr_data:/var/solr
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/" ]

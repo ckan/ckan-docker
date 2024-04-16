@@ -9,7 +9,7 @@ FROM ckan/ckan-base:2.10.4
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@v1.1.2#egg=ckanext-gdi-userportal && \
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@v1.2.0#egg=ckanext-gdi-userportal && \
     pip3 install -r ${APP_DIR}/src/ckanext-gdi-userportal/requirements.txt
 
 RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.1#egg=ckanext-dcat && \
@@ -58,7 +58,7 @@ ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets s
 COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 
 # TODO 
-# 1. Remove this comand once the issue is fixed
+# 1. Remove this command once the issue is fixed
 # https://github.com/ckan/ckan-docker-base/issues/41
 RUN mkdir /var/lib/ckan/storage
 RUN mkdir /var/lib/ckan/storage/uploads

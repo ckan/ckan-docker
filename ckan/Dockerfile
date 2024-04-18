@@ -11,6 +11,9 @@ RUN pip3 install -e git+https://github.com/keitaroinc/ckanext-s3filestore.git#eg
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 
+# Copy custom supervisor conf
+COPY supervisor-conf.d/* /etc/supervisord.d/
+
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)

@@ -1081,3 +1081,629 @@ res_format,File Formats,en
 spatial,Spatial Coverage,en
 tags,Keywords,en
 theme,Themes,en
+https://publications.europa.eu/resource/authority/dataset-type/APROF,Application profile,en
+https://publications.europa.eu/resource/authority/dataset-type/ATTO_LEX,ATTO table - EUR-Lex domain,en
+https://publications.europa.eu/resource/authority/dataset-type/ATTO_PUB,ATTO table - Publications domain,en
+https://publications.europa.eu/resource/authority/dataset-type/CODE_LIST,Code list,en
+https://publications.europa.eu/resource/authority/dataset-type/CORE_COMP,Core component,en
+https://publications.europa.eu/resource/authority/resource-type/DATABASE,Database,en
+https://publications.europa.eu/resource/authority/dataset-type/DIRECTORY,Directory,en
+https://publications.europa.eu/resource/authority/resource-type/DOC,Document,en
+https://publications.europa.eu/resource/authority/dataset-type/DOMAIN_MODEL,Domain model,en
+https://publications.europa.eu/resource/authority/dataset-type/GEOSPATIAL,Geospatial data,en
+https://publications.europa.eu/resource/authority/dataset-type/GLOSSARY,Glossary,en
+https://publications.europa.eu/resource/authority/dataset-type/HVD,High-value dataset,en
+https://publications.europa.eu/resource/authority/dataset-type/IEPD,Information exchange package description,en
+https://publications.europa.eu/resource/authority/dataset-type/MAPPING,Mapping,en
+https://publications.europa.eu/resource/authority/dataset-type/NAL,Name authority list,en
+https://publications.europa.eu/resource/authority/dataset-type/ONTOLOGY,Ontology,en
+https://publications.europa.eu/resource/authority/resource-type/REPORT_PERIOD,Periodic report,en
+https://publications.europa.eu/resource/authority/dataset-type/OP_DATPRO,Provisional data,en
+http://purl.obolibrary.org/obo/T4FS_0000109,Raw data,en
+https://publications.europa.eu/resource/authority/dataset-type/RELEASE,Release,en
+http://publications.europa.eu/resource/authority/resource-type/REPORT,Report,en
+http://publications.europa.eu/resource/authority/resource-type/REPOSITORY,Repository,en
+https://publications.europa.eu/resource/authority/dataset-type/SCHEMA,Schema,en
+https://publications.europa.eu/resource/authority/dataset-type/DSCRP_SERV,Service description,en
+https://publications.europa.eu/resource/authority/dataset-type/STATISTICAL,Statistical data,en
+https://publications.europa.eu/resource/authority/dataset-type/STYLES,Styles sheets,en
+https://publications.europa.eu/resource/authority/dataset-type/SYNTAX_ECD_SCHEME,Syntax encoding scheme,en
+https://publications.europa.eu/resource/authority/dataset-type/SYNTHETIC_DATA,Synthetic data,en
+https://publications.europa.eu/resource/authority/dataset-type/TAXONOMY,Taxonomy,en
+https://publications.europa.eu/resource/authority/dataset-type/TEST_DATA,Test data,en
+https://publications.europa.eu/resource/authority/dataset-type/THESAURUS,Thesaurus,en
+https://publications.europa.eu/resource/authority/access-right/CONFIDENTIAL,confidential,en
+https://publications.europa.eu/resource/authority/access-right/NON_PUBLIC,non-public,en
+https://publications.europa.eu/resource/authority/access-right/NORMAL,normal,en
+https://publications.europa.eu/resource/authority/access-right/PUBLIC,public,en
+https://publications.europa.eu/resource/authority/access-right/RESTRICTED,restricted,en
+https://publications.europa.eu/resource/authority/access-right/SENSITIVE,sensitive,en
+https://publications.europa.eu/resource/authority/frequency/ANNUAL,annual,en
+https://publications.europa.eu/resource/authority/frequency/BIDECENNIAL,bidecennial,en
+https://publications.europa.eu/resource/authority/frequency/BIENNIAL,biennial,en
+https://publications.europa.eu/resource/authority/frequency/BIHOURLY,bihourly,en
+https://publications.europa.eu/resource/authority/frequency/BIMONTHLY,bimonthly,en
+https://publications.europa.eu/resource/authority/frequency/BIWEEKLY,biweekly,en
+https://publications.europa.eu/resource/authority/frequency/CONT,cont,en
+https://publications.europa.eu/resource/authority/frequency/UPDATE_CONT,continuously updated,en
+https://publications.europa.eu/resource/authority/frequency/DAILY,daily,en
+https://publications.europa.eu/resource/authority/frequency/DECENNIAL,decennial,en
+https://publications.europa.eu/resource/authority/frequency/HOURLY,hourly,en
+https://publications.europa.eu/resource/authority/frequency/IRREG,irregular,en
+https://publications.europa.eu/resource/authority/frequency/MONTHLY,monthly,en
+https://publications.europa.eu/resource/authority/frequency/NEVER,never,en
+https://publications.europa.eu/resource/authority/frequency/OTHER,other,en
+https://publications.europa.eu/resource/authority/frequency/OP_DATPRO,Provisional data,en
+https://publications.europa.eu/resource/authority/frequency/QUADRENNIAL,quadrennial,en
+https://publications.europa.eu/resource/authority/frequency/QUARTERLY,quarterly,en
+https://publications.europa.eu/resource/authority/frequency/QUINQUENNIAL,quinquennial,en
+https://publications.europa.eu/resource/authority/frequency/ANNUAL_2,semiannual,en
+https://publications.europa.eu/resource/authority/frequency/MONTHLY_2,semimonthly,en
+https://publications.europa.eu/resource/authority/frequency/WEEKLY_2,semiweekly,en
+https://publications.europa.eu/resource/authority/frequency/MONTHLY_3,three times a month,en
+https://publications.europa.eu/resource/authority/frequency/WEEKLY_3,three times a week,en
+https://publications.europa.eu/resource/authority/frequency/ANNUAL_3,three times a year,en
+https://publications.europa.eu/resource/authority/frequency/TRIDECENNIAL,tridecennial,en
+https://publications.europa.eu/resource/authority/frequency/TRIENNIAL,triennial,en
+https://publications.europa.eu/resource/authority/frequency/TRIHOURLY,trihourly,en
+https://publications.europa.eu/resource/authority/frequency/DAILY_2,twice a day,en
+https://publications.europa.eu/resource/authority/frequency/UNKNOWN,unknown,en
+https://publications.europa.eu/resource/authority/frequency/WEEKLY,weekly,en
+https://publications.europa.eu/resource/authority/data-theme/AGRI,"Agriculture, fisheries, forestry and food",en
+https://publications.europa.eu/resource/authority/data-theme/ECON,Economy and finance,en
+https://publications.europa.eu/resource/authority/data-theme/EDUC,"Education, culture and sport",en
+https://publications.europa.eu/resource/authority/data-theme/ENER,Energy,en
+https://publications.europa.eu/resource/authority/data-theme/ENVI,Environment,en
+https://publications.europa.eu/resource/authority/data-theme/GOVE,Government and public sector,en
+https://publications.europa.eu/resource/authority/data-theme/HEAL,Health,en
+https://publications.europa.eu/resource/authority/data-theme/INTR,International issues,en
+https://publications.europa.eu/resource/authority/data-theme/JUST,"Justice, legal system and public safety",en
+https://publications.europa.eu/resource/authority/data-theme/SOCI,Population and society,en
+https://publications.europa.eu/resource/authority/data-theme/OP_DATPRO,Provisional data,en
+https://publications.europa.eu/resource/authority/data-theme/REGI,Regions and cities,en
+https://publications.europa.eu/resource/authority/data-theme/TECH,Science and technology,en
+https://publications.europa.eu/resource/authority/data-theme/TRAN,Transport,en
+https://publications.europa.eu/resource/authority/file-type/7Z,7z,en
+https://publications.europa.eu/resource/authority/file-type/AAB,AAB,en
+https://publications.europa.eu/resource/authority/file-type/AAC,AAC,en
+https://publications.europa.eu/resource/authority/file-type/AKN4EU,AKN4EU file,en
+https://publications.europa.eu/resource/authority/file-type/AKN4EU_ZIP,AKN4EU ZIP,en
+https://publications.europa.eu/resource/authority/file-type/AZW,Amazon Kindle eBook,en
+https://publications.europa.eu/resource/authority/file-type/APK,APK,en
+https://publications.europa.eu/resource/authority/file-type/APPX,AppX,en
+https://publications.europa.eu/resource/authority/file-type/ARC_GZ,ARC GZ,en
+https://publications.europa.eu/resource/authority/file-type/ARC,ARC,en
+https://publications.europa.eu/resource/authority/file-type/MAP_PRVW,ArcGIS Map Preview,en
+https://publications.europa.eu/resource/authority/file-type/MAP_SRVC,ArcGIS Map Service,en
+https://publications.europa.eu/resource/authority/file-type/ARCINFO_COV,ArcInfo coverage,en
+https://publications.europa.eu/resource/authority/file-type/ARJ,ARJ,en
+https://publications.europa.eu/resource/authority/file-type/ATOM,Atom Feed,en
+https://publications.europa.eu/resource/authority/file-type/BIN,Binary Data,en
+https://publications.europa.eu/resource/authority/file-type/BMP,Bitmap Image File,en
+https://publications.europa.eu/resource/authority/file-type/BITS,BITS XML,en
+https://publications.europa.eu/resource/authority/file-type/BWF,BWF,en
+https://publications.europa.eu/resource/authority/file-type/BZIP2,bzip2,en
+https://publications.europa.eu/resource/authority/file-type/LAZ,Compressed LAS file,en
+https://publications.europa.eu/resource/authority/file-type/CSS,CSS,en
+https://publications.europa.eu/resource/authority/file-type/CSV,CSV,en
+https://publications.europa.eu/resource/authority/file-type/DAPK,DAPK,en
+https://publications.europa.eu/resource/authority/file-type/DBF,DBF,en
+https://publications.europa.eu/resource/authority/file-type/DCR,DCR File,en
+https://publications.europa.eu/resource/authority/file-type/DEB,deb,en
+https://publications.europa.eu/resource/authority/file-type/DGN,DGN,en
+https://publications.europa.eu/resource/authority/file-type/DMG,DMG,en
+https://publications.europa.eu/resource/authority/file-type/DWCA,DwC-A,en
+https://publications.europa.eu/resource/authority/file-type/DWG,DWG,en
+https://publications.europa.eu/resource/authority/file-type/DXF,DXF,en
+https://publications.europa.eu/resource/authority/file-type/E00,E00,en
+https://publications.europa.eu/resource/authority/file-type/EAR,EAR,en
+https://publications.europa.eu/resource/authority/file-type/ECW,ECW,en
+https://publications.europa.eu/resource/authority/file-type/EFORMS_XML,eForms XML,en
+https://publications.europa.eu/resource/authority/file-type/EPS,Encapsulated Postscript,en
+https://publications.europa.eu/resource/authority/file-type/EPUB,EPUB,en
+https://publications.europa.eu/resource/authority/file-type/GRID_ASCII,Esri ASCII grid,en
+https://publications.europa.eu/resource/authority/file-type/GRID,Esri binary grid,en
+https://publications.europa.eu/resource/authority/file-type/GDB,Esri File Geodatabase,en
+https://publications.europa.eu/resource/authority/file-type/REST,Esri REST,en
+https://publications.europa.eu/resource/authority/file-type/SHP,Esri Shape,en
+https://publications.europa.eu/resource/authority/file-type/ETSI_XML,ETSI signature validation report,en
+https://publications.europa.eu/resource/authority/file-type/XLS,Excel XLS,en
+https://publications.europa.eu/resource/authority/file-type/XLSX,Excel XLSX,en
+https://publications.europa.eu/resource/authority/file-type/EXE,EXE,en
+https://publications.europa.eu/resource/authority/file-type/FMX4_ZIP,FMX4 ZIP,en
+https://publications.europa.eu/resource/authority/file-type/FMX2,Formex 2,en
+https://publications.europa.eu/resource/authority/file-type/FMX3,Formex 3,en
+https://publications.europa.eu/resource/authority/file-type/FMX4,Formex 4,en
+https://publications.europa.eu/resource/authority/file-type/GEOJSON,GeoJSON,en
+https://publications.europa.eu/resource/authority/file-type/GPKG,GeoPackage,en
+https://publications.europa.eu/resource/authority/file-type/GEOTIFF,GeoTIFF,en
+https://publications.europa.eu/resource/authority/file-type/GIF,GIF,en
+https://publications.europa.eu/resource/authority/file-type/GML,GML,en
+https://publications.europa.eu/resource/authority/file-type/GZIP,GNU zip,en
+https://publications.europa.eu/resource/authority/file-type/GTFS,GTFS,en
+https://publications.europa.eu/resource/authority/file-type/HDF,HDF,en
+https://publications.europa.eu/resource/authority/file-type/HDT,HDT,en
+https://publications.europa.eu/resource/authority/file-type/HTML_SIMPL,HTML simplified,en
+https://publications.europa.eu/resource/authority/file-type/HTML,HTML,en
+https://publications.europa.eu/resource/authority/file-type/HTML5,HTML5,en
+https://publications.europa.eu/resource/authority/file-type/MSG_HTTP,HTTP Message,en
+https://publications.europa.eu/resource/authority/file-type/ICS,ICalendar,en
+https://publications.europa.eu/resource/authority/file-type/IMMC_XML,IMMC XML message,en
+https://publications.europa.eu/resource/authority/file-type/INDD,INDD,en
+https://publications.europa.eu/resource/authority/file-type/IPA,IPA,en
+https://publications.europa.eu/resource/authority/file-type/ISO,ISO image,en
+https://publications.europa.eu/resource/authority/file-type/JAR,JAR,en
+https://publications.europa.eu/resource/authority/file-type/JATS,JATS XML,en
+https://publications.europa.eu/resource/authority/file-type/JS,JavaScript,en
+https://publications.europa.eu/resource/authority/file-type/JPEG2000,JPEG 2000,en
+https://publications.europa.eu/resource/authority/file-type/JPEG,JPEG,en
+https://publications.europa.eu/resource/authority/file-type/JSON_LD,JSON-LD,en
+https://publications.europa.eu/resource/authority/file-type/JSON,JSON,en
+https://publications.europa.eu/resource/authority/file-type/KML,KML,en
+https://publications.europa.eu/resource/authority/file-type/KMZ,KMZ,en
+https://publications.europa.eu/resource/authority/file-type/LAS,LASer file,en
+https://publications.europa.eu/resource/authority/file-type/LPK,Layer package,en
+https://publications.europa.eu/resource/authority/file-type/LEG,LEG,en
+https://publications.europa.eu/resource/authority/file-type/LHA,LHA,en
+https://publications.europa.eu/resource/authority/file-type/LZIP,lzip,en
+https://publications.europa.eu/resource/authority/file-type/LZMA,lzma,en
+https://publications.europa.eu/resource/authority/file-type/LZO,lzo,en
+https://publications.europa.eu/resource/authority/file-type/TAB,MapInfo TAB file,en
+https://publications.europa.eu/resource/authority/file-type/TAB_RSTR,MapInfo TAB raster file,en
+https://publications.europa.eu/resource/authority/file-type/MATHML,MathML,en
+https://publications.europa.eu/resource/authority/file-type/MBOX,MBOX,en
+https://publications.europa.eu/resource/authority/file-type/MDB,MDB,en
+https://publications.europa.eu/resource/authority/file-type/METS_ZIP,METS package,en
+https://publications.europa.eu/resource/authority/file-type/METS,METS XML,en
+https://publications.europa.eu/resource/authority/file-type/MHTML,MHTML,en
+https://publications.europa.eu/resource/authority/file-type/MIF_MID,MIF/MID,en
+https://publications.europa.eu/resource/authority/file-type/MOBI,Mobipocket eBook,en
+https://publications.europa.eu/resource/authority/file-type/MOP,MOP,en
+https://publications.europa.eu/resource/authority/file-type/MOV,MOV,en
+https://publications.europa.eu/resource/authority/file-type/MP3,MP3,en
+https://publications.europa.eu/resource/authority/file-type/MPEG2,MPEG-2,en
+https://publications.europa.eu/resource/authority/file-type/MPEG4_AVC,MPEG-4 AVC,en
+https://publications.europa.eu/resource/authority/file-type/MPEG4,MPEG-4,en
+https://publications.europa.eu/resource/authority/file-type/MRSID,MrSID,en
+https://publications.europa.eu/resource/authority/file-type/MSI,MSI,en
+https://publications.europa.eu/resource/authority/file-type/MXD,MXD,en
+https://publications.europa.eu/resource/authority/file-type/N3,N3,en
+https://publications.europa.eu/resource/authority/file-type/NETCDF,NetCDF,en
+https://publications.europa.eu/resource/authority/file-type/OAPK,OAPK,en
+https://publications.europa.eu/resource/authority/file-type/OCTET,Octet Stream,en
+https://publications.europa.eu/resource/authority/file-type/ODF,ODF,en
+https://publications.europa.eu/resource/authority/file-type/ODP,ODP,en
+https://publications.europa.eu/resource/authority/file-type/ODS,ODS,en
+https://publications.europa.eu/resource/authority/file-type/ODT,ODT,en
+https://publications.europa.eu/resource/authority/file-type/ODC,OpenDocument Chart,en
+https://publications.europa.eu/resource/authority/file-type/ODB,OpenDocument Database,en
+https://publications.europa.eu/resource/authority/file-type/ODG,OpenDocument Image,en
+https://publications.europa.eu/resource/authority/file-type/DMP,Oracle Dump,en
+https://publications.europa.eu/resource/authority/file-type/OVF,OVF,en
+https://publications.europa.eu/resource/authority/file-type/OWL,OWL,en
+https://publications.europa.eu/resource/authority/file-type/PDF,PDF,en
+https://publications.europa.eu/resource/authority/file-type/PDFA1A,PDF/A-1a,en
+https://publications.europa.eu/resource/authority/file-type/PDFA1B,PDF/A-1b,en
+https://publications.europa.eu/resource/authority/file-type/PDFA2A,PDF/A-2a,en
+https://publications.europa.eu/resource/authority/file-type/PDFA2B,PDF/A-2b,en
+https://publications.europa.eu/resource/authority/file-type/PDFUA,PDF/UA,en
+https://publications.europa.eu/resource/authority/file-type/PDFX1A,PDF/X-1a,en
+https://publications.europa.eu/resource/authority/file-type/PDFX2A,PDF/X-2a,en
+https://publications.europa.eu/resource/authority/file-type/PDFX4,PDF/X-4,en
+https://publications.europa.eu/resource/authority/file-type/PDFX,PDF/X,en
+https://publications.europa.eu/resource/authority/file-type/PDF1X,PDF1X,en
+https://publications.europa.eu/resource/authority/file-type/PDFA3,PDFA-3,en
+https://publications.europa.eu/resource/authority/file-type/PL,Perl script,en
+https://publications.europa.eu/resource/authority/file-type/TXT,Plain text,en
+https://publications.europa.eu/resource/authority/file-type/PNG,PNG,en
+https://publications.europa.eu/resource/authority/file-type/PPSX,PowerPoint PPSX,en
+https://publications.europa.eu/resource/authority/file-type/PPT,PowerPoint PPT,en
+https://publications.europa.eu/resource/authority/file-type/PPTX,PowerPoint PPTX,en
+https://publications.europa.eu/resource/authority/file-type/PPS,PowerPoint Slide Show,en
+https://publications.europa.eu/resource/authority/file-type/PS,PS,en
+https://publications.europa.eu/resource/authority/file-type/PSD,PSD,en
+https://publications.europa.eu/resource/authority/file-type/PWP,PWP,en
+https://publications.europa.eu/resource/authority/file-type/QGS,QGS,en
+https://publications.europa.eu/resource/authority/file-type/RAR,RAR,en
+https://publications.europa.eu/resource/authority/file-type/RDF_N_QUADS,RDF N-Quads,en
+https://publications.europa.eu/resource/authority/file-type/RDF_N_TRIPLES,RDF N-Triples,en
+https://publications.europa.eu/resource/authority/file-type/RDF_THRIFT,RDF Thrift,en
+https://publications.europa.eu/resource/authority/file-type/RDF_TRIG,RDF TriG,en
+https://publications.europa.eu/resource/authority/file-type/RDF_TRIX,RDF TriX,en
+https://publications.europa.eu/resource/authority/file-type/RDF_TURTLE,RDF Turtle,en
+https://publications.europa.eu/resource/authority/file-type/RDF_XML,RDF XML,en
+https://publications.europa.eu/resource/authority/file-type/RDF,RDF,en
+https://publications.europa.eu/resource/authority/file-type/RDFA,RDFa,en
+https://publications.europa.eu/resource/authority/file-type/RPM,RPM,en
+https://publications.europa.eu/resource/authority/file-type/RSS,RSS feed,en
+https://publications.europa.eu/resource/authority/file-type/RTF,RTF,en
+https://publications.europa.eu/resource/authority/file-type/SB3,sb3,en
+https://publications.europa.eu/resource/authority/file-type/SDMX,SDMX,en
+https://publications.europa.eu/resource/authority/file-type/DTD_SGML,SGML DTD,en
+https://publications.europa.eu/resource/authority/file-type/SGML,SGML,en
+https://publications.europa.eu/resource/authority/file-type/SKOS_XML,SKOS,en
+https://publications.europa.eu/resource/authority/file-type/SPARQLQRES,SPARQL results,en
+https://publications.europa.eu/resource/authority/file-type/SPARQLQ,SPARQL,en
+https://publications.europa.eu/resource/authority/file-type/SQL,SQL,en
+https://publications.europa.eu/resource/authority/file-type/STL,StL,en
+https://publications.europa.eu/resource/authority/file-type/SVG,SVG,en
+https://publications.europa.eu/resource/authority/file-type/SWM,SWM,en
+https://publications.europa.eu/resource/authority/file-type/TAR_GZ,TAR GZ,en
+https://publications.europa.eu/resource/authority/file-type/TAR_XZ,TAR XZ,en
+https://publications.europa.eu/resource/authority/file-type/TAR,TAR,en
+https://publications.europa.eu/resource/authority/file-type/TIFF_FX,TIFF FX,en
+https://publications.europa.eu/resource/authority/file-type/TIFF,TIFF,en
+https://publications.europa.eu/resource/authority/file-type/TMX,TMX,en
+https://publications.europa.eu/resource/authority/file-type/TSV,TSV,en
+https://publications.europa.eu/resource/authority/file-type/UNGEN,Ungen,en
+https://publications.europa.eu/resource/authority/file-type/WAR,WAR,en
+https://publications.europa.eu/resource/authority/file-type/WARC_GZ,WARC GZ,en
+https://publications.europa.eu/resource/authority/file-type/WARC,WARC,en
+https://publications.europa.eu/resource/authority/file-type/WAV,WAV,en
+https://publications.europa.eu/resource/authority/file-type/WCS_SRVC,WCS,en
+https://publications.europa.eu/resource/authority/file-type/WEBP,WebP,en
+https://publications.europa.eu/resource/authority/file-type/WFS_SRVC,WFS,en
+https://publications.europa.eu/resource/authority/file-type/WIM,WIM,en
+https://publications.europa.eu/resource/authority/file-type/WMS_SRVC,WMS,en
+https://publications.europa.eu/resource/authority/file-type/WMTS_SRVC,WMTS,en
+https://publications.europa.eu/resource/authority/file-type/DOC,Word DOC,en
+https://publications.europa.eu/resource/authority/file-type/DOCX,Word DOCX,en
+https://publications.europa.eu/resource/authority/file-type/WORLD,World file,en
+https://publications.europa.eu/resource/authority/file-type/XHTML_SIMPL,XHTML simplified,en
+https://publications.europa.eu/resource/authority/file-type/XHTML,XHTML,en
+https://publications.europa.eu/resource/authority/file-type/XHTML5,XHTML5,en
+https://publications.europa.eu/resource/authority/file-type/XLIFF,XLIFF,en
+https://publications.europa.eu/resource/authority/file-type/XLSB,XLSB,en
+https://publications.europa.eu/resource/authority/file-type/XLSM,XLSM,en
+https://publications.europa.eu/resource/authority/file-type/DTD_XML,XML DTD,en
+https://publications.europa.eu/resource/authority/file-type/SCHEMA_XML,XML schema,en
+https://publications.europa.eu/resource/authority/file-type/XML,XML,en
+https://publications.europa.eu/resource/authority/file-type/XSLFO,XSL-FO,en
+https://publications.europa.eu/resource/authority/file-type/XSLT,XSLT,en
+https://publications.europa.eu/resource/authority/file-type/XYZ,XYZ Chemical File,en
+https://publications.europa.eu/resource/authority/file-type/XZ,xz,en
+https://publications.europa.eu/resource/authority/file-type/YAML,YAML,en
+https://publications.europa.eu/resource/authority/file-type/Z,Z,en
+https://publications.europa.eu/resource/authority/file-type/ZIP,ZIP,en
+https://publications.europa.eu/resource/authority/file-type/GMZ,Zipped GML,en
+https://publications.europa.eu/resource/authority/file-type/ISO_ZIP,Zipped ISO image,en
+http://publications.europa.eu/resource/authority/country/GRL,"Greenland",en
+http://publications.europa.eu/resource/authority/country/BDI,"Burundi",en
+http://publications.europa.eu/resource/authority/country/BEN,"Benin",en
+http://publications.europa.eu/resource/authority/country/CAF,"Central African Republic",en
+http://publications.europa.eu/resource/authority/country/ZR0,"Zaire",en
+http://publications.europa.eu/resource/authority/country/BHR,"Bahrain",en
+http://publications.europa.eu/resource/authority/country/KWT,"Kuwait",en
+http://publications.europa.eu/resource/authority/country/OMN,"Oman",en
+http://publications.europa.eu/resource/authority/country/QAT,"Qatar",en
+http://publications.europa.eu/resource/authority/country/AFG,"Afghanistan",en
+http://publications.europa.eu/resource/authority/country/TUV,"Tuvalu",en
+http://publications.europa.eu/resource/authority/country/1A0,"Kosovo",en
+http://publications.europa.eu/resource/authority/country/WSM,"Samoa",en
+http://publications.europa.eu/resource/authority/country/COD,"Democratic Republic of the Congo",en
+http://publications.europa.eu/resource/authority/country/SLB,"Solomon Islands",en
+http://publications.europa.eu/resource/authority/country/BEL,"Belgium",en
+http://publications.europa.eu/resource/authority/country/DEU,"Germany",en
+http://publications.europa.eu/resource/authority/country/DNK,"Denmark",en
+http://publications.europa.eu/resource/authority/country/FRA,"France",en
+http://publications.europa.eu/resource/authority/country/GBR,"United Kingdom",en
+http://publications.europa.eu/resource/authority/country/GRC,"Greece",en
+http://publications.europa.eu/resource/authority/country/HRV,"Croatia",en
+http://publications.europa.eu/resource/authority/country/HUN,"Hungary",en
+http://publications.europa.eu/resource/authority/country/ITA,"Italy",en
+http://publications.europa.eu/resource/authority/country/LTU,"Lithuania",en
+http://publications.europa.eu/resource/authority/country/MEX,"Mexico",en
+http://publications.europa.eu/resource/authority/country/NLD,"Netherlands",en
+http://publications.europa.eu/resource/authority/country/OP_DATPRO,"Provisional data",en
+http://publications.europa.eu/resource/authority/country/POL,"Poland",en
+http://publications.europa.eu/resource/authority/country/PRT,"Portugal",en
+http://publications.europa.eu/resource/authority/country/SWE,"Sweden",en
+http://publications.europa.eu/resource/authority/country/AUT,"Austria",en
+http://publications.europa.eu/resource/authority/country/BGR,"Bulgaria",en
+http://publications.europa.eu/resource/authority/country/CYP,"Cyprus",en
+http://publications.europa.eu/resource/authority/country/ESP,"Spain",en
+http://publications.europa.eu/resource/authority/country/IRL,"Ireland",en
+http://publications.europa.eu/resource/authority/country/MAR,"Morocco",en
+http://publications.europa.eu/resource/authority/country/MLT,"Malta",en
+http://publications.europa.eu/resource/authority/country/MYS,"Malaysia",en
+http://publications.europa.eu/resource/authority/country/CZE,"Czechia",en
+http://publications.europa.eu/resource/authority/country/EST,"Estonia",en
+http://publications.europa.eu/resource/authority/country/FIN,"Finland",en
+http://publications.europa.eu/resource/authority/country/LVA,"Latvia",en
+http://publications.europa.eu/resource/authority/country/SVK,"Slovakia",en
+http://publications.europa.eu/resource/authority/country/SVN,"Slovenia",en
+http://publications.europa.eu/resource/authority/country/CHE,"Switzerland",en
+http://publications.europa.eu/resource/authority/country/LUX,"Luxembourg",en
+http://publications.europa.eu/resource/authority/country/ROU,"Romania",en
+http://publications.europa.eu/resource/authority/country,"Countries and territories",en
+http://publications.europa.eu/resource/authority/country/VNM,"Viet Nam",en
+http://publications.europa.eu/resource/authority/country/SEN,"Senegal",en
+http://publications.europa.eu/resource/authority/country/SYC,"Seychelles",en
+http://publications.europa.eu/resource/authority/country/ZAF,"South Africa",en
+http://publications.europa.eu/resource/authority/country/KOR,"South Korea",en
+http://publications.europa.eu/resource/authority/country/LBN,"Lebanon",en
+http://publications.europa.eu/resource/authority/country/SAU,"Saudi Arabia",en
+http://publications.europa.eu/resource/authority/country/JOR,"Jordan",en
+http://publications.europa.eu/resource/authority/country/COM,"Comoros",en
+http://publications.europa.eu/resource/authority/country/PAK,"Pakistan",en
+http://publications.europa.eu/resource/authority/country/TUN,"Tunisia",en
+http://publications.europa.eu/resource/authority/country/MKD,"North Macedonia",en
+http://publications.europa.eu/resource/authority/country/GNQ,"Equatorial Guinea",en
+http://publications.europa.eu/resource/authority/country/AUS,"Australia",en
+http://publications.europa.eu/resource/authority/country/GIN,"Guinea",en
+http://publications.europa.eu/resource/authority/country/DZA,"Algeria",en
+http://publications.europa.eu/resource/authority/country/CYM,"Cayman Islands",en
+http://publications.europa.eu/resource/authority/country/TKM,"Turkmenistan",en
+http://publications.europa.eu/resource/authority/country/IRN,"Iran",en
+http://publications.europa.eu/resource/authority/country/ARG,"Argentina",en
+http://publications.europa.eu/resource/authority/country/EGY,"Egypt",en
+http://publications.europa.eu/resource/authority/country/IDN,"Indonesia",en
+http://publications.europa.eu/resource/authority/country/CHL,"Chile",en
+http://publications.europa.eu/resource/authority/country/BGD,"Bangladesh",en
+http://publications.europa.eu/resource/authority/country/URY,"Uruguay",en
+http://publications.europa.eu/resource/authority/country/BMU,"Bermuda",en
+http://publications.europa.eu/resource/authority/country/MUS,"Mauritius",en
+http://publications.europa.eu/resource/authority/country/BLZ,"Belize",en
+http://publications.europa.eu/resource/authority/country/BRB,"Barbados",en
+http://publications.europa.eu/resource/authority/country/CIV,"Côte d’Ivoire",en
+http://publications.europa.eu/resource/authority/country/COG,"Congo",en
+http://publications.europa.eu/resource/authority/country/GUY,"Guyana",en
+http://publications.europa.eu/resource/authority/country/JAM,"Jamaica",en
+http://publications.europa.eu/resource/authority/country/KEN,"Kenya",en
+http://publications.europa.eu/resource/authority/country/MDG,"Madagascar",en
+http://publications.europa.eu/resource/authority/country/MWI,"Malawi",en
+http://publications.europa.eu/resource/authority/country/SUR,"Suriname",en
+http://publications.europa.eu/resource/authority/country/SWZ,"Eswatini",en
+http://publications.europa.eu/resource/authority/country/TTO,"Trinidad and Tobago",en
+http://publications.europa.eu/resource/authority/country/TZA,"Tanzania",en
+http://publications.europa.eu/resource/authority/country/UGA,"Uganda",en
+http://publications.europa.eu/resource/authority/country/ZMB,"Zambia",en
+http://publications.europa.eu/resource/authority/country/ZWE,"Zimbabwe",en
+http://publications.europa.eu/resource/authority/country/KGZ,"Kyrgyzstan",en
+http://publications.europa.eu/resource/authority/country/MRT,"Mauritania",en
+http://publications.europa.eu/resource/authority/country/SLE,"Sierra Leone",en
+http://publications.europa.eu/resource/authority/country/GMB,"The Gambia",en
+http://publications.europa.eu/resource/authority/country/LBY,"Libya",en
+http://publications.europa.eu/resource/authority/country/PAN,"Panama",en
+http://publications.europa.eu/resource/authority/country/AND,"Andorra",en
+http://publications.europa.eu/resource/authority/country/LIE,"Liechtenstein",en
+http://publications.europa.eu/resource/authority/country/NOR,"Norway",en
+http://publications.europa.eu/resource/authority/country/RUS,"Russia",en
+http://publications.europa.eu/resource/authority/country/SMR,"San Marino",en
+http://publications.europa.eu/resource/authority/country/STP,"São Tomé and Príncipe",en
+http://publications.europa.eu/resource/authority/country/TUR,"Türkiye",en
+http://publications.europa.eu/resource/authority/country/ISL,"Iceland",en
+http://publications.europa.eu/resource/authority/country/GNB,"Guinea-Bissau",en
+http://publications.europa.eu/resource/authority/country/CHN,"China",en
+http://publications.europa.eu/resource/authority/country/NPL,"Nepal",en
+http://publications.europa.eu/resource/authority/country/USA,"United States",en
+http://publications.europa.eu/resource/authority/country/ISR,"Israel",en
+http://publications.europa.eu/resource/authority/country/JPN,"Japan",en
+http://publications.europa.eu/resource/authority/country/CAN,"Canada",en
+http://publications.europa.eu/resource/authority/country/YUG,"Yugoslavia",en
+http://publications.europa.eu/resource/authority/country/IND,"India",en
+http://publications.europa.eu/resource/authority/country/MDA,"Moldova",en
+http://publications.europa.eu/resource/authority/country/KNA,"Saint Kitts and Nevis",en
+http://publications.europa.eu/resource/authority/country/MCO,"Monaco",en
+http://publications.europa.eu/resource/authority/country/TCD,"Chad",en
+http://publications.europa.eu/resource/authority/country/VUT,"Vanuatu",en
+http://publications.europa.eu/resource/authority/country/LAO,"Laos",en
+http://publications.europa.eu/resource/authority/country/MLI,"Mali",en
+http://publications.europa.eu/resource/authority/country/TGO,"Togo",en
+http://publications.europa.eu/resource/authority/country/BRN,"Brunei",en
+http://publications.europa.eu/resource/authority/country/COL,"Colombia",en
+http://publications.europa.eu/resource/authority/country/PNG,"Papua New Guinea",en
+http://publications.europa.eu/resource/authority/country/SUN,"Soviet Union",en
+http://publications.europa.eu/resource/authority/country/GIB,"Gibraltar",en
+http://publications.europa.eu/resource/authority/country/THA,"Thailand",en
+http://publications.europa.eu/resource/authority/country/BRA,"Brazil",en
+http://publications.europa.eu/resource/authority/country/NZL,"New Zealand",en
+http://publications.europa.eu/resource/authority/country/CPV,"Cabo Verde",en
+http://publications.europa.eu/resource/authority/country/NER,"Niger",en
+http://publications.europa.eu/resource/authority/country/ABW,"Aruba",en
+http://publications.europa.eu/resource/authority/country/UZB,"Uzbekistan",en
+http://publications.europa.eu/resource/authority/country/MOZ,"Mozambique",en
+http://publications.europa.eu/resource/authority/country/ANT,"Netherlands Antilles",en
+http://publications.europa.eu/resource/authority/country/TWN,"Taiwan",en
+http://publications.europa.eu/resource/authority/country/GTM,"Guatemala",en
+http://publications.europa.eu/resource/authority/country/BLR,"Belarus",en
+http://publications.europa.eu/resource/authority/country/BIH,"Bosnia and Herzegovina",en
+http://publications.europa.eu/resource/authority/country/LKA,"Sri Lanka",en
+http://publications.europa.eu/resource/authority/country/FSM,"Micronesia",en
+http://publications.europa.eu/resource/authority/country/CSK,"Czechoslovakia",en
+http://publications.europa.eu/resource/authority/country/BHS,"Bahamas",en
+http://publications.europa.eu/resource/authority/country/ARM,"Armenia",en
+http://publications.europa.eu/resource/authority/country/DMA,"Dominica",en
+http://publications.europa.eu/resource/authority/country/EUR,"European Union",en
+http://publications.europa.eu/resource/authority/country/ALB,"Albania",en
+http://publications.europa.eu/resource/authority/country/BFA,"Burkina Faso",en
+http://publications.europa.eu/resource/authority/country/KAZ,"Kazakhstan",en
+http://publications.europa.eu/resource/authority/country/UKR,"Ukraine",en
+http://publications.europa.eu/resource/authority/country/SGP,"Singapore",en
+http://publications.europa.eu/resource/authority/country/CMR,"Cameroon",en
+http://publications.europa.eu/resource/authority/country/AGO,"Angola",en
+http://publications.europa.eu/resource/authority/country/ARE,"United Arab Emirates",en
+http://publications.europa.eu/resource/authority/country/GEO,"Georgia",en
+http://publications.europa.eu/resource/authority/country/DOM,"Dominican Republic",en
+http://publications.europa.eu/resource/authority/country/ATG,"Antigua and Barbuda",en
+http://publications.europa.eu/resource/authority/country/BOL,"Bolivia",en
+http://publications.europa.eu/resource/authority/country/CRI,"Costa Rica",en
+http://publications.europa.eu/resource/authority/country/CUB,"Cuba",en
+http://publications.europa.eu/resource/authority/country/ECU,"Ecuador",en
+http://publications.europa.eu/resource/authority/country/GRD,"Grenada",en
+http://publications.europa.eu/resource/authority/country/HTI,"Haiti",en
+http://publications.europa.eu/resource/authority/country/LCA,"Saint Lucia",en
+http://publications.europa.eu/resource/authority/country/NIC,"Nicaragua",en
+http://publications.europa.eu/resource/authority/country/PER,"Peru",en
+http://publications.europa.eu/resource/authority/country/PRY,"Paraguay",en
+http://publications.europa.eu/resource/authority/country/SLV,"El Salvador",en
+http://publications.europa.eu/resource/authority/country/VCT,"Saint Vincent and the Grenadines",en
+http://publications.europa.eu/resource/authority/country/VEN,"Venezuela",en
+http://publications.europa.eu/resource/authority/country/DDR,"German Democratic Republic",en
+http://publications.europa.eu/resource/authority/country/SOM,"Somalia",en
+http://publications.europa.eu/resource/authority/country/FJI,"Fiji",en
+http://publications.europa.eu/resource/authority/country/HKG,"Hong Kong",en
+http://publications.europa.eu/resource/authority/country/PLW,"Palau",en
+http://publications.europa.eu/resource/authority/country/MNG,"Mongolia",en
+http://publications.europa.eu/resource/authority/country/SRB,"Serbia",en
+http://publications.europa.eu/resource/authority/country/MNE,"Montenegro",en
+http://publications.europa.eu/resource/authority/country/SYR,"Syria",en
+http://publications.europa.eu/resource/authority/country/GAB,"Gabon",en
+http://publications.europa.eu/resource/authority/country/HND,"Honduras",en
+http://publications.europa.eu/resource/authority/country/LBR,"Liberia",en
+http://publications.europa.eu/resource/authority/country/PHL,"Philippines",en
+http://publications.europa.eu/resource/authority/country/TJK,"Tajikistan",en
+http://publications.europa.eu/resource/authority/country/MDV,"Maldives",en
+http://publications.europa.eu/resource/authority/country/MAC,"Macao",en
+http://publications.europa.eu/resource/authority/country/RWA,"Rwanda",en
+http://publications.europa.eu/resource/authority/country/AZE,"Azerbaijan",en
+http://publications.europa.eu/resource/authority/country/KIR,"Kiribati",en
+http://publications.europa.eu/resource/authority/country/SDN,"Sudan",en
+http://publications.europa.eu/resource/authority/country/GHA,"Ghana",en
+http://publications.europa.eu/resource/authority/country/YMD,"North Yemen",en
+http://publications.europa.eu/resource/authority/country/BWA,"Botswana",en
+http://publications.europa.eu/resource/authority/country/LSO,"Lesotho",en
+http://publications.europa.eu/resource/authority/country/NAM,"Namibia",en
+http://publications.europa.eu/resource/authority/country/VAT,"Holy See",en
+http://publications.europa.eu/resource/authority/country/IRQ,"Iraq",en
+http://publications.europa.eu/resource/authority/country/NGA,"Nigeria",en
+http://publications.europa.eu/resource/authority/country/FRO,"Faroes",en
+http://publications.europa.eu/resource/authority/country/DJI,"Djibouti",en
+http://publications.europa.eu/resource/authority/country/COK,"Cook Islands",en
+http://publications.europa.eu/resource/authority/country/YEM,"Yemen",en
+http://publications.europa.eu/resource/authority/country/KHM,"Cambodia",en
+http://publications.europa.eu/resource/authority/country/TLS,"Timor-Leste",en
+http://publications.europa.eu/resource/authority/country/TON,"Tonga",en
+http://publications.europa.eu/resource/authority/country/PSE,"Palestine*",en
+http://publications.europa.eu/resource/authority/country/SCG,"Serbia and Montenegro",en
+http://publications.europa.eu/resource/authority/country/BYS,"Belarus",en
+http://publications.europa.eu/resource/authority/country/MHL,"Marshall Islands",en
+http://publications.europa.eu/resource/authority/country/AFI,"French Afar and Issas",en
+http://publications.europa.eu/resource/authority/country/AIA,"Anguilla",en
+http://publications.europa.eu/resource/authority/country/ALA,"Åland Islands",en
+http://publications.europa.eu/resource/authority/country/ASM,"American Samoa",en
+http://publications.europa.eu/resource/authority/country/ATA,"Antarctica",en
+http://publications.europa.eu/resource/authority/country/ATB,"British Antarctic Territory",en
+http://publications.europa.eu/resource/authority/country/ATF,"French Southern and Antarctic Lands",en
+http://publications.europa.eu/resource/authority/country/ATN,"Dronning Maud Land",en
+http://publications.europa.eu/resource/authority/country/BES,"Bonaire, Sint Eustatius and Saba",en
+http://publications.europa.eu/resource/authority/country/BLM,"Saint Barthélemy",en
+http://publications.europa.eu/resource/authority/country/BTN,"Bhutan",en
+http://publications.europa.eu/resource/authority/country/BUR,"Burma",en
+http://publications.europa.eu/resource/authority/country/BVT,"Bouvet Island",en
+http://publications.europa.eu/resource/authority/country/CCK,"Cocos (Keeling) Islands",en
+http://publications.europa.eu/resource/authority/country/CPT,"Clipperton",en
+http://publications.europa.eu/resource/authority/country/CTE,"Canton and Enderbury Islands",en
+http://publications.europa.eu/resource/authority/country/CUW,"Curaçao",en
+http://publications.europa.eu/resource/authority/country/CXR,"Christmas Island",en
+http://publications.europa.eu/resource/authority/country/DHY,"Dahomey",en
+http://publications.europa.eu/resource/authority/country/ERI,"Eritrea",en
+http://publications.europa.eu/resource/authority/country/ESH,"Western Sahara",en
+http://publications.europa.eu/resource/authority/country/ETH,"Ethiopia",en
+http://publications.europa.eu/resource/authority/country/FLK,"Falkland Islands",en
+http://publications.europa.eu/resource/authority/country/FQ0,"French Southern and Antarctic Lands",en
+http://publications.europa.eu/resource/authority/country/FXX,"Metropolitan France",en
+http://publications.europa.eu/resource/authority/country/GEL,"Gilbert and Ellice Islands",en
+http://publications.europa.eu/resource/authority/country/GGY,"Guernsey",en
+http://publications.europa.eu/resource/authority/country/GLP,"Guadeloupe",en
+http://publications.europa.eu/resource/authority/country/GUF,"French Guiana",en
+http://publications.europa.eu/resource/authority/country/GUM,"Guam",en
+http://publications.europa.eu/resource/authority/country/HMD,"Heard Island and McDonald Islands",en
+http://publications.europa.eu/resource/authority/country/HVO,"Upper Volta",en
+http://publications.europa.eu/resource/authority/country/IMN,"Isle of Man",en
+http://publications.europa.eu/resource/authority/country/IOT,"British Indian Ocean Territory",en
+http://publications.europa.eu/resource/authority/country/JEY,"Jersey",en
+http://publications.europa.eu/resource/authority/country/JTN,"Johnston Island",en
+http://publications.europa.eu/resource/authority/country/MAF,"Saint Martin",en
+http://publications.europa.eu/resource/authority/country/MID,"Midway Islands",en
+http://publications.europa.eu/resource/authority/country/MMR,"Myanmar/Burma",en
+http://publications.europa.eu/resource/authority/country/MNP,"Northern Mariana Islands",en
+http://publications.europa.eu/resource/authority/country/MSR,"Montserrat",en
+http://publications.europa.eu/resource/authority/country/MTQ,"Martinique",en
+http://publications.europa.eu/resource/authority/country/MYT,"Mayotte",en
+http://publications.europa.eu/resource/authority/country/NCL,"New Caledonia",en
+http://publications.europa.eu/resource/authority/country/NFK,"Norfolk Island",en
+http://publications.europa.eu/resource/authority/country/NHB,"New Hebrides",en
+http://publications.europa.eu/resource/authority/country/NIU,"Niue",en
+http://publications.europa.eu/resource/authority/country/NRU,"Nauru",en
+http://publications.europa.eu/resource/authority/country/NTZ,"Neutral Zone",en
+http://publications.europa.eu/resource/authority/country/PCI,"Trust Territory of the Pacific Islands",en
+http://publications.europa.eu/resource/authority/country/PCN,"Pitcairn Islands",en
+http://publications.europa.eu/resource/authority/country/PCZ,"Panama Canal Zone",en
+http://publications.europa.eu/resource/authority/country/PRI,"Puerto Rico",en
+http://publications.europa.eu/resource/authority/country/PRK,"North Korea",en
+http://publications.europa.eu/resource/authority/country/PUS,"US Miscellaneous Pacific Islands",en
+http://publications.europa.eu/resource/authority/country/PYF,"French Polynesia",en
+http://publications.europa.eu/resource/authority/country/REU,"Réunion",en
+http://publications.europa.eu/resource/authority/country/RHO,"Southern Rhodesia",en
+http://publications.europa.eu/resource/authority/country/SGS,"South Georgia and the South Sandwich Islands",en
+http://publications.europa.eu/resource/authority/country/SHN,"Saint Helena, Ascension and Tristan da Cunha",en
+http://publications.europa.eu/resource/authority/country/SJM,"Svalbard and Jan Mayen",en
+http://publications.europa.eu/resource/authority/country/SKM,"Sikkim",en
+http://publications.europa.eu/resource/authority/country/SPM,"Saint Pierre and Miquelon",en
+http://publications.europa.eu/resource/authority/country/SSD,"South Sudan",en
+http://publications.europa.eu/resource/authority/country/SXM,"Sint Maarten",en
+http://publications.europa.eu/resource/authority/country/TCA,"Turks and Caicos Islands",en
+http://publications.europa.eu/resource/authority/country/TKL,"Tokelau",en
+http://publications.europa.eu/resource/authority/country/TMP,"East Timor",en
+http://publications.europa.eu/resource/authority/country/UMI,"United States Minor Outlying Islands",en
+http://publications.europa.eu/resource/authority/country/VDR,"Democratic Republic of Vietnam",en
+http://publications.europa.eu/resource/authority/country/VGB,"British Virgin Islands",en
+http://publications.europa.eu/resource/authority/country/VIR,"US Virgin Islands",en
+http://publications.europa.eu/resource/authority/country/WAK,"Wake Island",en
+http://publications.europa.eu/resource/authority/country/WLF,"Wallis and Futuna",en
+http://publications.europa.eu/resource/authority/country/XSL,"Somaliland",en
+http://publications.europa.eu/resource/authority/country/XLF,"Fezzan (Libya)",en
+http://publications.europa.eu/resource/authority/country/XEU,"EU Waters",en
+http://publications.europa.eu/resource/authority/country/XMAZ,"Marine zone",en
+http://publications.europa.eu/resource/authority/country/XNY,"Nyasaland",en
+http://publications.europa.eu/resource/authority/country/XLI,"Livigno",en
+http://publications.europa.eu/resource/authority/country/XIC,"Canary Islands",en
+http://publications.europa.eu/resource/authority/country/XNC,"areas of the Republic of Cyprus in which the Government of the Republic of Cyprus does not exercise effective control",en
+http://publications.europa.eu/resource/authority/country/XSC,"Ceuta",en
+http://publications.europa.eu/resource/authority/country/XSM,"Melilla",en
+http://publications.europa.eu/resource/authority/country/XDST,"Disputed region",en
+http://publications.europa.eu/resource/authority/country/XQP,"Colombia/Jamaica (joint regime)",en
+http://publications.europa.eu/resource/authority/country/XXA,"Paracel Islands (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XKA,"Democratic Kampuchea",en
+http://publications.europa.eu/resource/authority/country/XKM,"People’s Republic of Kampuchea",en
+http://publications.europa.eu/resource/authority/country/ZAR,"Zaire",en
+http://publications.europa.eu/resource/authority/country/XXB,"Spratly Islands (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XLL,"Italian waters of Lake Lugano",en
+http://publications.europa.eu/resource/authority/country/XQR,"Japan/South Korea (joint regime)",en
+http://publications.europa.eu/resource/authority/country/XXC,"Aksai Chin (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XCI,"Campione d’Italia",en
+http://publications.europa.eu/resource/authority/country/XXD,"Arunashal Pradesh (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XBA,"Basutoland",en
+http://publications.europa.eu/resource/authority/country/XXE,"China/India (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XXF,"Hala'Ib Triangle (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XHS,"High seas",en
+http://publications.europa.eu/resource/authority/country/XPM,"Madeira",en
+http://publications.europa.eu/resource/authority/country/XXG,"Ilemi Triangle (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XXH,"Jammu Kashmir (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XXI,"Northern Ireland",en
+http://publications.europa.eu/resource/authority/country/XXJ,"Liancourt Rock (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XXO,"Juan de Nova, Glorioso, Europa, Tromelin, Bassas da India",en
+http://publications.europa.eu/resource/authority/country/XBH,"Büsingen am Hochrhein",en
+http://publications.europa.eu/resource/authority/country/XXL,"Navassa Island (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XBI,"Biafra",en
+http://publications.europa.eu/resource/authority/country/XXM,"Scarborough Reef (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XSG,"Joint area between Senegal and Guinea-Bissau",en
+http://publications.europa.eu/resource/authority/country/XPA,"Azores",en
+http://publications.europa.eu/resource/authority/country/XXN,"Senkaku Islands (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XIN,"International Waters",en
+http://publications.europa.eu/resource/authority/country/XJM,"Fisheries zone around Jan Mayen",en
+http://publications.europa.eu/resource/authority/country/XME,"Melanesia",en
+http://publications.europa.eu/resource/authority/country/XSV,"Fisheries Protection Zone around Svalbard",en
+http://publications.europa.eu/resource/authority/country/XXP,"China/Philippines/Viet Nam/Taiwan/Malaysia (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XXZ,"Kuril Islands (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XAC,"Ashmore and Cartier Islands",en
+http://publications.europa.eu/resource/authority/country/XKX,"Kosovo*",en
+http://publications.europa.eu/resource/authority/country/XGS,"Gaza Strip",en
+http://publications.europa.eu/resource/authority/country/CRQ,"Sark",en
+http://publications.europa.eu/resource/authority/country/XAD,"UK Sovereign Base Areas of Akrotiri and Dhekelia",en
+http://publications.europa.eu/resource/authority/country/XIH,"Heligoland",en
+http://publications.europa.eu/resource/authority/country/XMA,"Mount Athos",en
+http://publications.europa.eu/resource/authority/country/XWS,"Western Samoa",en
+http://publications.europa.eu/resource/authority/country/XXU,"Abyei Region (disputed territory)",en
+http://publications.europa.eu/resource/authority/country/XXV,"Bir Tawil (disputed territory)",en

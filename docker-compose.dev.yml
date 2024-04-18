@@ -26,7 +26,7 @@ services:
       - "0.0.0.0:${CKAN_PORT_HOST}:${CKAN_PORT}"
     volumes:
       - ckan_storage:/var/lib/ckan
-      - ./src:/srv/app/src_extensions
+      - /home/houfu/PycharmProjects/ckan-zeeker:/srv/app/src_extensions
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]

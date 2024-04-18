@@ -7,6 +7,8 @@ FROM ckan/ckan-base:2.10.4
 RUN pip3 install ckanext-pdfview cryptography
 RUN pip3 install -e git+https://github.com/keitaroinc/ckanext-s3filestore.git#egg=ckanext-s3filestore
 
+# Copy keys
+COPY keys/* /srv/app/
 
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/

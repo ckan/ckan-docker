@@ -32,6 +32,7 @@ https://publications.europa.eu/resource/authority/language/POR,portugalski,sh
 https://publications.europa.eu/resource/authority/language/POR,portugalština,cs
 https://publications.europa.eu/resource/authority/language/POR,portekizce,tr
 https://publications.europa.eu/resource/authority/language/POR,portugalščina,sl
+http://lexvo.org/id/iso639-3/por,Portuguese,en
 https://www.wikidata.org/wiki/Q57262078,food consumption,en
 https://www.wikidata.org/wiki/Q4014799,medical visit,en
 http://purl.obolibrary.org/obo/NCIT_C18002,Home,en
@@ -73,6 +74,7 @@ https://publications.europa.eu/resource/authority/language/EST,estonă,ro
 https://publications.europa.eu/resource/authority/language/EST,estų kalba,lt
 https://publications.europa.eu/resource/authority/language/EST,estisk,da
 https://publications.europa.eu/resource/authority/language/EST,estonščina,sl
+http://lexvo.org/id/iso639-3/est,Estonian,en
 https://www.wikidata.org/wiki/Q26305989,blood-borne transmission,en
 https://publications.europa.eu/resource/authority/language/HYE,armenska,is
 https://publications.europa.eu/resource/authority/language/HYE,armenski,hr
@@ -107,6 +109,7 @@ https://publications.europa.eu/resource/authority/language/HYE,arménien,fr
 https://publications.europa.eu/resource/authority/language/HYE,αρμενικά,el
 https://publications.europa.eu/resource/authority/language/HYE,örmény,hu
 https://publications.europa.eu/resource/authority/language/HYE,armenski,sh
+http://lexvo.org/id/iso639-3/hye,Armenian,en
 http://semanticscience.org/resource/SIO_000713,doctor role,en
 http://purl.obolibrary.org/obo/OMIT_0010784,Obesity,en
 https://www.wikidata.org/wiki/Property:P106,occupation,en
@@ -148,6 +151,7 @@ https://publications.europa.eu/resource/authority/language/BOS,боснійсь�
 https://publications.europa.eu/resource/authority/language/BOS,bosniacă,ro
 https://publications.europa.eu/resource/authority/language/BOS,bosnio,es
 https://publications.europa.eu/resource/authority/language/BOS,bošnjački,hr
+http://lexvo.org/id/iso639-3/bos,Bosnian,en
 http://purl.obolibrary.org/obo/OMIT_0008309,Income,en
 https://publications.europa.eu/resource/authority/language/CES,tšekki,fi
 https://publications.europa.eu/resource/authority/language/CES,tékkneska,is
@@ -182,6 +186,7 @@ https://publications.europa.eu/resource/authority/language/CES,češčina,sl
 https://publications.europa.eu/resource/authority/language/CES,čeština,cs
 https://publications.europa.eu/resource/authority/language/CES,Czech,en
 https://publications.europa.eu/resource/authority/language/CES,tjeckiska,sv
+http://lexvo.org/id/iso639-3/ces,Czech,en
 http://purl.obolibrary.org/obo/NCIT_C173558,Contact Tracing,en
 http://purl.obolibrary.org/obo/NCIT_C16669,Health Status,en
 https://www.wikidata.org/wiki/Q182672,zoonosis,en
@@ -218,6 +223,7 @@ https://publications.europa.eu/resource/authority/language/DEU,vācu valoda,lv
 https://publications.europa.eu/resource/authority/language/DEU,germană,ro
 https://publications.europa.eu/resource/authority/language/DEU,германски,mk
 https://publications.europa.eu/resource/authority/language/DEU,Deutsch,de
+http://lexvo.org/id/iso639-3/deu,German,en
 http://vivoweb.org/ontology/core#Hospital,Hospital,en
 http://purl.obolibrary.org/obo/GSSO_007925,pharmaceutical drug,en
 https://www.wikidata.org/wiki/Q18123741,infectious disease,en
@@ -260,6 +266,7 @@ https://publications.europa.eu/resource/authority/language/LIT,литовськ�
 https://publications.europa.eu/resource/authority/language/LIT,Liotuáinis,ga
 https://publications.europa.eu/resource/authority/language/LIT,litevština,cs
 https://publications.europa.eu/resource/authority/language/LIT,litvanski,sh
+http://lexvo.org/id/iso639-3/lit,Lithuanian,en
 https://www.wikidata.org/wiki/Q12206,diabetes,en
 https://www.wikidata.org/wiki/Q12078,cancer,en
 https://www.wikidata.org/wiki/Q2006636,waterborne disease,en
@@ -307,6 +314,7 @@ https://publications.europa.eu/resource/authority/language/ROM,ромски,sr
 https://publications.europa.eu/resource/authority/language/ROM,Romani,en
 https://publications.europa.eu/resource/authority/language/ROM,romani,ro
 https://publications.europa.eu/resource/authority/language/ROM,ρομανικά,el
+http://lexvo.org/id/iso639-3/rom,Romani,en
 https://www.wikidata.org/wiki/Q93815163,Cancer Survival Rates,en
 http://purl.obolibrary.org/obo/OMIT_0015761,Work,en
 https://publications.europa.eu/resource/authority/language/ENG,engleză,ro
@@ -342,6 +350,7 @@ https://publications.europa.eu/resource/authority/language/ENG,angleščina,sl
 https://publications.europa.eu/resource/authority/language/ENG,англиски,mk
 https://publications.europa.eu/resource/authority/language/ENG,englanti,fi
 https://publications.europa.eu/resource/authority/language/ENG,English,en
+http://lexvo.org/id/iso639-3/eng,English,en
 https://www.wikidata.org/wiki/Q622527,self-injury,en
 https://www.wikidata.org/wiki/Q2715623,social network,en
 https://publications.europa.eu/resource/authority/language/RUS,Russisch,de
@@ -377,6 +386,7 @@ https://publications.europa.eu/resource/authority/language/RUS,orosz,hu
 https://publications.europa.eu/resource/authority/language/RUS,rusų kalba,lt
 https://publications.europa.eu/resource/authority/language/RUS,rússneska,is
 https://publications.europa.eu/resource/authority/language/RUS,rušćina,hsb
+http://lexvo.org/id/iso639-3/rus,Russian,en
 https://www.wikidata.org/wiki/Q1519843,health technology,en
 http://purl.obolibrary.org/obo/NCIT_C17009,Poverty,en
 http://purl.obolibrary.org/obo/SCDO_0000948,Quality of Health Care,en
@@ -417,6 +427,7 @@ https://publications.europa.eu/resource/authority/language/NNO,norvégien nynors
 https://publications.europa.eu/resource/authority/language/NNO,novonorveščina,sl
 https://publications.europa.eu/resource/authority/language/NNO,uusnorra keel,et
 https://publications.europa.eu/resource/authority/language/NNO,норвезька нюнорська мова,uk
+http://lexvo.org/id/iso639-3/nno,Norwegian Nynorsk,en
 https://www.wikidata.org/wiki/Q96482267,vaccination coverage,en
 https://www.wikidata.org/wiki/Q6784043,mass gathering,en
 https://www.wikidata.org/wiki/Q193078,injury,en
@@ -469,6 +480,7 @@ https://publications.europa.eu/resource/authority/language/NLD,hollandi keel,et
 https://publications.europa.eu/resource/authority/language/NLD,нидерландский,ru
 https://publications.europa.eu/resource/authority/language/NLD,neerlandese,it
 https://publications.europa.eu/resource/authority/language/NLD,hollanti,fi
+http://lexvo.org/id/iso639-3/nld,Dutch,en
 http://purl.obolibrary.org/obo/SCDO_0000493,Health Service Utilization,en
 https://www.wikidata.org/wiki/Q389735,cardiovascular disease,en
 https://www.wikidata.org/wiki/Q105252400,vaccine acceptance,en
@@ -545,6 +557,7 @@ https://publications.europa.eu/resource/authority/language/SRP,serbišćina,hsb
 https://publications.europa.eu/resource/authority/language/SRP,serbia keel,et
 https://publications.europa.eu/resource/authority/language/SRP,σερβικά,el
 https://publications.europa.eu/resource/authority/language/SRP,српски,sr
+http://lexvo.org/id/iso639-3/srp,Serbian,en
 http://purl.obolibrary.org/obo/OMIT_0007885,Hospital Bed Capacity,en
 http://purl.obolibrary.org/obo/OPMI_0000482,medical visit,en
 http://purl.obolibrary.org/obo/APOLLO_SV_00000550,contact tracing,en
@@ -583,6 +596,7 @@ https://publications.europa.eu/resource/authority/language/MLT,Maltees,nl
 https://publications.europa.eu/resource/authority/language/MLT,мальтійська мова,uk
 https://publications.europa.eu/resource/authority/language/MLT,Máltais,ga
 https://publications.europa.eu/resource/authority/language/MLT,Maltesisch,de
+http://lexvo.org/id/iso639-3/mlt,Maltese,en
 http://purl.obolibrary.org/obo/NCIT_C15406,Cancer Screening,en
 https://publications.europa.eu/resource/authority/language/SWE,шведски,bg
 https://publications.europa.eu/resource/authority/language/SWE,Schwedisch,de
@@ -617,6 +631,7 @@ https://publications.europa.eu/resource/authority/language/SWE,zviedru valoda,lv
 https://publications.europa.eu/resource/authority/language/SWE,σουηδικά,el
 https://publications.europa.eu/resource/authority/language/SWE,sueco,es
 https://publications.europa.eu/resource/authority/language/SWE,svensk,no
+http://lexvo.org/id/iso639-3/swe,Swedish,en
 http://purl.obolibrary.org/obo/OMIT_0004449,Communicable Diseases,en
 https://www.wikidata.org/wiki/Q84263196,COVID-19,en
 http://purl.obolibrary.org/obo/NCIT_C16205,Healthcare Activity,en
@@ -661,6 +676,7 @@ https://publications.europa.eu/resource/authority/language/SLV,szlovén,hu
 https://publications.europa.eu/resource/authority/language/SLV,slovène,fr
 https://publications.europa.eu/resource/authority/language/SLV,slovenščina,sl
 https://publications.europa.eu/resource/authority/language/SLV,sloveeni,fi
+http://lexvo.org/id/iso639-3/slv,Slovenian,en
 https://www.wikidata.org/wiki/Q1128437,contact tracing,en
 https://www.wikidata.org/wiki/Q3044843,cancer screening,en
 https://publications.europa.eu/resource/authority/language/POL,Polainnis,ga
@@ -696,6 +712,7 @@ https://publications.europa.eu/resource/authority/language/POL,poljski,hr
 https://publications.europa.eu/resource/authority/language/POL,polska,sv
 https://publications.europa.eu/resource/authority/language/POL,Pollakk,mt
 https://publications.europa.eu/resource/authority/language/POL,Polish,en
+http://lexvo.org/id/iso639-3/pol,Polish,en
 https://www.wikidata.org/wiki/Q39631,physician,en
 https://www.wikidata.org/wiki/Q82642,blood pressure,en
 http://purl.obolibrary.org/obo/OBI_0000844,obsolete hospital,en
@@ -735,6 +752,7 @@ https://publications.europa.eu/resource/authority/language/HUN,maghiară,ro
 https://publications.europa.eu/resource/authority/language/HUN,венгерский,ru
 https://publications.europa.eu/resource/authority/language/HUN,ungerska,sv
 https://publications.europa.eu/resource/authority/language/HUN,madžarščina,sl
+http://lexvo.org/id/iso639-3/hun,Hungarian,en
 http://purl.obolibrary.org/obo/OMIT_0012168,Poverty,en
 http://purl.obolibrary.org/obo/OMIT_0008353,Infant Mortality,en
 http://purl.obolibrary.org/obo/MFOMD_0000001,mental disease,en
@@ -776,6 +794,7 @@ https://publications.europa.eu/resource/authority/language/HRV,hrvatski,sh
 https://publications.europa.eu/resource/authority/language/HRV,chorvatština,cs
 https://publications.europa.eu/resource/authority/language/HRV,hrvatski,hr
 https://publications.europa.eu/resource/authority/language/HRV,Croatian,en
+http://lexvo.org/id/iso639-3/hrv,Croatian,en
 http://purl.obolibrary.org/obo/GSSO_009380,health care quality,en
 https://www.wikidata.org/wiki/Q94298961,Medical Appointment,en
 https://www.wikidata.org/wiki/Q3137154,non-communicable disease,en
@@ -818,6 +837,7 @@ https://publications.europa.eu/resource/authority/language/ITA,itāļu valoda,lv
 https://publications.europa.eu/resource/authority/language/ITA,италијански,mk
 https://publications.europa.eu/resource/authority/language/ITA,Italienisch,de
 https://publications.europa.eu/resource/authority/language/ITA,italiană,ro
+http://lexvo.org/id/iso639-3/ita,Italian,en
 http://purl.obolibrary.org/obo/SCDO_0001082,Social Environment,en
 https://www.wikidata.org/wiki/Q7981051,well-being,en
 https://www.wikidata.org/wiki/Q1367554,morbidity,en
@@ -866,6 +886,7 @@ https://publications.europa.eu/resource/authority/language/SPA,ισπανικά,
 https://publications.europa.eu/resource/authority/language/SPA,espagnol,fr
 https://publications.europa.eu/resource/authority/language/SPA,ıspanyolca,tr
 https://publications.europa.eu/resource/authority/language/SPA,Spáinnis,ga
+http://lexvo.org/id/iso639-3/spa,Spanish,en
 https://www.wikidata.org/wiki/Q12198,sexually transmitted infection,en
 http://purl.obolibrary.org/obo/NCIT_C16273,Alcohol Consumption,en
 http://purl.obolibrary.org/obo/APOLLO_SV_00000239,infectious disease,en
@@ -910,6 +931,7 @@ https://publications.europa.eu/resource/authority/language/LAV,λετονικά,
 https://publications.europa.eu/resource/authority/language/LAV,latvijski,hr
 https://publications.europa.eu/resource/authority/language/LAV,латвиски,mk
 https://publications.europa.eu/resource/authority/language/LAV,Lettisch,de
+http://lexvo.org/id/iso639-3/lav,Latvian,en
 http://purl.obolibrary.org/obo/GSSO_006601,substance use,en
 http://id.loc.gov/vocabulary/iso639-1/en,English,en
 http://id.loc.gov/vocabulary/iso639-1/en,anglais,fr
@@ -950,6 +972,7 @@ https://publications.europa.eu/resource/authority/language/FRA,francošćina,hsb
 https://publications.europa.eu/resource/authority/language/FRA,français,fr
 https://publications.europa.eu/resource/authority/language/FRA,prantsuse keel,et
 https://publications.europa.eu/resource/authority/language/FRA,francoščina,sl
+http://lexvo.org/id/iso639-3/fra,French,en
 https://www.wikidata.org/wiki/Q332428,overweight,en
 https://www.wikidata.org/wiki/Q7907939,vaccine-preventable diseases,en
 https://www.wikidata.org/wiki/Q1247867,housing,en
@@ -989,6 +1012,7 @@ https://publications.europa.eu/resource/authority/language/FIN,finščina,sl
 https://publications.europa.eu/resource/authority/language/FIN,finnois,fr
 https://publications.europa.eu/resource/authority/language/FIN,finn,hu
 https://publications.europa.eu/resource/authority/language/FIN,Fionlainnis,ga
+http://lexvo.org/id/iso639-3/fin,Finnish,en
 https://www.wikidata.org/wiki/Q1527264,income,en
 https://www.wikidata.org/wiki/Q5259414,tooth pathology,en
 http://purl.obolibrary.org/obo/NCIT_C2893,Psychiatric Disorder,en
@@ -1060,6 +1084,7 @@ http://purl.org/cld/freq/daily,daily,en
 http://purl.org/cld/freq/continuous,continuous,en
 http://purl.org/cld/freq/irregular,irregular,en
 https://publications.europa.eu/resource/authority/language/LTZ,Luxembourgish,en
+http://lexvo.org/id/iso639-3/ltz,Luxembourgish,en
 http://purl.org/zonmw/covid19/10007,national,en
 http://purl.org/zonmw/covid19/10083,people by COVID-19 risk factors,en
 http://purl.org/zonmw/covid19/10091,COVID-19 patient grouping,en
@@ -1707,3 +1732,5 @@ http://publications.europa.eu/resource/authority/country/XMA,"Mount Athos",en
 http://publications.europa.eu/resource/authority/country/XWS,"Western Samoa",en
 http://publications.europa.eu/resource/authority/country/XXU,"Abyei Region (disputed territory)",en
 http://publications.europa.eu/resource/authority/country/XXV,"Bir Tawil (disputed territory)",en
+https://gdi.onemilliongenomes.eu,GDI,en
+https://en.wikipedia.org/wiki/Colorectal_cancer,Colorectal cancer,en

@@ -1,5 +1,8 @@
 FROM ckan/ckan-base:2.10.4
 
+# Install Cron for page view tracking
+RUN apt-get update && apt-get -y install cron
+
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples
 
@@ -16,6 +19,10 @@ COPY docker-entrypoint.d/* /docker-entrypoint.d/
 # Copy custom supervisor conf
 COPY supervisor-conf.d/* /etc/supervisord.d/
 
+# Copy page view crontab
+
+COPY setup/page_view_tracking_crontab /etc/cron.d/page_view_tracking_crontab
+RUN chmod 0644 /etc/cron.d/page_view_tracking_crontab && crontab /etc/cron.d/page_view_tracking_crontab
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)

@@ -1,0 +1,1 @@
+@hourly ckan -c /srv/app/ckan.ini tracking update  && ckan -c /srv/app/ckan.ini search-index rebuild -r

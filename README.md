@@ -97,7 +97,7 @@ To start the containers:
 
 	docker compose -f docker-compose.dev.yml up
 
-See [CKAN Images](#5--ckan-images) for more details of what happens when using development mode.
+See [CKAN images](#5-ckan-images) for more details of what happens when using development mode.
 
 
 #### Create an extension
@@ -141,6 +141,8 @@ The Docker image config files used to build your CKAN project are located in the
 * Any custom changes to the scripts run during container start up can be made to scripts in the `setup/` directory. For instance if you wanted to change the port on which CKAN runs you would need to make changes to the Docker Compose yaml file, and the `start_ckan.sh.override` file. Then you would need to add the following line to the Dockerfile ie: `COPY setup/start_ckan.sh.override ${APP_DIR}/start_ckan.sh`. The `start_ckan.sh` file in the locally built image would override the `start_ckan.sh` file included in the base image
 
 ### Extending the base images
+
+The CKAN base images are built from https://github.com/ckan/ckan-docker-base/
 
 You can modify the docker files to build your own customized image tailored to your project, installing any extensions and extra requirements needed. For example here is where you would update to use a different CKAN base image ie: `ckan/ckan-base:<new version>`
 

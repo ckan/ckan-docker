@@ -1,25 +1,25 @@
 # Docker Compose setup for CKAN
 
 
-* [1. Overview](#1--overview)
-* [2. Installing Docker](#2--installing-docker)
-* [3. docker compose vs docker-compose](#3--docker-compose-vs-docker-compose)
-* [4. Install (build and run) CKAN plus dependencies](#4--install-build-and-run-ckan-plus-dependencies)
+* [1. Overview](#1-overview)
+* [2. Installing Docker](#2-installing-docker)
+* [3. docker compose vs docker-compose](#3-docker-compose-vs-docker-compose)
+* [4. Install (build and run) CKAN plus dependencies](#4-install-build-and-run-ckan-plus-dependencies)
   * [Base mode](#base-mode)
   * [Development mode](#development-mode)
     * [Create an extension](#create-an-extension)
     * [Running HTTPS on development mode](#running-https-on-development-mode)
-* [5. CKAN images](#5--ckan-images)
+* [5. CKAN images](#5-ckan-images)
   * [Extending the base images](#extending-the-base-images)
   * [Applying patches](#applying-patches)
-* [6. Debugging with pdb](#6--debugging-with-pdb)
-* [7. Datastore and Datapusher](#7--datastore-and-datapusher)
-* [8. NGINX](#8--nginx)
-* [9. ckanext-envvars](#9--ckanext-envvars)
-* [10. CKAN_SITE_URL](#10--CKAN_SITE_URL)
+* [6. Debugging with pdb](#6-debugging-with-pdb)
+* [7. Datastore and Datapusher](#7-datastore-and-datapusher)
+* [8. NGINX](#8-nginx)
+* [9. ckanext-envvars](#9-ckanext-envvars)
+* [10. CKAN_SITE_URL](#10-CKAN_SITE_URL)
 * [11. Manage new users](#11-manage-new-users)
-* [12. Changing the base image](#12--changing-the-base-image)
-* [13. Replacing DataPusher with XLoader](#13--replacing-datapusher-with-xLoader)
+* [12. Changing the base image](#12-changing-the-base-image)
+* [13. Replacing DataPusher with XLoader](#13-replacing-datapusher-with-xLoader)
 
 
 ## 1.  Overview

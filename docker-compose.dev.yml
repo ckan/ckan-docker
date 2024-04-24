@@ -27,6 +27,8 @@ services:
     volumes:
       - ckan_storage:/var/lib/ckan
       - ./src:/srv/app/src_extensions
+      - /usr/lib/python3.10/site-packages
+      - /root/.vscode-server
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]

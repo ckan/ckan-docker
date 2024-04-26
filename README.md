@@ -9,6 +9,7 @@
   * [Development mode](#development-mode)
     * [Create an extension](#create-an-extension)
     * [Running HTTPS on development mode](#running-https-on-development-mode)
+    * [Remote Debugging with VS Code](#remote-debugging-with-vs-code)
 * [5. CKAN images](#5-ckan-images)
   * [Extending the base images](#extending-the-base-images)
   * [Applying patches](#applying-patches)
@@ -115,13 +116,40 @@ The new extension files and directories are created in the `/srv/app/src_extensi
 
 Sometimes is useful to run your local development instance under HTTPS, for instance if you are using authentication extensions like [ckanext-saml2auth](https://github.com/keitaroinc/ckanext-saml2auth). To enable it, set the following in your `.env` file:
 
+```
   USE_HTTPS_FOR_DEV=true
+```
 
 and update the site URL setting:
 
+```
   CKAN_SITE_URL=https://localhost:5000
+```
 
 After recreating the `ckan-dev` container, you should be able to access CKAN at https://localhost:5000
+
+
+#### Remote Debugging with VS Code
+
+[Visual Studio Code](https://code.visualstudio.com/) is a free IDE that includes remote
+debugging for Python applications. To debug CKAN you must enable `debugpy` for your
+development instance in your `.env` file:
+
+```
+  USE_DEBUGPY_FOR_DEV=true
+```
+
+Then start the containers in [development mode](#development-mode) and launch VS Code.
+
+In VS Code:
+
+1. Install the "Dev Container" extension: press CTRL+SHIFT+X, type "dev container", click "install"
+2. Click the "Open a Remote Window" button in the bottom-left of the VS Code window
+3. Click "Attach to Running Container..." and select your ckan-dev container, e.g. "ckan-docker-ckan-dev-1"
+4. Click the "Run and Debug" icon on the left panel then "create a launch.json", select "Python Debugger", "Remote Attach", host "localhost" and port "5678"
+5. Press F5 or click the "Run" menu and "Start Debugging"
+
+You can now set breakpoints and remote debug your CKAN development instance.
 
 
 ## 5. CKAN images

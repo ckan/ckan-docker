@@ -40,6 +40,7 @@ services:
         condition: service_healthy
     volumes:
       - ckan_storage:/var/lib/ckan
+      - /usr/lib/python3.10/site-packages
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]

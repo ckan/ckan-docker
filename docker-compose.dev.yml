@@ -13,6 +13,10 @@ services:
         - TZ=${TZ}
     env_file:
       - .env
+    links:
+      - db
+      - solr
+      - redis
     ports:
       - "0.0.0.0:${CKAN_PORT_HOST}:${CKAN_PORT}"
     volumes:

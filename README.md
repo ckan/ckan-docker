@@ -89,7 +89,7 @@ After this step, CKAN should be running at `CKAN_SITE_URL`.
 
 Create a sysadmin account and password to log in to the site:
 
-    docker compose -f docker-compose.yml exec ckan sh -c "ckan sysadmin add <ADMIN-NAME>"
+    docker compose -f docker-compose.yml exec ckan ckan sysadmin add <ADMIN-NAME>
 
 
 ### Development mode
@@ -110,14 +110,14 @@ See [CKAN images](#5-ckan-images) for more details of what happens when using de
 
 Similar to above, create a sysadmin account and password in development mode:
 
-    docker compose -f docker-compose.dev.yml exec ckan-dev sh -c "ckan sysadmin add <ADMIN-NAME>"
+    docker compose -f docker-compose.dev.yml exec ckan-dev ckan sysadmin add <ADMIN-NAME>
 
 
 #### Create an extension
 
 You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
 
-    docker compose -f docker-compose.dev.yml exec ckan-dev sh -c "ckan generate extension --output-dir /srv/app/src_extensions"
+    docker compose -f docker-compose.dev.yml exec ckan-dev ckan generate extension --output-dir /srv/app/src_extensions
 
 ![Screenshot 2023-02-22 at 1 45 55 pm](https://user-images.githubusercontent.com/54408245/220623568-b4e074c7-6d07-4d27-ae29-35ce70961463.png)
 
@@ -303,11 +303,11 @@ For convenience the CKAN_SITE_URL parameter should be set in the .env file. For 
 
 1. Create a new user from the Docker host, for example to create a new user called 'admin'
 
-   `docker exec -it <container-id> ckan -c ckan.ini user add admin email=admin@localhost`
+   `docker exec <container-id> ckan user add admin email=admin@localhost`
 
    To delete the 'admin' user
 
-   `docker exec -it <container-id> ckan -c ckan.ini user remove admin`
+   `docker exec <container-id> ckan user remove admin`
 
 2. Create a new user from within the ckan container. You will need to get a session on the running container
 

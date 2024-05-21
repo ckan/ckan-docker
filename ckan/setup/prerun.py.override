@@ -157,44 +157,6 @@ def init_datastore_db():
         connection.close()
 
 
-def create_sysadmin():
-
-    name = os.environ.get("CKAN_SYSADMIN_NAME")
-    password = os.environ.get("CKAN_SYSADMIN_PASSWORD")
-    email = os.environ.get("CKAN_SYSADMIN_EMAIL")
-
-    if name and password and email:
-
-        # Check if user exists
-        command = ["ckan", "-c", ckan_ini, "user", "show", name]
-
-        out = subprocess.check_output(command)
-        if b"User:None" not in re.sub(b"\s", b"", out):
-            print("[prerun] Sysadmin user exists, skipping creation")
-            return
-
-        # Create user
-        command = [
-            "ckan",
-            "-c",
-            ckan_ini,
-            "user",
-            "add",
-            name,
-            "password=" + password,
-            "email=" + email,
-        ]
-
-        subprocess.call(command)
-        print("[prerun] Created user {0}".format(name))
-
-        # Make it sysadmin
-        command = ["ckan", "-c", ckan_ini, "sysadmin", "add", name]
-
-        subprocess.call(command)
-        print("[prerun] Made user {0} a sysadmin".format(name))
-
-
 if __name__ == "__main__":
 
     maintenance = os.environ.get("MAINTENANCE_MODE", "").lower() == "true"
@@ -208,5 +170,3 @@ if __name__ == "__main__":
         check_datastore_db_connection()
         init_datastore_db()
         check_solr_connection()
-        create_sysadmin()
-        

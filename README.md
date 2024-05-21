@@ -6,6 +6,7 @@
 * [3. docker compose vs docker-compose](#3-docker-compose-vs-docker-compose)
 * [4. Install (build and run) CKAN plus dependencies](#4-install-build-and-run-ckan-plus-dependencies)
   * [Base mode](#base-mode)
+    * [Create a sysadmin account](#create-a-sysadmin-account)
   * [Development mode](#development-mode)
     * [Create an extension](#create-an-extension)
     * [Running HTTPS on development mode](#running-https-on-development-mode)
@@ -63,7 +64,7 @@ Copy the included `.env.example` and rename it to `.env`. Modify it depending on
 Please note that when accessing CKAN directly (via a browser) ie: not going through NGINX you will need to make sure you have "ckan" set up
 to be an alias to localhost in the local hosts file. Either that or you will need to change the `.env` entry for `CKAN_SITE_URL`
 
-Using the default values on the `.env.example` file will get you a working CKAN instance. There is a sysadmin user created by default with the values defined in `CKAN_SYSADMIN_NAME` and `CKAN_SYSADMIN_PASSWORD`(`ckan_admin` and `test1234` by default). This should be obviously changed before running this setup as a public CKAN instance.
+Using the default values on the `.env.example` file will get you a working CKAN instance.
 
 To build the images:
 
@@ -84,6 +85,13 @@ At the end of the container start sequence there should be 6 containers running
 After this step, CKAN should be running at `CKAN_SITE_URL`.
 
 
+#### Create a sysadmin account
+
+Create a sysadmin account and password to log in to the site:
+
+    docker compose -f docker-compose.yml exec ckan sh -c "ckan sysadmin add <ADMIN-NAME>"
+
+
 ### Development mode
 
 Use this mode if you are making code changes to CKAN and either creating new extensions or making code changes to existing extensions. This mode also uses the `.env` file for config options.
@@ -100,12 +108,16 @@ To start the containers:
 
 See [CKAN images](#5-ckan-images) for more details of what happens when using development mode.
 
+Similar to above, create a sysadmin account and password in development mode:
+
+    docker compose -f docker-compose.dev.yml exec ckan-dev sh -c "ckan sysadmin add <ADMIN-NAME>"
+
 
 #### Create an extension
 
 You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
 
-    docker compose -f docker-compose.dev.yml exec ckan-dev /bin/sh -c "ckan -c /srv/app/ckan.ini generate extension --output-dir /srv/app/src_extensions"
+    docker compose -f docker-compose.dev.yml exec ckan-dev sh -c "ckan generate extension --output-dir /srv/app/src_extensions"
 
 ![Screenshot 2023-02-22 at 1 45 55 pm](https://user-images.githubusercontent.com/54408245/220623568-b4e074c7-6d07-4d27-ae29-35ce70961463.png)
 

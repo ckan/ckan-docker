@@ -1723,690 +1723,690 @@ http://publications.europa.eu/resource/authority/country/XXU,"Abyei Region (disp
 http://publications.europa.eu/resource/authority/country/XXV,"Bir Tawil (disputed territory)",en
 https://gdi.onemilliongenomes.eu,GDI,en
 https://en.wikipedia.org/wiki/Colorectal_cancer,Colorectal cancer,en
-http://purl.bioontology.org/ontology/ICD10CM/B34.2,Coronavirus infection, unspecified,en
-http://purl.bioontology.org/ontology/ICD10CM/B95-B97,Bacterial and viral infectious agents (B95-B97),en
-http://purl.bioontology.org/ontology/ICD10CM/B97.21,SARS-associated coronavirus as the cause of diseases classified elsewhere,en
-http://purl.bioontology.org/ontology/ICD10CM/D65-D69,Coagulation defects, purpura and other hemorrhagic conditions (D65-D69),en
-http://purl.bioontology.org/ontology/ICD10CM/F03,Unspecified dementia,en
-http://purl.bioontology.org/ontology/ICD10CM/G30,Alzheimer's disease,en
-http://purl.bioontology.org/ontology/ICD10CM/G93.3,Postviral and related fatigue syndromes,en
-http://purl.bioontology.org/ontology/ICD10CM/G93.31,Postviral fatigue syndrome,en
-http://purl.bioontology.org/ontology/ICD10CM/I21,Acute myocardial infarction,en
-http://purl.bioontology.org/ontology/ICD10CM/I26-I28,Pulmonary heart disease and diseases of pulmonary circulation (I26-I28),en
-http://purl.bioontology.org/ontology/ICD10CM/I49.9,Cardiac arrhythmia, unspecified,en
-http://purl.bioontology.org/ontology/ICD10CM/I50,Heart failure,en
-http://purl.bioontology.org/ontology/ICD10CM/I51.4,Myocarditis, unspecified,en
-http://purl.bioontology.org/ontology/ICD10CM/I60-I69,Cerebrovascular diseases (I60-I69),en
-http://purl.bioontology.org/ontology/ICD10CM/I63,Cerebral infarction,en
-http://purl.bioontology.org/ontology/ICD10CM/I67.6,Nonpyogenic thrombosis of intracranial venous system,en
-http://purl.bioontology.org/ontology/ICD10CM/I80-I89,Diseases of veins, lymphatic vessels and lymph nodes, not elsewhere classified (I80-I89),en
-http://purl.bioontology.org/ontology/ICD10CM/I82,Other venous embolism and thrombosis,en
-http://purl.bioontology.org/ontology/ICD10CM/J00-J99,Diseases of the respiratory system (J00-J99),en
-http://purl.bioontology.org/ontology/ICD10CM/J06.9,Acute upper respiratory infection, unspecified,en
-http://purl.bioontology.org/ontology/ICD10CM/J12.81,Pneumonia due to SARS-associated coronavirus,en
-http://purl.bioontology.org/ontology/ICD10CM/J12.82,Pneumonia due to coronavirus disease 2019,en
-http://purl.bioontology.org/ontology/ICD10CM/M30.3,Mucocutaneous lymph node syndrome [Kawasaki],en
-http://purl.bioontology.org/ontology/ICD10CM/M35.81,Multisystem inflammatory syndrome,en
-http://purl.bioontology.org/ontology/ICD10CM/R53,Malaise and fatigue,en
-http://purl.bioontology.org/ontology/ICD10CM/R53.82,Chronic fatigue, unspecified,en
-http://purl.bioontology.org/ontology/ICD10CM/T83.510S,Infection and inflammatory reaction due to cystostomy catheter, sequela,en
-http://purl.bioontology.org/ontology/ICD10CM/U00-U85,Codes for special purposes (U00-U85),en
-http://purl.bioontology.org/ontology/ICD10CM/U07.1,COVID-19,en
-http://purl.bioontology.org/ontology/ICD10CM/U09,Post COVID-19 condition,en
-http://purl.bioontology.org/ontology/ICD10CM/U09.9,Post COVID-19 condition, unspecified,en
-http://purl.bioontology.org/ontology/ICD10CM/Z01.89,Encounter for other specified special examinations,en
-http://purl.bioontology.org/ontology/ICD10CM/Z11.52,Encounter for screening for COVID-19,en
-http://purl.org/zonmw/covid19/10121,ultrasound,en
-http://purl.org/zonmw/covid19/10127,environmental data,en
-http://purl.org/zonmw/covid19/10125,survey data,en
-http://purl.org/zonmw/covid19/10129,aerial photography,en
-http://purl.org/zonmw/covid19/10124,social data,en
-http://purl.org/zonmw/covid19/10123,infrared thermography,en
-http://purl.org/zonmw/covid19/10122,computed tomography,en
-http://purl.org/zonmw/covid19/10128,geographical data,en
-http://purl.org/zonmw/covid19/10120,X-ray imaging,en
-http://purl.org/zonmw/covid19/10126,COVID policy and prevention measures,en
-http://purl.org/zonmw/covid19/10174,nasopharyngeal swab specimen,en
-http://purl.org/zonmw/covid19/10176,tissue specimen,en
-http://purl.org/zonmw/covid19/10175,oropharyngeal swab specimen,en
-http://purl.org/zonmw/covid19/10172,frozen specimen,en
-http://purl.org/zonmw/covid19/10173,nasal swab,en
-http://purl.org/zonmw/covid19/10178,FFPE tissue specimen,en
-http://purl.org/zonmw/covid19/10179,glutaraldehyde fixed tissue specimen,en
-http://purl.org/zonmw/covid19/10171,fresh specimen,en
-http://purl.org/zonmw/covid19/10170,cell line,en
-http://purl.org/zonmw/covid19/10177,vaginal swab specimen,en
-http://purl.org/zonmw/covid19/10198,animal facility (breeding/transgenesis),en
-http://purl.org/zonmw/covid19/10190,ML-3 laboratory,en
-http://purl.org/zonmw/covid19/10195,antibody facility,en
-http://purl.org/zonmw/covid19/10194,BSL-4 laboratory,en
-http://purl.org/zonmw/covid19/10191,BSL-1 laboratory,en
-http://purl.org/zonmw/covid19/10193,BSL-3 laboratory,en
-http://purl.org/zonmw/covid19/10196,proteomics facility,en
-http://purl.org/zonmw/covid19/10192,BSL-2 laboratory,en
-http://purl.org/zonmw/covid19/10199,flow cytometry facility,en
-http://purl.org/zonmw/covid19/10197,metabolomics facility,en
-http://purl.org/zonmw/covid19/10158,saliva,en
-http://purl.org/zonmw/covid19/10157,plasma,en
-http://purl.org/zonmw/covid19/10154,blood,en
-http://purl.org/zonmw/covid19/10159,semen,en
-http://purl.org/zonmw/covid19/10156,feces,en
-http://purl.org/zonmw/covid19/10155,breath,en
-http://purl.org/zonmw/covid19/10240,behaviour,en
-http://purl.org/zonmw/covid19/10249,predictive diagnostics and treatment - risk analysis and prognostics,en
-http://purl.org/zonmw/covid19/10246,cloacal swab,en
-http://purl.org/zonmw/covid19/10245,perineal swab,en
-http://purl.org/zonmw/covid19/10244,genomics data,en
-http://purl.org/zonmw/covid19/10148,mouse,en
-http://purl.org/zonmw/covid19/10146,human,en
-http://purl.org/zonmw/covid19/10147,mink,en
-http://purl.org/zonmw/covid19/10140,interview data,en
-http://purl.org/zonmw/covid19/10143,prototype description,en
-http://purl.org/zonmw/covid19/10142,study design,en
-http://purl.org/zonmw/covid19/10149,rat,en
-http://purl.org/zonmw/covid19/10023,surveillance phase,en
-http://purl.org/zonmw/covid19/10021,palliative care,en
-http://purl.org/zonmw/covid19/10028,lockdown phase,en
-http://purl.org/zonmw/covid19/10024,short-term impact on emotional wellbeing,en
-http://purl.org/zonmw/covid19/10029,prevention phase,en
-http://purl.org/zonmw/covid19/10022,rehabilitation,en
-http://purl.org/zonmw/covid19/10026,long COVID,en
-http://purl.org/zonmw/covid19/10020,post-covid care,en
-http://purl.org/zonmw/covid19/10025,long-term impact on emotional wellbeing,en
-http://purl.org/zonmw/covid19/10027,regulation phase,en
-http://purl.org/zonmw/covid19/10232,Diagnostiek,en
-http://purl.org/zonmw/covid19/10233,impact of measures and strategies,en
-http://purl.org/zonmw/covid19/10236,therapy,en
-http://purl.org/zonmw/covid19/10235,education,en
-http://purl.org/zonmw/covid19/10238,Prognose,en
-http://purl.org/zonmw/covid19/10237,risk analysis,en
-http://purl.org/zonmw/covid19/10231,organisation of care and prevention,en
-http://purl.org/zonmw/covid19/10239,Immunologie,en
-http://purl.org/zonmw/covid19/10234,healthcare,en
-http://purl.org/zonmw/covid19/10274,viral infection,en
-http://purl.org/zonmw/covid19/10276,base call quality score,en
-http://purl.org/zonmw/covid19/10271,viral epidemiology,en
-http://purl.org/zonmw/covid19/10273,viral transmission,en
-http://purl.org/zonmw/covid19/10272,viral evolution,en
-http://purl.org/zonmw/covid19/10270,COVID-19,en
-http://purl.org/zonmw/covid19/10275,base calls,en
-http://purl.org/zonmw/covid19/10132,audiovisual data,en
-http://purl.org/zonmw/covid19/10134,video recording,en
-http://purl.org/zonmw/covid19/10136,field note,en
-http://purl.org/zonmw/covid19/10135,qualitative data,en
-http://purl.org/zonmw/covid19/10133,picture,en
-http://purl.org/zonmw/covid19/10131,GIS data,en
-http://purl.org/zonmw/covid19/10130,map,en
-http://purl.org/zonmw/covid19/10138,social media data,en
-http://purl.org/zonmw/covid19/10139,diaries,en
-http://purl.org/zonmw/covid19/10137,focus group discussion,en
-http://purl.org/zonmw/covid19/10030,social distancing phase,en
-http://purl.org/zonmw/covid19/10035,second wave,en
-http://purl.org/zonmw/covid19/10038,people by age,en
-http://purl.org/zonmw/covid19/10036,third wave,en
-http://purl.org/zonmw/covid19/10032,curefew,en
-http://purl.org/zonmw/covid19/10039,prematures,en
-http://purl.org/zonmw/covid19/10033,COVID-19 phase,en
-http://purl.org/zonmw/covid19/10031,restricted shopping phase,en
-http://purl.org/zonmw/covid19/10034,first wave,en
-http://purl.org/zonmw/covid19/10061,preschooler,en
-http://purl.org/zonmw/covid19/10064,secondary school student,en
-http://purl.org/zonmw/covid19/10067,people by employment,en
-http://purl.org/zonmw/covid19/10065,vocational school student,en
-http://purl.org/zonmw/covid19/10062,daycare child,en
-http://purl.org/zonmw/covid19/10063,primary school student,en
-http://purl.org/zonmw/covid19/10060,people by education,en
-http://purl.org/zonmw/covid19/10066,university student,en
-http://purl.org/zonmw/covid19/10069,individual with high socio-economic status,en
-http://purl.org/zonmw/covid19/10068,individual with low socio-economic status,en
-http://purl.org/zonmw/covid19/10220,COVID-19 vaccination grouping,en
+http://purl.bioontology.org/ontology/ICD10CM/B34.2,"Coronavirus infection, unspecified",en
+http://purl.bioontology.org/ontology/ICD10CM/B95-B97,"Bacterial and viral infectious agents (B95-B97)",en
+http://purl.bioontology.org/ontology/ICD10CM/B97.21,"SARS-associated coronavirus as the cause of diseases classified elsewhere",en
+http://purl.bioontology.org/ontology/ICD10CM/D65-D69,"Coagulation defects, purpura and other hemorrhagic conditions (D65-D69)",en
+http://purl.bioontology.org/ontology/ICD10CM/F03,"Unspecified dementia",en
+http://purl.bioontology.org/ontology/ICD10CM/G30,"Alzheimer's disease",en
+http://purl.bioontology.org/ontology/ICD10CM/G93.3,"Postviral and related fatigue syndromes",en
+http://purl.bioontology.org/ontology/ICD10CM/G93.31,"Postviral fatigue syndrome",en
+http://purl.bioontology.org/ontology/ICD10CM/I21,"Acute myocardial infarction",en
+http://purl.bioontology.org/ontology/ICD10CM/I26-I28,"Pulmonary heart disease and diseases of pulmonary circulation (I26-I28)",en
+http://purl.bioontology.org/ontology/ICD10CM/I49.9,"Cardiac arrhythmia, unspecified",en
+http://purl.bioontology.org/ontology/ICD10CM/I50,"Heart failure",en
+http://purl.bioontology.org/ontology/ICD10CM/I51.4,"Myocarditis, unspecified",en
+http://purl.bioontology.org/ontology/ICD10CM/I60-I69,"Cerebrovascular diseases (I60-I69)",en
+http://purl.bioontology.org/ontology/ICD10CM/I63,"Cerebral infarction",en
+http://purl.bioontology.org/ontology/ICD10CM/I67.6,"Nonpyogenic thrombosis of intracranial venous system",en
+http://purl.bioontology.org/ontology/ICD10CM/I80-I89,"Diseases of veins, lymphatic vessels and lymph nodes, not elsewhere classified (I80-I89)",en
+http://purl.bioontology.org/ontology/ICD10CM/I82,"Other venous embolism and thrombosis",en
+http://purl.bioontology.org/ontology/ICD10CM/J00-J99,"Diseases of the respiratory system (J00-J99)",en
+http://purl.bioontology.org/ontology/ICD10CM/J06.9,"Acute upper respiratory infection, unspecified",en
+http://purl.bioontology.org/ontology/ICD10CM/J12.81,"Pneumonia due to SARS-associated coronavirus",en
+http://purl.bioontology.org/ontology/ICD10CM/J12.82,"Pneumonia due to coronavirus disease 2019",en
+http://purl.bioontology.org/ontology/ICD10CM/M30.3,"Mucocutaneous lymph node syndrome [Kawasaki]",en
+http://purl.bioontology.org/ontology/ICD10CM/M35.81,"Multisystem inflammatory syndrome",en
+http://purl.bioontology.org/ontology/ICD10CM/R53,"Malaise and fatigue",en
+http://purl.bioontology.org/ontology/ICD10CM/R53.82,"Chronic fatigue, unspecified",en
+http://purl.bioontology.org/ontology/ICD10CM/T83.510S,"Infection and inflammatory reaction due to cystostomy catheter, sequela",en
+http://purl.bioontology.org/ontology/ICD10CM/U00-U85,"Codes for special purposes (U00-U85)",en
+http://purl.bioontology.org/ontology/ICD10CM/U07.1,"COVID-19",en
+http://purl.bioontology.org/ontology/ICD10CM/U09,"Post COVID-19 condition",en
+http://purl.bioontology.org/ontology/ICD10CM/U09.9,"Post COVID-19 condition, unspecified",en
+http://purl.bioontology.org/ontology/ICD10CM/Z01.89,"Encounter for other specified special examinations",en
+http://purl.bioontology.org/ontology/ICD10CM/Z11.52,"Encounter for screening for COVID-19",en
+http://purl.org/zonmw/covid19/10121,"ultrasound",en
+http://purl.org/zonmw/covid19/10127,"environmental data",en
+http://purl.org/zonmw/covid19/10125,"survey data",en
+http://purl.org/zonmw/covid19/10129,"aerial photography",en
+http://purl.org/zonmw/covid19/10124,"social data",en
+http://purl.org/zonmw/covid19/10123,"infrared thermography",en
+http://purl.org/zonmw/covid19/10122,"computed tomography",en
+http://purl.org/zonmw/covid19/10128,"geographical data",en
+http://purl.org/zonmw/covid19/10120,"X-ray imaging",en
+http://purl.org/zonmw/covid19/10126,"COVID policy and prevention measures",en
+http://purl.org/zonmw/covid19/10174,"nasopharyngeal swab specimen",en
+http://purl.org/zonmw/covid19/10176,"tissue specimen",en
+http://purl.org/zonmw/covid19/10175,"oropharyngeal swab specimen",en
+http://purl.org/zonmw/covid19/10172,"frozen specimen",en
+http://purl.org/zonmw/covid19/10173,"nasal swab",en
+http://purl.org/zonmw/covid19/10178,"FFPE tissue specimen",en
+http://purl.org/zonmw/covid19/10179,"glutaraldehyde fixed tissue specimen",en
+http://purl.org/zonmw/covid19/10171,"fresh specimen",en
+http://purl.org/zonmw/covid19/10170,"cell line",en
+http://purl.org/zonmw/covid19/10177,"vaginal swab specimen",en
+http://purl.org/zonmw/covid19/10198,"animal facility (breeding/transgenesis)",en
+http://purl.org/zonmw/covid19/10190,"ML-3 laboratory",en
+http://purl.org/zonmw/covid19/10195,"antibody facility",en
+http://purl.org/zonmw/covid19/10194,"BSL-4 laboratory",en
+http://purl.org/zonmw/covid19/10191,"BSL-1 laboratory",en
+http://purl.org/zonmw/covid19/10193,"BSL-3 laboratory",en
+http://purl.org/zonmw/covid19/10196,"proteomics facility",en
+http://purl.org/zonmw/covid19/10192,"BSL-2 laboratory",en
+http://purl.org/zonmw/covid19/10199,"flow cytometry facility",en
+http://purl.org/zonmw/covid19/10197,"metabolomics facility",en
+http://purl.org/zonmw/covid19/10158,"saliva",en
+http://purl.org/zonmw/covid19/10157,"plasma",en
+http://purl.org/zonmw/covid19/10154,"blood",en
+http://purl.org/zonmw/covid19/10159,"semen",en
+http://purl.org/zonmw/covid19/10156,"feces",en
+http://purl.org/zonmw/covid19/10155,"breath",en
+http://purl.org/zonmw/covid19/10240,"behaviour",en
+http://purl.org/zonmw/covid19/10249,"predictive diagnostics and treatment - risk analysis and prognostics",en
+http://purl.org/zonmw/covid19/10246,"cloacal swab",en
+http://purl.org/zonmw/covid19/10245,"perineal swab",en
+http://purl.org/zonmw/covid19/10244,"genomics data",en
+http://purl.org/zonmw/covid19/10148,"mouse",en
+http://purl.org/zonmw/covid19/10146,"human",en
+http://purl.org/zonmw/covid19/10147,"mink",en
+http://purl.org/zonmw/covid19/10140,"interview data",en
+http://purl.org/zonmw/covid19/10143,"prototype description",en
+http://purl.org/zonmw/covid19/10142,"study design",en
+http://purl.org/zonmw/covid19/10149,"rat",en
+http://purl.org/zonmw/covid19/10023,"surveillance phase",en
+http://purl.org/zonmw/covid19/10021,"palliative care",en
+http://purl.org/zonmw/covid19/10028,"lockdown phase",en
+http://purl.org/zonmw/covid19/10024,"short-term impact on emotional wellbeing",en
+http://purl.org/zonmw/covid19/10029,"prevention phase",en
+http://purl.org/zonmw/covid19/10022,"rehabilitation",en
+http://purl.org/zonmw/covid19/10026,"long COVID",en
+http://purl.org/zonmw/covid19/10020,"post-covid care",en
+http://purl.org/zonmw/covid19/10025,"long-term impact on emotional wellbeing",en
+http://purl.org/zonmw/covid19/10027,"regulation phase",en
+http://purl.org/zonmw/covid19/10232,"Diagnostiek",en
+http://purl.org/zonmw/covid19/10233,"impact of measures and strategies",en
+http://purl.org/zonmw/covid19/10236,"therapy",en
+http://purl.org/zonmw/covid19/10235,"education",en
+http://purl.org/zonmw/covid19/10238,"Prognose",en
+http://purl.org/zonmw/covid19/10237,"risk analysis",en
+http://purl.org/zonmw/covid19/10231,"organisation of care and prevention",en
+http://purl.org/zonmw/covid19/10239,"Immunologie",en
+http://purl.org/zonmw/covid19/10234,"healthcare",en
+http://purl.org/zonmw/covid19/10274,"viral infection",en
+http://purl.org/zonmw/covid19/10276,"base call quality score",en
+http://purl.org/zonmw/covid19/10271,"viral epidemiology",en
+http://purl.org/zonmw/covid19/10273,"viral transmission",en
+http://purl.org/zonmw/covid19/10272,"viral evolution",en
+http://purl.org/zonmw/covid19/10270,"COVID-19",en
+http://purl.org/zonmw/covid19/10275,"base calls",en
+http://purl.org/zonmw/covid19/10132,"audiovisual data",en
+http://purl.org/zonmw/covid19/10134,"video recording",en
+http://purl.org/zonmw/covid19/10136,"field note",en
+http://purl.org/zonmw/covid19/10135,"qualitative data",en
+http://purl.org/zonmw/covid19/10133,"picture",en
+http://purl.org/zonmw/covid19/10131,"GIS data",en
+http://purl.org/zonmw/covid19/10130,"map",en
+http://purl.org/zonmw/covid19/10138,"social media data",en
+http://purl.org/zonmw/covid19/10139,"diaries",en
+http://purl.org/zonmw/covid19/10137,"focus group discussion",en
+http://purl.org/zonmw/covid19/10030,"social distancing phase",en
+http://purl.org/zonmw/covid19/10035,"second wave",en
+http://purl.org/zonmw/covid19/10038,"people by age",en
+http://purl.org/zonmw/covid19/10036,"third wave",en
+http://purl.org/zonmw/covid19/10032,"curefew",en
+http://purl.org/zonmw/covid19/10039,"prematures",en
+http://purl.org/zonmw/covid19/10033,"COVID-19 phase",en
+http://purl.org/zonmw/covid19/10031,"restricted shopping phase",en
+http://purl.org/zonmw/covid19/10034,"first wave",en
+http://purl.org/zonmw/covid19/10061,"preschooler",en
+http://purl.org/zonmw/covid19/10064,"secondary school student",en
+http://purl.org/zonmw/covid19/10067,"people by employment",en
+http://purl.org/zonmw/covid19/10065,"vocational school student",en
+http://purl.org/zonmw/covid19/10062,"daycare child",en
+http://purl.org/zonmw/covid19/10063,"primary school student",en
+http://purl.org/zonmw/covid19/10060,"people by education",en
+http://purl.org/zonmw/covid19/10066,"university student",en
+http://purl.org/zonmw/covid19/10069,"individual with high socio-economic status",en
+http://purl.org/zonmw/covid19/10068,"individual with low socio-economic status",en
+http://purl.org/zonmw/covid19/10220,"COVID-19 vaccination grouping",en
 http://purl.org/zonmw/covid19/10227,"virus, immunity and immune response - vaccine studies",en
-http://purl.org/zonmw/covid19/10226,predictive diagnostics and treatment - treatment,en
-http://purl.org/zonmw/covid19/10221,political data,en
-http://purl.org/zonmw/covid19/10223,socio-economic data,en
-http://purl.org/zonmw/covid19/10222,economic data,en
-http://purl.org/zonmw/covid19/10228,care and prevention - organisation of care and prevention,en
-http://purl.org/zonmw/covid19/10229,effects on society - impacts of measurements and strategies,en
-http://purl.org/zonmw/covid19/10093,non-hospitalised covid-19 patient,en
-http://purl.org/zonmw/covid19/10095,Individual after first infection,en
-http://purl.org/zonmw/covid19/10091,COVID-19 patient grouping,en
-http://purl.org/zonmw/covid19/10092,hospitalised covid-19 patient,en
-http://purl.org/zonmw/covid19/10098,target group of policy interventions,en
-http://purl.org/zonmw/covid19/10099,homeless,en
-http://purl.org/zonmw/covid19/10090,blood donor,en
-http://purl.org/zonmw/covid19/10094,long-covid-19 patient,en
-http://purl.org/zonmw/covid19/10096,individual with SARS-CoV-2 vaccination,en
-http://purl.org/zonmw/covid19/10097,individual refusing SARS-CoV-2 vaccination,en
-http://purl.org/zonmw/covid19/10000,deprecated,en
-http://purl.org/zonmw/covid19/10005,provincial,en
-http://purl.org/zonmw/covid19/10006,regional,en
-http://purl.org/zonmw/covid19/10003,urban,en
-http://purl.org/zonmw/covid19/10008,international,en
-http://purl.org/zonmw/covid19/10007,national,en
-http://purl.org/zonmw/covid19/10002,area,en
-http://purl.org/zonmw/covid19/10004,rural,en
-http://purl.org/zonmw/covid19/10001,spatial scope,en
-http://purl.org/zonmw/covid19/10009,care setting,en
-http://purl.org/zonmw/covid19/10100,victim of domestic violence,en
-http://purl.org/zonmw/covid19/10101,illiterate people,en
-http://purl.org/zonmw/covid19/10108,health data,en
-http://purl.org/zonmw/covid19/10103,intellectual disabled,en
-http://purl.org/zonmw/covid19/10109,health record data,en
-http://purl.org/zonmw/covid19/10106,single household person,en
-http://purl.org/zonmw/covid19/10102,physical disabled,en
-http://purl.org/zonmw/covid19/10105,policy-maker,en
-http://purl.org/zonmw/covid19/10104,mental health patient,en
-http://purl.org/zonmw/covid19/10187,laboratory service,en
-http://purl.org/zonmw/covid19/10182,DNA,en
-http://purl.org/zonmw/covid19/10181,cDNA,en
-http://purl.org/zonmw/covid19/10183,RNA,en
-http://purl.org/zonmw/covid19/10185,antibody,en
-http://purl.org/zonmw/covid19/10188,ML-1 laboratory,en
-http://purl.org/zonmw/covid19/10184,protein,en
-http://purl.org/zonmw/covid19/10189,ML-2 laboratory,en
-http://purl.org/zonmw/covid19/10078,individual with a migration background,en
-http://purl.org/zonmw/covid19/10070,employed person,en
-http://purl.org/zonmw/covid19/10071,self-employed individual,en
-http://purl.org/zonmw/covid19/10076,tourist,en
-http://purl.org/zonmw/covid19/10077,people with migration background,en
-http://purl.org/zonmw/covid19/10075,individual living in a care home,en
-http://purl.org/zonmw/covid19/10079,statushouder,en
-http://purl.org/zonmw/covid19/10074,professional care provider,en
-http://purl.org/zonmw/covid19/10072,employee with a temporary contract,en
-http://purl.org/zonmw/covid19/10073,informal care provider,en
-http://purl.org/zonmw/covid19/10012,GP care,en
-http://purl.org/zonmw/covid19/10011,transmural,en
-http://purl.org/zonmw/covid19/10013,nursing home care,en
-http://purl.org/zonmw/covid19/10014,hospital care,en
-http://purl.org/zonmw/covid19/10010,home care,en
-http://purl.org/zonmw/covid19/10017,local,en
-http://purl.org/zonmw/covid19/10015,informal care,en
-http://purl.org/zonmw/covid19/10016,residential care,en
-http://purl.org/zonmw/covid19/10019,acute care,en
-http://purl.org/zonmw/covid19/10018,health care phase,en
-http://purl.org/zonmw/covid19/10059,not specified,en
-http://purl.org/zonmw/covid19/10052,male,en
-http://purl.org/zonmw/covid19/10057,woman,en
-http://purl.org/zonmw/covid19/10053,female,en
-http://purl.org/zonmw/covid19/10050,very elderly,en
-http://purl.org/zonmw/covid19/10056,man,en
-http://purl.org/zonmw/covid19/10055,people by gender,en
-http://purl.org/zonmw/covid19/10058,non-binary,en
-http://purl.org/zonmw/covid19/10051,people by sex,en
-http://purl.org/zonmw/covid19/10054,intersex,en
-http://purl.org/zonmw/covid19/10207,pharmacy,en
-http://purl.org/zonmw/covid19/10209,biobank,en
-http://purl.org/zonmw/covid19/10201,sequencing facility,en
-http://purl.org/zonmw/covid19/10204,data analytics facility,en
-http://purl.org/zonmw/covid19/10202,hiPSC facility,en
-http://purl.org/zonmw/covid19/10200,microscopy facility,en
-http://purl.org/zonmw/covid19/10203,GMP facility,en
-http://purl.org/zonmw/covid19/10206,viral vector facility,en
-http://purl.org/zonmw/covid19/10205,biobank facility,en
-http://purl.org/zonmw/covid19/10208,repository,en
-http://purl.org/zonmw/covid19/10044,primary school children,en
-http://purl.org/zonmw/covid19/10047,young adults,en
-http://purl.org/zonmw/covid19/10042,babies,en
-http://purl.org/zonmw/covid19/10045,teenager,en
-http://purl.org/zonmw/covid19/10040,newborns,en
-http://purl.org/zonmw/covid19/10049,elderly,en
-http://purl.org/zonmw/covid19/10046,young people,en
-http://purl.org/zonmw/covid19/10041,neonates,en
-http://purl.org/zonmw/covid19/10043,small children,en
-http://purl.org/zonmw/covid19/10048,adults,en
-http://purl.org/zonmw/covid19/10161,sewage,en
-http://purl.org/zonmw/covid19/10164,tissue,en
-http://purl.org/zonmw/covid19/10162,sputum,en
-http://purl.org/zonmw/covid19/10160,serum,en
-http://purl.org/zonmw/covid19/10163,tear,en
-http://purl.org/zonmw/covid19/10165,urine,en
-http://purl.org/zonmw/covid19/10167,nutrition,en
-http://purl.org/zonmw/covid19/10166,peripheral blood mononuclear cell,en
-http://purl.org/zonmw/covid19/10168,cervicovaginal secretion,en
-http://purl.org/zonmw/covid19/10080,asylum seeker,en
-http://purl.org/zonmw/covid19/10081,undocumented migrant,en
-http://purl.org/zonmw/covid19/10082,season labour migrant,en
-http://purl.org/zonmw/covid19/10083,people by COVID-19 risk factors,en
-http://purl.org/zonmw/covid19/10088,patient using anticoagulants,en
-http://purl.org/zonmw/covid19/10086,patient with (covid-19 associated) thrombosis,en
-http://purl.org/zonmw/covid19/10087,individual with obesity,en
-http://purl.org/zonmw/covid19/10085,individual with underlying disease(s),en
-http://purl.org/zonmw/covid19/10084,individual with a chronic illness,en
-http://purl.org/zonmw/covid19/10089,surgical patient,en
-http://purl.org/zonmw/covid19/10264,genomics,en
-http://purl.org/zonmw/covid19/10268,performed by a certified laboratory,en
-http://purl.org/zonmw/covid19/10265,sequence length,en
-http://purl.org/zonmw/covid19/10269,SARS-CoV-2,en
-http://purl.org/zonmw/covid19/10267,date of last PRC test,en
-http://purl.org/zonmw/covid19/10262,personal information data,en
-http://purl.org/zonmw/covid19/10263,neighbourhood,en
+http://purl.org/zonmw/covid19/10226,"predictive diagnostics and treatment - treatment",en
+http://purl.org/zonmw/covid19/10221,"political data",en
+http://purl.org/zonmw/covid19/10223,"socio-economic data",en
+http://purl.org/zonmw/covid19/10222,"economic data",en
+http://purl.org/zonmw/covid19/10228,"care and prevention - organisation of care and prevention",en
+http://purl.org/zonmw/covid19/10229,"effects on society - impacts of measurements and strategies",en
+http://purl.org/zonmw/covid19/10093,"non-hospitalised covid-19 patient",en
+http://purl.org/zonmw/covid19/10095,"Individual after first infection",en
+http://purl.org/zonmw/covid19/10091,"COVID-19 patient grouping",en
+http://purl.org/zonmw/covid19/10092,"hospitalised covid-19 patient",en
+http://purl.org/zonmw/covid19/10098,"target group of policy interventions",en
+http://purl.org/zonmw/covid19/10099,"homeless",en
+http://purl.org/zonmw/covid19/10090,"blood donor",en
+http://purl.org/zonmw/covid19/10094,"long-covid-19 patient",en
+http://purl.org/zonmw/covid19/10096,"individual with SARS-CoV-2 vaccination",en
+http://purl.org/zonmw/covid19/10097,"individual refusing SARS-CoV-2 vaccination",en
+http://purl.org/zonmw/covid19/10000,"deprecated",en
+http://purl.org/zonmw/covid19/10005,"provincial",en
+http://purl.org/zonmw/covid19/10006,"regional",en
+http://purl.org/zonmw/covid19/10003,"urban",en
+http://purl.org/zonmw/covid19/10008,"international",en
+http://purl.org/zonmw/covid19/10007,"national",en
+http://purl.org/zonmw/covid19/10002,"area",en
+http://purl.org/zonmw/covid19/10004,"rural",en
+http://purl.org/zonmw/covid19/10001,"spatial scope",en
+http://purl.org/zonmw/covid19/10009,"care setting",en
+http://purl.org/zonmw/covid19/10100,"victim of domestic violence",en
+http://purl.org/zonmw/covid19/10101,"illiterate people",en
+http://purl.org/zonmw/covid19/10108,"health data",en
+http://purl.org/zonmw/covid19/10103,"intellectual disabled",en
+http://purl.org/zonmw/covid19/10109,"health record data",en
+http://purl.org/zonmw/covid19/10106,"single household person",en
+http://purl.org/zonmw/covid19/10102,"physical disabled",en
+http://purl.org/zonmw/covid19/10105,"policy-maker",en
+http://purl.org/zonmw/covid19/10104,"mental health patient",en
+http://purl.org/zonmw/covid19/10187,"laboratory service",en
+http://purl.org/zonmw/covid19/10182,"DNA",en
+http://purl.org/zonmw/covid19/10181,"cDNA",en
+http://purl.org/zonmw/covid19/10183,"RNA",en
+http://purl.org/zonmw/covid19/10185,"antibody",en
+http://purl.org/zonmw/covid19/10188,"ML-1 laboratory",en
+http://purl.org/zonmw/covid19/10184,"protein",en
+http://purl.org/zonmw/covid19/10189,"ML-2 laboratory",en
+http://purl.org/zonmw/covid19/10078,"individual with a migration background",en
+http://purl.org/zonmw/covid19/10070,"employed person",en
+http://purl.org/zonmw/covid19/10071,"self-employed individual",en
+http://purl.org/zonmw/covid19/10076,"tourist",en
+http://purl.org/zonmw/covid19/10077,"people with migration background",en
+http://purl.org/zonmw/covid19/10075,"individual living in a care home",en
+http://purl.org/zonmw/covid19/10079,"statushouder",en
+http://purl.org/zonmw/covid19/10074,"professional care provider",en
+http://purl.org/zonmw/covid19/10072,"employee with a temporary contract",en
+http://purl.org/zonmw/covid19/10073,"informal care provider",en
+http://purl.org/zonmw/covid19/10012,"GP care",en
+http://purl.org/zonmw/covid19/10011,"transmural",en
+http://purl.org/zonmw/covid19/10013,"nursing home care",en
+http://purl.org/zonmw/covid19/10014,"hospital care",en
+http://purl.org/zonmw/covid19/10010,"home care",en
+http://purl.org/zonmw/covid19/10017,"local",en
+http://purl.org/zonmw/covid19/10015,"informal care",en
+http://purl.org/zonmw/covid19/10016,"residential care",en
+http://purl.org/zonmw/covid19/10019,"acute care",en
+http://purl.org/zonmw/covid19/10018,"health care phase",en
+http://purl.org/zonmw/covid19/10059,"not specified",en
+http://purl.org/zonmw/covid19/10052,"male",en
+http://purl.org/zonmw/covid19/10057,"woman",en
+http://purl.org/zonmw/covid19/10053,"female",en
+http://purl.org/zonmw/covid19/10050,"very elderly",en
+http://purl.org/zonmw/covid19/10056,"man",en
+http://purl.org/zonmw/covid19/10055,"people by gender",en
+http://purl.org/zonmw/covid19/10058,"non-binary",en
+http://purl.org/zonmw/covid19/10051,"people by sex",en
+http://purl.org/zonmw/covid19/10054,"intersex",en
+http://purl.org/zonmw/covid19/10207,"pharmacy",en
+http://purl.org/zonmw/covid19/10209,"biobank",en
+http://purl.org/zonmw/covid19/10201,"sequencing facility",en
+http://purl.org/zonmw/covid19/10204,"data analytics facility",en
+http://purl.org/zonmw/covid19/10202,"hiPSC facility",en
+http://purl.org/zonmw/covid19/10200,"microscopy facility",en
+http://purl.org/zonmw/covid19/10203,"GMP facility",en
+http://purl.org/zonmw/covid19/10206,"viral vector facility",en
+http://purl.org/zonmw/covid19/10205,"biobank facility",en
+http://purl.org/zonmw/covid19/10208,"repository",en
+http://purl.org/zonmw/covid19/10044,"primary school children",en
+http://purl.org/zonmw/covid19/10047,"young adults",en
+http://purl.org/zonmw/covid19/10042,"babies",en
+http://purl.org/zonmw/covid19/10045,"teenager",en
+http://purl.org/zonmw/covid19/10040,"newborns",en
+http://purl.org/zonmw/covid19/10049,"elderly",en
+http://purl.org/zonmw/covid19/10046,"young people",en
+http://purl.org/zonmw/covid19/10041,"neonates",en
+http://purl.org/zonmw/covid19/10043,"small children",en
+http://purl.org/zonmw/covid19/10048,"adults",en
+http://purl.org/zonmw/covid19/10161,"sewage",en
+http://purl.org/zonmw/covid19/10164,"tissue",en
+http://purl.org/zonmw/covid19/10162,"sputum",en
+http://purl.org/zonmw/covid19/10160,"serum",en
+http://purl.org/zonmw/covid19/10163,"tear",en
+http://purl.org/zonmw/covid19/10165,"urine",en
+http://purl.org/zonmw/covid19/10167,"nutrition",en
+http://purl.org/zonmw/covid19/10166,"peripheral blood mononuclear cell",en
+http://purl.org/zonmw/covid19/10168,"cervicovaginal secretion",en
+http://purl.org/zonmw/covid19/10080,"asylum seeker",en
+http://purl.org/zonmw/covid19/10081,"undocumented migrant",en
+http://purl.org/zonmw/covid19/10082,"season labour migrant",en
+http://purl.org/zonmw/covid19/10083,"people by COVID-19 risk factors",en
+http://purl.org/zonmw/covid19/10088,"patient using anticoagulants",en
+http://purl.org/zonmw/covid19/10086,"patient with (covid-19 associated) thrombosis",en
+http://purl.org/zonmw/covid19/10087,"individual with obesity",en
+http://purl.org/zonmw/covid19/10085,"individual with underlying disease(s)",en
+http://purl.org/zonmw/covid19/10084,"individual with a chronic illness",en
+http://purl.org/zonmw/covid19/10089,"surgical patient",en
+http://purl.org/zonmw/covid19/10264,"genomics",en
+http://purl.org/zonmw/covid19/10268,"performed by a certified laboratory",en
+http://purl.org/zonmw/covid19/10265,"sequence length",en
+http://purl.org/zonmw/covid19/10269,"SARS-CoV-2",en
+http://purl.org/zonmw/covid19/10267,"date of last PRC test",en
+http://purl.org/zonmw/covid19/10262,"personal information data",en
+http://purl.org/zonmw/covid19/10263,"neighbourhood",en
 http://purl.org/zonmw/covid19/10260,"virus, immunity and immune response - immune compromised",en
 http://purl.org/zonmw/covid19/10261,"virus, immunity and immune response - safety and side effects",en
-http://purl.org/zonmw/covid19/10266,genetic variation,en
-http://purl.org/zonmw/covid19/10257,effects on society - ethical issues,en
-http://purl.org/zonmw/covid19/10252,predictive diagnostics and treatment - Long COVID,en
-http://purl.org/zonmw/covid19/10251,predictive diagnostics and treatment - recovery and rehabilitation,en
-http://purl.org/zonmw/covid19/10255,care and prevention - palliative care and bereavement,en
-http://purl.org/zonmw/covid19/10254,care and prevention - transmission and epidemiology,en
+http://purl.org/zonmw/covid19/10266,"genetic variation",en
+http://purl.org/zonmw/covid19/10257,"effects on society - ethical issues",en
+http://purl.org/zonmw/covid19/10252,"predictive diagnostics and treatment - Long COVID",en
+http://purl.org/zonmw/covid19/10251,"predictive diagnostics and treatment - recovery and rehabilitation",en
+http://purl.org/zonmw/covid19/10255,"care and prevention - palliative care and bereavement",en
+http://purl.org/zonmw/covid19/10254,"care and prevention - transmission and epidemiology",en
 http://purl.org/zonmw/covid19/10259,"virus, immunity and immune response - immunology",en
-http://purl.org/zonmw/covid19/10250,predictive diagnostics and treatment - studies into clinical treatments,en
-http://purl.org/zonmw/covid19/10253,care and prevention - care and prevention for vulnerable citizens,en
+http://purl.org/zonmw/covid19/10250,"predictive diagnostics and treatment - studies into clinical treatments",en
+http://purl.org/zonmw/covid19/10253,"care and prevention - care and prevention for vulnerable citizens",en
 http://purl.org/zonmw/covid19/10258,"virus, immunity and immune response - animal free innovations",en
-http://purl.org/zonmw/covid19/10256,effects on society - economic resilience,en
-http://purl.org/zonmw/covid19/10211,ELSI service,en
-http://purl.org/zonmw/covid19/10210,data catalogue,en
-http://purl.org/zonmw/covid19/10111,diagnostic data,en
-http://purl.org/zonmw/covid19/10114,treatment data,en
-http://purl.org/zonmw/covid19/10119,magnetic resonance imaging,en
-http://purl.org/zonmw/covid19/10112,physiological data,en
-http://purl.org/zonmw/covid19/10115,medication data,en
-http://purl.org/zonmw/covid19/10116,molecular data,en
-http://purl.org/zonmw/covid19/10118,diagnostic imaging,en
-http://purl.org/zonmw/covid19/10110,medical history data,en
-http://purl.org/zonmw/covid19/10113,laboratory data,en
-http://purl.org/zonmw/covid19/10117,genetic data,en
-http://purl.org/zonmw/id-amr/10022,screening phase,en
-http://purl.org/zonmw/id-amr/10044,wastewater,en
+http://purl.org/zonmw/covid19/10256,"effects on society - economic resilience",en
+http://purl.org/zonmw/covid19/10211,"ELSI service",en
+http://purl.org/zonmw/covid19/10210,"data catalogue",en
+http://purl.org/zonmw/covid19/10111,"diagnostic data",en
+http://purl.org/zonmw/covid19/10114,"treatment data",en
+http://purl.org/zonmw/covid19/10119,"magnetic resonance imaging",en
+http://purl.org/zonmw/covid19/10112,"physiological data",en
+http://purl.org/zonmw/covid19/10115,"medication data",en
+http://purl.org/zonmw/covid19/10116,"molecular data",en
+http://purl.org/zonmw/covid19/10118,"diagnostic imaging",en
+http://purl.org/zonmw/covid19/10110,"medical history data",en
+http://purl.org/zonmw/covid19/10113,"laboratory data",en
+http://purl.org/zonmw/covid19/10117,"genetic data",en
+http://purl.org/zonmw/id-amr/10022,"screening phase",en
+http://purl.org/zonmw/id-amr/10044,"wastewater",en
 http://purl.org/zonmw/id-amr/10139,"plasma, single spun",en
-http://purl.org/zonmw/id-amr/10237,open only through collaboration,en
-http://purl.org/zonmw/id-amr/10010,vector-borne disease,en
-http://purl.org/zonmw/id-amr/10167,amplifiablility of nucleic acids,en
-http://purl.org/zonmw/id-amr/10250,sensitive information,en
-http://purl.org/zonmw/id-amr/10100,fruit,en
-http://purl.org/zonmw/id-amr/10112,bone marrow aspirate,en
-http://purl.org/zonmw/id-amr/10000,deprecated,en
-http://purl.org/zonmw/id-amr/10105,pulse - bean,en
-http://purl.org/zonmw/id-amr/10104,oil seed,en
-http://purl.org/zonmw/id-amr/10024,disease phase,en
-http://purl.org/zonmw/id-amr/10262,storage,en
-http://purl.org/zonmw/id-amr/10060,poultry,en
-http://purl.org/zonmw/id-amr/10061,insect,en
-http://purl.org/zonmw/id-amr/10073,health status data,en
-http://purl.org/zonmw/id-amr/10201,data integration,en
-http://purl.org/zonmw/id-amr/10045,water,en
-http://purl.org/zonmw/id-amr/10200,data analysis,en
-http://purl.org/zonmw/id-amr/10047,livestock,en
-http://purl.org/zonmw/id-amr/10207,training,en
-http://purl.org/zonmw/id-amr/10110,blood (whole),en
-http://purl.org/zonmw/id-amr/10236,open in response to specific calls,en
-http://purl.org/zonmw/id-amr/10035,subject having antimicrobial treatment,en
-http://purl.org/zonmw/id-amr/10097,synovial fluid specimen,en
+http://purl.org/zonmw/id-amr/10237,"open only through collaboration",en
+http://purl.org/zonmw/id-amr/10010,"vector-borne disease",en
+http://purl.org/zonmw/id-amr/10167,"amplifiablility of nucleic acids",en
+http://purl.org/zonmw/id-amr/10250,"sensitive information",en
+http://purl.org/zonmw/id-amr/10100,"fruit",en
+http://purl.org/zonmw/id-amr/10112,"bone marrow aspirate",en
+http://purl.org/zonmw/id-amr/10000,"deprecated",en
+http://purl.org/zonmw/id-amr/10105,"pulse - bean",en
+http://purl.org/zonmw/id-amr/10104,"oil seed",en
+http://purl.org/zonmw/id-amr/10024,"disease phase",en
+http://purl.org/zonmw/id-amr/10262,"storage",en
+http://purl.org/zonmw/id-amr/10060,"poultry",en
+http://purl.org/zonmw/id-amr/10061,"insect",en
+http://purl.org/zonmw/id-amr/10073,"health status data",en
+http://purl.org/zonmw/id-amr/10201,"data integration",en
+http://purl.org/zonmw/id-amr/10045,"water",en
+http://purl.org/zonmw/id-amr/10200,"data analysis",en
+http://purl.org/zonmw/id-amr/10047,"livestock",en
+http://purl.org/zonmw/id-amr/10207,"training",en
+http://purl.org/zonmw/id-amr/10110,"blood (whole)",en
+http://purl.org/zonmw/id-amr/10236,"open in response to specific calls",en
+http://purl.org/zonmw/id-amr/10035,"subject having antimicrobial treatment",en
+http://purl.org/zonmw/id-amr/10097,"synovial fluid specimen",en
 http://purl.org/zonmw/id-amr/10151,"urine, 24 h",en
 http://purl.org/zonmw/id-amr/10127,"disrupted tissue, non-viable",en
-http://purl.org/zonmw/id-amr/10253,viral disease,en
-http://purl.org/zonmw/id-amr/10102,crop,en
-http://purl.org/zonmw/id-amr/10192,clinical records,en
-http://purl.org/zonmw/id-amr/10255,fungal disease,en
-http://purl.org/zonmw/id-amr/10071,imaging data,en
-http://purl.org/zonmw/id-amr/10052,sheep (wool),en
-http://purl.org/zonmw/id-amr/10179,quality control of microbiological material,en
-http://purl.org/zonmw/id-amr/10117,cells from laser capture microdissected tissue,en
-http://purl.org/zonmw/id-amr/10223,in progress,en
-http://purl.org/zonmw/id-amr/10132,hair,en
-http://purl.org/zonmw/id-amr/10011,prion disease,en
-http://purl.org/zonmw/id-amr/10258,disease caused by insects,en
-http://purl.org/zonmw/id-amr/10145,solid tissue,en
-http://purl.org/zonmw/id-amr/10015,human domain,en
+http://purl.org/zonmw/id-amr/10253,"viral disease",en
+http://purl.org/zonmw/id-amr/10102,"crop",en
+http://purl.org/zonmw/id-amr/10192,"clinical records",en
+http://purl.org/zonmw/id-amr/10255,"fungal disease",en
+http://purl.org/zonmw/id-amr/10071,"imaging data",en
+http://purl.org/zonmw/id-amr/10052,"sheep (wool)",en
+http://purl.org/zonmw/id-amr/10179,"quality control of microbiological material",en
+http://purl.org/zonmw/id-amr/10117,"cells from laser capture microdissected tissue",en
+http://purl.org/zonmw/id-amr/10223,"in progress",en
+http://purl.org/zonmw/id-amr/10132,"hair",en
+http://purl.org/zonmw/id-amr/10011,"prion disease",en
+http://purl.org/zonmw/id-amr/10258,"disease caused by insects",en
+http://purl.org/zonmw/id-amr/10145,"solid tissue",en
+http://purl.org/zonmw/id-amr/10015,"human domain",en
 http://purl.org/zonmw/id-amr/10251,"yes, and it is GDPR compliant",en
-http://purl.org/zonmw/id-amr/10240,closed to access,en
-http://purl.org/zonmw/id-amr/10004,transmission,en
-http://purl.org/zonmw/id-amr/10048,diary cattle,en
-http://purl.org/zonmw/id-amr/10257,phytoplasma disease,en
-http://purl.org/zonmw/id-amr/10170,type of primary container,en
-http://purl.org/zonmw/id-amr/10123,cord blood,en
-http://purl.org/zonmw/id-amr/10229,genetic analysis restriction,en
-http://purl.org/zonmw/id-amr/10265,centrifugation information,en
-http://purl.org/zonmw/id-amr/10147,stool,en
-http://purl.org/zonmw/id-amr/10008,stewardship,en
-http://purl.org/zonmw/id-amr/10137,placenta,en
-http://purl.org/zonmw/id-amr/10066,aquaculture,en
-http://purl.org/zonmw/id-amr/10141,red blood cells,en
-http://purl.org/zonmw/id-amr/10103,cereal,en
-http://purl.org/zonmw/id-amr/10217,company department,en
-http://purl.org/zonmw/id-amr/10058,broiler,en
-http://purl.org/zonmw/id-amr/10129,enriched (physicochemically) circulating tumor cells,en
-http://purl.org/zonmw/id-amr/10030,subject with a viral infection,en
-http://purl.org/zonmw/id-amr/10085,protein,en
-http://purl.org/zonmw/id-amr/10126,dental pulp,en
-http://purl.org/zonmw/id-amr/10051,buffalo,en
-http://purl.org/zonmw/id-amr/10209,national registries data,en
-http://purl.org/zonmw/id-amr/10036,subject having vaccination,en
-http://purl.org/zonmw/id-amr/10122,cerebrospinal fluid,en
+http://purl.org/zonmw/id-amr/10240,"closed to access",en
+http://purl.org/zonmw/id-amr/10004,"transmission",en
+http://purl.org/zonmw/id-amr/10048,"diary cattle",en
+http://purl.org/zonmw/id-amr/10257,"phytoplasma disease",en
+http://purl.org/zonmw/id-amr/10170,"type of primary container",en
+http://purl.org/zonmw/id-amr/10123,"cord blood",en
+http://purl.org/zonmw/id-amr/10229,"genetic analysis restriction",en
+http://purl.org/zonmw/id-amr/10265,"centrifugation information",en
+http://purl.org/zonmw/id-amr/10147,"stool",en
+http://purl.org/zonmw/id-amr/10008,"stewardship",en
+http://purl.org/zonmw/id-amr/10137,"placenta",en
+http://purl.org/zonmw/id-amr/10066,"aquaculture",en
+http://purl.org/zonmw/id-amr/10141,"red blood cells",en
+http://purl.org/zonmw/id-amr/10103,"cereal",en
+http://purl.org/zonmw/id-amr/10217,"company department",en
+http://purl.org/zonmw/id-amr/10058,"broiler",en
+http://purl.org/zonmw/id-amr/10129,"enriched (physicochemically) circulating tumor cells",en
+http://purl.org/zonmw/id-amr/10030,"subject with a viral infection",en
+http://purl.org/zonmw/id-amr/10085,"protein",en
+http://purl.org/zonmw/id-amr/10126,"dental pulp",en
+http://purl.org/zonmw/id-amr/10051,"buffalo",en
+http://purl.org/zonmw/id-amr/10209,"national registries data",en
+http://purl.org/zonmw/id-amr/10036,"subject having vaccination",en
+http://purl.org/zonmw/id-amr/10122,"cerebrospinal fluid",en
 http://purl.org/zonmw/id-amr/10120,"cells from non-blood specimen type (e.g. dissociated tissue), non-viable",en
-http://purl.org/zonmw/id-amr/10094,specimen from geinital system,en
+http://purl.org/zonmw/id-amr/10094,"specimen from geinital system",en
 http://purl.org/zonmw/id-amr/10118,"cells from non blood specimen type (e.g. ascites, amniotic), non-viable",en
-http://purl.org/zonmw/id-amr/10018,environmental domain,en
-http://purl.org/zonmw/id-amr/10161,biomedical device,en
-http://purl.org/zonmw/id-amr/10228,export restriction,en
-http://purl.org/zonmw/id-amr/10107,detailed type of specimen,en
-http://purl.org/zonmw/id-amr/10050,beef cattle,en
-http://purl.org/zonmw/id-amr/10213,laboratory,en
-http://purl.org/zonmw/id-amr/10256,nematode disease,en
+http://purl.org/zonmw/id-amr/10018,"environmental domain",en
+http://purl.org/zonmw/id-amr/10161,"biomedical device",en
+http://purl.org/zonmw/id-amr/10228,"export restriction",en
+http://purl.org/zonmw/id-amr/10107,"detailed type of specimen",en
+http://purl.org/zonmw/id-amr/10050,"beef cattle",en
+http://purl.org/zonmw/id-amr/10213,"laboratory",en
+http://purl.org/zonmw/id-amr/10256,"nematode disease",en
 http://purl.org/zonmw/id-amr/10152,"urine, first morning",en
-http://purl.org/zonmw/id-amr/10041,infectious agent having antimicrobial resistance,en
-http://purl.org/zonmw/id-amr/10162,quality control of biomaterials,en
-http://purl.org/zonmw/id-amr/10186,less frequently,en
-http://purl.org/zonmw/id-amr/10029,subject with a bacterial infection,en
-http://purl.org/zonmw/id-amr/10149,tears,en
-http://purl.org/zonmw/id-amr/10243,up to one year,en
-http://purl.org/zonmw/id-amr/10157,animal material,en
-http://purl.org/zonmw/id-amr/10184,every two years,en
-http://purl.org/zonmw/id-amr/10171,pre-centrifugation conditions,en
-http://purl.org/zonmw/id-amr/10033,subject with risk of bacterial infection,en
-http://purl.org/zonmw/id-amr/10128,dried whole blood (e.g. guthrie cards),en
-http://purl.org/zonmw/id-amr/10172,centrifugation conditions,en
-http://purl.org/zonmw/id-amr/10266,viability frequency,en
-http://purl.org/zonmw/id-amr/10108,amniotic fluid,en
-http://purl.org/zonmw/id-amr/10165,concentration of molecular or cellular derivatives,en
-http://purl.org/zonmw/id-amr/10009,zoonotic disease,en
-http://purl.org/zonmw/id-amr/10225,consent restriction,en
-http://purl.org/zonmw/id-amr/10241,time frame,en
-http://purl.org/zonmw/id-amr/10227,disease area restriction,en
-http://purl.org/zonmw/id-amr/10062,wildlife,en
-http://purl.org/zonmw/id-amr/10072,data regarding antimicrobial resistance,en
-http://purl.org/zonmw/id-amr/10246,data quality,en
-http://purl.org/zonmw/id-amr/10089,blood specimen,en
-http://purl.org/zonmw/id-amr/10185,every five years,en
-http://purl.org/zonmw/id-amr/10059,layer,en
-http://purl.org/zonmw/id-amr/10087,outbreak,en
-http://purl.org/zonmw/id-amr/10219,private funding,en
-http://purl.org/zonmw/id-amr/10040,infectious agent,en
-http://purl.org/zonmw/id-amr/10106,tree nut,en
+http://purl.org/zonmw/id-amr/10041,"infectious agent having antimicrobial resistance",en
+http://purl.org/zonmw/id-amr/10162,"quality control of biomaterials",en
+http://purl.org/zonmw/id-amr/10186,"less frequently",en
+http://purl.org/zonmw/id-amr/10029,"subject with a bacterial infection",en
+http://purl.org/zonmw/id-amr/10149,"tears",en
+http://purl.org/zonmw/id-amr/10243,"up to one year",en
+http://purl.org/zonmw/id-amr/10157,"animal material",en
+http://purl.org/zonmw/id-amr/10184,"every two years",en
+http://purl.org/zonmw/id-amr/10171,"pre-centrifugation conditions",en
+http://purl.org/zonmw/id-amr/10033,"subject with risk of bacterial infection",en
+http://purl.org/zonmw/id-amr/10128,"dried whole blood (e.g. guthrie cards)",en
+http://purl.org/zonmw/id-amr/10172,"centrifugation conditions",en
+http://purl.org/zonmw/id-amr/10266,"viability frequency",en
+http://purl.org/zonmw/id-amr/10108,"amniotic fluid",en
+http://purl.org/zonmw/id-amr/10165,"concentration of molecular or cellular derivatives",en
+http://purl.org/zonmw/id-amr/10009,"zoonotic disease",en
+http://purl.org/zonmw/id-amr/10225,"consent restriction",en
+http://purl.org/zonmw/id-amr/10241,"time frame",en
+http://purl.org/zonmw/id-amr/10227,"disease area restriction",en
+http://purl.org/zonmw/id-amr/10062,"wildlife",en
+http://purl.org/zonmw/id-amr/10072,"data regarding antimicrobial resistance",en
+http://purl.org/zonmw/id-amr/10246,"data quality",en
+http://purl.org/zonmw/id-amr/10089,"blood specimen",en
+http://purl.org/zonmw/id-amr/10185,"every five years",en
+http://purl.org/zonmw/id-amr/10059,"layer",en
+http://purl.org/zonmw/id-amr/10087,"outbreak",en
+http://purl.org/zonmw/id-amr/10219,"private funding",en
+http://purl.org/zonmw/id-amr/10040,"infectious agent",en
+http://purl.org/zonmw/id-amr/10106,"tree nut",en
 http://purl.org/zonmw/id-amr/10125,"density-gradient-centrifugation-separated mononuclear cells, viable",en
-http://purl.org/zonmw/id-amr/10115,buccal cells,en
-http://purl.org/zonmw/id-amr/10046,air,en
+http://purl.org/zonmw/id-amr/10115,"buccal cells",en
+http://purl.org/zonmw/id-amr/10046,"air",en
 http://purl.org/zonmw/id-amr/10135,"non-density-gradient-centrifugation-separated buffy coat, non-viable",en
-http://purl.org/zonmw/id-amr/10242,up to one month,en
-http://purl.org/zonmw/id-amr/10053,sheep (milk),en
-http://purl.org/zonmw/id-amr/10034,subject with risk of viral infection,en
-http://purl.org/zonmw/id-amr/10037,subject having other treatments,en
-http://purl.org/zonmw/id-amr/10208,communication,en
-http://purl.org/zonmw/id-amr/10101,vegetable,en
-http://purl.org/zonmw/id-amr/10049,veal calve,en
-http://purl.org/zonmw/id-amr/10013,prudent use,en
-http://purl.org/zonmw/id-amr/10216,reference centre,en
-http://purl.org/zonmw/id-amr/10160,solution,en
-http://purl.org/zonmw/id-amr/10001,therapeutics,en
-http://purl.org/zonmw/id-amr/10038,subject by age,en
-http://purl.org/zonmw/id-amr/10063,companion animal,en
-http://purl.org/zonmw/id-amr/10021,diagnostic phase,en
-http://purl.org/zonmw/id-amr/10109,ascites fluid,en
-http://purl.org/zonmw/id-amr/10131,fresh cells from non-blood specimen type (e.g. biopsy),en
-http://purl.org/zonmw/id-amr/10111,bone,en
-http://purl.org/zonmw/id-amr/10196,patient ethnicity data,en
-http://purl.org/zonmw/id-amr/10005,intervention,en
-http://purl.org/zonmw/id-amr/10057,pig,en
-http://purl.org/zonmw/id-amr/10218,public funding,en
-http://purl.org/zonmw/id-amr/10133,nails,en
-http://purl.org/zonmw/id-amr/10222,not started,en
-http://purl.org/zonmw/id-amr/10006,preparedness and response,en
-http://purl.org/zonmw/id-amr/10191,sequencing - genotyping data,en
-http://purl.org/zonmw/id-amr/10164,quality management of pre-analytical data,en
-http://purl.org/zonmw/id-amr/10181,purity of microbiological material,en
-http://purl.org/zonmw/id-amr/10264,storage information,en
-http://purl.org/zonmw/id-amr/10090,bronchoalveolar lavage fluid sample,en
-http://purl.org/zonmw/id-amr/10263,centrifugation,en
-http://purl.org/zonmw/id-amr/10025,free-from-disease phase,en
+http://purl.org/zonmw/id-amr/10242,"up to one month",en
+http://purl.org/zonmw/id-amr/10053,"sheep (milk)",en
+http://purl.org/zonmw/id-amr/10034,"subject with risk of viral infection",en
+http://purl.org/zonmw/id-amr/10037,"subject having other treatments",en
+http://purl.org/zonmw/id-amr/10208,"communication",en
+http://purl.org/zonmw/id-amr/10101,"vegetable",en
+http://purl.org/zonmw/id-amr/10049,"veal calve",en
+http://purl.org/zonmw/id-amr/10013,"prudent use",en
+http://purl.org/zonmw/id-amr/10216,"reference centre",en
+http://purl.org/zonmw/id-amr/10160,"solution",en
+http://purl.org/zonmw/id-amr/10001,"therapeutics",en
+http://purl.org/zonmw/id-amr/10038,"subject by age",en
+http://purl.org/zonmw/id-amr/10063,"companion animal",en
+http://purl.org/zonmw/id-amr/10021,"diagnostic phase",en
+http://purl.org/zonmw/id-amr/10109,"ascites fluid",en
+http://purl.org/zonmw/id-amr/10131,"fresh cells from non-blood specimen type (e.g. biopsy)",en
+http://purl.org/zonmw/id-amr/10111,"bone",en
+http://purl.org/zonmw/id-amr/10196,"patient ethnicity data",en
+http://purl.org/zonmw/id-amr/10005,"intervention",en
+http://purl.org/zonmw/id-amr/10057,"pig",en
+http://purl.org/zonmw/id-amr/10218,"public funding",en
+http://purl.org/zonmw/id-amr/10133,"nails",en
+http://purl.org/zonmw/id-amr/10222,"not started",en
+http://purl.org/zonmw/id-amr/10006,"preparedness and response",en
+http://purl.org/zonmw/id-amr/10191,"sequencing - genotyping data",en
+http://purl.org/zonmw/id-amr/10164,"quality management of pre-analytical data",en
+http://purl.org/zonmw/id-amr/10181,"purity of microbiological material",en
+http://purl.org/zonmw/id-amr/10264,"storage information",en
+http://purl.org/zonmw/id-amr/10090,"bronchoalveolar lavage fluid sample",en
+http://purl.org/zonmw/id-amr/10263,"centrifugation",en
+http://purl.org/zonmw/id-amr/10025,"free-from-disease phase",en
 http://purl.org/zonmw/id-amr/10252,"yes, but it is not (yet) GDPR compliant",en
-http://purl.org/zonmw/id-amr/10210,organisation level,en
-http://purl.org/zonmw/id-amr/10198,experimental data,en
-http://purl.org/zonmw/id-amr/10221,collection status,en
-http://purl.org/zonmw/id-amr/10043,soil-waste,en
-http://purl.org/zonmw/id-amr/10142,saliva,en
-http://purl.org/zonmw/id-amr/10182,viability of microbiological material,en
-http://purl.org/zonmw/id-amr/10204,providing reference materials,en
-http://purl.org/zonmw/id-amr/10224,completed,en
-http://purl.org/zonmw/id-amr/10193,follow-up records,en
-http://purl.org/zonmw/id-amr/10017,environment,en
-http://purl.org/zonmw/id-amr/10158,specimen from environment,en
-http://purl.org/zonmw/id-amr/10247,data plausibility,en
-http://purl.org/zonmw/id-amr/10195,surveillance data,en
-http://purl.org/zonmw/id-amr/10113,breast milk,en
-http://purl.org/zonmw/id-amr/10220,charity of philanthropic funding,en
-http://purl.org/zonmw/id-amr/10174,storage temperature for long-term preservation,en
-http://purl.org/zonmw/id-amr/10084,domain,en
-http://purl.org/zonmw/id-amr/10150,teeth,en
+http://purl.org/zonmw/id-amr/10210,"organisation level",en
+http://purl.org/zonmw/id-amr/10198,"experimental data",en
+http://purl.org/zonmw/id-amr/10221,"collection status",en
+http://purl.org/zonmw/id-amr/10043,"soil-waste",en
+http://purl.org/zonmw/id-amr/10142,"saliva",en
+http://purl.org/zonmw/id-amr/10182,"viability of microbiological material",en
+http://purl.org/zonmw/id-amr/10204,"providing reference materials",en
+http://purl.org/zonmw/id-amr/10224,"completed",en
+http://purl.org/zonmw/id-amr/10193,"follow-up records",en
+http://purl.org/zonmw/id-amr/10017,"environment",en
+http://purl.org/zonmw/id-amr/10158,"specimen from environment",en
+http://purl.org/zonmw/id-amr/10247,"data plausibility",en
+http://purl.org/zonmw/id-amr/10195,"surveillance data",en
+http://purl.org/zonmw/id-amr/10113,"breast milk",en
+http://purl.org/zonmw/id-amr/10220,"charity of philanthropic funding",en
+http://purl.org/zonmw/id-amr/10174,"storage temperature for long-term preservation",en
+http://purl.org/zonmw/id-amr/10084,"domain",en
+http://purl.org/zonmw/id-amr/10150,"teeth",en
 http://purl.org/zonmw/id-amr/10121,"cells from non-blood specimen type (e.g. dissociated tissue), viable",en
-http://purl.org/zonmw/id-amr/10173,post-centrifugation conditions,en
-http://purl.org/zonmw/id-amr/10146,sputum,en
-http://purl.org/zonmw/id-amr/10114,bronchoalveolar lavage,en
-http://purl.org/zonmw/id-amr/10055,goat (milk),en
+http://purl.org/zonmw/id-amr/10173,"post-centrifugation conditions",en
+http://purl.org/zonmw/id-amr/10146,"sputum",en
+http://purl.org/zonmw/id-amr/10114,"bronchoalveolar lavage",en
+http://purl.org/zonmw/id-amr/10055,"goat (milk)",en
 http://purl.org/zonmw/id-amr/10154,"urine, timed",en
-http://purl.org/zonmw/id-amr/10134,nasal washing,en
-http://purl.org/zonmw/id-amr/10143,semen,en
-http://purl.org/zonmw/id-amr/10116,cells from fine needle aspirate,en
+http://purl.org/zonmw/id-amr/10134,"nasal washing",en
+http://purl.org/zonmw/id-amr/10143,"semen",en
+http://purl.org/zonmw/id-amr/10116,"cells from fine needle aspirate",en
 http://purl.org/zonmw/id-amr/10119,"cells from non blood specimen type (e.g. ascites, amniotic), viable",en
-http://purl.org/zonmw/id-amr/10245,three years or longer,en
-http://purl.org/zonmw/id-amr/10159,plant specimen,en
-http://purl.org/zonmw/id-amr/10234,open to everyone,en
-http://purl.org/zonmw/id-amr/10202,digital imaging,en
-http://purl.org/zonmw/id-amr/10248,data completeness,en
-http://purl.org/zonmw/id-amr/10260,non-infectious disease,en
-http://purl.org/zonmw/id-amr/10140,pleural fluid,en
-http://purl.org/zonmw/id-amr/10093,skin swab,en
-http://purl.org/zonmw/id-amr/10183,once every year,en
-http://purl.org/zonmw/id-amr/10148,synovial fluid,en
-http://purl.org/zonmw/id-amr/10002,surveillance,en
-http://purl.org/zonmw/id-amr/10068,epidemiological data,en
-http://purl.org/zonmw/id-amr/10016,animal domain,en
-http://purl.org/zonmw/id-amr/10042,soil,en
-http://purl.org/zonmw/id-amr/10070,complete medical records,en
-http://purl.org/zonmw/id-amr/10259,parasite disease,en
-http://purl.org/zonmw/id-amr/10092,respiratory sample,en
-http://purl.org/zonmw/id-amr/10086,antibody,en
-http://purl.org/zonmw/id-amr/10194,monitoring data,en
-http://purl.org/zonmw/id-amr/10197,quality data,en
-http://purl.org/zonmw/id-amr/10187,integrity of nucleic acids,en
-http://purl.org/zonmw/id-amr/10074,taxonomical data,en
-http://purl.org/zonmw/id-amr/10205,quality control,en
-http://purl.org/zonmw/id-amr/10231,project specific restriction,en
-http://purl.org/zonmw/id-amr/10069,diagnostics usage data,en
-http://purl.org/zonmw/id-amr/10156,human material,en
-http://purl.org/zonmw/id-amr/10214,research group,en
+http://purl.org/zonmw/id-amr/10245,"three years or longer",en
+http://purl.org/zonmw/id-amr/10159,"plant specimen",en
+http://purl.org/zonmw/id-amr/10234,"open to everyone",en
+http://purl.org/zonmw/id-amr/10202,"digital imaging",en
+http://purl.org/zonmw/id-amr/10248,"data completeness",en
+http://purl.org/zonmw/id-amr/10260,"non-infectious disease",en
+http://purl.org/zonmw/id-amr/10140,"pleural fluid",en
+http://purl.org/zonmw/id-amr/10093,"skin swab",en
+http://purl.org/zonmw/id-amr/10183,"once every year",en
+http://purl.org/zonmw/id-amr/10148,"synovial fluid",en
+http://purl.org/zonmw/id-amr/10002,"surveillance",en
+http://purl.org/zonmw/id-amr/10068,"epidemiological data",en
+http://purl.org/zonmw/id-amr/10016,"animal domain",en
+http://purl.org/zonmw/id-amr/10042,"soil",en
+http://purl.org/zonmw/id-amr/10070,"complete medical records",en
+http://purl.org/zonmw/id-amr/10259,"parasite disease",en
+http://purl.org/zonmw/id-amr/10092,"respiratory sample",en
+http://purl.org/zonmw/id-amr/10086,"antibody",en
+http://purl.org/zonmw/id-amr/10194,"monitoring data",en
+http://purl.org/zonmw/id-amr/10197,"quality data",en
+http://purl.org/zonmw/id-amr/10187,"integrity of nucleic acids",en
+http://purl.org/zonmw/id-amr/10074,"taxonomical data",en
+http://purl.org/zonmw/id-amr/10205,"quality control",en
+http://purl.org/zonmw/id-amr/10231,"project specific restriction",en
+http://purl.org/zonmw/id-amr/10069,"diagnostics usage data",en
+http://purl.org/zonmw/id-amr/10156,"human material",en
+http://purl.org/zonmw/id-amr/10214,"research group",en
 http://purl.org/zonmw/id-amr/10136,"non-density-gradient-centrifugation-separated buffy coat, viable",en
-http://purl.org/zonmw/id-amr/10211,university faculty,en
-http://purl.org/zonmw/id-amr/10096,stool specimen,en
-http://purl.org/zonmw/id-amr/10007,infection prevention,en
-http://purl.org/zonmw/id-amr/10215,specific research project,en
-http://purl.org/zonmw/id-amr/10190,physiological - biochemical measurement,en
-http://purl.org/zonmw/id-amr/10166,purity of nucleic acids,en
-http://purl.org/zonmw/id-amr/10254,bacterial disease,en
-http://purl.org/zonmw/id-amr/10163,pre-analytical data,en
-http://purl.org/zonmw/id-amr/10212,university hospital,en
-http://purl.org/zonmw/id-amr/10232,scope of use restriction,en
-http://purl.org/zonmw/id-amr/10031,subject with an unknown infection,en
-http://purl.org/zonmw/id-amr/10233,access condition,en
-http://purl.org/zonmw/id-amr/10056,horse,en
+http://purl.org/zonmw/id-amr/10211,"university faculty",en
+http://purl.org/zonmw/id-amr/10096,"stool specimen",en
+http://purl.org/zonmw/id-amr/10007,"infection prevention",en
+http://purl.org/zonmw/id-amr/10215,"specific research project",en
+http://purl.org/zonmw/id-amr/10190,"physiological - biochemical measurement",en
+http://purl.org/zonmw/id-amr/10166,"purity of nucleic acids",en
+http://purl.org/zonmw/id-amr/10254,"bacterial disease",en
+http://purl.org/zonmw/id-amr/10163,"pre-analytical data",en
+http://purl.org/zonmw/id-amr/10212,"university hospital",en
+http://purl.org/zonmw/id-amr/10232,"scope of use restriction",en
+http://purl.org/zonmw/id-amr/10031,"subject with an unknown infection",en
+http://purl.org/zonmw/id-amr/10233,"access condition",en
+http://purl.org/zonmw/id-amr/10056,"horse",en
 http://purl.org/zonmw/id-amr/10153,"urine, random",en
-http://purl.org/zonmw/id-amr/10023,intervention phase,en
-http://purl.org/zonmw/id-amr/10091,cerebrospinal fluid sample,en
-http://purl.org/zonmw/id-amr/10095,specimen of unknown material,en
-http://purl.org/zonmw/id-amr/10032,subject with risk of infection,en
-http://purl.org/zonmw/id-amr/10155,isolation source,en
-http://purl.org/zonmw/id-amr/10168,storage format for long-term preservation,en
-http://purl.org/zonmw/id-amr/10012,microbiome,en
-http://purl.org/zonmw/id-amr/10144,serum,en
-http://purl.org/zonmw/id-amr/10230,human genetic analysis restriction,en
-http://purl.org/zonmw/id-amr/10203,FAIRification service,en
+http://purl.org/zonmw/id-amr/10023,"intervention phase",en
+http://purl.org/zonmw/id-amr/10091,"cerebrospinal fluid sample",en
+http://purl.org/zonmw/id-amr/10095,"specimen of unknown material",en
+http://purl.org/zonmw/id-amr/10032,"subject with risk of infection",en
+http://purl.org/zonmw/id-amr/10155,"isolation source",en
+http://purl.org/zonmw/id-amr/10168,"storage format for long-term preservation",en
+http://purl.org/zonmw/id-amr/10012,"microbiome",en
+http://purl.org/zonmw/id-amr/10144,"serum",en
+http://purl.org/zonmw/id-amr/10230,"human genetic analysis restriction",en
+http://purl.org/zonmw/id-amr/10203,"FAIRification service",en
 http://purl.org/zonmw/id-amr/10138,"plasma, double spun",en
-http://purl.org/zonmw/id-amr/10239,access restricted at present,en
-http://purl.org/zonmw/id-amr/10180,authenticity of microbiological material,en
-http://purl.org/zonmw/id-amr/10199,biospecimen processing,en
-http://purl.org/zonmw/id-amr/10065,fungus,en
-http://purl.org/zonmw/id-amr/10244,up to three years,en
-http://purl.org/zonmw/id-amr/10235,open to applicants,en
-http://purl.org/zonmw/id-amr/10188,food specimen,en
-http://purl.org/zonmw/id-amr/10206,regulatory,en
-http://purl.org/zonmw/id-amr/10249,data accuracy,en
-http://purl.org/zonmw/id-amr/10099,body fluid sample,en
+http://purl.org/zonmw/id-amr/10239,"access restricted at present",en
+http://purl.org/zonmw/id-amr/10180,"authenticity of microbiological material",en
+http://purl.org/zonmw/id-amr/10199,"biospecimen processing",en
+http://purl.org/zonmw/id-amr/10065,"fungus",en
+http://purl.org/zonmw/id-amr/10244,"up to three years",en
+http://purl.org/zonmw/id-amr/10235,"open to applicants",en
+http://purl.org/zonmw/id-amr/10188,"food specimen",en
+http://purl.org/zonmw/id-amr/10206,"regulatory",en
+http://purl.org/zonmw/id-amr/10249,"data accuracy",en
+http://purl.org/zonmw/id-amr/10099,"body fluid sample",en
 http://purl.org/zonmw/id-amr/10124,"density-gradient-centrifugation-separated mononuclear cells, non viable",en
-http://purl.org/zonmw/id-amr/10054,goat (meat),en
-http://purl.org/zonmw/id-amr/10226,commerial resctriction,en
-http://purl.org/zonmw/id-amr/10028,subject with an infection,en
-http://purl.org/zonmw/id-amr/10238,data access only,en
-http://purl.org/zonmw/id-amr/10130,fresh cells from non-blood specimen type,en
-http://purl.org/zonmw/id-amr/10261,funding type,en
-http://purl.org/zonmw/id-amr/10039,subject by sex,en
-http://purl.org/zonmw/id-amr/10088,biopsy sample,en
-http://purl.org/zonmw/id-amr/10098,urine specimen,en
-http://purl.org/zonmw/generic/10082,project manager,en
-http://purl.org/zonmw/generic/10089,contact person,en
-http://purl.org/zonmw/generic/10084,reseacher,en
-http://purl.org/zonmw/generic/10087,supervisor,en
-http://purl.org/zonmw/generic/10083,project member,en
-http://purl.org/zonmw/generic/10086,rights holder,en
-http://purl.org/zonmw/generic/10080,distributor,en
-http://purl.org/zonmw/generic/10085,editor,en
-http://purl.org/zonmw/generic/10081,project leader,en
-http://purl.org/zonmw/generic/10088,work package leader,en
-http://purl.org/zonmw/generic/10042,IKNL - Netherlands Comprehensive Cancer Organisation,en
-http://purl.org/zonmw/generic/10048,Netherlands Heart Institute,en
-http://purl.org/zonmw/generic/10044,Leiden University Medical Center,en
-http://purl.org/zonmw/generic/10040,Hogeschool Leiden - University of Applied Sciences Leiden,en
-http://purl.org/zonmw/generic/10047,Netherlands Comprehensive Cancer Organisation,en
-http://purl.org/zonmw/generic/10046,Maastricht University Medical Centre,en
-http://purl.org/zonmw/generic/10045,Maastricht University,en
-http://purl.org/zonmw/generic/10041,Hogeschool van Amsterdam - Amsterdam University of Applied Sciences,en
-http://purl.org/zonmw/generic/10043,Leiden University,en
-http://purl.org/zonmw/generic/10049,NIVEL - Netherlands Institute for Health Services Research,en
-http://purl.org/zonmw/generic/10111,RTF - Rich Text File,en
-http://purl.org/zonmw/generic/10115,HTML - Hypertext Markup Language,en
-http://purl.org/zonmw/generic/10114,XML - eXtensivle Markup Language,en
-http://purl.org/zonmw/generic/10116,CSS - Cascading Style Sheets,en
-http://purl.org/zonmw/generic/10119,ES - ECMAScript,en
-http://purl.org/zonmw/generic/10117,XSLT - Extensible Stylesheet Language Transformations,en
-http://purl.org/zonmw/generic/10113,TXT - Non-Unicode text,en
-http://purl.org/zonmw/generic/10110,DOCX - Office Open XML,en
-http://purl.org/zonmw/generic/10118,JS - JavaScript,en
-http://purl.org/zonmw/generic/10112,TXT - Unicode text,en
-http://purl.org/zonmw/generic/10022,property,en
-http://purl.org/zonmw/generic/10027,institution,en
-http://purl.org/zonmw/generic/10025,animal,en
-http://purl.org/zonmw/generic/10023,constraint,en
-http://purl.org/zonmw/generic/10021,variable,en
-http://purl.org/zonmw/generic/10029,Amsterdam Health and Technology Institute - AHTI,en
-http://purl.org/zonmw/generic/10028,Academic Medical Center - Amsterdam UMC,en
-http://purl.org/zonmw/generic/10026,disease,en
-http://purl.org/zonmw/generic/10020,framework,en
-http://purl.org/zonmw/generic/10024,microorganism,en
-http://purl.org/zonmw/generic/10077,data manager,en
-http://purl.org/zonmw/generic/10078,data curator,en
-http://purl.org/zonmw/generic/10073,Wageningen University & Research,en
-http://purl.org/zonmw/generic/10075,contributor type,en
-http://purl.org/zonmw/generic/10071,VU Amsterdam,en
-http://purl.org/zonmw/generic/10072,VU University Medical Center,en
-http://purl.org/zonmw/generic/10070,Veiligheids- en Gezondheidsregio Gelderland-Midden,en
-http://purl.org/zonmw/generic/10074,ZonMw - Netherlands Organisation for Health Research and Development,en
-http://purl.org/zonmw/generic/10076,data collector,en
-http://purl.org/zonmw/generic/10079,sponsor,en
-http://purl.org/zonmw/generic/10130,SIARD - Software Independent Archiving of Relational Databases,en
-http://purl.org/zonmw/generic/10131,Microsoft Access,en
-http://purl.org/zonmw/generic/10137,JPEG - Joint Photographic Expert Group,en
-http://purl.org/zonmw/generic/10133,HDF5 - Hierarchical Data Format,en
-http://purl.org/zonmw/generic/10132,DBF - dBase,en
-http://purl.org/zonmw/generic/10134,SPSS,en
-http://purl.org/zonmw/generic/10139,TIFF - Tagged Image File Format,en
-http://purl.org/zonmw/generic/10138,JPEG 2000,en
-http://purl.org/zonmw/generic/10136,R,en
-http://purl.org/zonmw/generic/10135,STATA,en
-http://purl.org/zonmw/generic/10158,Turtle,en
-http://purl.org/zonmw/generic/10155,Polygon file format,en
-http://purl.org/zonmw/generic/10157,TriG,en
-http://purl.org/zonmw/generic/10159,NTriples,en
-http://purl.org/zonmw/generic/10152,GeoTIFF,en
-http://purl.org/zonmw/generic/10151,GeoJSON,en
-http://purl.org/zonmw/generic/10156,RDF - Resource Description Framework,en
-http://purl.org/zonmw/generic/10150,MIF/MID - MapInfo Interchange Format,en
-http://purl.org/zonmw/generic/10153,ASCII GRID,en
-http://purl.org/zonmw/generic/10154,WaveFront Object,en
-http://purl.org/zonmw/generic/10038,GGD Zuid Holland Zuid,en
-http://purl.org/zonmw/generic/10037,GGD Amsterdam - Public Health Service of Amsterdam,en
-http://purl.org/zonmw/generic/10033,Erasmus MC,en
-http://purl.org/zonmw/generic/10039,GO FAIR Foundation,en
-http://purl.org/zonmw/generic/10030,Delft University of Technology,en
-http://purl.org/zonmw/generic/10031,Eindhoven University of Technology,en
-http://purl.org/zonmw/generic/10034,Erasmus University Rotterdam,en
-http://purl.org/zonmw/generic/10035,Expertisecentrum Nederlands,en
-http://purl.org/zonmw/generic/10036,Federal University of Rio de Janeiro,en
-http://purl.org/zonmw/generic/10032,Erasmus Centrum voor Zorgbestuur,en
-http://purl.org/zonmw/generic/10142,SVG - Scalable Vector Graphics,en
-http://purl.org/zonmw/generic/10147,OPUS,en
-http://purl.org/zonmw/generic/10144,MXF - Material Exchange Format,en
-http://purl.org/zonmw/generic/10140,PNG - Portable Network Graphics,en
-http://purl.org/zonmw/generic/10146,FLAC - Free Lossless Audio Codec,en
-http://purl.org/zonmw/generic/10141,DICOM - Digital Imaging and Communications in Medicine,en
-http://purl.org/zonmw/generic/10148,DXF - AutoCAD DXF version R12 (ASCII),en
-http://purl.org/zonmw/generic/10143,BWF - Broadcast Wave Format,en
-http://purl.org/zonmw/generic/10145,MKA - Matroska,en
-http://purl.org/zonmw/generic/10149,GML - Geography Markup Language,en
-http://purl.org/zonmw/generic/10094,none,en
-http://purl.org/zonmw/generic/10090,bacterium,en
-http://purl.org/zonmw/generic/10093,fungus,en
-http://purl.org/zonmw/generic/10096,animal disease,en
-http://purl.org/zonmw/generic/10097,plant disease,en
-http://purl.org/zonmw/generic/10095,human disease,en
-http://purl.org/zonmw/generic/10091,prion,en
-http://purl.org/zonmw/generic/10099,generic answer options,en
-http://purl.org/zonmw/generic/10092,virus,en
-http://purl.org/zonmw/generic/10098,plant,en
-http://purl.org/zonmw/generic/10005,data,en
-http://purl.org/zonmw/generic/10006,other,en
-http://purl.org/zonmw/generic/10000,deprecated,en
-http://purl.org/zonmw/generic/10002,subject,en
-http://purl.org/zonmw/generic/10004,population group,en
-http://purl.org/zonmw/generic/10008,organism,en
-http://purl.org/zonmw/generic/10009,specimen,en
-http://purl.org/zonmw/generic/10003,temporal scope,en
-http://purl.org/zonmw/generic/10001,focus area,en
-http://purl.org/zonmw/generic/10007,biomaterial,en
-http://purl.org/zonmw/generic/10160,JSON-LD,en
-http://purl.org/zonmw/generic/10161,REFI-QDA - Qualitative Data Analysis,en
-http://purl.org/zonmw/generic/10052,Public Procurement Research Centre - PPRC,en
-http://purl.org/zonmw/generic/10057,Sanquin,en
-http://purl.org/zonmw/generic/10055,Reade Research BV,en
-http://purl.org/zonmw/generic/10054,Radboud University Nijmegen Medical Centre,en
-http://purl.org/zonmw/generic/10056,RIVM - National Institute for Public Health and the Environment,en
-http://purl.org/zonmw/generic/10051,Public Health Service of Amsterdam,en
-http://purl.org/zonmw/generic/10059,SEO Economisch Onderzoek,en
-http://purl.org/zonmw/generic/10050,NSCR - Netherlands Institute for the Study of Crime and Law Enforcement,en
-http://purl.org/zonmw/generic/10058,Saxion University of Applied Sciences,en
-http://purl.org/zonmw/generic/10053,Radboud University Nijmegen,en
-http://purl.org/zonmw/generic/10129,SQL - Structured Query Language,en
-http://purl.org/zonmw/generic/10123,NetCDF - Network Common Data Form,en
-http://purl.org/zonmw/generic/10122,MATLAB,en
-http://purl.org/zonmw/generic/10121,MD - Markdown,en
-http://purl.org/zonmw/generic/10126,CSV - Comma Separated Values,en
-http://purl.org/zonmw/generic/10125,ODS,en
-http://purl.org/zonmw/generic/10120,SGML - Standard Generalized Markup Language,en
-http://purl.org/zonmw/generic/10127,XLS - Microsoft Excel,en
-http://purl.org/zonmw/generic/10124,TF - Text-Fabric,en
-http://purl.org/zonmw/generic/10128,XLSX - Office Open XML Workbook,en
-http://purl.org/zonmw/generic/10019,guideline,en
-http://purl.org/zonmw/generic/10010,substance,en
-http://purl.org/zonmw/generic/10017,technical standard,en
-http://purl.org/zonmw/generic/10015,metadata standard,en
-http://purl.org/zonmw/generic/10018,conceptual model,en
-http://purl.org/zonmw/generic/10011,macromolecule,en
-http://purl.org/zonmw/generic/10016,semantic artefact,en
-http://purl.org/zonmw/generic/10013,service,en
-http://purl.org/zonmw/generic/10014,standard,en
-http://purl.org/zonmw/generic/10062,TNO - Netherlands Organisation for Applied Scientific Research,en
-http://purl.org/zonmw/generic/10064,University Medical Center Utrecht,en
-http://purl.org/zonmw/generic/10069,Utrecht University,en
-http://purl.org/zonmw/generic/10068,University of Twente,en
-http://purl.org/zonmw/generic/10061,Tilburg University,en
-http://purl.org/zonmw/generic/10060,Spaarne Gasthuis - Spaarne Ziekenhuis,en
-http://purl.org/zonmw/generic/10066,University of Groningen,en
-http://purl.org/zonmw/generic/10063,University Medical Center Groningen,en
-http://purl.org/zonmw/generic/10065,University of Amsterdam,en
-http://purl.org/zonmw/generic/10067,University of Humanistic Studies,en
-http://purl.org/zonmw/generic/10101,no,en
-http://purl.org/zonmw/generic/10108,ODT - Open Document,en
-http://purl.org/zonmw/generic/10100,yes,en
-http://purl.org/zonmw/generic/10109,DOC - Microsoft Word,en
-http://purl.org/zonmw/generic/10103,unknown,en
-http://purl.org/zonmw/generic/10106,PDF/A - Portable Document Format for archiving,en
-http://purl.org/zonmw/generic/10107,PDF - Portable Document Format,en
-http://purl.org/zonmw/generic/10105,media type,en
-http://purl.org/zonmw/generic/10104,protozoa,en
-http://purl.org/zonmw/generic/10102,funder institution,en
+http://purl.org/zonmw/id-amr/10054,"goat (meat)",en
+http://purl.org/zonmw/id-amr/10226,"commerial resctriction",en
+http://purl.org/zonmw/id-amr/10028,"subject with an infection",en
+http://purl.org/zonmw/id-amr/10238,"data access only",en
+http://purl.org/zonmw/id-amr/10130,"fresh cells from non-blood specimen type",en
+http://purl.org/zonmw/id-amr/10261,"funding type",en
+http://purl.org/zonmw/id-amr/10039,"subject by sex",en
+http://purl.org/zonmw/id-amr/10088,"biopsy sample",en
+http://purl.org/zonmw/id-amr/10098,"urine specimen",en
+http://purl.org/zonmw/generic/10082,"project manager",en
+http://purl.org/zonmw/generic/10089,"contact person",en
+http://purl.org/zonmw/generic/10084,"reseacher",en
+http://purl.org/zonmw/generic/10087,"supervisor",en
+http://purl.org/zonmw/generic/10083,"project member",en
+http://purl.org/zonmw/generic/10086,"rights holder",en
+http://purl.org/zonmw/generic/10080,"distributor",en
+http://purl.org/zonmw/generic/10085,"editor",en
+http://purl.org/zonmw/generic/10081,"project leader",en
+http://purl.org/zonmw/generic/10088,"work package leader",en
+http://purl.org/zonmw/generic/10042,"IKNL - Netherlands Comprehensive Cancer Organisation",en
+http://purl.org/zonmw/generic/10048,"Netherlands Heart Institute",en
+http://purl.org/zonmw/generic/10044,"Leiden University Medical Center",en
+http://purl.org/zonmw/generic/10040,"Hogeschool Leiden - University of Applied Sciences Leiden",en
+http://purl.org/zonmw/generic/10047,"Netherlands Comprehensive Cancer Organisation",en
+http://purl.org/zonmw/generic/10046,"Maastricht University Medical Centre",en
+http://purl.org/zonmw/generic/10045,"Maastricht University",en
+http://purl.org/zonmw/generic/10041,"Hogeschool van Amsterdam - Amsterdam University of Applied Sciences",en
+http://purl.org/zonmw/generic/10043,"Leiden University",en
+http://purl.org/zonmw/generic/10049,"NIVEL - Netherlands Institute for Health Services Research",en
+http://purl.org/zonmw/generic/10111,"RTF - Rich Text File",en
+http://purl.org/zonmw/generic/10115,"HTML - Hypertext Markup Language",en
+http://purl.org/zonmw/generic/10114,"XML - eXtensivle Markup Language",en
+http://purl.org/zonmw/generic/10116,"CSS - Cascading Style Sheets",en
+http://purl.org/zonmw/generic/10119,"ES - ECMAScript",en
+http://purl.org/zonmw/generic/10117,"XSLT - Extensible Stylesheet Language Transformations",en
+http://purl.org/zonmw/generic/10113,"TXT - Non-Unicode text",en
+http://purl.org/zonmw/generic/10110,"DOCX - Office Open XML",en
+http://purl.org/zonmw/generic/10118,"JS - JavaScript",en
+http://purl.org/zonmw/generic/10112,"TXT - Unicode text",en
+http://purl.org/zonmw/generic/10022,"property",en
+http://purl.org/zonmw/generic/10027,"institution",en
+http://purl.org/zonmw/generic/10025,"animal",en
+http://purl.org/zonmw/generic/10023,"constraint",en
+http://purl.org/zonmw/generic/10021,"variable",en
+http://purl.org/zonmw/generic/10029,"Amsterdam Health and Technology Institute - AHTI",en
+http://purl.org/zonmw/generic/10028,"Academic Medical Center - Amsterdam UMC",en
+http://purl.org/zonmw/generic/10026,"disease",en
+http://purl.org/zonmw/generic/10020,"framework",en
+http://purl.org/zonmw/generic/10024,"microorganism",en
+http://purl.org/zonmw/generic/10077,"data manager",en
+http://purl.org/zonmw/generic/10078,"data curator",en
+http://purl.org/zonmw/generic/10073,"Wageningen University & Research",en
+http://purl.org/zonmw/generic/10075,"contributor type",en
+http://purl.org/zonmw/generic/10071,"VU Amsterdam",en
+http://purl.org/zonmw/generic/10072,"VU University Medical Center",en
+http://purl.org/zonmw/generic/10070,"Veiligheids- en Gezondheidsregio Gelderland-Midden",en
+http://purl.org/zonmw/generic/10074,"ZonMw - Netherlands Organisation for Health Research and Development",en
+http://purl.org/zonmw/generic/10076,"data collector",en
+http://purl.org/zonmw/generic/10079,"sponsor",en
+http://purl.org/zonmw/generic/10130,"SIARD - Software Independent Archiving of Relational Databases",en
+http://purl.org/zonmw/generic/10131,"Microsoft Access",en
+http://purl.org/zonmw/generic/10137,"JPEG - Joint Photographic Expert Group",en
+http://purl.org/zonmw/generic/10133,"HDF5 - Hierarchical Data Format",en
+http://purl.org/zonmw/generic/10132,"DBF - dBase",en
+http://purl.org/zonmw/generic/10134,"SPSS",en
+http://purl.org/zonmw/generic/10139,"TIFF - Tagged Image File Format",en
+http://purl.org/zonmw/generic/10138,"JPEG 2000",en
+http://purl.org/zonmw/generic/10136,"R",en
+http://purl.org/zonmw/generic/10135,"STATA",en
+http://purl.org/zonmw/generic/10158,"Turtle",en
+http://purl.org/zonmw/generic/10155,"Polygon file format",en
+http://purl.org/zonmw/generic/10157,"TriG",en
+http://purl.org/zonmw/generic/10159,"NTriples",en
+http://purl.org/zonmw/generic/10152,"GeoTIFF",en
+http://purl.org/zonmw/generic/10151,"GeoJSON",en
+http://purl.org/zonmw/generic/10156,"RDF - Resource Description Framework",en
+http://purl.org/zonmw/generic/10150,"MIF/MID - MapInfo Interchange Format",en
+http://purl.org/zonmw/generic/10153,"ASCII GRID",en
+http://purl.org/zonmw/generic/10154,"WaveFront Object",en
+http://purl.org/zonmw/generic/10038,"GGD Zuid Holland Zuid",en
+http://purl.org/zonmw/generic/10037,"GGD Amsterdam - Public Health Service of Amsterdam",en
+http://purl.org/zonmw/generic/10033,"Erasmus MC",en
+http://purl.org/zonmw/generic/10039,"GO FAIR Foundation",en
+http://purl.org/zonmw/generic/10030,"Delft University of Technology",en
+http://purl.org/zonmw/generic/10031,"Eindhoven University of Technology",en
+http://purl.org/zonmw/generic/10034,"Erasmus University Rotterdam",en
+http://purl.org/zonmw/generic/10035,"Expertisecentrum Nederlands",en
+http://purl.org/zonmw/generic/10036,"Federal University of Rio de Janeiro",en
+http://purl.org/zonmw/generic/10032,"Erasmus Centrum voor Zorgbestuur",en
+http://purl.org/zonmw/generic/10142,"SVG - Scalable Vector Graphics",en
+http://purl.org/zonmw/generic/10147,"OPUS",en
+http://purl.org/zonmw/generic/10144,"MXF - Material Exchange Format",en
+http://purl.org/zonmw/generic/10140,"PNG - Portable Network Graphics",en
+http://purl.org/zonmw/generic/10146,"FLAC - Free Lossless Audio Codec",en
+http://purl.org/zonmw/generic/10141,"DICOM - Digital Imaging and Communications in Medicine",en
+http://purl.org/zonmw/generic/10148,"DXF - AutoCAD DXF version R12 (ASCII)",en
+http://purl.org/zonmw/generic/10143,"BWF - Broadcast Wave Format",en
+http://purl.org/zonmw/generic/10145,"MKA - Matroska",en
+http://purl.org/zonmw/generic/10149,"GML - Geography Markup Language",en
+http://purl.org/zonmw/generic/10094,"none",en
+http://purl.org/zonmw/generic/10090,"bacterium",en
+http://purl.org/zonmw/generic/10093,"fungus",en
+http://purl.org/zonmw/generic/10096,"animal disease",en
+http://purl.org/zonmw/generic/10097,"plant disease",en
+http://purl.org/zonmw/generic/10095,"human disease",en
+http://purl.org/zonmw/generic/10091,"prion",en
+http://purl.org/zonmw/generic/10099,"generic answer options",en
+http://purl.org/zonmw/generic/10092,"virus",en
+http://purl.org/zonmw/generic/10098,"plant",en
+http://purl.org/zonmw/generic/10005,"data",en
+http://purl.org/zonmw/generic/10006,"other",en
+http://purl.org/zonmw/generic/10000,"deprecated",en
+http://purl.org/zonmw/generic/10002,"subject",en
+http://purl.org/zonmw/generic/10004,"population group",en
+http://purl.org/zonmw/generic/10008,"organism",en
+http://purl.org/zonmw/generic/10009,"specimen",en
+http://purl.org/zonmw/generic/10003,"temporal scope",en
+http://purl.org/zonmw/generic/10001,"focus area",en
+http://purl.org/zonmw/generic/10007,"biomaterial",en
+http://purl.org/zonmw/generic/10160,"JSON-LD",en
+http://purl.org/zonmw/generic/10161,"REFI-QDA - Qualitative Data Analysis",en
+http://purl.org/zonmw/generic/10052,"Public Procurement Research Centre - PPRC",en
+http://purl.org/zonmw/generic/10057,"Sanquin",en
+http://purl.org/zonmw/generic/10055,"Reade Research BV",en
+http://purl.org/zonmw/generic/10054,"Radboud University Nijmegen Medical Centre",en
+http://purl.org/zonmw/generic/10056,"RIVM - National Institute for Public Health and the Environment",en
+http://purl.org/zonmw/generic/10051,"Public Health Service of Amsterdam",en
+http://purl.org/zonmw/generic/10059,"SEO Economisch Onderzoek",en
+http://purl.org/zonmw/generic/10050,"NSCR - Netherlands Institute for the Study of Crime and Law Enforcement",en
+http://purl.org/zonmw/generic/10058,"Saxion University of Applied Sciences",en
+http://purl.org/zonmw/generic/10053,"Radboud University Nijmegen",en
+http://purl.org/zonmw/generic/10129,"SQL - Structured Query Language",en
+http://purl.org/zonmw/generic/10123,"NetCDF - Network Common Data Form",en
+http://purl.org/zonmw/generic/10122,"MATLAB",en
+http://purl.org/zonmw/generic/10121,"MD - Markdown",en
+http://purl.org/zonmw/generic/10126,"CSV - Comma Separated Values",en
+http://purl.org/zonmw/generic/10125,"ODS",en
+http://purl.org/zonmw/generic/10120,"SGML - Standard Generalized Markup Language",en
+http://purl.org/zonmw/generic/10127,"XLS - Microsoft Excel",en
+http://purl.org/zonmw/generic/10124,"TF - Text-Fabric",en
+http://purl.org/zonmw/generic/10128,"XLSX - Office Open XML Workbook",en
+http://purl.org/zonmw/generic/10019,"guideline",en
+http://purl.org/zonmw/generic/10010,"substance",en
+http://purl.org/zonmw/generic/10017,"technical standard",en
+http://purl.org/zonmw/generic/10015,"metadata standard",en
+http://purl.org/zonmw/generic/10018,"conceptual model",en
+http://purl.org/zonmw/generic/10011,"macromolecule",en
+http://purl.org/zonmw/generic/10016,"semantic artefact",en
+http://purl.org/zonmw/generic/10013,"service",en
+http://purl.org/zonmw/generic/10014,"standard",en
+http://purl.org/zonmw/generic/10062,"TNO - Netherlands Organisation for Applied Scientific Research",en
+http://purl.org/zonmw/generic/10064,"University Medical Center Utrecht",en
+http://purl.org/zonmw/generic/10069,"Utrecht University",en
+http://purl.org/zonmw/generic/10068,"University of Twente",en
+http://purl.org/zonmw/generic/10061,"Tilburg University",en
+http://purl.org/zonmw/generic/10060,"Spaarne Gasthuis - Spaarne Ziekenhuis",en
+http://purl.org/zonmw/generic/10066,"University of Groningen",en
+http://purl.org/zonmw/generic/10063,"University Medical Center Groningen",en
+http://purl.org/zonmw/generic/10065,"University of Amsterdam",en
+http://purl.org/zonmw/generic/10067,"University of Humanistic Studies",en
+http://purl.org/zonmw/generic/10101,"no",en
+http://purl.org/zonmw/generic/10108,"ODT - Open Document",en
+http://purl.org/zonmw/generic/10100,"yes",en
+http://purl.org/zonmw/generic/10109,"DOC - Microsoft Word",en
+http://purl.org/zonmw/generic/10103,"unknown",en
+http://purl.org/zonmw/generic/10106,"PDF/A - Portable Document Format for archiving",en
+http://purl.org/zonmw/generic/10107,"PDF - Portable Document Format",en
+http://purl.org/zonmw/generic/10105,"media type",en
+http://purl.org/zonmw/generic/10104,"protozoa",en
+http://purl.org/zonmw/generic/10102,"funder institution",en

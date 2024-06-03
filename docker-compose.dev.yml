@@ -7,6 +7,16 @@ volumes:
 
 services:
 
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "carlos.albertoufs@gmail.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "TopicosA1"
+    ports:
+      - "16543:80"
+    depends_on:
+      - db
+
   ckan-dev:
     build:
       context: ckan/

@@ -41,6 +41,18 @@ RUN mkdir -p /var/log/ckan/std && chown -R ckan:ckan /var/log/ckan
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 COPY config/ckan_harvesting.conf /etc/supervisord.d/ckan_harvesting.conf
 
+# Copy crontab file to the cron.d directory
+ADD config/crontab-harvester /etc/cron.d/crontab-harvester
+
+# Give execution rights on the cron job
+RUN chmod 644 /etc/cron.d/crontab-harvester
+
+# Apply cron job
+RUN crontab -u ckan /etc/cron.d/crontab-harvester
+
+# Create log file for cron
+RUN touch /var/log/cron.log && chown ckan:ckan /var/log/cron.log
+
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
 COPY patches ${APP_DIR}/patches

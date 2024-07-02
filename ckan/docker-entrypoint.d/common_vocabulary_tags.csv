@@ -1057,6 +1057,8 @@ http://www.ebi.ac.uk/efo/EFO_1001216,"tooth disease",en
 http://purl.obolibrary.org/obo/DOID_162,"cancer",en
 http://www.ebi.ac.uk/efo/EFO_0004352,"mortality",en
 http://purl.obolibrary.org/obo/DOID_0080600,"COVID-19",en
+http://purl.obolibrary.org/obo/NCIT_C15546,"Breast Cancer Screening",en
+http://purl.obolibrary.org/obo/NCIT_C20116,"Breast Cancer Risk Factor",en
 https://bioportal.bioontology.org/ontologies/ICD10CM?p=classes&conceptid=U07.1,"COVID-19",en
 http://bioportal.bioontology.org/ontologies/ICD10CM?p=classes&conceptid=U07.1,"COVID-19",en
 http://publications.europa.eu/resource/authority/access-right/PUBLIC,"Public",en

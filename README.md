@@ -152,6 +152,16 @@ In VS Code:
 You can now set breakpoints and remote debug your CKAN development instance.
 
 
+#### Updating the .env file for development mode
+
+The Docker Compose .env file by default is set up for production mode. There are a few changes needed if you would
+like to run in Development mode:
+
+1. Change the `CKAN_SITE_URL` variable to be: http://localhost:5000
+2. Update the `CKAN__DATAPUSHER__CALLBACK_URL_BASE` variable to use the `ckan-dev` container name: http://ckan-dev:5000
+3. Update the `DATAPUSHER_REWRITE_URL` variable to also use the `ckan-dev` container name http://ckan-dev:5000
+
+
 ## 5. CKAN images
 ![ckan images](https://user-images.githubusercontent.com/54408245/207079416-a01235af-2dea-4425-b6fd-f8c3687dd993.png)
 

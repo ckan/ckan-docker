@@ -11,4 +11,4 @@ ckan config-tool $CKAN_INI -s app:main \
     "scheming.presets = ckanext.scheming:presets.json"\
     "scheming.dataset_fallback = false"\
     "ckanext.dcat.rdf.profiles = euro_dcat_ap_2 fairdatapoint_dcat_ap"\
-    "ckanext.dcat.compatibility_mode = true"
+    "ckanext.dcat.compatibility_mode = false"

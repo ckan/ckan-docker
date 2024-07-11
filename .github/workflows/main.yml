@@ -67,7 +67,7 @@ jobs:
           echo "last_tag=${TAGS[LAST_INDEX]}" >> $GITHUB_OUTPUT
 
       - name: Build Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./ckan
           push: false
@@ -86,7 +86,7 @@ jobs:
           severity: "CRITICAL"
 
       - name: Push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./ckan
           push: true

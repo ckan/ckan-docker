@@ -5,7 +5,7 @@ name: Scan Latest Two Semantically Versioned Image with Trivy and ORT
 
 on:
   schedule:
-    - cron: "0 14 * * 1" # Works on Every Monday at 14:00 UTC
+    - cron: "0 14 * * 1" # Works on every Monday at 14:00 UTC
   workflow_dispatch:
 
 env:

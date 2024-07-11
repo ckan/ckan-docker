@@ -1,0 +1,67 @@
+# SPDX-FileCopyrightText: 2024 PNED G.I.E.
+# SPDX-License-Identifier: Apache-2.0
+
+name: Scan Latest Two Semantically Versioned Image with Trivy and ORT
+
+on:
+  schedule:
+    - cron: "0 14 * * 1" # Works on every Monday at 14:00 UTC
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: ghcr.io/genomicdatainfrastructure/gdi-userportal-ckan-docker
+  LATEST_PATCHES: ""
+
+jobs:
+  fetch-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Docker
+        run: sudo service docker start
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: List Docker Image Tags and Fetch Latest Two
+        run: |
+          IMAGE="ghcr.io/genomicdatainfrastructure/gdi-userportal-ckan-docker"
+          echo "Fetching Docker image tags..."
+          RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/orgs/genomicdatainfrastructure/packages/container/gdi-userportal-ckan-docker/versions")
+
+          # Log the response for debugging
+          echo "Response from curl: $RESPONSE"
+
+          # Extract tags and creation dates, then sort by creation date
+          TAGS_WITH_DATES=$(echo "$RESPONSE" | jq -r '.[] | .metadata.container.tags[] as $tag | select($tag | test("^sha-[a-z0-9]+$")) | "\($tag) \(.created_at)"' | sort -k2 -r)
+
+          # Get the latest tag from each of the latest two minor versions
+          LATEST_TAGS=$(echo "$TAGS_WITH_DATES" | awk '{split($1, a, "."); key=a[1] "." a[2]; if (!seen[key]++) print $1}' | head -n 2 | tr '\n' ' ')
+
+          # Print the results
+          echo "Tags fetched: $LATEST_TAGS"
+
+          echo "LATEST_PATCHES=$LATEST_TAGS" >> $GITHUB_ENV
+
+      - name: Pull and Scan Docker Images with Trivy
+        run: |
+          IFS=' ' read -ra TAGS <<< "${{ env.LATEST_PATCHES }}"
+          for TAG in "${TAGS[@]}"
+          do
+            IMAGE_TAG="ghcr.io/genomicdatainfrastructure/gdi-userportal-ckan-docker:$TAG"
+            echo "Pulling $IMAGE_TAG"
+            docker pull $IMAGE_TAG || exit 1
+            echo "Scanning $IMAGE_TAG with Trivy"
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity CRITICAL,HIGH --exit-code 1 "$IMAGE_TAG" || exit 1
+
+          done
+
+      - name: OSS Review Toolkit (ORT) Analysis
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+
+      - uses: oss-review-toolkit/ort-ci-github-action@7f23c1f8d169dad430e41df223d3b8409c7a156e
+        with:
+          allow-dynamic-versions: "true"
+          fail-on: "issues"
+          run: "cache-dependencies,cache-scan-results,labels,analyzer,evaluator,advisor,reporter,upload-results"

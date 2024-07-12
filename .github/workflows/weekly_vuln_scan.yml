@@ -9,6 +9,7 @@ on:
   workflow_dispatch:
 
 env:
+  REGISTRY: ghcr.io
   IMAGE_NAME: ghcr.io/genomicdatainfrastructure/gdi-userportal-ckan-docker
   LATEST_PATCHES: ""
 
@@ -19,8 +20,12 @@ jobs:
       - name: Setup Docker
         run: sudo service docker start
 
-      - name: Login to GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: List Docker Image Tags and Fetch Latest Two
         run: |
@@ -60,7 +65,7 @@ jobs:
         with:
           repository: ${{ github.repository }}
 
-      - uses: oss-review-toolkit/ort-ci-github-action@81698a977ebcf51bb3d6ef5c6a04220cf60d3bde
+      - uses: oss-review-toolkit/ort-ci-github-action@v1
         with:
           allow-dynamic-versions: "true"
           fail-on: "issues"

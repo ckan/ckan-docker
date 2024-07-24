@@ -6,9 +6,6 @@
 
 FROM ckan/ckan-base:2.10.4
 
-# Install any extensions needed by your CKAN instance
-# See Dockerfile.dev for more details and examples
-
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@v1.2.3#egg=ckanext-gdi-userportal && \
     pip3 install -r ${APP_DIR}/src/ckanext-gdi-userportal/requirements.txt
 
@@ -72,7 +69,5 @@ COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 # TODO 
 # 1. Remove this command once the issue is fixed
 # https://github.com/ckan/ckan-docker-base/issues/41
-RUN mkdir /var/lib/ckan/storage
-RUN mkdir /var/lib/ckan/storage/uploads
-RUN mkdir /var/lib/ckan/storage/uploads/group
+RUN mkdir -p /var/lib/ckan/storage/uploads/group
 RUN chmod -R u+rwx "/var/lib/ckan"

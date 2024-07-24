@@ -36,13 +36,8 @@ services:
   postgres:
     build:
       context: postgresql/
-    environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
-      - CKAN_DB_USER
-      - CKAN_DB_PASSWORD
-      - CKAN_DB
+    env_file:
+      - .env
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped

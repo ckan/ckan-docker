@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# SPDX-FileCopyrightText: 2024 PNED G.I.E.
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+
 echo "[DEFAULT] Setting up debug"
 #ckan config-tool $CKAN_INI  -s DEFAULT "debug = $CKAN___DEBUG"
 

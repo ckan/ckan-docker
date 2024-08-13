@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "depTypeList": ["devDependencies", "require-dev"],
+      "updateTypes": ["patch", "minor", "major"],
+      "groupName": "devDependencies"
+    },
+    {
+      "description": "Trigger fix release for patch updates",
+      "matchPackageNames": [
+        "renovate/renovate",
+        "ghcr.io/renovatebot/renovate"
+      ],
+      "automerge": true,
+      "matchUpdateTypes": ["patch"],
+      "semanticCommitType": "fix",
+      "automergeType": "pr"
+    }
+  ],
+  "extends": [
+    "config:base",
+    ":preserveSemverRanges",
+    ":dependencyDashboard",
+    ":rebaseStalePrs",
+    ":enableVulnerabilityAlertsWithLabel('security')",
+    "group:recommended"
+  ]
+}

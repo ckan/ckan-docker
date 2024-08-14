@@ -12,17 +12,13 @@ RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.1#egg=cka
 RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git@v1.5.6#egg=ckanext-harvest && \
     pip3 install -r ${APP_DIR}/src/ckanext-harvest/requirements.txt
 
-RUN git clone https://github.com/CivityNL/ckanext-scheming.git ${APP_DIR}/src/ckanext-scheming && \
-    cd "${APP_DIR}/src/ckanext-scheming" && \
-    git checkout release-3.0.0-civity && \
-    pip3 install -e .
+RUN pip3 install -e git+https://github.com/CivityNL/ckanext-scheming.git@release-3.0.0-civity#egg=ckanext-scheming[requirements]    
 
 RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.3.1#egg=ckanext-oidc-pkce && \
     pip3 install -r ${APP_DIR}/src/ckanext-oidc-pkce/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@v1.2.2#egg=ckanext-fairdatapoint && \
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@v1.2.3#egg=ckanext-fairdatapoint && \
     pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
-
 
 # Install Supervisor and cron
 RUN apk update \
@@ -63,3 +59,6 @@ RUN for d in $APP_DIR/patches/*; do \
 ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations gdi_userportal dcat harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester dcat_json_interface oidc_pkce fairdatapointharvester activity"
 
 COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
+
+RUN mkdir -p /var/lib/ckan/storage/uploads/group && \
+    chmod -R u+rwx "/var/lib/ckan"

@@ -2,4 +2,4 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-GET http://localhost:5500/api/action/package_search?facet.field=["organization","theme","conforms_to","has_version","access_rights","language","publisher_name","res_format"]&facet.limit=10&rows=0
+GET http://localhost:5500/api/action/package_search?facet.field=["organization","theme","access_rights","res_format"]&facet.limit=10&rows=0

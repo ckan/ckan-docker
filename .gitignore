@@ -13,3 +13,4 @@ _solr/schema.xml
 _src/*
 local/*
 venv
+.env.secrets

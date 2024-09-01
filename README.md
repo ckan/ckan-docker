@@ -32,7 +32,7 @@ The CKAN images used are from the official CKAN [ckan-docker](https://github.com
 
 The non-CKAN images are as follows:
 
-* DataPusher: CKAN's [pre-configured DataPusher image](https://github.com/ckan/ckan-base/tree/main/datapusher).
+* DataPusher: CKAN's [pre-configured DataPusher image](https://github.com/ckan/ckan-docker-base/tree/main/datapusher).
 * PostgreSQL: Official PostgreSQL image. Database files are stored in a named volume.
 * Solr: CKAN's [pre-configured Solr image](https://github.com/ckan/ckan-solr). Index data is stored in a named volume.
 * Redis: standard Redis image

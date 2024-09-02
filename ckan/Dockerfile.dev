@@ -61,4 +61,5 @@ ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets s
 COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 
 RUN mkdir -p /var/lib/ckan/storage/uploads/group && \
+    mkdir -p /var/usr/ckan/storage/uploads/user && \
     chmod -R u+rwx "/var/lib/ckan"

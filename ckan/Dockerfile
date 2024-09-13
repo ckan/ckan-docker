@@ -17,9 +17,6 @@ RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git@v1.5.6#egg=c
 
 RUN pip3 install -e git+https://github.com/CivityNL/ckanext-scheming.git@release-3.0.0-civity#egg=ckanext-scheming[requirements]
 
-RUN  pip3 install -e git+https://github.com/DataShades/ckanext-oidc-pkce.git@v0.3.1#egg=ckanext-oidc-pkce && \
-    pip3 install -r ${APP_DIR}/src/ckanext-oidc-pkce/requirements.txt
-
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@v1.2.3#egg=ckanext-fairdatapoint && \
     pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
 
@@ -59,7 +56,7 @@ RUN for d in $APP_DIR/patches/*; do \
     fi ; \
     done
 
-ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations dcat dcat_json_interface harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester fairdatapointharvester oidc_pkce gdi_userportal activity"
+ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations dcat dcat_json_interface harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester fairdatapointharvester gdi_userportal activity"
 
 COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 

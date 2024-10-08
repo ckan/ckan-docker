@@ -70,4 +70,3 @@ RUN mkdir -p /var/lib/ckan/storage/uploads/group && \
 # https://github.com/ckan/ckan-docker-base/issues/82
 # CVE-2024-32002 was found on git and related packages
 RUN apk del git git-perl perl-git
-RUN apk del git git-perl perl-git

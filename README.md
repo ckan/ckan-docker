@@ -113,12 +113,29 @@ See [CKAN images](#5-ckan-images) for more details of what happens when using de
 
 You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
 
-    docker compose -f docker-compose.dev.yml exec ckan-dev /bin/sh -c "ckan -c /srv/app/ckan.ini generate extension --output-dir /srv/app/src_extensions"
+```bash
+docker compose -f docker-compose.dev.yml exec ckan-dev ckan generate extension --output-dir /srv/app/src_extensions
+```
 
-![Screenshot 2023-02-22 at 1 45 55 pm](https://user-images.githubusercontent.com/54408245/220623568-b4e074c7-6d07-4d27-ae29-35ce70961463.png)
+```
+Extension's name [must begin 'ckanext-']: ckanext-mytheme
+Author's name []: Joe Bloggs
+Author's email []: joeb@example.com
+Your Github user or organization name []: example
+Brief description of the project []: My CKAN theme
+List of keywords (separated by spaces) [CKAN]:
+Do you want to include code examples? [y/N]: y
 
+Written: /srv/app/src_extensions/ckanext-mytheme
+```
 
-The new extension files and directories are created in the `/srv/app/src_extensions/` folder in the running container. They will also exist in the local src/ directory as local `/src` directory is mounted as `/srv/app/src_extensions/` on the ckan container. You might need to change the owner of its folder to have the appropiate permissions.
+The new extension files and directories are created in the `/srv/app/src_extensions/` folder in the running container. They will also exist in the local src/ directory as local `/src` directory is mounted as `/srv/app/src_extensions/` on the ckan container.
+
+The files will be owned by root, to correct the ownership so you can edit the files with your normal account outside the container run:
+
+```bash
+docker compose -f docker-compose.dev.yml exec ckan-dev chown --reference /srv/app/src_extensions/ -R /srv/app/src_extensions/ckanext-mytheme/
+```
 
 #### Running HTTPS on development mode
 

@@ -1,8 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 
 # SPDX-FileCopyrightText: 2006-2024 Open Knowledge Foundation and contributors
 #
 # SPDX-License-Identifier: AGPL-3.0-only
+
+if [[ $CKAN__PLUGINS == *"datapusher"* ]]; then
+    # Add ckan.datapusher.api_token to the CKAN config file (updated with corrected value later)
+    echo "Setting a temporary value for ckan.datapusher.api_token"
+    ckan config-tool $CKAN_INI ckan.datapusher.api_token=xxx
+fi
 
 # Install any local extensions in the src_extensions volume
 echo "Looking for local extensions to install..."
@@ -12,6 +18,10 @@ for i in $SRC_EXTENSIONS_DIR/*
 do
     if [ -d $i ];
     then
+        if [ -d $SRC_DIR/$(basename $i) ];
+        then
+            pip uninstall -y "$(basename $i)"
+        fi
 
         if [ -f $i/pip-requirements.txt ];
         then
@@ -35,6 +45,13 @@ do
             echo "Found setup.py file in $i"
             cd $APP_DIR
         fi
+        if [ -f $i/pyproject.toml ];
+        then
+            cd $i
+            pip install -e .
+            echo "Found pyproject.toml file in $i"
+            cd $APP_DIR
+        fi
 
         # Point `use` in test.ini to location of `test-core.ini`
         if [ -f $i/test.ini ];
@@ -48,9 +65,6 @@ done
 # Set debug to true
 echo "Enabling debug mode"
 ckan config-tool $CKAN_INI -s DEFAULT "debug = true"
-
-# Add ckan.datapusher.api_token to the CKAN config file (updated with corrected value later)
-ckan config-tool $CKAN_INI ckan.datapusher.api_token=xxx
 
 # Set up the Secret key used by Beaker and Flask
 # This can be overriden using a CKAN___BEAKER__SESSION__SECRET env var
@@ -78,10 +92,7 @@ ckan config-tool $SRC_DIR/ckan/test-core.ini \
     "ckan.redis.url = $TEST_CKAN_REDIS_URL"
 
 # Run the prerun script to init CKAN and create the default admin user
-sudo -u ckan -EH python3 prerun.py
-
-echo "Set up ckan.datapusher.api_token in the CKAN config file"
-ckan config-tool $CKAN_INI "ckan.datapusher.api_token=$(ckan -c $CKAN_INI user token add ckan_admin datapusher | tail -n 1 | tr -d '\t')"
+python3 prerun.py
 
 # Run any startup scripts provided by images extending this one
 if [[ -d "/docker-entrypoint.d" ]]
@@ -96,8 +107,23 @@ then
     done
 fi
 
-# Start supervisord
-supervisord --configuration /etc/supervisord.conf &
+CKAN_RUN="ckan -c $CKAN_INI run -H 0.0.0.0"
+CKAN_OPTIONS=""
+if [ "$USE_DEBUGPY_FOR_DEV" = true ] ; then
+    pip install debugpy
+    CKAN_RUN="/usr/bin/python -m debugpy --listen 0.0.0.0:5678 $CKAN_RUN"
+    CKAN_OPTIONS="$CKAN_OPTIONS --disable-reloader"
+fi
 
-# Start the development server with automatic reload
-sudo -u ckan -EH ckan -c $CKAN_INI run -H 0.0.0.0
+if [ "$USE_HTTPS_FOR_DEV" = true ] ; then
+    CKAN_OPTIONS="$CKAN_OPTIONS -C unsafe.cert -K unsafe.key"
+fi
+
+# Start the development server as the ckan user with automatic reload
+while true; do
+    # Start supervisord
+    supervisord --configuration /etc/supervisord.conf & 
+    su ckan -c "$CKAN_RUN $CKAN_OPTIONS"
+    echo Exit with status $?. Restarting.
+    sleep 2
+done

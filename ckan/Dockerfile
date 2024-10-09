@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-FROM ckan/ckan-base:2.10.5
+FROM docker.io/ckan/ckan-base:2.10.5
 
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@v1.3.1#egg=ckanext-gdi-userportal && \
     pip3 install -r ${APP_DIR}/src/ckanext-gdi-userportal/requirements.txt
@@ -20,29 +20,16 @@ RUN pip3 install -e git+https://github.com/CivityNL/ckanext-scheming.git@release
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@v1.3.1#egg=ckanext-fairdatapoint && \
     pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
 
-# Install Supervisor and cron
-RUN apk update \
-    && apk add --no-cache supervisor cronie \
-    && rm -rf /var/cache/apk/*
-
 # Create log directories for CKAN harvester
 RUN mkdir -p /var/log/ckan/std && chown -R ckan:ckan /var/log/ckan
 
 # Copy custom initialization scripts
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
-COPY config/ckan_harvesting.conf /etc/supervisord.d/ckan_harvesting.conf
 
-# Copy crontab file to the cron.d directory
-ADD config/crontab-harvester /etc/cron.d/crontab-harvester
-
-# Give execution rights on the cron job
-RUN chmod 644 /etc/cron.d/crontab-harvester
-
-# Apply cron job
-RUN crontab -u ckan /etc/cron.d/crontab-harvester
-
-# Create log file for cron
-RUN touch /var/log/cron.log && chown ckan:ckan /var/log/cron.log
+# Config cron job for harvesting
+COPY config/supervisord.conf /etc/supervisord.d/ckan.conf
+COPY config/crontab ${APP_DIR}/crontab
+RUN crontab ${APP_DIR}/crontab
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)

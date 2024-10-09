@@ -159,7 +159,6 @@ The Docker Compose environment `.env` file by default is set up for production m
 
 1. Change the `CKAN_SITE_URL` variable to be: http://localhost:5000
 2. Update the `CKAN__DATAPUSHER__CALLBACK_URL_BASE` variable to use the `ckan-dev` container name: http://ckan-dev:5000
-3. Update the `DATAPUSHER_REWRITE_URL` variable to also use the `ckan-dev` container name http://ckan-dev:5000
 
 
 ## 5. CKAN images

@@ -60,7 +60,7 @@ services:
       - "8983:8983"
 
   redis:
-    image: redis:6.2.16
+    image: redis:7.4.1
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "-e", "QUIT"]

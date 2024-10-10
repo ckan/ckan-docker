@@ -1090,13 +1090,6 @@ http://lexvo.org/id/iso639-3/ltz,"Luxembourgish",en
 https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&code=C9245,"Invasive Breast Carcinoma",en
 https://ncim.nci.nih.gov/ncimbrowser/ConceptReport.jsp?code=C0853879,"Invasive Breast Carcinoma",en
 http://purl.bioontology.org/ontology/ICD10CM/J96.2,"Acute and chronic respiratory failure",en
-access_rights,"Access Rights",en
-organization,"Publishers",en
-publisher_name,"Publishers",en
-res_format,"File Formats",en
-spatial,"Spatial Coverage",en
-tags,"Keywords",en
-theme,"Themes",en
 https://publications.europa.eu/resource/authority/dataset-type/APROF,"Application profile",en
 https://publications.europa.eu/resource/authority/dataset-type/ATTO_LEX,"ATTO table - EUR-Lex domain",en
 https://publications.europa.eu/resource/authority/dataset-type/ATTO_PUB,"ATTO table - Publications domain",en
@@ -2412,3 +2405,17 @@ http://purl.org/zonmw/generic/10107,"PDF - Portable Document Format",en
 http://purl.org/zonmw/generic/10105,"media type",en
 http://purl.org/zonmw/generic/10104,"protozoa",en
 http://purl.org/zonmw/generic/10102,"funder institution",en
+access_rights,"Access Rights",en
+access_rights,"Toegangsrechten",nl
+organization,"Publishers",en
+organization,"Uitgevers",nl
+publisher_name,"Publishers",en
+publisher_name,"Uitgevers",nl
+res_format,"File Formats",en
+res_format,"Bestandstype",nl
+spatial,"Spatial Coverage",en
+spatial,"Spatiële dekking",nl
+tags,"Keywords",en
+tags,"Trefwoorden",nl
+theme,"Themes",en
+theme,"Themas",nl

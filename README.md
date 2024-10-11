@@ -28,7 +28,6 @@ The non-CKAN images are as follows:
 * Solr: CKAN's [pre-configured Solr image](https://github.com/ckan/ckan-solr). Index data is stored in a named volume.
 * Redis: standard Redis image
 * NGINX: latest stable nginx image that includes SSL and Non-SSL endpoints
-* Keycloak: Latest official Keycloak image. A test CKAN realm is injected during `docker compose up`
 * National Catalogue Mock: Python script to expose a synthetic RDF file, to test the Harvester.
 
 CKAN and all the components are configured using environment variables that you can set in the `.env` file.
@@ -37,7 +36,6 @@ CKAN and all the components are configured using environment variables that you 
 
 * Install docker with support to docker compose v2.
   * Ensure you have enough computer resources, if you are using `colima`: `colima start --arch aarch64 --vm-type=vz --mount-type=virtiofs --vz-rosetta --cpu 4 --memory 10`
-* Add `127.0.0.1  keycloak` to `/etc/hosts`.
 * Copy `.env.example` to `.env`.
 * Ensure git submodules are pulled correctly after clone CKAN-DOCKER `git submodule update --init`
 

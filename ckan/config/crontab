@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 # run job every hour
-0 */1 * * * /usr/bin/ckan -c /srv/app/ckan.ini harvester run
+*/15 * * * * /usr/bin/ckan -c /srv/app/ckan.ini harvester run
 # run cean harvest log every day, at 5 AM
 0 5 * * * /usr/bin/ckan -c /srv/app/ckan.ini harvester clean-harvest-log

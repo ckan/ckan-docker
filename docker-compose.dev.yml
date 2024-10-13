@@ -31,12 +31,18 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
+      interval: 60s
+      timeout: 10s
+      retries: 3s
 
   datapusher:
     image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]
+      interval: 60s
+      timeout: 10s
+      retries: 3s
 
   db:
     build:

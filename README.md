@@ -61,10 +61,8 @@ Use this if you are a maintainer and will not be making code changes to CKAN or 
 
 Copy the included `.env.example` and rename it to `.env`. Modify it depending on your own needs.
 
-Please note that when accessing CKAN directly (via a browser) ie: not going through NGINX you will need to make sure you have "ckan" set up
-to be an alias to localhost in the local hosts file. Either that or you will need to change the `.env` entry for `CKAN_SITE_URL`
-
-Using the default values on the `.env.example` file will get you a working CKAN instance. There is a sysadmin user created by default with the values defined in `CKAN_SYSADMIN_NAME` and `CKAN_SYSADMIN_PASSWORD`(`ckan_admin` and `test1234` by default). This should be obviously changed before running this setup as a public CKAN instance.
+> [!WARNING]
+> There is a sysadmin user created by default with the values defined in `CKAN_SYSADMIN_NAME` and `CKAN_SYSADMIN_PASSWORD` (`ckan_admin` and `test1234` by default). These must be changed before running this setup as a public CKAN instance.
 
 To build the images:
 
@@ -78,11 +76,20 @@ This will start up the containers in the current window. By default the containe
 using a different colour. You could also use the -d "detach mode" option ie: `docker compose up -d` if you wished to use the current 
 window for something else.
 
-At the end of the container start sequence there should be 6 containers running
+At the end of the container start sequence there should be 6 containers running:
 
-![Screenshot 2022-12-12 at 10 36 21 am](https://user-images.githubusercontent.com/54408245/207012236-f9571baa-4d99-4ffe-bd93-30b11c4829e0.png)
+```bash
+$ docker compose ps
+NAME                       IMAGE                              COMMAND                  SERVICE      CREATED         STATUS                   PORTS
+ckan-docker-ckan-1         ckan-docker-ckan                   "/srv/app/start_ckan…"   ckan         4 minutes ago   Up 3 minutes (healthy)   5000/tcp
+ckan-docker-datapusher-1   ckan/ckan-base-datapusher:0.0.20   "sh -c 'uwsgi --plug…"   datapusher   4 minutes ago   Up 4 minutes (healthy)   8800/tcp
+ckan-docker-db-1           ckan-docker-db                     "docker-entrypoint.s…"   db           4 minutes ago   Up 4 minutes (healthy)
+ckan-docker-nginx-1        ckan-docker-nginx                  "/bin/sh -c 'openssl…"   nginx        4 minutes ago   Up 2 minutes             80/tcp, 0.0.0.0:8443->443/tcp
+ckan-docker-redis-1        redis:6                            "docker-entrypoint.s…"   redis        4 minutes ago   Up 4 minutes (healthy)
+ckan-docker-solr-1         ckan/ckan-solr:2.10-solr9          "docker-entrypoint.s…"   solr         4 minutes ago   Up 4 minutes (healthy)
+```
 
-After this step, CKAN should be running at `CKAN_SITE_URL`.
+After this step, CKAN should be running at `CKAN_SITE_URL` (by default https://localhost:8443)
 
 
 ### Development mode
@@ -106,12 +113,29 @@ See [CKAN images](#5-ckan-images) for more details of what happens when using de
 
 You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
 
-    docker compose -f docker-compose.dev.yml exec ckan-dev /bin/sh -c "ckan -c /srv/app/ckan.ini generate extension --output-dir /srv/app/src_extensions"
+```bash
+docker compose -f docker-compose.dev.yml exec ckan-dev ckan generate extension --output-dir /srv/app/src_extensions
+```
 
-![Screenshot 2023-02-22 at 1 45 55 pm](https://user-images.githubusercontent.com/54408245/220623568-b4e074c7-6d07-4d27-ae29-35ce70961463.png)
+```
+Extension's name [must begin 'ckanext-']: ckanext-mytheme
+Author's name []: Joe Bloggs
+Author's email []: joeb@example.com
+Your Github user or organization name []: example
+Brief description of the project []: My CKAN theme
+List of keywords (separated by spaces) [CKAN]:
+Do you want to include code examples? [y/N]: y
 
+Written: /srv/app/src_extensions/ckanext-mytheme
+```
 
-The new extension files and directories are created in the `/srv/app/src_extensions/` folder in the running container. They will also exist in the local src/ directory as local `/src` directory is mounted as `/srv/app/src_extensions/` on the ckan container. You might need to change the owner of its folder to have the appropiate permissions.
+The new extension files and directories are created in the `/srv/app/src_extensions/` folder in the running container. They will also exist in the local src/ directory as local `/src` directory is mounted as `/srv/app/src_extensions/` on the ckan container.
+
+The files will be owned by root, to correct the ownership so you can edit the files with your normal account outside the container run:
+
+```bash
+docker compose -f docker-compose.dev.yml exec ckan-dev chown --reference /srv/app/src_extensions/ -R /srv/app/src_extensions/ckanext-mytheme/
+```
 
 #### Running HTTPS on development mode
 
@@ -159,7 +183,6 @@ The Docker Compose environment `.env` file by default is set up for production m
 
 1. Change the `CKAN_SITE_URL` variable to be: http://localhost:5000
 2. Update the `CKAN__DATAPUSHER__CALLBACK_URL_BASE` variable to use the `ckan-dev` container name: http://ckan-dev:5000
-3. Update the `DATAPUSHER_REWRITE_URL` variable to also use the `ckan-dev` container name http://ckan-dev:5000
 
 
 ## 5. CKAN images

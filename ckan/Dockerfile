@@ -6,7 +6,7 @@
 
 FROM docker.io/ckan/ckan-base:2.10.5
 
-RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@v1.3.1#egg=ckanext-gdi-userportal && \
+RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@v1.3.3#egg=ckanext-gdi-userportal && \
     pip3 install -r ${APP_DIR}/src/ckanext-gdi-userportal/requirements.txt
 
 RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v2.0.0#egg=ckanext-dcat && \

@@ -4,11 +4,13 @@ FROM ckan/ckan-base:2.11.0
 # See Dockerfile.dev for more details and examples
 
 # Copy custom initialization scripts
-COPY docker-entrypoint.d/* /docker-entrypoint.d/
+COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
-COPY patches ${APP_DIR}/patches
+COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
+
+USER ckan
 
 RUN for d in $APP_DIR/patches/*; do \
         if [ -d $d ]; then \

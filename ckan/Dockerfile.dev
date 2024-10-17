@@ -1,4 +1,4 @@
-FROM ckan/ckan-dev:2.11.0
+FROM ckan/ckan-dev:2.11.0-py3.10
 
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
@@ -35,11 +35,11 @@ FROM ckan/ckan-dev:2.11.0
 # to get them mounted in this image at runtime
 
 # Copy custom initialization scripts
-COPY docker-entrypoint.d/* /docker-entrypoint.d/
+COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
-COPY patches ${APP_DIR}/patches
+COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 
 RUN for d in $APP_DIR/patches/*; do \
         if [ -d $d ]; then \

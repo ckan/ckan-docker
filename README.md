@@ -102,6 +102,10 @@ To build the images:
 
 	docker compose -f docker-compose.dev.yml build
 
+To install extensions from the `src` directory:
+
+	docker compose -f docker-compose.dev.yml run -u root ckan-dev ./install_src.sh
+
 To start the containers:
 
 	docker compose -f docker-compose.dev.yml up
@@ -114,7 +118,7 @@ See [CKAN images](#5-ckan-images) for more details of what happens when using de
 You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
 
 ```bash
-docker compose -f docker-compose.dev.yml exec ckan-dev ckan generate extension --output-dir /srv/app/src_extensions
+docker compose -f docker-compose.dev.yml exec -u `stat -c '%u' src` -e HOME=/srv/app/src_extensions ckan-dev ckan generate extension --output-dir /srv/app/src_extensions
 ```
 
 ```
@@ -130,12 +134,6 @@ Written: /srv/app/src_extensions/ckanext-mytheme
 ```
 
 The new extension files and directories are created in the `/srv/app/src_extensions/` folder in the running container. They will also exist in the local src/ directory as local `/src` directory is mounted as `/srv/app/src_extensions/` on the ckan container.
-
-The files will be owned by root, to correct the ownership so you can edit the files with your normal account outside the container run:
-
-```bash
-docker compose -f docker-compose.dev.yml exec ckan-dev chown --reference /srv/app/src_extensions/ -R /srv/app/src_extensions/ckanext-mytheme/
-```
 
 #### Running HTTPS on development mode
 

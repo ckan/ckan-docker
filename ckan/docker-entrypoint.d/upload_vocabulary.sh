@@ -6,7 +6,7 @@
 
 set -e
 
-psql postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:5432/$CKAN_DB <<-EOSQL
+psql $CKAN_SQLALCHEMY_URL <<-EOSQL
 
   SELECT
       EXISTS(SELECT 1 FROM public.term_translation) as table_not_empty

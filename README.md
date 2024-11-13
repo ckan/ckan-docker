@@ -135,6 +135,9 @@ Written: /srv/app/src_extensions/ckanext-mytheme
 
 The new extension files and directories are created in the `/srv/app/src_extensions/` folder in the running container. They will also exist in the local src/ directory as local `/src` directory is mounted as `/srv/app/src_extensions/` on the ckan container.
 
+Please note that you will need to change the stat command to `stat -f '%u' src` on Mac OS rather than `stat -c '%u' src` which is specific to GNU stat (ie: Linux)
+
+
 #### Running HTTPS on development mode
 
 Sometimes is useful to run your local development instance under HTTPS, for instance if you are using authentication extensions like [ckanext-saml2auth](https://github.com/keitaroinc/ckanext-saml2auth). To enable it, set the following in your `.env` file:

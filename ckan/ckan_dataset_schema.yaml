@@ -79,6 +79,11 @@ dataset_fields:
   display_snippet: email.html
   display_email_name_field: maintainer
 
+- field_name: spatial_coverage
+  label: Cobertura Espacial
+  form_placeholder: Brasil, Estados, Município
+  validators: ignore_missing
+  required: true
 
 resource_fields:
 

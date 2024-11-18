@@ -11,15 +11,6 @@ dataset_fields:
   preset: title
   form_placeholder: eg. A descriptive title
 
-- field_name: category
-  preset: select
-  label: Category
-  choices:
-  - value: bactrian
-    label: Bactrian Camel
-  - value: hybrid
-    label: Hybrid Camel
-
 - field_name: name
   label: URL
   preset: dataset_slug
@@ -82,7 +73,7 @@ dataset_fields:
 - field_name: spatial_coverage
   label: Cobertura Espacial
   form_placeholder: Brasil, Estados, Município
-  validators: ignore_missing
+  validators: not_empty
   required: true
 
 resource_fields:

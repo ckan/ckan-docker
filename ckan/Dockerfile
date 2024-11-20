@@ -3,6 +3,16 @@ FROM ckan/ckan-base:2.11
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples
 
+
+USER root
+
+### ckanext-geoview ###
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext-spatial' && \ 
+    pip3 install -r ${APP_DIR}/src/ckanext-spatial/requirements.txt && \
+    pip3 install -e 'git+https://github.com/ckan/ckanext-geoview.git#egg=ckanext-geoview' && \
+    pip install -e 'git+https://github.com/ckan/ckanext-pdfview#egg=ckanext-pdfview'
+
+    
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 

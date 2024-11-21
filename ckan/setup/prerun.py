@@ -7,6 +7,7 @@ import os
 import sys
 import subprocess
 import psycopg2
+
 try:
     from urllib.request import urlopen
     from urllib.error import URLError
@@ -31,12 +32,18 @@ def update_plugins():
     subprocess.check_output(cmd, stderr=subprocess.STDOUT)
     print("[prerun] Plugins set.")
 
+
 def update_database():
 
     sqlalchemy_url = os.environ.get("CKAN_SQLALCHEMY_URL", "")
     print(("[prerun] Setting the SqlAlchemy URL in {}:".format(ckan_ini)))
     print(sqlalchemy_url)
-    cmd = ["ckan", "config-tool", ckan_ini, "sqlalchemy.url = {}".format(sqlalchemy_url)]
+    cmd = [
+        "ckan",
+        "config-tool",
+        ckan_ini,
+        "sqlalchemy.url = {}".format(sqlalchemy_url),
+    ]
     subprocess.check_output(cmd, stderr=subprocess.STDOUT)
     print("[prerun] SqlAlchemy URL set.")
 
@@ -46,14 +53,6 @@ def check_main_db_connection(retry=None):
     conn_str = os.environ.get("CKAN_SQLALCHEMY_URL")
     if not conn_str:
         print("[prerun] CKAN_SQLALCHEMY_URL not defined, not checking db")
-    return check_db_connection(conn_str, retry)
-
-
-def check_datastore_db_connection(retry=None):
-
-    conn_str = os.environ.get("CKAN_DATASTORE_WRITE_URL")
-    if not conn_str:
-        print("[prerun] CKAN_DATASTORE_WRITE_URL not defined, not checking db")
     return check_db_connection(conn_str, retry)
 
 
@@ -86,7 +85,7 @@ def check_solr_connection(retry=None):
         sys.exit(1)
 
     url = os.environ.get("CKAN_SOLR_URL", "")
-    search_url = '{url}/schema/name?wt=json'.format(url=url)
+    search_url = "{url}/schema/name?wt=json".format(url=url)
 
     try:
         connection = urlopen(search_url)
@@ -96,13 +95,14 @@ def check_solr_connection(retry=None):
         time.sleep(10)
         check_solr_connection(retry=retry - 1)
     else:
-        import re                                                                                                                                                      
-        conn_info = connection.read()                                                                                                                                  
-        schema_name = json.loads(conn_info)                                                                                                                            
-        if 'ckan' in schema_name['name']:                                                                                                                              
-            print('[prerun] Succesfully connected to solr and CKAN schema loaded')                                                                                     
-        else:                                                                                                                                                          
-            print('[prerun] Succesfully connected to solr, but CKAN schema not found')
+        import re
+
+        conn_info = connection.read()
+        schema_name = json.loads(conn_info)
+        if "ckan" in schema_name["name"]:
+            print("[prerun] Succesfully connected to solr and CKAN schema loaded")
+        else:
+            print("[prerun] Succesfully connected to solr, but CKAN schema not found")
 
 
 def init_db():
@@ -123,39 +123,12 @@ def init_db():
             raise e
 
 
-def init_datastore_db():
-
-    conn_str = os.environ.get("CKAN_DATASTORE_WRITE_URL")
-    if not conn_str:
-        print("[prerun] Skipping datastore initialization")
-        return
-
-    datastore_perms_command = ["ckan", "-c", ckan_ini, "datastore", "set-permissions"]
-
-    connection = psycopg2.connect(conn_str)
-    cursor = connection.cursor()
-
-    print("[prerun] Initializing datastore db - start")
+def init_db_harvest():
+    db_command = ["ckan", "-c", ckan_ini, "db", "upgrade", "-p", "harvest"]
+    print("[prerun] Initializing or upgrading harvest db - start")
     try:
-        datastore_perms = subprocess.Popen(
-            datastore_perms_command, stdout=subprocess.PIPE
-        )
-
-        perms_sql = datastore_perms.stdout.read()
-        # Remove internal pg command as psycopg2 does not like it
-        perms_sql = re.sub(b'\\\\connect "(.*)"', b"", perms_sql)
-        cursor.execute(perms_sql)
-        for notice in connection.notices:
-            print(notice)
-
-        connection.commit()
-
-        print("[prerun] Initializing datastore db - end")
-        print(datastore_perms.stdout.read())
-    except psycopg2.Error as e:
-        print("[prerun] Could not initialize datastore")
-        print(str(e))
-
+        subprocess.check_output(db_command, stderr=subprocess.STDOUT)
+        print("[prerun] Initializing or upgrading harvest db - end")
     except subprocess.CalledProcessError as e:
         if "OperationalError" in e.output:
             print(e.output)
@@ -165,9 +138,6 @@ def init_datastore_db():
         else:
             print(e.output)
             raise e
-    finally:
-        cursor.close()
-        connection.close()
 
 
 def create_sysadmin():
@@ -219,8 +189,6 @@ if __name__ == "__main__":
         update_database()
         check_main_db_connection()
         init_db()
-        #check_datastore_db_connection()
-        #init_datastore_db()
+        init_db_harvest()
         check_solr_connection()
         create_sysadmin()
-        

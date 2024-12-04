@@ -5,7 +5,7 @@ volumes:
   pip_cache:
   site_packages:
   local_bin:
-  vscode_server:
+  home_dir:
 
 services:
 
@@ -29,7 +29,7 @@ services:
       - pip_cache:/root/.cache/pip
       - site_packages:/usr/local/lib/python3.10/site-packages
       - local_bin:/usr/local/bin
-      - vscode_server:/root/.vscode-server
+      - home_dir:/srv/app/
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]

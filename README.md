@@ -165,6 +165,10 @@ development instance in your `.env` file:
   USE_DEBUGPY_FOR_DEV=true
 ```
 
+Next run the install script to install debugpy:
+
+	docker compose -f docker-compose.dev.yml run -u root ckan-dev ./install_src.sh
+
 Then start the containers in [development mode](#development-mode) and launch VS Code.
 
 In VS Code:
@@ -172,8 +176,9 @@ In VS Code:
 1. Install the "Dev Container" extension: press CTRL+SHIFT+X, type "dev container", click "install"
 2. Click the "Open a Remote Window" button in the bottom-left of the VS Code window
 3. Click "Attach to Running Container..." and select your ckan-dev container, e.g. "ckan-docker-ckan-dev-1"
-4. Click the "Run and Debug" icon on the left panel then "create a launch.json", select "Python Debugger", "Remote Attach", host "localhost" and port "5678"
-5. Press F5 or click the "Run" menu and "Start Debugging"
+4. Click the "Run and Debug" icon on the left panel and choose to install the "Python Debugger"
+5. Click "create a launch.json", select "Python Debugger", "Remote Attach", host "localhost" and port "5678"
+6. Press F5 or click the "Run" menu and "Start Debugging"
 
 You can now set breakpoints and remote debug your CKAN development instance.
 

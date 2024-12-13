@@ -318,6 +318,8 @@ For more information please see [ckanext-envvars](https://github.com/okfn/ckanex
 
 A extensão `ckanext-scheming` é usada para criar campos em datasets, organizações, recursos e grupos usando YAML ou JSON. Podemos adicionar validação dos campos.
 
+Para mais detalhes [ckanext-scheming no GitHub](https://github.com/ckan/ckanext-scheming)
+
 ## 10. CKAN_SITE_URL
 
 For convenience the CKAN_SITE_URL parameter should be set in the .env file. For development it can be set to http://localhost:5000 and non-development set to https://localhost:8443

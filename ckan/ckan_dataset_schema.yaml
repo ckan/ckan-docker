@@ -22,12 +22,8 @@ dataset_fields:
   - field_name: tag_string
     label: Tags
     preset: tag_string_autocomplete
-    form_placeholder: eg. economy, mental health, government
-
-  - field_name: license_id
-    label: License
-    form_snippet: license.html
-    help_text: License definitions and additional information can be found at http://opendefinition.org/
+    form_placeholder: eg. imovel, terreno, ocupacao
+    required: true
 
   - field_name: owner_org
     label: Organization
@@ -41,8 +37,9 @@ dataset_fields:
 
   - field_name: version
     label: Version
-    validators: ignore_missing unicode_safe package_version_validator
-    form_placeholder: "1.0"
+    validators: not_empty is_positive_integer
+    form_placeholder: 1, 2, 3
+    required: true
 
   - field_name: author
     label: Author
@@ -70,7 +67,7 @@ dataset_fields:
 
   - field_name: spatial_coverage
     label: Cobertura Espacial
-    form_placeholder: Brasil, Estados, Município
+    form_placeholder: Centro, Zona Sul, Zona Oeste, Zona Leste
     validators: not_empty
     required: true
 

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+ROOT="$(dirname ${BASH_SOURCE[0]})/.."
+USERGROUP="$(stat -c '%u:%g' "${ROOT}/src")"
+if [ "$USERGROUP" == ":" ]; then
+	# macos stat?
+	USERGROUP="$(stat -f '%u:%g' "${ROOT}/src")"
+fi
+
+docker compose -f "${ROOT}/docker-compose.dev.yml" exec -u "$USERGROUP" \
+	-e HOME=/srv/app/src_extensions ckan-dev ckan generate extension \
+	--output-dir /srv/app/src_extensions

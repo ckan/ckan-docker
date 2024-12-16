@@ -96,19 +96,19 @@ After this step, CKAN should be running at `CKAN_SITE_URL` (by default https://l
 
 Use this mode if you are making code changes to CKAN and either creating new extensions or making code changes to existing extensions. This mode also uses the `.env` file for config options.
 
-To develop local extensions use the `docker-compose.dev.yml` file:
+To develop local extensions use the `docker-compose.dev.yml` file with help from the scripts under `bin`:
 
 To build the images:
 
-	docker compose -f docker-compose.dev.yml build
+	bin/compose build
 
 To install extensions from the `src` directory:
 
-	docker compose -f docker-compose.dev.yml run -u root ckan-dev ./install_src.sh
+	bin/install_src
 
 To start the containers:
 
-	docker compose -f docker-compose.dev.yml up
+	bin/compose up
 
 See [CKAN images](#5-ckan-images) for more details of what happens when using development mode.
 
@@ -117,9 +117,7 @@ See [CKAN images](#5-ckan-images) for more details of what happens when using de
 
 You can use the ckan [extension](https://docs.ckan.org/en/latest/extensions/tutorial.html#creating-a-new-extension) instructions to create a CKAN extension, only executing the command inside the CKAN container and setting the mounted `src/` folder as output:
 
-```bash
-docker compose -f docker-compose.dev.yml exec -u `stat -c '%u' src` -e HOME=/srv/app/src_extensions ckan-dev ckan generate extension --output-dir /srv/app/src_extensions
-```
+        bin/generate_extension
 
 ```
 Extension's name [must begin 'ckanext-']: ckanext-mytheme
@@ -134,8 +132,6 @@ Written: /srv/app/src_extensions/ckanext-mytheme
 ```
 
 The new extension files and directories are created in the `/srv/app/src_extensions/` folder in the running container. They will also exist in the local src/ directory as local `/src` directory is mounted as `/srv/app/src_extensions/` on the ckan container.
-
-Please note that you will need to change the stat command to `stat -f '%u' src` on Mac OS rather than `stat -c '%u' src` which is specific to GNU stat (ie: Linux)
 
 
 #### Running HTTPS on development mode
@@ -167,7 +163,7 @@ development instance in your `.env` file:
 
 Next run the install script to install debugpy:
 
-	docker compose -f docker-compose.dev.yml run -u root ckan-dev ./install_src.sh
+	bin/install_src
 
 Then start the containers in [development mode](#development-mode) and launch VS Code.
 

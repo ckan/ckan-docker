@@ -2,10 +2,11 @@
 
 set -e
 ROOT="$(dirname ${BASH_SOURCE[0]})/.."
-USERGROUP="$(stat -c '%u:%g' "${ROOT}/src")"
-if [ "$USERGROUP" == ":" ]; then
-	# macos stat?
+if [[ "$(uname)" == "Darwin" ]]; then
+  # macOS
 	USERGROUP="$(stat -f '%u:%g' "${ROOT}/src")"
+else
+	USERGROUP="$(stat -c '%u:%g' "${ROOT}/src")"
 fi
 
 docker compose -f "${ROOT}/docker-compose.dev.yml" exec -u "$USERGROUP" \

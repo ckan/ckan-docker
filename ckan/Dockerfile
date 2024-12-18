@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-FROM docker.io/ckan/ckan-base:2.10.5
+FROM docker.io/ckan/ckan-base:2.10.6
 
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@v1.3.8#egg=ckanext-gdi-userportal && \
     pip3 install -r ${APP_DIR}/src/ckanext-gdi-userportal/requirements.txt

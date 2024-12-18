@@ -7,7 +7,6 @@ volumes:
   ckan_storage:
   pg_data:
   solr_data:
-  pip_cache:
   site_packages:
 
 services:
@@ -29,7 +28,6 @@ services:
     volumes:
       - ckan_storage:/var/lib/ckan
       - ./src:/srv/app/src_extensions
-      - pip_cache:/root/.cache/pip
       - site_packages:/usr/lib/python3.10/site-packages
     restart: unless-stopped
     healthcheck:

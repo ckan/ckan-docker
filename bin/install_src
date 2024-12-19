@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -e
+ROOT="$(dirname ${BASH_SOURCE[0]})/.."
+
+docker compose -f "${ROOT}/docker-compose.dev.yml" run -u root ckan-dev ./install_src.sh

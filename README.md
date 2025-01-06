@@ -98,6 +98,16 @@ Use this mode if you are making code changes to CKAN and either creating new ext
 
 To develop local extensions use the `docker-compose.dev.yml` file with help from the scripts under `bin`:
 
+dev script | description
+--- | ---
+`bin/ckan …` | exec `ckan` cli within the ckan-dev container
+`bin/compose …` | dev docker compose commands
+`bin/generate_extension` | generate extension in `src` directory
+`bin/install_src` | install all extensions from `src` directory (ckan-dev does not need to be running)
+`bin/reload` | reload ckan within the ckan-dev container without restarting
+`bin/restart` | shut down and restart the whole ckan-dev container (loads new values from .env)
+`bin/shell` | exec bash prompt within the ckan-dev container
+
 To build the images:
 
 	bin/compose build

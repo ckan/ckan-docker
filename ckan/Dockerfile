@@ -1,19 +1,18 @@
 FROM ckan/ckan-base:2.11
 
-# Install any extensions needed by your CKAN instance
-# See Dockerfile.dev for more details and examples
+USER root
 
+# Add extensions
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext-spatial' && \ 
+    pip3 install -r ${APP_DIR}/src/ckanext-spatial/requirements.txt && \
+    pip3 install -e 'git+https://github.com/ckan/ckanext-geoview.git#egg=ckanext-geoview' && \
+    pip3 install -e 'git+https://github.com/ckan/ckanext-pdfview#egg=ckanext-pdfview' && \
+    pip3 install -e 'git+https://github.com/ckan/ckanext-scheming.git@master#egg=ckanext-scheming'
+    
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 
-# Apply any patches needed to CKAN core or any of the built extensions (not the
-# runtime mounted ones)
 COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
-
-USER root
-
-### Scheming ###
-RUN pip3 install -e 'git+https://github.com/ckan/ckanext-scheming.git@master#egg=ckanext-scheming'
 
 COPY ./ckan_dataset_schema.yaml ${APP_DIR}/src/ckanext-scheming/ckanext/scheming
 

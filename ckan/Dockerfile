@@ -10,6 +10,11 @@ COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 # runtime mounted ones)
 COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 
+USER root
+
+# Install tool to make the below patch functionality work.
+RUN apt-get update && apt-get install -y patch
+
 USER ckan
 
 RUN for d in $APP_DIR/patches/*; do \

@@ -65,12 +65,6 @@ dataset_fields:
     display_snippet: email.html
     display_email_name_field: maintainer
 
-  - field_name: spatial_coverage
-    label: Cobertura Espacial
-    form_placeholder: Centro, Zona Sul, Zona Oeste, Zona Leste
-    validators: not_empty
-    required: true
-
 resource_fields:
   - field_name: url
     label: URL
@@ -85,9 +79,20 @@ resource_fields:
     form_snippet: markdown.html
     form_placeholder: Some useful notes about the data
 
-  - field_name: update_freq
-    label: Frequência de atualização dos dados
-    form_placeholder: A cada 6 meses
+  - field_name: geometry_type
+    label: Tipo de geometria
+    form_placeholder: Point, LineString, Polygon
+    validators: not_empty
+
+  - field_name: coordinate_system
+    label: Tipo de sistema do coordenada
+    form_placeholder: "EPSG SIRGAS: 31983"
+    validators: not_empty
+
+  - field_name: spatial_coverage
+    label: Cobertura Espacial
+    form_placeholder: Região Metropolitana de São Paulo, Município de São Paulo, Região do Município de São Paulo, Subprefeitura, etc
+    validators: not_empty
 
   - field_name: format
     label: Format

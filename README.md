@@ -1,27 +1,30 @@
 # Docker Compose setup for CKAN
 
 
-* [1. Overview](#1-overview)
-* [2. Installing Docker](#2-installing-docker)
-* [3. docker compose vs docker-compose](#3-docker-compose-vs-docker-compose)
-* [4. Install (build and run) CKAN plus dependencies](#4-install-build-and-run-ckan-plus-dependencies)
-  * [Base mode](#base-mode)
-  * [Development mode](#development-mode)
-    * [Create an extension](#create-an-extension)
-    * [Running HTTPS on development mode](#running-https-on-development-mode)
-    * [Remote Debugging with VS Code](#remote-debugging-with-vs-code)
-    * [Updating the environment file for development mode](#updating-the-environment-file-for-development-mode)
-* [5. CKAN images](#5-ckan-images)
-  * [Extending the base images](#extending-the-base-images)
-  * [Applying patches](#applying-patches)
-* [6. Debugging with pdb](#6-debugging-with-pdb)
-* [7. Datastore and Datapusher](#7-datastore-and-datapusher)
-* [8. NGINX](#8-nginx)
-* [9. ckanext-envvars](#9-ckanext-envvars)
-* [10. CKAN_SITE_URL](#10-CKAN_SITE_URL)
-* [11. Manage new users](#11-manage-new-users)
-* [12. Changing the base image](#12-changing-the-base-image)
-* [13. Replacing DataPusher with XLoader](#13-replacing-datapusher-with-xLoader)
+- [Docker Compose setup for CKAN](#docker-compose-setup-for-ckan)
+  - [1.  Overview](#1--overview)
+  - [2.  Installing Docker](#2--installing-docker)
+  - [3.  docker compose *vs* docker-compose](#3--docker-compose-vs-docker-compose)
+  - [4.  Install (build and run) CKAN plus dependencies](#4--install-build-and-run-ckan-plus-dependencies)
+    - [Base mode](#base-mode)
+    - [Development mode](#development-mode)
+      - [Create an extension](#create-an-extension)
+      - [Running HTTPS on development mode](#running-https-on-development-mode)
+      - [Remote Debugging with VS Code](#remote-debugging-with-vs-code)
+      - [Updating the environment file for development mode](#updating-the-environment-file-for-development-mode)
+  - [5. CKAN images](#5-ckan-images)
+    - [Extending the base images](#extending-the-base-images)
+    - [Applying patches](#applying-patches)
+    - [_uWSGI_ command line arguments](#uwsgi-command-line-arguments)
+  - [6. Debugging with pdb](#6-debugging-with-pdb)
+  - [7. Datastore and datapusher](#7-datastore-and-datapusher)
+  - [8. NGINX](#8-nginx)
+  - [9. ckanext-envvars](#9-ckanext-envvars)
+  - [10. CKAN\_SITE\_URL](#10-ckan_site_url)
+  - [11. Manage new users](#11-manage-new-users)
+  - [12. Changing the base image](#12-changing-the-base-image)
+  - [13. Replacing DataPusher with XLoader](#13-replacing-datapusher-with-xloader)
+  - [Copying and License](#copying-and-license)
 
 
 ## 1.  Overview
@@ -44,12 +47,12 @@ The site is configured using environment variables that you can set in the `.env
 
 Install Docker by following the following instructions: [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 
-To verify a successful Docker installation, run `docker run hello-world` and `docker version`. These commands should output 
+To verify a successful Docker installation, run `docker run hello-world` and `docker version`. These commands should output
 versions for client and server.
 
 ## 3.  docker compose *vs* docker-compose
 
-All Docker Compose commands in this README will use the V2 version of Compose ie: `docker compose`. The older version (V1) 
+All Docker Compose commands in this README will use the V2 version of Compose ie: `docker compose`. The older version (V1)
 used the `docker-compose` command. Please see [Docker Compose](https://docs.docker.com/compose/compose-v2/) for
 more information.
 
@@ -73,7 +76,7 @@ To start the containers:
 	docker compose up
 
 This will start up the containers in the current window. By default the containers will log direct to this window with each container
-using a different colour. You could also use the -d "detach mode" option ie: `docker compose up -d` if you wished to use the current 
+using a different colour. You could also use the -d "detach mode" option ie: `docker compose up -d` if you wished to use the current
 window for something else.
 
 At the end of the container start sequence there should be 6 containers running:
@@ -238,7 +241,7 @@ We want to install an extension like [ckanext-validation](https://github.com/fri
 #!/bin/bash
 
 # Create DB tables if not there
-ckan -c /srv/app/ckan.ini validation init-db 
+ckan -c /srv/app/ckan.ini validation init-db
 ```
 
 And then in our `Dockerfile.dev` file we install the extension and copy the initialization scripts:
@@ -256,7 +259,7 @@ NB: There are a number of extension examples commented out in the Dockerfile.dev
 
 ### Applying patches
 
-When building your project specific CKAN images (the ones defined in the `ckan/` folder), you can apply patches 
+When building your project specific CKAN images (the ones defined in the `ckan/` folder), you can apply patches
 to CKAN core or any of the built extensions. To do so create a folder inside `ckan/patches` with the name of the
 package to patch (ie `ckan` or `ckanext-??`). Inside you can place patch files that will be applied when building
 the images. The patches will be applied in alphabetical order, so you can prefix them sequentially if necessary.
@@ -275,8 +278,22 @@ ckan
 ├── setup
 ├── Dockerfile
 └── Dockerfile.dev
-
 ```
+
+### _uWSGI_ command line arguments
+
+The images use the application server [_uWSGI_](https://uwsgi-docs.readthedocs.io/en/latest/) to run _CKAN_. There are two environment variables, that allow to configure _uWSGI_ using [command line arguments](https://uwsgi-docs.readthedocs.io/en/latest/Configuration.html#command-line-arguments). The available options are described [here](https://uwsgi-docs.readthedocs.io/en/latest/Options.html).
+
+For most use cases, the defaults specified in `ckan-X.XX/setup/start_ckan.sh` in `DEFAULT_UWSGI_OPTS` are fine. If required, you can either _overwrite_ the defaults or _append_ additional arguments.
+
+| Variable            | Description                                           | Defaults           |
+|:--------------------|:------------------------------------------------------| :------------------|
+| `UWSGI_OPTS`        | If set, overwrites `DEFAULT_UWSGI_OPTS`. If not set, `UWSGI_OPTS` will bet set to `DEFAULT_UWSGI_OPTS`.             | unset              |
+| `EXTRA_UWSGI_OPTS`  | If set, appends its content to `UWSGI_OPTS`.          | unset              |
+
+> [!IMPORTANT]
+> These setting **do not** apply for the dev images.
+
 
 ## 6. Debugging with pdb
 
@@ -293,7 +310,7 @@ command: `python -m pdb /usr/lib/ckan/venv/bin/ckan --config /srv/app/ckan.ini r
 
 ## 7. Datastore and datapusher
 
-The Datastore database and user is created as part of the entrypoint scripts for the db container. There is also a Datapusher container 
+The Datastore database and user is created as part of the entrypoint scripts for the db container. There is also a Datapusher container
 running the latest version of Datapusher.
 
 ## 8. NGINX
@@ -311,9 +328,9 @@ This extension checks for environmental variables conforming to an expected form
 
 For the extension to correctly identify which env var keys map to the format used for the config object, env var keys should be formatted in the following way:
 
-  All uppercase  
-  Replace periods ('.') with two underscores ('__')  
-  Keys must begin with 'CKAN' or 'CKANEXT', if they do not you can prepend them with '`CKAN___`' 
+  All uppercase
+  Replace periods ('.') with two underscores ('__')
+  Keys must begin with 'CKAN' or 'CKANEXT', if they do not you can prepend them with '`CKAN___`'
 
 For example:
 
@@ -321,7 +338,7 @@ For example:
   * `CKAN__DATAPUSHER__CALLBACK_URL_BASE=http://ckan:5000`
   * `CKAN___BEAKER__SESSION__SECRET=CHANGE_ME`
 
-These parameters can be added to the `.env` file 
+These parameters can be added to the `.env` file
 
 For more information please see [ckanext-envvars](https://github.com/okfn/ckanext-envvars)
 

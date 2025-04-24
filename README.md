@@ -284,7 +284,7 @@ ckan
 
 The images use the application server [_uWSGI_](https://uwsgi-docs.readthedocs.io/en/latest/) to run _CKAN_. There are two environment variables, that allow to configure _uWSGI_ using [command line arguments](https://uwsgi-docs.readthedocs.io/en/latest/Configuration.html#command-line-arguments). The available options are described [here](https://uwsgi-docs.readthedocs.io/en/latest/Options.html).
 
-For most use cases, the defaults specified in `ckan-X.XX/setup/start_ckan.sh` in `DEFAULT_UWSGI_OPTS` are fine. If required, you can either _overwrite_ the defaults or _append_ additional arguments.
+For most use cases, the defaults specified in `ckan-X.XX/setup/start_ckan.sh` in `DEFAULT_UWSGI_OPTS` of the [ckan/ckan-docker-base](https://github.com/ckan/ckan-docker-base) image are fine. If required, you can either _overwrite_ the defaults or _append_ additional arguments.
 
 | Variable            | Description                                           | Defaults           |
 |:--------------------|:------------------------------------------------------| :------------------|

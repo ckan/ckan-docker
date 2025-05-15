@@ -369,7 +369,28 @@ The base image used in the CKAN Dockerfile and Dockerfile.dev can be changed so 
 
 ## 13. Replacing DataPusher with XLoader
 
-Check out the wiki page for this: https://github.com/ckan/ckan-docker/wiki/Replacing-DataPusher-with-XLoader
+Basically it's just replacing files copied from the xloader directory. Depending on if you are running in Production mode or Development mode, here are the instructions you should use:
+
+##### For Production (base)
+
+From the top (root) directory of your docker installation:
+
+ 1. `cd xloader/`
+ 2. `cp .env ..`
+ 3. `cp docker-compose.yml ..`
+ 4. `cp Dockerfile ../ckan`
+ 5. `cp -pr docker-entrypoint.d/ ../ckan`
+
+##### For Development
+
+From the top (root) directory of your docker installation:
+
+ 1. `cd xloader/`
+ 2. `cp .env ..`
+ 3. `cp docker-compose-dev.yml ..`
+ 4. `cp Dockerfile.dev ../ckan`
+ 5. `cp -pr docker-entrypoint.d/ ../ckan`
+
 
 Copying and License
 -------------------

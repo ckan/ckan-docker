@@ -7,3 +7,5 @@ _service-provider/*
 _solr/schema.xml
 _src/*
 local/*
+
+template_base/

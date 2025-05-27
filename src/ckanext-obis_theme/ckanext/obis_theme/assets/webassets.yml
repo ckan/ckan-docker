@@ -1,0 +1,14 @@
+# obis_theme-js:
+#   filter: rjsmin
+#   output: ckanext-obis_theme/%(version)s-obis_theme.js
+#   contents:
+#     - js/obis_theme.js
+#   extra:
+#     preload:
+#       - base/main
+
+# obis_theme-css:
+#   filter: cssrewrite
+#   output: ckanext-obis_theme/%(version)s-obis_theme.css
+#   contents:
+#     - css/obis_theme.css

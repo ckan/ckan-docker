@@ -1,12 +1,94 @@
-.custom-header {
-    background-color: #2c3e50;
-    border: none;
+/* Define --main-bg-color here */
+:root {
+  --main-a-color: #b1b695;;
+  --main-a-hover-color: #cfd2bb;;
+}
+.account-masthead {
+    background-color: rgb(40, 40, 40) !important;
+}
+.masthead {
+    /* background: #005d7a url(../../../base/images/bg.png); */
+    background: white !important;
+    padding: 0rem !important;
+}
+.masthead .main-navbar ul li a {
+  padding: 0.6rem 0.9rem !important;
+  color: var(--main-a-color) !important;
+  text-decoration: none !important;
+  border-color: transparent !important;
+  border-bottom-style: solid;
+  border-width: medium;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}
+.masthead .main-navbar ul li:hover a,
+.masthead .main-navbar ul li:focus a,
+.masthead .main-navbar ul li.active a {
+    border-radius: 0px !important;
+    background-color: white !important;
+    color: var(--main-a-hover-color) !important;
+    border-color: var(--main-a-hover-color) !important;
+    border-bottom-style: solid;
+    border-width: medium;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+}
+.masthead .navbar .logo img {
+    max-height: 30px !important;
 }
 
-.custom-header .navbar-nav > li > a {
-    color: #ecf0f1;
+.masthead-container-1 {
+    padding: 0.5em;
+    border-bottom: 1px solid #D3D3D3;
 }
 
-.custom-header .navbar-brand img {
-    max-height: 40px;
+.masthead-container-2 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #f2f3f4 !important;
+    border-bottom: 1px solid #D3D3D3;
+    padding-right: 20%;
+    padding-left: 20%;
+}
+
+
+
+
+.site-search .form-control {
+    display: block;
+    width: 100%;
+    height: 50px;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #333333;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.075);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.site-search  button {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    /* background-color: black !important; */
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #b1b695;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    /* padding: 0.375rem 0.75rem; */
+    font-size: 1.175rem;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }

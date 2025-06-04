@@ -1,10 +1,5 @@
 {% ckan_extends %}
 
-{% block styles %}
-  {{ super() }}
-  <link rel="stylesheet" href="{{ h.url_for_static('/css/theme.css') }}">
-{% endblock %}
-
 {% block header %}
   {{ super() }}
   <div class="my-custom-header-message">

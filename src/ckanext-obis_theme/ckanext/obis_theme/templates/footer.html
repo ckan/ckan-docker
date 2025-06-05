@@ -1,0 +1,47 @@
+{% ckan_extends %}
+
+{% block footer_nav %}
+{% if c.userobj %}
+<div class="account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
+        {% if c.userobj.sysadmin %}
+        <a href="{{ h.url_for('admin.index') }}" title="{{ _('Sysadmin settings') }}">
+                <i class="fa fa-gavel" aria-hidden="true"></i>
+                <span class="text">{{ _('Admin') }}</span>
+            </a>
+        {% endif %}
+            <a href="{{ h.url_for('user.read', id=c.userobj.name) }}" class="image" title="{{ _('View profile') }}">
+                {{ h.user_image((c.user if c and c.user else ''), size=22) }}
+                <span class="username">{{ c.userobj.display_name }}</span>
+            </a>
+            <a href="{{ h.url_for('dashboard.datasets') }}" title="{{ _(" View dashboard") }}">
+                <i class="fa fa-tachometer" aria-hidden="true"></i>
+                <span class="text">{{ _('Dashboard') }}</span>
+            </a>
+            <a href="{{ h.url_for('user.edit', id=c.userobj.name) }}" title="{{ _('Profile settings') }}">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <span class="text">{{ _('Profile settings') }}</span>
+            </a>
+            <a href="{{ h.url_for('user.logout') }}" title="{{ _('Log out') }}">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span class="text">{{ _('Log out') }}</span>
+            </a>
+</div>
+{% else %}
+<div aria-label="{{ _('Account') }}">
+        {% link_for _('Log in'), named_route='user.login' %} <span> | </span>
+        {% if h.check_access('user_create') %}
+        {% link_for _('Register'), named_route='user.register', class_='sub' %}
+        {% endif %}
+</div>
+{% endif %}
+<hr id="footer-separator">
+<div id="logos">
+        <a href="http://www.ioc-unesco.org/" target="_blank"><img src="https://obis.org/images/logo_ioc_new.png"></a>
+        <a href="http://www.iode.org/" target="_blank"><img src="https://obis.org/images/logo_iode.png"></a>
+</div>
+{% endblock %}
+{% block footer_attribution %}
+    <p style="color: white;">{% trans %}Powered by <a class="hide-text ckan-footer-logo" href="http://ckan.org">CKAN</a>{% endtrans %}</p>
+{% endblock %}
+{% block footer_lang %}
+{% endblock %}

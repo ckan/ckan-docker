@@ -127,13 +127,42 @@
   </div>
    </div>
    <div class="masthead-container-2">
-    {% block header_site_search %}
+    {% if g.blueprint == 'home' and g.view == 'index' %}
+        <div style="margin-bottom: 20px; text-align: center;">
+            <span class="super-title">OBIS products catalogue</span>
+        </div>
+    {% endif %}
+    <div class="container">
+        {% block header_site_search %}
           <form class="d-flex site-search position-relative" action="{% url_for dataset_type ~ '.search' %}" method="get">
               <label class="d-none" for="field-sitewide-search">{% block header_site_search_label %}{{ h.humanize_entity_type('package', dataset_type, 'search_placeholder') or _('Search Datasets...') }}{% endblock %}</label>
               <input id="field-sitewide-search" class="form-control me-2"  type="text" name="q" placeholder="{{ _('Search') }}" aria-label="{{ h.humanize_entity_type('package', dataset_type, 'search_placeholder') or _('Search datasets...') }}"/>
               <button class="btn" type="submit" aria-label="{{ _('Submit') }}"><i class="fa fa-search"></i></button>
           </form>
-      {% endblock %}
+        {% endblock %}
+    </div>
+    {% if g.blueprint == 'home' and g.view == 'index' %}
+        <div class="container py-4" style="padding-bottom: 0px !important;">
+            <div class="row text-center text-primary fw-bold">
+                <div class="col-6 col-md-3 mb-3">
+                <div class="small text-uppercase">Variables</div>
+                <div class="display-6 fw-bold text-primary">26</div>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                <div class="small text-uppercase">Organizations</div>
+                <div class="display-6 fw-bold text-primary">34</div>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                <div class="small text-uppercase">Products</div>
+                <div class="display-6 fw-bold text-primary">150</div>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                <div class="small text-uppercase">Maps</div>
+                <div class="display-6 fw-bold text-primary">250</div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
   </div>
 </header>
 {% endblock %}

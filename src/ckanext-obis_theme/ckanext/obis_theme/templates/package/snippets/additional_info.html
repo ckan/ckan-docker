@@ -1,0 +1,86 @@
+<section class="additional-info">
+  <h3>{{ _('Additional Info') }}</h3>
+  {% block package_additional_info %}
+  <div class="add-info-block">
+    {% if pkg_dict.url %}
+        <div class="add-info-row">
+          <div class="add-info-label">{{ _('Source') }}</div>
+          {% if h.is_url(pkg_dict.url) %}
+            <div class="add-info-value" property="foaf:homepage">
+              <a href="{{ pkg_dict.url }}" rel="foaf:homepage" target="_blank">
+                {{ pkg_dict.url }}
+              </a>
+            </div>
+          {% else %}
+            <div class="add-info-value" property="foaf:homepage">{{ pkg_dict.url }}</div>
+          {% endif %}
+        </div>
+    {% endif %}
+
+    {% if pkg_dict.author_email %}
+      <div class="add-info-row">
+        <div class="add-info-label">{{ _("Author") }}</div>
+        <div class="add-info-value" property="dc:creator">{{ h.mail_to(email_address=pkg_dict.author_email, name=pkg_dict.author) }}</div>
+      </div>
+    {% elif pkg_dict.author %}
+      <div class="add-info-row">
+        <div class="add-info-label">{{ _("Author") }}</div>
+        <div class="add-info-value" property="dc:creator">{{ pkg_dict.author }}</div>
+      </div>
+    {% endif %}
+
+    {% if pkg_dict.maintainer_email %}
+          <div class="add-info-row">
+            <div class="add-info-label">{{ _('Maintainer') }}</div>
+            <div class="add-info-value" property="dc:contributor">{{ h.mail_to(email_address=pkg_dict.maintainer_email, name=pkg_dict.maintainer) }}</div>
+          </div>
+        {% elif pkg_dict.maintainer %}
+          <div class="add-info-row">
+            <div class="add-info-label">{{ _('Maintainer') }}</div>
+            <div class="add-info-value" property="dc:contributor">{{ pkg_dict.maintainer }}</div>
+          </div>
+        {% endif %}
+
+        {% if pkg_dict.version %}
+          <div class="add-info-row">
+            <div class="add-info-label">{{ _("Version") }}</div>
+            <div class="add-info-value">{{ pkg_dict.version }}</div>
+          </div>
+        {% endif %}
+
+        {% if h.check_access('package_update',{'id':pkg_dict.id}) %}
+          <div class="add-info-row">
+            <div class="add-info-label">{{ _("State") }}</div>
+            <div class="add-info-value">{{ _(pkg_dict.state) }}</div>
+          </div>
+        {% endif %}
+        {% if pkg_dict.metadata_modified %}
+          <div class="add-info-row">
+            <div class="add-info-label">{{ _("Last Updated") }}</div>
+            <div class="add-info-value">
+                {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=pkg_dict.metadata_modified %}
+            </div>
+          </div>
+        {% endif %}
+        {% if pkg_dict.metadata_created %}
+          <div class="add-info-row">
+            <div class="add-info-label">{{ _("Created") }}</div>
+
+            <div class="add-info-value">
+                {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=pkg_dict.metadata_created %}
+            </div>
+          </div>
+        {% endif %}
+
+      {% block extras scoped %}
+        {% for extra in h.sorted_extras(pkg_dict.extras) %}
+          {% set key, value = extra %}
+          <div class="add-info-row" rel="dc:relation" resource="_:extra{{ i }}">
+            <div class="add-info-label" property="rdfs:label">{{ _(key|e) }}</div>
+            <div class="add-info-value {{ h.dataset_type_class(value) }}" property="rdf:value">{{ value }}</div>
+          </div>
+        {% endfor %}
+      {% endblock %}
+  </div>
+  {% endblock %}
+</section>

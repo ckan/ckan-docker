@@ -1,0 +1,117 @@
+{% extends "package/read_base.html" %}
+
+{% block primary_content_inner %}
+  {{ super() }}
+  <h1>
+    {% block page_heading %}
+      {{ h.dataset_display_name(pkg) }}
+      {% if pkg.state.startswith('draft') %}
+        [{{ _('Draft') }}]
+      {% endif %}
+      {% if pkg.state == 'deleted' %}
+        [{{ _('Deleted') }}]
+      {% endif %}
+    {% endblock %}
+  </h1>
+  <div class="row">
+    <div class="col-sm-8 col-xs-12">
+      {% block package_description %}
+        {% if pkg.private %}
+          <span class="dataset-private badge badge-inverse pull-right">
+            <i class="fa fa-lock"></i>
+            {{ _('Private') }}
+          </span>
+        {% endif %}
+        {# Previous H1 position#}
+        {% block package_notes %}
+          {% if pkg.notes %}
+            <div class="notes embedded-content">
+              {{ h.render_markdown(h.get_translated(pkg, 'notes')) }}
+            </div>
+          {% endif %}
+        {% endblock %}
+        {# FIXME why is this here? seems wrong #}
+        <span class="insert-comment-thread"></span>
+      {% endblock %}
+    </div>
+
+    <div class="col-sm-4 col-xs-12">
+      {% if pkg.organization %}
+        {% set org = h.get_organization(pkg.organization.id) %}
+        {% snippet "package/snippets/organization_prod.html", organization=org, has_context_title=false, show_provided=true %}
+      {% endif %}
+
+      <div class="resources-right">
+        <div style="display: flex; flex-direction: column;">
+          <div style="margin-bottom: 10px; display: flex; flex-direction: column">
+            <span class="tags-title">Frequency of update</span>
+            {% if pkg.frequency %}
+              <span class="resources-info">{{ pkg.frequency }}</span>
+            {% else %}
+              <span class="resources-info">{{ _('Not specified') }}</span>
+            {% endif %}
+          </div>
+          <div style="margin-bottom: 10px; display: flex; flex-direction: column">
+            <span class="tags-title">Status</span>
+            {% if pkg.status %}
+              <span class="resources-info {{ pkg.status | lower }}">{{ pkg.status }}</span>
+            {% else %}
+              <span class="resources-info">{{ _('Not specified') }}</span>
+            {% endif %}
+          </div>
+        </div>
+        {% block package_tags %}
+          <span class="tags-title">Tags</span>
+          {% snippet "package/snippets/tags.html", tags=pkg.tags %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-8 col-xs-12">
+      {% block package_resources %}
+        {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
+      {% endblock %}
+    </div>
+
+    <div class="col-sm-4 col-xs-12">
+      {% block package_additional_info %}
+        {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
+      {% endblock %}
+    </div>
+  </div>
+
+  <div class="how-to-cite-wrapper">
+    <div class="how-to-cite">
+      <h3>{{ _('How to cite this dataset') }}</h3>
+      {% if pkg.citation %}
+        <p>{{ pkg.citation }}</p>
+      {% else %}
+        <p>{{ _('No citation available for this dataset.') }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="related-datasets">
+    <div class="row">
+      <div class="col-sm-3">
+        <h3>{{ _('Discover More') }}</h3>
+      </div>
+      <div class="col-sm-9">
+        {% if pkg.related_datasets %}
+          <ul>
+            {% for related in pkg.related_datasets %}
+              <li>
+                <a href="{{ h.url_for(related.type ~ '.read', id=related.name) }}">{{ related.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>{{ _('No related datasets found.') }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

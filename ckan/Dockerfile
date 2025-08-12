@@ -1,4 +1,4 @@
-FROM ckan/ckan-base:2.11
+FROM ckan/ckan-base:2.11.3
 
 ARG TOKEN
 
@@ -6,6 +6,9 @@ ARG TOKEN
 USER root
 RUN mkdir /srv/app/.local && chown ckan /srv/app/.local
 RUN mkdir /srv/app/.cache && chown ckan /srv/app/.cache
+
+RUN chown -R ckan:ckan-sys ${APP_DIR}
+
 USER ckan
 
 
@@ -39,6 +42,26 @@ RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-extentsearch.git#egg=c
 RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-sitemap.git#egg=ckanext-sitemap"
 
 
+USER root
+
+### Install everything we need for the harvester
+# Install cron and supervisor.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    cron \
+    supervisor \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /var/log/ckan/std /var/log/supervisor /etc/supervisor/conf.d \
+    && chown -R ckan:ckan-sys /var/log/ckan /var/log/supervisor /etc/supervisor/conf.d
+
+# Config cron job for harvesting
+COPY config/supervisord.conf /etc/supervisord.d/ckan.conf
+COPY config/crontab /etc/cron.d/ckan-cron
+
+# Running cron as non-root user and give permission to ckan user
+RUN chmod gu+rw /var/run && \
+    chmod gu+s /usr/sbin/cron && \
+    crontab -u ckan /etc/cron.d/ckan-cron
+
 
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
@@ -51,6 +74,8 @@ COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 USER root
 RUN mkdir -p /var/www/html && chown ckan /var/www/html
 
+# Add supervisord invocation during startup
+RUN sed -i '/uwsgi \$UWSGI_OPTS/i\    supervisord --configuration \/etc\/supervisord.d\/ckan.conf &' ${APP_DIR}/start_ckan.sh
 
 USER ckan
 RUN for d in $APP_DIR/patches/*; do \

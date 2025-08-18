@@ -22,11 +22,11 @@ spec:
       labels:
         io.kompose.service: solr
     spec:
-        securityContext:
-            runAsUser: 8983
-            runAsGroup: 8983
-            fsGroup: 8983
-        containers:
+      securityContext:
+        runAsUser: 8983
+        runAsGroup: 8983
+        fsGroup: 8983
+      containers:
         - image: "{{ .Values.webapp.image_solr }}:{{ .Values.webapp.tag }}"
           livenessProbe:
             exec:

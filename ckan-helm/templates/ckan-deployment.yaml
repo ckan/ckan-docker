@@ -55,8 +55,6 @@ spec:
               name: pip-cache
             - mountPath: /usr/lib/python3.10/site-packages
               name: site-packages
-            - mountPath: /srv/app
-              name: home-dir
             - mountPath: /var/www/html
               name: waf-dir
       restartPolicy: Always

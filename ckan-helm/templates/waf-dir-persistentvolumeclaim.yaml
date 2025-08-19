@@ -6,7 +6,9 @@ metadata:
   name: waf-dir
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
+    - ReadOnlyMany
+  storageClassName: cephfs
   resources:
     requests:
       storage: 5Gi

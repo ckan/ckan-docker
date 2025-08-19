@@ -7,7 +7,6 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-    - ReadOnlyMany
   storageClassName: cephfs
   resources:
     requests:

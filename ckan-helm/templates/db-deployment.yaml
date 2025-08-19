@@ -46,6 +46,8 @@ spec:
               value: postgres
             - name: POSTGRES_USER
               value: postgres
+            - name: PGDATA
+              value: pg-data
           image: "{{ .Values.webapp.image_postgres }}:{{ .Values.webapp.tag }}"
           livenessProbe:
             exec:
@@ -61,7 +63,7 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              subPath: pgdata
+              subPath: pg-data
               name: pg-data
       restartPolicy: Always
       volumes:

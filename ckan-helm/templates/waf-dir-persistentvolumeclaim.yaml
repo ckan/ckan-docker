@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: waf-dir
+  name: waf-dir
+spec:
+  accessModes:
+    - ReadWriteMany
+    - ReadOnlyMany
+  storageClassName: cephfs
+  resources:
+    requests:
+      storage: 5Gi

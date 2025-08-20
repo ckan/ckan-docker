@@ -1,5 +1,13 @@
 webapp:
   name: ckandev
+  group: ckandev
+  path: "/"
+  tls:
+    fqdn: ckandev.data-commons.k8s.ucar.edu
+    secretName: incommon-cert-sage-ckandev
+  container:
+    image: nginx
+    port: 8443
   image_solr: ghcr.io/ncar/sage-dashsearch-solr
   image_postgres: ghcr.io/ncar/sage-dashsearch-postgres
   image_nginx: ghcr.io/ncar/sage-dashsearch-nginx

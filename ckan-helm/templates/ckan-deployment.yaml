@@ -22,6 +22,10 @@ spec:
       labels:
         io.kompose.service: ckan
     spec:
+      securityContext:
+        runAsUser: 503
+        runAsGroup: 502
+        fsGroup: 502
       containers:
         - envFrom:
             - configMapRef:

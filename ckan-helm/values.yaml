@@ -7,7 +7,7 @@ webapp:
     secretName: incommon-cert-sage-ckandev
   container:
     image: nginx
-    port: 8443
+    port: 443
   image_solr: ghcr.io/ncar/sage-dashsearch-solr
   image_postgres: ghcr.io/ncar/sage-dashsearch-postgres
   image_nginx: ghcr.io/ncar/sage-dashsearch-nginx

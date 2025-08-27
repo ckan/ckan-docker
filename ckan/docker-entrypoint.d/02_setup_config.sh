@@ -6,6 +6,7 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   set -x
 
   ckan config-tool --edit ./ckan.ini ckan.auth.public_user_details=false
+  ckan config-tool --edit ./ckan.ini ckan.cors.origin_allow_all=true
 
   # Keep the favicon value unchanged; its config setting differs across CKAN versions.
   ckan config-tool --edit ./ckan.ini ckan.favicon='/NCARfavicon.ico'

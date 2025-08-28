@@ -14,9 +14,7 @@
     
 ### Harvesting Test Records
 
-To fully test out the DASH Search interface, it helps to harvest a small number of records from a test WAF.  This deployment is currently set to use the WAF repo [https://github.com/NCAR/sage-dset-harvest-test-records.git](https://github.com/NCAR/sage-dset-harvest-test-records.git).
-
-At this time, harvesting is done manually after deployment with these steps:
+To fully test out the DASH Search interface, it helps to harvest a small number of records from a test WAF.  At this time, harvesting is done manually after deployment with these steps:
 1. Login to the ckan container:  `docker exec -it ckan-docker-ckan-1 /bin/bash`
 2. Check that the harvester source was set up correctly by running: `ckan harvester sources`.  You should see one active harvest source.
 3. Begin harvesting a small number of records with: `ckan harvester run-test mini-waf`.  

@@ -7,7 +7,10 @@ USER root
 RUN mkdir /srv/app/.local && chown ckan /srv/app/.local
 RUN mkdir /srv/app/.cache && chown ckan /srv/app/.cache
 
-RUN chown -R ckan:ckan-sys ${APP_DIR}
+# Copy harvester scripts
+COPY config/*.sh  /srv/app
+
+RUN chown -R ckan:ckan-sys ${APP_DIR} && chmod 744 /srv/app/*.sh
 
 USER ckan
 
@@ -61,7 +64,6 @@ COPY config/crontab /etc/cron.d/ckan-cron
 RUN chmod gu+rw /var/run && \
     chmod gu+s /usr/sbin/cron && \
     crontab -u ckan /etc/cron.d/ckan-cron
-
 
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/

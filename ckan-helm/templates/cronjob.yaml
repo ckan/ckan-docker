@@ -15,13 +15,6 @@ spec:
           - name: ckan
             image: "{{ .Values.webapp.image_ckan }}:{{ .Values.webapp.tag }}"
             command: ["/srv/app/run_harvester.sh"]
-            volumeMounts:
-              - mountPath: /srv/app
-                name: home-dir
-                readOnly: true
-              - mountPath: /var/www/html
-                name: waf-dir
-                readOnly: false
           volumes:
             - name: home-dir
               persistentVolumeClaim:

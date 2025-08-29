@@ -29,3 +29,4 @@ spec:
             - name: waf-dir
               persistentVolumeClaim:
                 claimName: waf-dir
+          restartPolicy: Never

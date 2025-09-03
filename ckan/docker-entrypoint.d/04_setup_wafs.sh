@@ -19,11 +19,11 @@ if [[ $CKAN__PLUGINS == *"spatial"* ]]; then
   fi
 
   set -x
-
-  cd /var/www/html
-  rm -rf *
-
   whoami
+
+  touch /var/www/html/testme
+  ls -lR /var/www/html
+  rm -rf /var/www/html/*
 
   # Create web-accessible folder structure
   if [ ! -d "/var/www/html" ]; then

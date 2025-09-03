@@ -57,7 +57,7 @@ spec:
               name: site-packages
             - mountPath: /srv/app
               name: home-dir
-            - mountPath: /var/www/html
+            - mountPath: /var/www
               name: waf-dir
       restartPolicy: Always
       volumes:

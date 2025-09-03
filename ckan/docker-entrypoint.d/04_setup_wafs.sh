@@ -18,6 +18,9 @@ if [[ $CKAN__PLUGINS == *"spatial"* ]]; then
       /srv/app/.local/bin/ckanapi action organization_create name=ncar title=NCAR
   fi
 
+  set -x
+  cd /var/www/html
+  rm -rf *
   # Create web-accessible folder structure
   if [ ! -d "/var/www/html/dset-web-accessible-folder-dev" ]; then
       cd /var/www/html
@@ -26,7 +29,7 @@ if [[ $CKAN__PLUGINS == *"spatial"* ]]; then
       git clone https://github.com/NCAR/dset-web-accessible-folder-dev.git
       cd dset-web-accessible-folder-dev
       git fetch
-      ckan -c ~/ckan.ini harvester source create "dev-waf" "http://nginx:9000/dset-web-accessible-folder-dev" "waf" "DEV WAF" "TRUE" "ncar" "MANUAL" '{"user" : "ckan_admin", "read_only": true}'
+      ckan -c ~/ckan.ini harvester source create "dev-waf2" "http://nginx:9000/dset-web-accessible-folder-dev" "waf" "DEV WAF2" "TRUE" "ncar" "MANUAL" '{"user" : "ckan_admin", "read_only": true}'
 
 
       ## Commands for mini-waf

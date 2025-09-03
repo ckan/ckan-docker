@@ -74,7 +74,7 @@ COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 
 # Make the WAF folder owned by ckan
 USER root
-RUN mkdir -p /var/www/html && chown ckan /var/www/html
+RUN mkdir -p /var/www/html && chown ckan:ckan-sys /var/www/html
 
 # Add supervisord invocation during startup
 RUN sed -i '/uwsgi \$UWSGI_OPTS/i\    supervisord --configuration \/etc\/supervisord.d\/ckan.conf &' ${APP_DIR}/start_ckan.sh

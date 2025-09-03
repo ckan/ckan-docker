@@ -25,6 +25,7 @@ if [[ $CKAN__PLUGINS == *"spatial"* ]]; then
   ls -lR /var/www/html
   rm -rf /var/www/html/*
 
+
   # Create web-accessible folder structure
   if [ ! -d "/var/www/html" ]; then
       mkdir -p /var/www/html

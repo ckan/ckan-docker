@@ -6,7 +6,8 @@ metadata:
   name: home-dir
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
+  storageClassName: cephfs
   resources:
     requests:
       storage: 10Gi

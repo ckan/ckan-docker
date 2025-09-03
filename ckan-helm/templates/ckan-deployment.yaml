@@ -22,6 +22,10 @@ spec:
       labels:
         io.kompose.service: ckan
     spec:
+      securityContext:
+        runAsUser: 503
+        runAsGroup: 502
+        fsGroup: 502
       containers:
         - envFrom:
             - configMapRef:
@@ -58,6 +62,7 @@ spec:
             - mountPath: /srv/app
               name: home-dir
             - mountPath: /var/www
+              readOnly: false
               name: waf-dir
       restartPolicy: Always
       volumes:

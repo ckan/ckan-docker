@@ -30,7 +30,10 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /var/www/html
+              readOnly: true
               name: waf-dir
+
+
       restartPolicy: Always
       volumes:
         - name: waf-dir

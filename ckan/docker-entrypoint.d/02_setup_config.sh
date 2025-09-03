@@ -5,11 +5,8 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   # Show commands that are run
   set -x
 
-  ckan config-tool --edit ./ckan.ini ckan.site_title='Docker DASH Search'
-
-  ckan config-tool --edit ./ckan.ini ckan.site_description='NCAR data search and discovery'
-
   ckan config-tool --edit ./ckan.ini ckan.auth.public_user_details=false
+  ckan config-tool --edit ./ckan.ini ckan.cors.origin_allow_all=true
 
   # Keep the favicon value unchanged; its config setting differs across CKAN versions.
   ckan config-tool --edit ./ckan.ini ckan.favicon='/NCARfavicon.ico'
@@ -67,6 +64,11 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   ckan config-tool ./ckan.ini ckanext.spatial.common_map.type=custom 
   ckan config-tool ./ckan.ini ckanext.spatial.common_map.custom.url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
   ckan config-tool ./ckan.ini ckanext.spatial.common_map.attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+
+  #  These settings are subject to change, depending on the deployment
+  ckan config-tool --edit ./ckan.ini ckan.site_title='DASH Search (Development)'
+  ckan config-tool --edit ./ckan.ini ckan.site_url='https://ckandev.data-commons.k8s.ucar.edu'
+  ckan config-tool --edit ./ckan.ini ckan.site_description='NCAR data search and discovery'
 
 
 

@@ -47,9 +47,9 @@ COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 # runtime mounted ones)
 COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 
-# Make the WAF folder owned by ckan
-USER root
-RUN mkdir -p /var/www/html && chown ckan /var/www/html
+## Make the WAF folder owned by ckan
+#USER root
+#RUN mkdir -p /var/www/html && chown ckan /var/www/html
 
 
 USER ckan

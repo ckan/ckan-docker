@@ -18,6 +18,11 @@ if [[ $CKAN__PLUGINS == *"spatial"* ]]; then
       /srv/app/.local/bin/ckanapi action organization_create name=ncar title=NCAR
   fi
 
+  set -x
+  whoami
+
+  rm -rf /var/www/html
+
   # Create web-accessible folder structure
   if [ ! -d "/var/www/html" ]; then
       mkdir -p /var/www/html

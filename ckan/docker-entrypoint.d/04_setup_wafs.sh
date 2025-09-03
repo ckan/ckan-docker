@@ -19,10 +19,14 @@ if [[ $CKAN__PLUGINS == *"spatial"* ]]; then
   fi
 
   # Create web-accessible folder structure
+  if [ ! -d "/var/www/html" ]; then
+      mkdir -p /var/www/html
+  fi
+
   if [ ! -d "/var/www/html/sagedev-dset-harvest-test" ]; then
-      cd /var/www/html
-      git clone https://github.com/NCAR/sagedev-dset-harvest-test.git
-      ckan -c ~/ckan.ini harvester source create "mini-waf" "http://nginx:9000/sagedev-dset-harvest-test" "waf" "MINI WAF" "TRUE" "ncar" "MANUAL" '{"user" : "ckan_admin", "read_only": true}'
+      cd /var/www/html && \
+      git clone https://github.com/NCAR/sagedev-dset-harvest-test.git && \
+      ckan -c ~/ckan.ini harvester source create "mini-waf2" "http://nginx:9000/sagedev-dset-harvest-test" "waf" "MINI WAF2" "TRUE" "ncar" "MANUAL" '{"user" : "ckan_admin", "read_only": true}'
       # We can't run this command right away, because nginx has not started up yet.
       #ckan -c ~/ckan.ini harvester run-test mini-waf
   fi

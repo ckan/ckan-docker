@@ -27,7 +27,7 @@ spec:
         image: busybox
         command: ["sh", "-c", "chown -R 503:502 /var/www/html"]
         volumeMounts:
-        - name: my-volume
+        - name: waf-dir
           mountPath: /var/www/html
       securityContext:
         runAsUser: 503

@@ -25,7 +25,7 @@ spec:
       initContainers:
       - name: volume-permissions
         image: busybox
-        command: ["sh", "-c", "chown -R 502:503 /var/www/html"]
+        command: ["sh", "-c", "chown -R 503:502 /var/www/html"]
         volumeMounts:
         - name: my-volume
           mountPath: /var/www/html

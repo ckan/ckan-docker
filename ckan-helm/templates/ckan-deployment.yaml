@@ -22,13 +22,6 @@ spec:
       labels:
         io.kompose.service: ckan
     spec:
-      initContainers:
-      - name: volume-permissions
-        image: busybox
-        command: ["sh", "-c", "chown -R 503:502 /var/www/html"]
-        volumeMounts:
-        - name: waf-dir
-          mountPath: /var/www/html
       securityContext:
         runAsUser: 503
         runAsGroup: 502

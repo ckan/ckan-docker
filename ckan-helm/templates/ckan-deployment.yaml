@@ -29,10 +29,7 @@ spec:
         fsGroup: 503
       initContainers:
         - name: volume-permissions
-          image: busybox
-          env:
-            - name: "VOLUME_DATA_DIR"
-              value: "/var/www/html"
+          image: ubuntu
           command: ["chown", "-R", "503:502", "/var/www/html"]
           volumeMounts:
             - name: waf-dir

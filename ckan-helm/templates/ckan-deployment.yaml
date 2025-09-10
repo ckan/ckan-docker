@@ -76,7 +76,7 @@ spec:
               name: pip-cache
             - mountPath: /usr/lib/python3.10/site-packages
               name: site-packages
-            - mountPath: /var/www
+            - mountPath: /var/www/html
               readOnly: false
               name: waf-dir
       restartPolicy: Always

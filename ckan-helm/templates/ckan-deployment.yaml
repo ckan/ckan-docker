@@ -26,6 +26,23 @@ spec:
         runAsUser: 503
         runAsGroup: 502
         fsGroup: 503
+      initContainers:
+        - name: volume-permissions
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: "VOLUME_DATA_DIR"
+              value: "/var/www/html"
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p $VOLUME_DATA_DIR
+              chown -R 503:502 $VOLUME_DATA_DIR
+              echo 'Volume permissions OK ✓'
+          volumeMounts:
+            - name: waf-dir
+              mountPath: "/var/www"
       containers:
         - envFrom:
             - configMapRef:
@@ -59,7 +76,7 @@ spec:
               name: pip-cache
             - mountPath: /usr/lib/python3.10/site-packages
               name: site-packages
-            - mountPath: /var/www/html
+            - mountPath: /var/www
               readOnly: false
               name: waf-dir
       restartPolicy: Always

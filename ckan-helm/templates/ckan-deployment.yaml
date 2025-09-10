@@ -23,26 +23,22 @@ spec:
         io.kompose.service: ckan
     spec:
       securityContext:
+        runAsNonRoot: true
         runAsUser: 503
         runAsGroup: 502
         fsGroup: 503
       initContainers:
         - name: volume-permissions
-          image: busybox
+          image: busybox:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: "VOLUME_DATA_DIR"
               value: "/var/www/html"
-          command:
-            - sh
-            - -c
-            - |
-              mkdir -p $VOLUME_DATA_DIR
-              chown -R 503:502 $VOLUME_DATA_DIR
-              echo 'Volume permissions OK ✓'
+          command: ["chown", "-R", "503:502", "/var/www/html"]
           volumeMounts:
             - name: waf-dir
               mountPath: "/var/www/html"
+
       containers:
         - envFrom:
             - configMapRef:

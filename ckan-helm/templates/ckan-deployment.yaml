@@ -31,8 +31,8 @@ spec:
         - name: volume-permissions
           image: ubuntu
           securityContext:
-            runAsNonRoot: false
-          command: ["chown", "-R", "503:502", "/var/www/html"]
+            runAsUser: 0
+          command: ["sh", "-c", "chown", "-R", "503:502", "/var/www/html"]
           volumeMounts:
             - name: waf-dir
               mountPath: "/var/www/html"

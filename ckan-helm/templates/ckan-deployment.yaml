@@ -29,8 +29,7 @@ spec:
         fsGroup: 503
       initContainers:
         - name: volume-permissions
-          image: busybox:latest
-          imagePullPolicy: IfNotPresent
+          image: busybox
           env:
             - name: "VOLUME_DATA_DIR"
               value: "/var/www/html"

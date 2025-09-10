@@ -42,7 +42,7 @@ spec:
               echo 'Volume permissions OK ✓'
           volumeMounts:
             - name: waf-dir
-              mountPath: "/var/www"
+              mountPath: "/var/www/html"
       containers:
         - envFrom:
             - configMapRef:

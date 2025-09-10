@@ -32,11 +32,10 @@ spec:
           image: ubuntu
           securityContext:
             runAsNonRoot: false
-          command: ["mkdir", "-p", "/var/www/html", "&&",
-                    "chown", "-R", "503:502", "/var/www/html"]
+          command: ["chown", "-R", "503:502", "/var/www/html"]
           volumeMounts:
             - name: waf-dir
-              mountPath: "/var/www"
+              mountPath: "/var/www/html"
 
       containers:
         - envFrom:

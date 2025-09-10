@@ -30,10 +30,13 @@ spec:
       initContainers:
         - name: volume-permissions
           image: ubuntu
-          command: ["chown", "-R", "503:502", "/var/www/html"]
+          securityContext:
+            runAsNonRoot: false
+          command: ["mkdir", "-p", "/var/www/html", "&&",
+                    "chown", "-R", "503:502", "/var/www/html"]
           volumeMounts:
             - name: waf-dir
-              mountPath: "/var/www/html"
+              mountPath: "/var/www"
 
       containers:
         - envFrom:

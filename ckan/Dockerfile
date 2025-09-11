@@ -10,3 +10,7 @@ RUN echo ${TZ} > /etc/timezone
 RUN if ! [ /usr/share/zoneinfo/${TZ} -ef /etc/localtime ]; then \
         cp /usr/share/zoneinfo/${TZ} /etc/localtime ;\
     fi ;
+
+# Install OBIS theme extension
+COPY src/ckanext-obis_theme ${APP_DIR}/src/ckanext-obis_theme
+RUN pip install -e ${APP_DIR}/src/ckanext-obis_theme

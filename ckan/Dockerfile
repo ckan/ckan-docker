@@ -44,6 +44,9 @@ RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-extentsearch.git#egg=c
 ### Provide sitemap and Pure feed
 RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-sitemap.git#egg=ckanext-sitemap"
 
+### Provide Google Analytics
+RUN  pip3 install -e "git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics"
+
 
 USER root
 

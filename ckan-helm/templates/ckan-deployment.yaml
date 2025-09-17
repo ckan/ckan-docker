@@ -22,14 +22,8 @@ spec:
       labels:
         io.kompose.service: ckan
     spec:
-      initContainers:
-      - name: volume-permissions
-        image: busybox
-        command: ["sh", "-c", "chown -R 503:502 /var/www/html"]
-        volumeMounts:
-        - name: waf-dir
-          mountPath: /var/www/html
       securityContext:
+        runAsNonRoot: true
         runAsUser: 503
         runAsGroup: 502
         fsGroup: 502
@@ -66,7 +60,7 @@ spec:
               name: pip-cache
             - mountPath: /usr/lib/python3.10/site-packages
               name: site-packages
-            - mountPath: /var/www/html
+            - mountPath: /var/www
               readOnly: false
               name: waf-dir
       restartPolicy: Always

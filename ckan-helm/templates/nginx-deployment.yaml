@@ -29,7 +29,7 @@ spec:
             - containerPort: 443
               protocol: TCP
           volumeMounts:
-            - mountPath: /var/www/html
+            - mountPath: /var/www
               readOnly: true
               name: waf-dir
 

@@ -32,10 +32,11 @@ spec:
           image: ubuntu
           securityContext:
             runAsUser: 0
-          command: ["sh", "-c", "chown", "-R", "503:502", "/var/www/html"]
+          command: ["mkdir", "-p", "/var/www/html", "&&",
+                    "chown", "-R", "503:502", "/var/www/html"]
           volumeMounts:
             - name: waf-dir
-              mountPath: "/var/www/html"
+              mountPath: "/var/www"
 
       containers:
         - envFrom:
@@ -70,7 +71,7 @@ spec:
               name: pip-cache
             - mountPath: /usr/lib/python3.10/site-packages
               name: site-packages
-            - mountPath: /var/www/html
+            - mountPath: /var/www
               readOnly: false
               name: waf-dir
       restartPolicy: Always

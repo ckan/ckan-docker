@@ -12,7 +12,7 @@ spec:
     - name: "8443"
       port: 8443
       targetPort: 443
-    - protocol: TCP
+    - name: "9000"
       port: 9000
       targetPort: 9000
   selector:

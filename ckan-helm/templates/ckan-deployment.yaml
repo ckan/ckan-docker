@@ -26,18 +26,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 503
         runAsGroup: 502
-        fsGroup: 503
-      initContainers:
-        - name: volume-permissions
-          image: ubuntu
-          securityContext:
-            runAsUser: 0
-          command: ["mkdir", "-p", "/var/www/html", "&&",
-                    "chown", "-R", "503:502", "/var/www/html"]
-          volumeMounts:
-            - name: waf-dir
-              mountPath: "/var/www"
-
+        fsGroup: 502
       containers:
         - envFrom:
             - configMapRef:

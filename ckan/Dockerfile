@@ -75,6 +75,8 @@ COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 # runtime mounted ones)
 COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 
+# Use custom prerun.py for Helm, with DB_INIT flag
+COPY --chown=ckan-sys:ckan-sys setup/prerun.py ${APP_DIR}
 
 # Add supervisord invocation during startup
 RUN sed -i '/uwsgi \$UWSGI_OPTS/i\    supervisord --configuration \/etc\/supervisord.d\/ckan.conf &' ${APP_DIR}/start_ckan.sh

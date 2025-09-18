@@ -15,6 +15,7 @@ data:
   CKAN_DB: "ckandb"
   CKAN_DB_PASSWORD: "ckandbpassword"
   CKAN_DB_USER: "ckandbuser"
+  CKAN_INITIALIZE_DATABASE: "false"
   CKAN_MAX_UPLOAD_SIZE_MB: "100"
   CKAN_PORT_HOST: "5000"
   CKAN_REDIS_URL: "redis://redis:6379/1"

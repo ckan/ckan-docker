@@ -58,7 +58,7 @@ spec:
             - containerPort: 5432
               protocol: TCP
       restartPolicy: Always
-      volumes:
-        - name: pg-data
-          persistentVolumeClaim:
-            claimName: pg-data
+      #volumes:
+      #  - name: pg-data
+      #    persistentVolumeClaim:
+      #      claimName: pg-data

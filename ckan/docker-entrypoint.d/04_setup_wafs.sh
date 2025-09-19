@@ -35,6 +35,15 @@ if [[ $CKAN__PLUGINS == *"spatial"* ]]; then
       # We can't run this command right away, because nginx has not started up yet.
       #ckan -c ~/ckan.ini harvester run-test mini-waf
   fi
-  ckan -c ~/ckan.ini harvester source create "sagedev-dset-harvest-test" "http://nginx:9000/sagedev-dset-harvest-test" "waf" "MINI WAF" "TRUE" "ncar" "MANUAL" '{"user" : "ckan_admin", "read_only": true}'
+  ckan -c ~/ckan.ini harvester source create "sagedev-dset-harvest-test" "http://nginx:9000/sagedev-dset-harvest-test" "waf" "MINI-WAF" "TRUE" "ncar" "MANUAL" '{"user" : "ckan_admin", "read_only": true}'
 
+  if [ ! -d "/var/www/html/dset-web-accessible-folder-dev" ]; then
+      cd /var/www/html && \
+      git clone https://github.com/NCAR/dset-web-accessible-folder-dev.git
+      # We can't run this command right away, because nginx has not started up yet.
+      #ckan -c ~/ckan.ini harvester run-test mini-waf
+  fi
+  ckan -c ~/ckan.ini harvester source create "dset-web-accessible-folder-dev" "http://nginx:9000/dset-web-accessible-folder-dev" "waf" "DEV-WAF" "TRUE" "ncar" "MANUAL" '{"user" : "ckan_admin", "read_only": true}'
+
+https://github.com/NCAR/dset-web-accessible-folder-dev.git
 fi

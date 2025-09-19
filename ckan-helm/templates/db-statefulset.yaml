@@ -7,16 +7,16 @@ spec:
   replicas: 1
   selector:
       matchLabels:
-  	    app: postgres
+        app: postgres
   template:
    metadata:
-  	  labels:
+      labels:
       app: postgres
       spec:
-  	    containers:
-    	    - name: db
-      	    image: "{{ .Values.webapp.images.postgres }}:{{ .Values.webapp.tag }}"
-      	    env:
+        containers:
+          - name: db
+            image: "{{ .Values.webapp.images.postgres }}:{{ .Values.webapp.tag }}"
+            env:
               - name: CKAN_DB
                 value: ckandb
               - name: CKAN_DB_PASSWORD
@@ -35,16 +35,16 @@ spec:
                 value: postgres
               - name: POSTGRES_USER
                 value: postgres
-      	    volumeMounts:
-        	       - name: postgres-data
-          	       mountPath:
+            volumeMounts:
+              - name: postgres-data
+                mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
-     	- metadata:
+      - metadata:
           name: pg-data
         spec:
-    	   accessModes:
-      	      - ReadWriteOnce
+           accessModes:
+             - ReadWriteOnce
         resources:
           requests:
-        	    storage: 10Gi
+            storage: 10Gi
         storageClassName: standard

@@ -27,7 +27,7 @@ spec:
         runAsGroup: 8983
         fsGroup: 8983
       containers:
-        - image: "{{ .Values.webapp.image_solr }}:{{ .Values.webapp.tag }}"
+        - image: "{{ .Values.webapp.images.solr }}:{{ .Values.webapp.tag }}"
           livenessProbe:
             exec:
               command:

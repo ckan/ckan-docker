@@ -23,7 +23,7 @@ spec:
         io.kompose.service: nginx
     spec:
       containers:
-        - image: "{{ .Values.webapp.image_nginx }}:{{ .Values.webapp.tag }}"
+        - image: "{{ .Values.webapp.images.nginx }}:{{ .Values.webapp.tag }}"
           name: nginx
           ports:
             - containerPort: 443

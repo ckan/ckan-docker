@@ -31,7 +31,7 @@ spec:
         - envFrom:
             - configMapRef:
                 name: env
-          image: "{{ .Values.webapp.image_ckan }}:{{ .Values.webapp.tag }}"
+          image: "{{ .Values.webapp.images.ckan }}:{{ .Values.webapp.tag }}"
           resources: # Add this block
             requests:
               cpu: "2"  # Example: request 250 milliCPU

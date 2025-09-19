@@ -44,7 +44,7 @@ spec:
               value: postgres
             - name: PGDATA
               value: pg-data
-          image: "{{ .Values.webapp.image_postgres }}:{{ .Values.webapp.tag }}"
+          image: "{{ .Values.webapp.images.postgres }}:{{ .Values.webapp.tag }}"
           livenessProbe:
             exec:
               command:

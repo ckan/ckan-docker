@@ -12,8 +12,6 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: db
-  strategy:
-    type: Retain
   template:
     metadata:
       annotations:

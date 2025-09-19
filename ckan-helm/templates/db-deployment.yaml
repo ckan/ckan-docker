@@ -13,7 +13,7 @@ spec:
     matchLabels:
       io.kompose.service: db
   strategy:
-    type: Recreate
+    type: Retain
   template:
     metadata:
       annotations:
@@ -43,7 +43,7 @@ spec:
             - name: POSTGRES_USER
               value: postgres
             - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
+              value: /var/lib/postgresql/data/pg-data
           image: "{{ .Values.webapp.images.postgres }}:{{ .Values.webapp.tag }}"
           livenessProbe:
             exec:

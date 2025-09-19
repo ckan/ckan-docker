@@ -43,7 +43,7 @@ spec:
             - name: POSTGRES_USER
               value: postgres
             - name: PGDATA
-              value: /var/lib/postgresql/data
+              value: /var/lib/postgresql/data/pgdata
           image: "{{ .Values.webapp.images.postgres }}:{{ .Values.webapp.tag }}"
           livenessProbe:
             exec:

@@ -10,5 +10,5 @@ spec:
   resources:
     requests:
       storage: 10Gi
-hostPath:
-path: "/var/lib/postgresql/data"
+#hostPath:
+#path: "/var/lib/postgresql/data"

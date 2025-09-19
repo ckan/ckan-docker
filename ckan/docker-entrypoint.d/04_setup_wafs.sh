@@ -22,7 +22,7 @@ if [[ $CKAN__PLUGINS == *"spatial"* ]]; then
   whoami
 
   #rm -rf /var/www/html
-  ls -lR /var/www
+  ls -l /var/www/*
 
   # Create web-accessible folder structure
   if [ ! -d "/var/www/html" ]; then

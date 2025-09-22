@@ -39,6 +39,9 @@ spec:
           ports:
             - containerPort: 8983
               protocol: TCP
+          volumeMounts:
+            - name: solr-data
+              mountPath: /var/solr
       restartPolicy: Always
       volumes:
         - name: solr-data

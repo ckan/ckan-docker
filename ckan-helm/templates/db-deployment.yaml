@@ -43,9 +43,9 @@ spec:
             #- name: PGDATA
             #  value: /var/lib/postgresql/data/new-pg-data
           image: "{{ .Values.webapp.images.postgres }}:{{ .Values.webapp.tag }}"
-          #volumeMounts:
-            #- mountPath: /var/lib/postgresql/data/new-pg-data
-            #  name: pg-data
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pg-data
           livenessProbe:
             exec:
               command:

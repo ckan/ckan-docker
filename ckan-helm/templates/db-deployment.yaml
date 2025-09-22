@@ -40,11 +40,11 @@ spec:
               value: postgres
             - name: POSTGRES_USER
               value: postgres
-            #- name: PGDATA
-            #  value: /var/lib/postgresql/data/new-pg-data
+            - name: PGDATA
+              value: /var/lib/postgresql/data
           image: "{{ .Values.webapp.images.postgres }}:{{ .Values.webapp.tag }}"
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
+            - mountPath: /var/lib/postgresql
               name: pg-data
           livenessProbe:
             exec:

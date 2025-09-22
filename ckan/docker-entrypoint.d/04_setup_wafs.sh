@@ -45,5 +45,6 @@ if [[ $CKAN__PLUGINS == *"spatial"* ]]; then
   fi
   ckan -c ~/ckan.ini harvester source create "dset-web-accessible-folder-dev" "http://nginx:9000/dset-web-accessible-folder-dev" "waf" "DEV-WAF" "TRUE" "ncar" "MANUAL" '{"user" : "ckan_admin", "read_only": true}'
 
-https://github.com/NCAR/dset-web-accessible-folder-dev.git
+  # Return to home directory for supervisord startup
+  cd
 fi

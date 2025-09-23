@@ -8,9 +8,13 @@
 # Modified to work with older versions of git (< 2.0.0)
 #
 
-LOCAL=$(git rev-parse @{0})
-REMOTE=$(git rev-parse @{u})
-BASE=$(git merge-base @{0} @{u})
+# Always fetch before comparing
+git fetch
+
+UPSTREAM=${1:-'@{u}'}
+LOCAL=$(git rev-parse @)
+REMOTE=$(git rev-parse "$UPSTREAM")
+BASE=$(git merge-base @ "$UPSTREAM")
 
 if [ $LOCAL = $REMOTE ]; then
     echo "Up-to-date"

@@ -63,6 +63,8 @@ spec:
             - mountPath: /var/www
               readOnly: false
               name: waf-dir
+            - name: webapp-secrets-volume
+              mountPath: /usr/local/secrets
       restartPolicy: Always
       volumes:
         - name: ckan-storage
@@ -80,3 +82,6 @@ spec:
         - name: waf-dir
           persistentVolumeClaim:
             claimName: waf-dir
+        - name: webapp-secrets-volume
+          secret:
+            secretName: secrets-webapp

@@ -10,7 +10,7 @@ RUN mkdir /srv/app/.cache && chown ckan /srv/app/.cache
 # Copy harvester scripts
 COPY config/*.sh  /srv/app
 
-RUN chown -R ckan:ckan-sys ${APP_DIR} && chmod 744 /srv/app/*.sh
+RUN chown -R ckan:ckan-sys ${APP_DIR} && chmod 755 /srv/app/*.sh
 
 USER ckan
 

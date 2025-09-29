@@ -5,6 +5,12 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   # Show commands that are run
   set -x
 
+  # Load all external secrets as environment variables
+  for f in /usr/local/secrets/*; do
+    secret_name=${f}
+    export $secret_name=`cat /usr/local/secrets/${f}`
+  done
+
   ckan config-tool --edit ./ckan.ini ckan.auth.public_user_details=false
   ckan config-tool --edit ./ckan.ini ckan.cors.origin_allow_all=true
 

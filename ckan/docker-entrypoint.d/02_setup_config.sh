@@ -7,8 +7,8 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
 
   # Load all external secrets as environment variables
   for f in /usr/local/secrets/*; do
-    secret_name=${f}
-    export $secret_name=`cat /usr/local/secrets/${f}`
+    secret_name=`basename ${f}`
+    export $secret_name=`cat ${f}`
   done
 
   ckan config-tool --edit ./ckan.ini ckan.auth.public_user_details=false

@@ -56,8 +56,11 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   ckan config-tool ./ckan.ini ckan.harvest.mq.type=redis
   ckan config-tool ./ckan.ini ckan.harvest.log_scope=1 
   ckan config-tool ./ckan.ini ckan.harvest.log_timeframe=10 
-  ckan config-tool ./ckan.ini ckan.harvest.log_level=info 
-  ckan config-tool ./ckan.ini ckanext.spatial.harvest.user_name=ckan_admin
+  ckan config-tool ./ckan.ini ckan.harvest.log_level=info
+
+  # NOTE: the CKAN_HARVEST_USERNAME must have admin rights, and belong to the WAF organization,
+  # or harvesting will fail with permission errors.
+  ckan config-tool ./ckan.ini ckanext.spatial.harvest.user_name=${CKAN_HARVEST_USERNAME}
   ckan config-tool ./ckan.ini ckanext.spatial.search_backend=solr-spatial-field
   ckan config-tool ./ckan.ini ckanext.spatial.use_postgis_sorting=false
   ckan config-tool ./ckan.ini ckan.spatial.validator.profiles='iso19139, dset-minimum-fields-production, geographic-extent-validator, temporal-extent-validator, collections-validator'
@@ -71,7 +74,10 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   ckan config-tool --edit ./ckan.ini ckan.site_url='https://ckandev.data-commons.k8s.ucar.edu'
   ckan config-tool --edit ./ckan.ini ckan.site_description='NCAR data search and discovery'
 
-
+  ckan config-tool ./ckan.ini googleanalytics.id=${CKAN_GOOGLEANALYTICS_ID}
+  ckan config-tool ./ckan.ini googleanalytics.account=${CKAN_GOOGLEANALYTICS_ACCOUNT}
+  ckan config-tool ./ckan.ini googleanalytics.username=${CKAN_GOOGLEANALYTICS_USERNAME}
+  ckan config-tool ./ckan.ini googleanalytics.password=${CKAN_GOOGLEANALYTICS_PASSWORD}
 
   # Change Solr query parser to allow point location queries
   #sed -i "s|ckan.search.solr_allowed_query_parsers = |ckan.search.solr_allowed_query_parsers = field|" /etc/ckan/default/ckan.ini
@@ -89,6 +95,4 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
 #  ckan config-tool --edit ./ckan.ini smtp.user=yourEmail@ucar.edu
 #  ckan config-tool --edit ./ckan.ini smtp.password=your_CIT_Password
 #  ckan config-tool --edit ./ckan.ini smtp.mail_from=vagrant-ckan@ucar.edu
-
-
 fi

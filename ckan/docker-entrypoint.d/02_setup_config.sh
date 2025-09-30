@@ -5,12 +5,6 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   # Show commands that are run
   set -x
 
-  # Load all external secrets as environment variables
-  for f in /usr/local/secrets/*; do
-    secret_name=`basename ${f}`
-    export $secret_name=`cat ${f}`
-  done
-
   ckan config-tool --edit ./ckan.ini ckan.auth.public_user_details=false
   ckan config-tool --edit ./ckan.ini ckan.cors.origin_allow_all=true
 
@@ -70,6 +64,7 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   ckan config-tool ./ckan.ini ckanext.spatial.common_map.type=custom 
   ckan config-tool ./ckan.ini ckanext.spatial.common_map.custom.url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
   ckan config-tool ./ckan.ini ckanext.spatial.common_map.attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  ckan config-tool --edit ./ckan.ini error_email_from=donotreply@ucar.edu
 
   #  These settings are subject to change, depending on the deployment
   ckan config-tool --edit ./ckan.ini ckan.site_title='DASH Search (Development)'
@@ -89,7 +84,6 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   # Update Email Notification settings in [app:main] section
 
 #  ckan config-tool --edit ./ckan.ini email_to=yourEmail@ucar.edu
-#  ckan config-tool --edit ./ckan.ini error_email_from=vagrant-ckan@localhost
 #  ckan config-tool --edit ./ckan.ini smtp.server=smtp.gmail.com:587
 #  ckan config-tool --edit ./ckan.ini smtp.starttls=True
 #  ckan config-tool --edit ./ckan.ini smtp.user=yourEmail@ucar.edu

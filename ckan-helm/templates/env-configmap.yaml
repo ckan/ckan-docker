@@ -53,8 +53,10 @@ data:
   TEST_CKAN_REDIS_URL: "redis://redis:6379/1"
   TEST_CKAN_SOLR_URL: "http://solr:8983/solr/ckan"
   TEST_CKAN_SQLALCHEMY_URL: "postgres://ckan:ckan@db/ckan_test"
-  TZ: "UTC"
+  TZ: "America/Denver"
   USE_HTTPS_FOR_DEV: "false"
+  # Add python command-line tools to PATH
+  PATH: "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/srv/app/.local/bin"
 kind: ConfigMap
 metadata:
   labels:

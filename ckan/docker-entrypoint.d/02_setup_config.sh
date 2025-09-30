@@ -11,45 +11,18 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   # Keep the favicon value unchanged; its config setting differs across CKAN versions.
   ckan config-tool --edit ./ckan.ini ckan.favicon='/NCARfavicon.ico'
 
-  # Place DSETSearch plugin settings in [app:main] section (before Logging)
-#  sed -i "/## Logging configuration/i \ \n\
-### DSET-Search Plugin Settings \n\
-## Toggle display of Resource Formats search facet and dataset-specific format tags in search results \n\
-#ckanext.dsetsearch.enable_search_format_ui = true \n\
-#ckanext.dsetsearch.enable_publisher_facet = true \n\
-#" /etc/ckan/default/ckan.ini
+
   ckan config-tool ./ckan.ini ckanext.dsetsearch.enable_search_format_ui=true
   ckan config-tool ./ckan.ini ckanext.dsetsearch.enable_publisher_facet=true
   ckan config-tool ./ckan.ini ckanext_dsetsearch_banner_message='test'
 
 
-
-  # Place Repo-Info settings in [app:main] section (before Logging)
-#  sed -i "/## Logging configuration/i \ \n\
-### Repo-Info Settings \n\
-#ckanext.repo.srcpath = /usr/lib/ckan/default/src \n\
-#ckanext.repo.repos = ckan NCAR/ckanext-dsetsearch \n\
-#" /etc/ckan/default/ckan.ini
   ckan config-tool ./ckan.ini ckanext.repo.srcpath=$SRC_DIR
   ckan config-tool ./ckan.ini ckanext.repo.repos='ckan NCAR/ckanext-dsetsearch'
 
-  # Place Harvester settings in [app:main] section (before Logging)
-#  sed -i "/## Logging configuration/i \ \n\
-### Harvest Settings \n\
-#ckan.harvest.mq.type = redis \n\
-#ckan.harvest.log_scope = 1 \n\
-#ckan.harvest.log_timeframe = 10 \n\
-#ckan.harvest.log_level = info \n\
-#ckanext.spatial.harvest.user_name = admin \n\
-#ckanext.spatial.search_backend = solr-spatial-field \n\
-#ckanext.spatial.use_postgis_sorting = false \n\
-#ckan.spatial.validator.profiles = iso19139, dset-minimum-fields-production, geographic-extent-validator, temporal-extent-validator, collections-validator \n\
-# \n\
-### Spatial Map Widget Settings  \n\
-#ckanext.spatial.common_map.type = custom \n\
-#ckanext.spatial.common_map.custom.url = https://tile.openstreetmap.org/{z}/{x}/{y}.png \n\
-#ckanext.spatial.common_map.attribution = &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors \n\
-#" /etc/ckan/default/ckan.ini
+  # NOTE: the CKAN_HARVEST_USERNAME must have admin rights, and belong to the WAF organization,
+  # or harvesting will fail with permission errors.
+  ckan config-tool ./ckan.ini ckanext.spatial.harvest.user_name=${CKAN_HARVEST_USERNAME}
 
   # Add configuration toggle for enabling/disabling harvest error email notification
   ckan config-tool ./ckan.ini ckan.harvest.status_mail.errored=true
@@ -58,9 +31,6 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   ckan config-tool ./ckan.ini ckan.harvest.log_timeframe=10 
   ckan config-tool ./ckan.ini ckan.harvest.log_level=info
 
-  # NOTE: the CKAN_HARVEST_USERNAME must have admin rights, and belong to the WAF organization,
-  # or harvesting will fail with permission errors.
-  ckan config-tool ./ckan.ini ckanext.spatial.harvest.user_name=${CKAN_HARVEST_USERNAME}
   ckan config-tool ./ckan.ini ckanext.spatial.search_backend=solr-spatial-field
   ckan config-tool ./ckan.ini ckanext.spatial.use_postgis_sorting=false
   ckan config-tool ./ckan.ini ckan.spatial.validator.profiles='iso19139, dset-minimum-fields-production, geographic-extent-validator, temporal-extent-validator, collections-validator'
@@ -74,10 +44,10 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   ckan config-tool --edit ./ckan.ini ckan.site_url='https://ckandev.data-commons.k8s.ucar.edu'
   ckan config-tool --edit ./ckan.ini ckan.site_description='NCAR data search and discovery'
 
-  ckan config-tool ./ckan.ini googleanalytics.id=${CKAN_GOOGLEANALYTICS_ID}
-  ckan config-tool ./ckan.ini googleanalytics.account=${CKAN_GOOGLEANALYTICS_ACCOUNT}
-  ckan config-tool ./ckan.ini googleanalytics.username=${CKAN_GOOGLEANALYTICS_USERNAME}
-  ckan config-tool ./ckan.ini googleanalytics.password=${CKAN_GOOGLEANALYTICS_PASSWORD}
+  ckan config-tool ./ckan.ini googleanalytics.id="${CKAN_GOOGLEANALYTICS_ID}"
+  ckan config-tool ./ckan.ini googleanalytics.account="${CKAN_GOOGLEANALYTICS_ACCOUNT}"
+  ckan config-tool ./ckan.ini googleanalytics.username="${CKAN_GOOGLEANALYTICS_USERNAME}"
+  ckan config-tool ./ckan.ini googleanalytics.password="${CKAN_GOOGLEANALYTICS_PASSWORD}"
 
   # Change Solr query parser to allow point location queries
   #sed -i "s|ckan.search.solr_allowed_query_parsers = |ckan.search.solr_allowed_query_parsers = field|" /etc/ckan/default/ckan.ini

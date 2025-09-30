@@ -13,7 +13,6 @@ if [[ $CKAN__PLUGINS == *"spatial"* ]]; then
 
   # Add API token to admin user, so we can create an Organization, thereby allowing creation of a WAF.
   if [ ! -d "/tmp/apikey.txt" ]; then
-      ckan -c ~/ckan.ini user token add ckan_admin api-token | tail -1 | xargs > /tmp/apikey.txt
       pip install ckanapi
       /srv/app/.local/bin/ckanapi action organization_create name=ncar title=NCAR
   fi

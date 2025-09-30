@@ -31,6 +31,8 @@ spec:
         - envFrom:
             - configMapRef:
                 name: env
+            - secretRef:
+                name: secrets-webapp
           image: "{{ .Values.webapp.images.ckan }}:{{ .Values.webapp.tag }}"
           resources: # Add this block
             requests:

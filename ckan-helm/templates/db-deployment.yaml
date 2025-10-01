@@ -25,26 +25,14 @@ spec:
             - configMapRef:
                 name: env
             - secretRef:
-                name: secrets-webapp
+                name: secrets-db
         - env:
-            - name: CKAN_DB
-              value: ckandb
-            - name: CKAN_DB_PASSWORD
-              value: ckandbpassword
-            - name: CKAN_DB_USER
-              value: ckandbuser
             - name: DATASTORE_DB
               value: datastore
             - name: DATASTORE_READONLY_PASSWORD
               value: datastore
             - name: DATASTORE_READONLY_USER
               value: datastore_ro
-            - name: POSTGRES_DB
-              value: postgres
-            - name: POSTGRES_PASSWORD
-              value: postgres
-            - name: POSTGRES_USER
-              value: postgres
             - name: PGDATA
               value: /var/lib/postgresql/data
           image: "{{ .Values.webapp.images.postgres }}:{{ .Values.webapp.tag }}"

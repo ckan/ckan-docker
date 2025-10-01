@@ -21,6 +21,11 @@ spec:
         io.kompose.service: db
     spec:
       containers:
+        - envFrom:
+            - configMapRef:
+                name: env
+            - secretRef:
+                name: secrets-webapp
         - env:
             - name: CKAN_DB
               value: ckandb

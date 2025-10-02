@@ -16,6 +16,7 @@ data:
   #CKAN_DB: "ckandb"
   #CKAN_DB_PASSWORD: "ckandbpassword"
   #CKAN_DB_USER: "ckandbuser"
+  #CKAN_SQLALCHEMY_URL: "postgresql://ckandbuser:ckandbpassword@db/ckandb"
   CKAN_MAX_UPLOAD_SIZE_MB: "100"
   CKAN_PORT_HOST: "5000"
   CKAN_REDIS_URL: "redis://redis:6379/1"
@@ -28,7 +29,6 @@ data:
   #CKAN_SMTP_STARTTLS: "True"
   #CKAN_SMTP_USER: "user"
   CKAN_SOLR_URL: "http://solr:8983/solr/ckan"
-  CKAN_SQLALCHEMY_URL: "postgresql://${CKAN_DB_USER}:${CKAN_DB_PASSWORD}@db/${CKAN_DB}"
   CKAN_STORAGE_PATH: "/var/lib/ckan"
   # Any variables commented out in this file are handled with external secrets.
   #CKAN_SYSADMIN_EMAIL: "your_email@example.com"

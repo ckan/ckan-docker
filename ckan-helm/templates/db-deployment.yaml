@@ -21,12 +21,13 @@ spec:
         io.kompose.service: db
     spec:
       containers:
-        - envFrom:
+        - name: db
+          envFrom:
             - configMapRef:
                 name: env
             - secretRef:
                 name: secrets-db
-        - env:
+          env:
             - name: DATASTORE_DB
               value: datastore
             - name: DATASTORE_READONLY_PASSWORD
@@ -47,7 +48,6 @@ spec:
                 - postgres
                 - -d
                 - postgres
-          name: db
           ports:
             - containerPort: 5432
               protocol: TCP

@@ -28,7 +28,8 @@ spec:
         runAsGroup: 502
         fsGroup: 502
       containers:
-        - envFrom:
+        - name: ckan
+          envFrom:
             - configMapRef:
                 name: env
             - secretRef:
@@ -51,7 +52,6 @@ spec:
             failureThreshold: 3
             periodSeconds: 60
             timeoutSeconds: 10
-          name: ckan
           ports:
             - containerPort: 5000
               protocol: TCP
@@ -82,6 +82,3 @@ spec:
         - name: waf-dir
           persistentVolumeClaim:
             claimName: waf-dir
-        - name: webapp-secrets-volume
-          secret:
-            secretName: secrets-webapp

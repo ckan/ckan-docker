@@ -33,7 +33,9 @@
   ln -sf $SRC_DIR/ckanext-dsetsearch/solr/schema.solr-spatial-2.0.xml schema.xml
 
 
-  # Download and use JTI for point-based geographic queries in DASH Search
-
+  # Provide library needed by Google Analytics plugin
+  if [[ $CKAN__PLUGINS == *"googleanalytics"* ]]; then
+       pip install oauth2client==4.1.3
+  fi
 
   

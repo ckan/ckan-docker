@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: /Users/bonnland/bin/kompose --file docker-compose.yml convert -c
+    kompose.cmd: kompose --file docker-compose.yml convert -c
     kompose.version: 1.36.0 (ae2a39403)
   labels:
     io.kompose.service: redis
@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: /Users/bonnland/bin/kompose --file docker-compose.yml convert -c
+        kompose.cmd: kompose --file docker-compose.yml convert -c
         kompose.version: 1.36.0 (ae2a39403)
       labels:
         io.kompose.service: redis

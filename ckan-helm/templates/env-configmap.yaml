@@ -12,9 +12,10 @@ data:
   CKAN_DATAPUSHER_URL: "http://datapusher:8800"
   CKAN_DATASTORE_READ_URL: "postgresql://datastore_ro:datastore@db/datastore"
   CKAN_DATASTORE_WRITE_URL: "postgresql://ckandbuser:ckandbpassword@db/datastore"
-  CKAN_DB: "ckandb"
-  CKAN_DB_PASSWORD: "ckandbpassword"
-  CKAN_DB_USER: "ckandbuser"
+  # Any variables commented out in this file are handled with external secrets.
+  #CKAN_DB: "ckandb"
+  #CKAN_DB_PASSWORD: "ckandbpassword"
+  #CKAN_DB_USER: "ckandbuser"
   CKAN_MAX_UPLOAD_SIZE_MB: "100"
   CKAN_PORT_HOST: "5000"
   CKAN_REDIS_URL: "redis://redis:6379/1"

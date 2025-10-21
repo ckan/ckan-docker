@@ -70,6 +70,7 @@ RUN chmod gu+rw /var/run && \
 
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
+COPY --chown=ckan-sys:ckan-sys setup/prerun.py ${APP_DIR}
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)

@@ -33,7 +33,7 @@ spec:
             - configMapRef:
                 name: env
             - secretRef:
-                name: secrets-webapp
+                name: secrets-ckan
           image: "{{ .Values.webapp.images.ckan }}:{{ .Values.webapp.tag }}"
           resources: # Add this block
             requests:

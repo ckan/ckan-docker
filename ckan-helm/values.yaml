@@ -14,3 +14,4 @@ webapp:
     nginx: ghcr.io/ncar/sage-dashsearch-nginx
     ckan: ghcr.io/ncar/sage-dashsearch-ckan
   tag: 2025-10-24.20.56
+

@@ -4,6 +4,7 @@ webapp:
   path: "/"
   tls:
     fqdn: ckandev.k8s.ucar.edu
+    DNSAlias: ckandev.ucar.edu
     secretName: incommon-cert-sage-ckandev
   container:
     image: nginx

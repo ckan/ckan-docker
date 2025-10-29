@@ -16,7 +16,7 @@ spec:
       - {{ .Values.webapp.tls.fqdn }}
       secretName: {{ .Values.webapp.tls.secretName }}
   rules:
-  - host: {{ .Values.webapp.tls.fqdn }}
+  - host: {{ .Values.webapp.tls.fqdn | quote }}
     http:
       paths:
       - path: {{ .Values.webapp.path }}
@@ -26,3 +26,13 @@ spec:
             name: {{ .Values.webapp.container.image }}
             port:
               number: {{ .Values.webapp.container.port }}
+  - host: {{ .Values.webapp.tls.DNSAlias | quote }}
+    http:
+      paths:
+        - path: {{ .Values.webapp.path }}
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Values.webapp.container.image }}
+              port:
+                number: {{ .Values.webapp.container.port }}

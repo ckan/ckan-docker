@@ -14,6 +14,7 @@ spec:
   tls:
     - hosts:
       - {{ .Values.webapp.tls.fqdn }}
+      - {{ .Values.webapp.tls.DNSAlias }}
       secretName: {{ .Values.webapp.tls.secretName }}
   rules:
   - host: {{ .Values.webapp.tls.fqdn | quote }}

@@ -41,7 +41,7 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
 
   #  These settings are subject to change, depending on the deployment
   ckan config-tool --edit ./ckan.ini ckan.site_title='DASH Search (Development)'
-  ckan config-tool --edit ./ckan.ini ckan.site_url='https://ckandev.data-commons.k8s.ucar.edu'
+  ckan config-tool --edit ./ckan.ini ckan.site_url="${CKAN_SITE_URL}"
   ckan config-tool --edit ./ckan.ini ckan.site_description='NCAR data search and discovery'
 
   ckan config-tool ./ckan.ini googleanalytics.id="${CKAN_GOOGLEANALYTICS_ID}"

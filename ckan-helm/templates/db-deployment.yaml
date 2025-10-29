@@ -10,6 +10,9 @@ metadata:
   name: db
 spec:
   replicas: 1
+  # Use Recreate to ensure old pod is terminated before creating the new one (prevents PVC attach contention).
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       io.kompose.service: db

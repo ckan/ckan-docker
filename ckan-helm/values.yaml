@@ -3,7 +3,7 @@ webapp:
   group: ckandev
   path: "/"
   tls:
-    fqdn: ckandev.ucar.edu
+    fqdn: ckandev.k8s.ucar.edu
     secretName: incommon-cert-sage-ckandev
   container:
     image: nginx

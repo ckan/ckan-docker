@@ -3,6 +3,7 @@
 ##################################
 # /srv/app/run_harvester.sh
 ##################################
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/srv/app/.local/bin
 
 set -x
 

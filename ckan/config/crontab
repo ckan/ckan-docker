@@ -1,10 +1,11 @@
 # Redirect STDOUT to /dev/null, so email is sent ONLY when an error occurs.
 # m h dom mon dow command
 
-0 * * * *          /srv/app/run_harvester.sh 2>&1      # Every hour on the hour
+# Run harvester every hour on the hour
+0 * * * *          /srv/app/run_harvester.sh
 
 # Mark harvest jobs as finished at 7:55 AM every day
-55 7 * * *     /srv/app/finish_jobs.sh 2>&1
+55 7 * * *     /srv/app/finish_jobs.sh
 
 # run harvest log cleanup weekly, every Sunday at 5 AM
 0 5 * * 0      /usr/local/bin/ckan -c /srv/app/ckan.ini harvester clean-harvest-log

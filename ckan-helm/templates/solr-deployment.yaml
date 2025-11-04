@@ -28,6 +28,13 @@ spec:
         fsGroup: 8983
       containers:
         - image: "{{ .Values.webapp.images.solr }}:{{ .Values.webapp.tag }}"
+          resources: # Add this block
+            requests:
+              cpu: "2"  # Example: request 250 milliCPU
+              memory: "16Gi" # Example: request 512 MiB of memory
+            limits:
+              cpu: "2"  # Example: limit to 500 milliCPU
+              memory: "32Gi"   # Example: limit to 1 GiB of memory
           livenessProbe:
             exec:
               command:

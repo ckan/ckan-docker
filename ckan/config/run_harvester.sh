@@ -52,5 +52,5 @@ while [ "$logsize" '!=' "$logsize_old" ]; do
     echo "logsize == $logsize; logsize_old == $logsize_old"
 done
 
-# Mark job as finished
+# Mark running jobs as finished
 $MARK_JOBS_FINISHED

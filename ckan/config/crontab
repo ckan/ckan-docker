@@ -1,8 +1,8 @@
 # Redirect STDOUT to /dev/null, so email is sent ONLY when an error occurs.
 # m h dom mon dow command
 
-# Run harvester every hour on the hour
-0 * * * *          /srv/app/run_harvester.sh
+# Run harvester every 8 hours, to guarantee long-running jobs are finished
+0 */8 * * *    /srv/app/run_harvester.sh
 
 # Mark harvest jobs as finished at 7:55 AM every day
 55 7 * * *     /srv/app/finish_jobs.sh

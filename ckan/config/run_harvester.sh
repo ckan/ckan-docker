@@ -41,3 +41,16 @@ for directory in $directories; do
 
     fi
 done
+
+# Wait for fetch_consumer.log to stop growing
+logsize=`wc /var/log/ckan/std/fetch_consumer.log | awk '{print $1;}'`
+logsize_old=-1
+while [ "$logsize" '!=' "$logsize_old" ]; do
+    sleep 30
+    logsize_old=$logsize
+    logsize=`wc /var/log/ckan/std/fetch_consumer.log | awk '{print $1;}'`
+    echo "logsize == $logsize; logsize_old == $logsize_old"
+done
+
+# Mark job as finished
+$MARK_JOBS_FINISHED

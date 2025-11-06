@@ -30,6 +30,7 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   ckan config-tool ./ckan.ini ckan.harvest.log_scope=1 
   ckan config-tool ./ckan.ini ckan.harvest.log_timeframe=10 
   ckan config-tool ./ckan.ini ckan.harvest.log_level=info
+  ckan config-tool ./ckan.ini ckan.harvest.timeout=360       # Six hours
 
   ckan config-tool ./ckan.ini ckanext.spatial.search_backend=solr-spatial-field
   ckan config-tool ./ckan.ini ckanext.spatial.use_postgis_sorting=false

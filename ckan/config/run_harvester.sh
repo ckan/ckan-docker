@@ -9,16 +9,12 @@ set -x
 
 WAF_FOLDER='/var/www/html/'
 MARK_JOBS_FINISHED='/usr/local/bin/ckan -c /srv/app/ckan.ini harvester run'
-ABORT_FAILED_JOBS='/usr/local/bin/ckan -c /srv/app/ckan.ini harvester abort-failed-jobs'
 
 # Try marking any jobs as finished before looking for hung jobs.
 # NOTE: we can't do this for long-running jobs without causing strange behavior in the harvest queue.
 # This can only be done safely if the job is finished running and fetch_consumer.log output has stopped.
-#$MARK_JOBS_FINISHED
+$MARK_JOBS_FINISHED
 
-# Try aborting any hung harvest jobs (based on the job's start time).
-# We need to resync with the DB after a DB server timeout, which we can't really control.
-$ABORT_FAILED_JOBS
 
 directories=$( ls -d $WAF_FOLDER*/ )
 

@@ -7,6 +7,8 @@ export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sb
 
 set -x
 
+date
+
 WAF_FOLDER='/var/www/html/'
 MARK_JOBS_FINISHED='/usr/local/bin/ckan -c /srv/app/ckan.ini harvester run'
 

@@ -2,13 +2,13 @@
 # m h dom mon dow command
 
 # Run harvester every 8 hours, to guarantee long-running jobs are finished
-0 */8 * * *    /srv/app/run_harvester.sh
+0 */8 * * *    /srv/app/run_harvester.sh >> /var/log/ckan/std/cron.log 2>&1
 
 # Mark harvest jobs as finished at 7:55 AM every day
-55 7 * * *     /srv/app/finish_jobs.sh
+55 7 * * *     /srv/app/finish_jobs.sh   >> /var/log/ckan/std/cron.log 2>&1
 
 # run harvest log cleanup weekly, every Sunday at 5 AM
-0 5 * * 0      /usr/local/bin/ckan -c /srv/app/ckan.ini harvester clean-harvest-log
+0 5 * * 0      /usr/local/bin/ckan -c /srv/app/ckan.ini harvester clean-harvest-log  >> /var/log/ckan/std/cron.log 2>&1
 
 # cron heartbeat
 */5 * * * *    /usr/bin/touch /srv/app/cron-heartbeat

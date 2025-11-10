@@ -11,6 +11,12 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   # Keep the favicon value unchanged; its config setting differs across CKAN versions.
   ckan config-tool --edit ./ckan.ini ckan.favicon='/NCARfavicon.ico'
 
+  # The harvester doesn't inherit environment variables, so we set the
+  # important ones in the config file.
+  ckan config-tool --edit ./ckan.ini ckan.site_url="${CKAN_SITE_URL}"
+  ckan config-tool --edit ./ckan.ini sqlalchemy.url="${CKAN_SQLALCHEMY_URL}"
+  ckan config-tool --edit ./ckan.ini solr_url="${CKAN_SOLR_URL}"
+  ckan config-tool --edit ./ckan.ini ckan.redis.url="${CKAN_REDIS_URL}"
 
   ckan config-tool ./ckan.ini ckanext.dsetsearch.enable_search_format_ui=true
   ckan config-tool ./ckan.ini ckanext.dsetsearch.enable_publisher_facet=true
@@ -42,7 +48,6 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
 
   #  These settings are subject to change, depending on the deployment
   ckan config-tool --edit ./ckan.ini ckan.site_title='DASH Search (Development)'
-  ckan config-tool --edit ./ckan.ini ckan.site_url="${CKAN_SITE_URL}"
   ckan config-tool --edit ./ckan.ini ckan.site_description='NCAR data search and discovery'
 
   ckan config-tool ./ckan.ini googleanalytics.id="${CKAN_GOOGLEANALYTICS_ID}"

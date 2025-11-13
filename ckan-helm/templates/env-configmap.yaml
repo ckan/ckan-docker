@@ -11,7 +11,6 @@ data:
   CKAN__PLUGINS: "activity dsetsearch harvest waf_harvester spatial_harvest_metadata_api spatial_metadata spatial_query repo_info extentsearch datesearch sitemap googleanalytics"
   CKAN_DATAPUSHER_URL: "http://datapusher:8800"
   CKAN_DATASTORE_READ_URL: "postgresql://datastore_ro:datastore@db/datastore"
-  CKAN_DATASTORE_WRITE_URL: "postgresql://ckandbuser:ckandbpassword@db/datastore"
   # Any variables commented out in this file are handled with external secrets.
   #CKAN_DB: "ckandb"
   #CKAN_DB_PASSWORD: "ckandbpassword"

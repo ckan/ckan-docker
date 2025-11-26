@@ -1,7 +1,5 @@
 FROM ckan/ckan-base:2.11.3
 
-ARG TOKEN
-
 # Workaround from https://github.com/ckan/ckan-docker/issues/196
 USER root
 RUN mkdir /srv/app/.local && chown ckan /srv/app/.local
@@ -31,10 +29,6 @@ RUN pip3 install -e 'git+https://github.com/NCAR/ckanext-spatial.git@main#egg=ck
 
 ### Repo Info; required by dsetsearch plugin ###
 RUN pip3 install -e 'git+https://github.com/NCAR/ckanext-repo.git@main#egg=ckanext-repo'
-
-### DASH Search custom plugin
-RUN  pip3 install -e "git+https://${TOKEN}@github.com/NCAR/ckanext-dsetsearch.git#egg=ckanext-dsetsearch" && \
-     pip3 install -r ${APP_DIR}/src/ckanext-dsetsearch/pip-requirements.txt
 
 ### Plugins for filtering on publication date and temporal extent
 RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-datesearch.git#egg=ckanext-datesearch"

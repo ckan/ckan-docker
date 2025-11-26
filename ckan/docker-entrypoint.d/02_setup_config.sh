@@ -5,6 +5,10 @@ if [[ $CKAN__PLUGINS == *"dsetsearch"* ]]; then
   # Show commands that are run
   set -x
 
+### Install DASH Search custom plugin at runtime, to avoid baking in secrets
+  pip3 install -e "git+https://${REPO_TOKEN}@github.com/NCAR/ckanext-dsetsearch.git#egg=ckanext-dsetsearch" && \
+  pip3 install -r /srv/app/src/ckanext-dsetsearch/pip-requirements.txt
+
   ckan config-tool --edit ./ckan.ini ckan.auth.public_user_details=false
   ckan config-tool --edit ./ckan.ini ckan.cors.origin_allow_all=true
 

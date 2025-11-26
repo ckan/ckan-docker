@@ -75,11 +75,11 @@ jobs:
           
     -  name: CKAN build
        uses: docker/build-push-action@v6
+       env:
+         REPO_TOKEN: ${{secrets.REPO_TOKEN}}
        with:
           context: ./ckan
           file: ./ckan/Dockerfile
-          build-args: |
-            TOKEN=${{ secrets.REPO_TOKEN }}
           push: true
           tags: ghcr.io/ncar/sage-dashsearch-ckan:${{ steps.date.outputs.date }}
       

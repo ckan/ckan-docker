@@ -75,8 +75,6 @@ jobs:
           
     -  name: CKAN build
        uses: docker/build-push-action@v6
-       env:
-         REPO_TOKEN: ${{secrets.REPO_TOKEN}}
        with:
           context: ./ckan
           file: ./ckan/Dockerfile

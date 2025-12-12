@@ -1,0 +1,17 @@
+name: Docker Compose CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+env:
+  COMPOSE_FILE: ./tests/compose.yml:./tests/compose.ci.yml
+
+jobs:
+  docker-compose-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the stack
+        run: |
+          DOCKER_BUILDKIT=1 docker compose up --quiet-pull --no-color --remove-orphans --exit-code-from ci

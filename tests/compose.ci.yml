@@ -1,0 +1,25 @@
+services:
+  ci:
+    image: alpine:latest
+    container_name: ci
+    tty: true
+    command:
+      - /bin/sh
+      - -c
+      - |
+        apk add --no-cache jq curl bash util-linux
+        timeout 10 sh -c 'while ! curl -s $$URL; do echo "Waiting for service..."; sleep 1; done'
+        if [ $? -eq 124 ]; then
+          echo 'Timeout reached, exiting...'
+        else
+          echo 'Service is up and running!'
+          bash -x /test/e2e.sh
+        fi
+    environment:
+      URL: api:8080
+    volumes:
+      - ./tests:/test
+    depends_on:
+      # should match service name of your app:
+     api:
+        condition: service_started

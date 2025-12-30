@@ -36,7 +36,7 @@ RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-datesearch.git#egg=cka
 RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-extentsearch.git#egg=ckanext-extentsearch"
 
 ### Provide sitemap and Pure feed
-RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-sitemap.git#egg=ckanext-sitemap"
+RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-sitemap.git@pure-implementation#egg=ckanext-sitemap"
 
 ### Provide Google Analytics
 RUN  pip3 install -e "git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics"
@@ -65,6 +65,9 @@ RUN chmod gu+rw /var/run && \
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/
 COPY --chown=ckan-sys:ckan-sys setup/prerun.py ${APP_DIR}
+
+# Copy Pure XML for serving at endpoint <ckan_base_url>/pure.xml
+COPY --chown=ckan-sys:ckan-sys setup/pure.xml ${APP_DIR}
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)

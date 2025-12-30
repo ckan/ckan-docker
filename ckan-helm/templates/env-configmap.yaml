@@ -20,6 +20,8 @@ data:
   CKAN_PORT_HOST: "5000"
   CKAN_REDIS_URL: "redis://redis:6379/1"
   CKAN_SITE_ID: "default"
+  # Consider switching CKAN_SITE_URL later
+  #CKAN_SITE_URL: "https://{{ .Values.webapp.tls.DNSAlias }}"
   CKAN_SITE_URL: "https://{{ .Values.webapp.tls.fqdn }}"
   # Any variables commented out in this file are handled with external secrets.
   #CKAN_SMTP_MAIL_FROM: "ckan@localhost"

@@ -77,7 +77,7 @@ COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 
 # Add supervisord invocation during startup
 #RUN sed -i '/uwsgi \$UWSGI_OPTS/i\    supervisord --configuration \/etc\/supervisord.d\/ckan.conf &' ${APP_DIR}/start_ckan.sh
-RUN sed -i '/uwsgi \$UWSGI_OPTS/i\    supervisord --configuration \/etc\/supervisor\/supervisor.conf &' ${APP_DIR}/start_ckan.sh
+RUN sed -i '/uwsgi \$UWSGI_OPTS/i\    supervisord --configuration \/etc\/supervisor\/supervisord.conf &' ${APP_DIR}/start_ckan.sh
 
 USER ckan
 RUN for d in $APP_DIR/patches/*; do \

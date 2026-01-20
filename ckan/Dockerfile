@@ -54,7 +54,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && chown -R ckan:ckan-sys /var/log/ckan /var/log/supervisor /etc/supervisor/conf.d
 
 # Config cron job for harvesting
-COPY config/supervisord_ckan.conf /etc/supervisord/conf.d/ckan.conf
+COPY config/supervisord_ckan.conf /etc/supervisor/conf.d/ckan.conf
 #COPY config/supervisord.conf /etc/supervisor/supervisord.conf
 COPY config/crontab /etc/cron.d/ckan-cron
 

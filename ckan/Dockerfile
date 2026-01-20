@@ -54,8 +54,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && chown -R ckan:ckan-sys /var/log/ckan /var/log/supervisor /etc/supervisor/conf.d
 
 # Config cron job for harvesting
-COPY config/supervisord_ckan.conf /etc/supervisord.d/ckan.conf
-COPY config/supervisord.conf /etc/supervisor/supervisord.conf
+COPY config/supervisord_ckan.conf /etc/supervisord/conf.d/ckan.conf
+#COPY config/supervisord.conf /etc/supervisor/supervisord.conf
 COPY config/crontab /etc/cron.d/ckan-cron
 
 # Running cron as non-root user and give permission to ckan user
@@ -76,7 +76,8 @@ COPY --chown=ckan-sys:ckan-sys patches ${APP_DIR}/patches
 
 
 # Add supervisord invocation during startup
-RUN sed -i '/uwsgi \$UWSGI_OPTS/i\    supervisord --configuration \/etc\/supervisord.d\/ckan.conf &' ${APP_DIR}/start_ckan.sh
+#RUN sed -i '/uwsgi \$UWSGI_OPTS/i\    supervisord --configuration \/etc\/supervisord.d\/ckan.conf &' ${APP_DIR}/start_ckan.sh
+RUN sed -i '/uwsgi \$UWSGI_OPTS/i\    supervisord --configuration \/etc\/supervisor\/supervisor.conf &' ${APP_DIR}/start_ckan.sh
 
 USER ckan
 RUN for d in $APP_DIR/patches/*; do \

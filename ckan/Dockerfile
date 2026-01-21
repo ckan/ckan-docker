@@ -55,13 +55,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Config cron job for harvesting
 COPY config/supervisord_ckan.conf /etc/supervisor/conf.d/ckan.conf
-#COPY config/supervisord.conf /etc/supervisor/supervisord.conf
+COPY config/supervisord.conf /etc/supervisor/supervisord.conf
 COPY config/crontab /etc/cron.d/ckan-cron
 
 # Running cron as non-root user and give permission to ckan user
-RUN chmod gu+rw /var/run && \
-    chmod gu+rw /run && \
-    chmod gu+s /usr/sbin/cron && \
+#RUN chmod gu+rw /var/run && \
+#    chmod gu+rw /run && \
+RUN chmod gu+s /usr/sbin/cron && \
     crontab -u ckan /etc/cron.d/ckan-cron
 
 # Copy custom initialization scripts

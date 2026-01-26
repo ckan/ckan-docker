@@ -38,17 +38,17 @@ spec:
             mountPath: /var/solr
         livenessProbe:
           httpGet:
-            path: /admin/info/health
+            path: /solr/admin/info/health
             port: 8983
-          initialDelaySeconds: 60 # Give Solr time to start up
+          initialDelaySeconds: 20 # Give Solr time to start up
           periodSeconds: 10
           failureThreshold: 3
           # Consider a higher failureThreshold for liveness probes
         readinessProbe:
           httpGet:
-            path: /admin/info/health
+            path: /solr/admin/info/health
             port: 8983
-          initialDelaySeconds: 30
+          initialDelaySeconds: 15
           periodSeconds: 5
       restartPolicy: Always
       volumes:

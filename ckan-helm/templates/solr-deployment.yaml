@@ -27,21 +27,29 @@ spec:
         runAsGroup: 8983
         fsGroup: 8983
       containers:
-        - image: "{{ .Values.webapp.images.solr }}:{{ .Values.webapp.tag }}"
-          livenessProbe:
-            exec:
-              command:
-                - wget
-                - -qO
-                - /dev/null
-                - http://localhost:8983/solr/
-          name: solr
-          ports:
-            - containerPort: 8983
-              protocol: TCP
-          volumeMounts:
-            - name: solr-data
-              mountPath: /var/solr
+      - name:
+          solr
+        image: "{{ .Values.webapp.images.solr }}:{{ .Values.webapp.tag }}"
+        ports:
+          - containerPort: 8983
+            protocol: TCP
+        volumeMounts:
+          - name: solr-data
+            mountPath: /var/solr
+        livenessProbe:
+          httpGet:
+            path: /admin/info/health
+            port: 8983
+          initialDelaySeconds: 60 # Give Solr time to start up
+          periodSeconds: 10
+          failureThreshold: 3
+          # Consider a higher failureThreshold for liveness probes
+        readinessProbe:
+          httpGet:
+            path: /admin/info/health
+            port: 8983
+          initialDelaySeconds: 30
+          periodSeconds: 5
       restartPolicy: Always
       volumes:
         - name: solr-data

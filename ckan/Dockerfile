@@ -35,8 +35,8 @@ RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-datesearch.git#egg=cka
 
 RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-extentsearch.git#egg=ckanext-extentsearch"
 
-### Provide sitemap and Pure feed on dev branch
-RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-sitemap.git@pure-implementation#egg=ckanext-sitemap"
+### Provide sitemap and Pure feed
+RUN  pip3 install -e "git+https://github.com/NCAR/ckanext-sitemap.git#egg=ckanext-sitemap"
 
 ### Provide Google Analytics
 RUN  pip3 install -e "git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics"

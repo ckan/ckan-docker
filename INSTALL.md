@@ -8,9 +8,10 @@
 1. Create a local clone of this repo.
 2. Copy the file .env.example to .env
 3. Place your Github token value in the file `.github_token` in the repo top-level directory.  It will be ignored by git.
-4. Run this command:  `docker compose -f docker-compose.yml build --build-arg TOKEN=$(cat .github_token)`
+4. Run this command:  `docker compose -f docker-compose.yml build`
 5. Then run: `docker compose -f docker-compose.yml up`
 6. The nginx service will come up last, at which point you can browse to [https://localhost:8443](https://localhost:8443).
+7. Use the command `docker compose down -v` to remove pre-existing data from volumes and start from scratch
     
 ### Harvesting Test Records
 

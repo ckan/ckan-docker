@@ -10,8 +10,11 @@ COPY config/*.sh  /srv/app
 
 RUN chown -R ckan:ckan-sys ${APP_DIR} && chmod 755 /srv/app/*.sh
 
-USER ckan
+# Make WAF folder writeable by ckan user
+RUN mkdir -p /var/www/html && chown -R ckan:ckan-sys /var/www/html
 
+
+USER ckan
 
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples

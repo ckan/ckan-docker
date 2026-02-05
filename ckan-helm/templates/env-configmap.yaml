@@ -8,7 +8,7 @@ data:
   CKAN__HARVEST__MQ__PORT: "6379"
   CKAN__HARVEST__MQ__REDIS_DB: "1"
   CKAN__HARVEST__MQ__TYPE: "redis"
-  CKAN__PLUGINS: "activity dsetsearch harvest waf_harvester spatial_harvest_metadata_api spatial_metadata spatial_query repo_info extentsearch datesearch sitemap googleanalytics"
+  CKAN__PLUGINS: "activity harvest waf_harvester spatial_harvest_metadata_api spatial_metadata spatial_query repo_info extentsearch datesearch sitemap googleanalytics"
   CKAN_DATAPUSHER_URL: "http://datapusher:8800"
   CKAN_DATASTORE_READ_URL: "postgresql://datastore_ro:datastore@db/datastore"
   # Any variables commented out in this file are handled with external secrets.
@@ -60,6 +60,8 @@ data:
   USE_HTTPS_FOR_DEV: "false"
   # Add python command-line tools to PATH
   PATH: "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/srv/app/.local/bin"
+  # Save bash history
+  HISTFILE: "/srv/app/.bash_history"
 kind: ConfigMap
 metadata:
   labels:

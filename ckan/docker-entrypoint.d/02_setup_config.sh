@@ -6,14 +6,16 @@ CKAN_PLUGINS=`grep plugins ${APP_DIR}/ckan.ini`
 
 if [[ $CKAN_PLUGINS == *"dsetsearch"* ]]; then
 
-  # Load private repo clone token
-  REPO_TOKEN=`cat /run/secrets/REPO_TOKEN`
+  # Load private repo clone token (not used for kubernetes deployment)
+  if [[ -f '/run/secrets/REPO_TOKEN' ]]; then
+     REPO_TOKEN=`cat /run/secrets/REPO_TOKEN`
+  fi
 
   # Show commands that are run
   set -x
 
-### Install DASH Search custom plugin at runtime, to avoid baking in secrets
-  pip3 install -e "git+https://${REPO_TOKEN}@github.com/NCAR/ckanext-dsetsearch.git@orcid#egg=ckanext-dsetsearch" && \
+  ### Install DASH Search custom plugin at runtime, to avoid baking in secrets
+  pip3 install -e "git+https://${REPO_TOKEN}@github.com/NCAR/ckanext-dsetsearch.git#egg=ckanext-dsetsearch" && \
   pip3 install -r /srv/app/src/ckanext-dsetsearch/pip-requirements.txt
 
 

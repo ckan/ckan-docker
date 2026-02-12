@@ -58,6 +58,8 @@ services:
       retries: 3
     ports:
       - "5000:5000"
+    secrets:
+      - REPO_TOKEN
     
   db:
     build:
@@ -117,3 +119,7 @@ networks:
     internal: true
   redisnet:
     internal: true
+
+secrets:
+  REPO_TOKEN:
+    file: ./.github_token

@@ -1,4 +1,9 @@
-FROM ckan/ckan-base:2.11.3
+# Use to install Production CKAN
+FROM ckan/ckan-base:2.11.4
+
+# Use to install CKAN Developer/Debug tools
+#FROM ckan/ckan-dev:2.11.4
+
 
 # Workaround from https://github.com/ckan/ckan-docker/issues/196
 USER root
@@ -10,8 +15,11 @@ COPY config/*.sh  /srv/app
 
 RUN chown -R ckan:ckan-sys ${APP_DIR} && chmod 755 /srv/app/*.sh
 
-USER ckan
+# Make WAF folder writeable by ckan user
+RUN mkdir -p /var/www/html && chown -R ckan:ckan-sys /var/www/html
 
+
+USER ckan
 
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples

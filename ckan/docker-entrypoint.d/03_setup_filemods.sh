@@ -20,13 +20,15 @@
      cd
   fi
 
+  CKAN_PLUGINS=`grep plugins ${APP_DIR}/ckan.ini`
+
   # Provide library needed by Google Analytics plugin
-  if [[ $CKAN__PLUGINS == *"googleanalytics"* ]]; then
+  if [[ $CKAN_PLUGINS == *"googleanalytics"* ]]; then
        pip install oauth2client==4.1.3
   fi
 
   # Initialize the harvester DB tables
-  if [[ $CKAN__PLUGINS == *"harvest"* ]]; then
+  if [[ $CKAN_PLUGINS == *"harvest"* ]]; then
        ckan -c ~/ckan.ini db upgrade -p harvest
   fi
 
@@ -35,7 +37,3 @@
   cd $SRC_DIR/ckan/ckan/config/solr/
   mv schema.xml schema.xml.ORIG_INSTALLED
   ln -sf $SRC_DIR/ckanext-dsetsearch/solr/schema.solr-spatial-2.0.xml schema.xml
-
-
-
-  

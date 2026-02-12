@@ -16,7 +16,6 @@ if [[ $CKAN_PLUGINS == *"dsetsearch"* ]]; then
   pip3 install -e "git+https://${REPO_TOKEN}@github.com/NCAR/ckanext-dsetsearch.git@orcid#egg=ckanext-dsetsearch" && \
   pip3 install -r /srv/app/src/ckanext-dsetsearch/pip-requirements.txt
 
-#        cd ckanext-dsetsearch && git checkout orcid && \
 
   ckan config-tool --edit ./ckan.ini ckan.auth.public_user_details=false
   ckan config-tool --edit ./ckan.ini ckan.cors.origin_allow_all=true

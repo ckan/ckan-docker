@@ -44,7 +44,7 @@ if [[ $CKAN_PLUGINS == *"harvest"* ]]; then
       # We can't run this command right away, because nginx has not started up yet.
       #ckan -c ~/ckan.ini harvester run-test mini-waf
   fi
-  ckan -c ~/ckan.ini harvester source create "dset-web-accessible-folder-dev" "http://nginx:9000/dset-web-accessible-folder-dev" "waf" "DEV-WAF" "TRUE" "ncar" "DAILY" '{"user" : "admin", "read_only": true}'
+  ckan -c ~/ckan.ini harvester source create "dset-web-accessible-folder-dev" "http://nginx:9000/dset-web-accessible-folder-dev" "waf" "DEV-WAF" "TRUE" "ncar" "MANUAL" '{"user" : "admin", "read_only": true}'
 
   # Return to home directory for supervisord startup
   cd

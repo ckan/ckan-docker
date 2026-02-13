@@ -8,7 +8,9 @@ data:
   CKAN__HARVEST__MQ__PORT: "6379"
   CKAN__HARVEST__MQ__REDIS_DB: "1"
   CKAN__HARVEST__MQ__TYPE: "redis"
-  CKAN__PLUGINS: "activity harvest waf_harvester spatial_harvest_metadata_api spatial_metadata spatial_query repo_info extentsearch datesearch sitemap googleanalytics"
+  # Note: some plugins are installed during container startup, so we start with a minimal plugin list here for build.
+  # We *do* need the harvest plugin pre-installed to run the "ckan db harvest --upgrade" command at startup.
+  CKAN__PLUGINS: "activity harvest"
   CKAN_DATAPUSHER_URL: "http://datapusher:8800"
   CKAN_DATASTORE_READ_URL: "postgresql://datastore_ro:datastore@db/datastore"
   # Any variables commented out in this file are handled with external secrets.

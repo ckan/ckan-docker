@@ -11,13 +11,12 @@ if [[ $CKAN_PLUGINS == *"dsetsearch"* ]]; then
      REPO_TOKEN=`cat /run/secrets/REPO_TOKEN`
   fi
 
-  # Show commands that are run
-  set -x
-
   ### Install DASH Search custom plugin at runtime, to avoid baking in secrets
   pip3 install -e "git+https://${REPO_TOKEN}@github.com/NCAR/ckanext-dsetsearch.git#egg=ckanext-dsetsearch" && \
   pip3 install -r /srv/app/src/ckanext-dsetsearch/pip-requirements.txt
 
+  # Show commands that are run (don't show REPO_TOKEN)
+  set -x
 
   ckan config-tool --edit ./ckan.ini ckan.auth.public_user_details=false
   ckan config-tool --edit ./ckan.ini ckan.cors.origin_allow_all=true

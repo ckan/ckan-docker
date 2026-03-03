@@ -21,7 +21,7 @@ spec:
         io.kompose.service: redis
     spec:
       containers:
-        - image: redis:6
+        - image: docker.io/library/redis:6
           livenessProbe:
             exec:
               command:

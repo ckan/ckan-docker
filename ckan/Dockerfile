@@ -1,9 +1,6 @@
 # Use to install Production CKAN
 FROM ckan/ckan-base:2.11.4
 
-# Use to install CKAN Developer/Debug tools
-#FROM ckan/ckan-dev:2.11.4
-
 
 # Workaround from https://github.com/ckan/ckan-docker/issues/196
 USER root

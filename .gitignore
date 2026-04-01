@@ -1,7 +1,7 @@
 # generic
 .DS_Store
-.vagrant
-.idea
+.vagrant/
+.idea/
 
 # code & config
 _service-provider/*
@@ -11,3 +11,7 @@ local/*
 .env
 .github_token
 .packages_token
+
+# Ignore local git clones of CKAN plugins.
+# Use bin/install_src to copy CKAN plugins to docker container for debugging.
+src/

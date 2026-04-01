@@ -1,42 +1,26 @@
-FROM ckan/ckan-dev:2.11
+FROM ckan/ckan-dev:2.11.4
+
+
+# Workaround from https://github.com/ckan/ckan-docker/issues/196
+USER root
+RUN mkdir /srv/app/.local && chown ckan /srv/app/.local
+RUN mkdir /srv/app/.cache && chown ckan /srv/app/.cache
+
+# Copy harvester scripts
+COPY config/*.sh  /srv/app
+
+RUN chown -R ckan:ckan-sys ${APP_DIR} && chmod 755 /srv/app/*.sh
+
+# Make WAF folder writeable by ckan user
+RUN mkdir -p /var/www/html && chown -R ckan:ckan-sys /var/www/html
+
+
+USER ckan
 
 # Install any extensions needed by your CKAN instance
-# - Make sure to add the plugins to CKAN__PLUGINS in the .env file
-# - Also make sure all provide all extra configuration options, either by:
-#   * Adding them to the .env file (check the ckanext-envvars syntax for env vars), or
-#   * Adding extra configuration scripts to /docker-entrypoint.d folder) to update
-#      the CKAN config file (ckan.ini) with the `ckan config-tool` command
-#
-# See README > Extending the base images for more details
-#
-# For instance:
-#
-### XLoader ###
-#RUN pip3 install -e 'git+https://github.com/ckan/ckanext-xloader.git@master#egg=ckanext-xloader' && \ 
-#    pip3 install -r ${APP_DIR}/src/ckanext-xloader/requirements.txt && \
-#    pip3 install -U requests[security]
-
-### Harvester ###
-RUN pip3 install -e 'git+https://github.com/NCAR/ckanext-harvest.git@main#egg=ckanext-harvest' && \
-    pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
-# will also require gather_consumer and fetch_consumer processes running (please see https://github.com/ckan/ckanext-harvest)
-
-### Spatial Harvester ###
-RUN pip3 install -e 'git+https://github.com/NCAR/ckanext-spatial.git@main#egg=ckanext-spatial' && \
-    pip3 install -r ${APP_DIR}/src/ckanext-spatial/pip-requirements.txt
-
-### Repo Info; required by dsetsearch plugin ###
-RUN pip3 install -e 'git+https://github.com/NCAR/ckanext-repo.git@main#egg=ckanext-repo' 
+# See Dockerfile.dev for more details and examples
 
 
-
-### DASH Search custom plugin
-RUN  pip3 install -e git+https://${REPO_TOKEN}@github.com/NCAR/ckanext-dsetsearch.git#egg=ckanext-dsetsearch && \
-     pip3 install -r ${APP_DIR}/src/ckanext-dsetsearch/pip-requirements.txt
-
-
-# Clone the extension(s) your are writing for your own project in the `src` folder
-# to get them mounted in this image at runtime
 
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/

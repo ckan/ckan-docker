@@ -15,3 +15,4 @@ local/*
 # Ignore local git clones of CKAN plugins.
 # Use bin/install_src to copy CKAN plugins to docker container for debugging.
 src/
+src_docker/

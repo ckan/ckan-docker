@@ -17,7 +17,7 @@ services:
       args:
         - TZ=${TZ}
     env_file:
-      - .env
+      - env.dev
     links:
       - db
       - solr
@@ -81,3 +81,9 @@ services:
     healthcheck:
       test: ["CMD", "redis-cli", "-e", "QUIT"]
 
+  nginx:
+    build:
+      context: nginx/
+      dockerfile: Dockerfile.dev
+    volumes:
+      - waf_dir:/var/www/html

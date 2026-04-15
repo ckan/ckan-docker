@@ -1,3 +1,4 @@
+# Use to run with debugger
 FROM ckan/ckan-dev:2.11.4
 
 
@@ -7,7 +8,7 @@ RUN mkdir /srv/app/.local && chown ckan /srv/app/.local
 RUN mkdir /srv/app/.cache && chown ckan /srv/app/.cache
 
 # Copy harvester scripts
-COPY config/*.sh  /srv/app
+COPY config/*.sh  /srv/app/
 
 RUN chown -R ckan:ckan-sys ${APP_DIR} && chmod 755 /srv/app/*.sh
 

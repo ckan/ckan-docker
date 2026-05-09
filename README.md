@@ -214,7 +214,9 @@ The Docker image config files used to build your CKAN project are located in the
   * CKAN is started running this: `/usr/bin/ckan -c /srv/app/ckan.ini run -H 0.0.0.0`.
   * Make sure to add the local plugins to the `CKAN__PLUGINS` env var in the `.env` file.
 
-* Any custom changes to the scripts run during container start up can be made to scripts in the `setup/` directory. For instance if you wanted to change the port on which CKAN runs you would need to make changes to the Docker Compose yaml file, and the `start_ckan.sh.override` file. Then you would need to add the following line to the Dockerfile ie: `COPY setup/start_ckan.sh.override ${APP_DIR}/start_ckan.sh`. The `start_ckan.sh` file in the locally built image would override the `start_ckan.sh` file included in the base image
+### Overriding the setup/* files derived from the CKAN base image
+
+Any deviations or custom changes to the scripts run during container startup can be made by overriding those scripts in the `ckan/setup/` directory. For instance if you wanted to change the port on which CKAN runs you would need to make changes to the Docker Compose yaml file, plus the `start_ckan.sh` file. The `start_ckan.sh` file in the locally built image will override the `start_ckan.sh` file included in the base image. You would also need to include a `COPY setup/start_ckan.sh ${APP_DIR}` command in the relevant Dockerfile to copy the (override) script to the newly-built local image
 
 ### Extending the base images
 

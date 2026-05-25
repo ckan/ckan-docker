@@ -1,0 +1,35 @@
+.main {
+  background: #ffffff;
+}
+
+.container {
+  max-width: 960px;
+}
+
+.toolbar,
+.breadcrumb {
+  font-family: "Source Sans Pro", arial, sans-serif;
+}
+
+.module {
+  border: 0;
+  box-shadow: none;
+}
+
+.module-heading,
+.page-heading {
+  color: #000000;
+  font-family: "Source Sans Pro", arial, sans-serif;
+}
+
+.form-control {
+  min-height: 40px;
+  border: 2px solid #0b0c0c;
+  border-radius: 0;
+}
+
+.btn-primary {
+  background: #00703c;
+  border-color: #00703c;
+  border-radius: 0;
+}

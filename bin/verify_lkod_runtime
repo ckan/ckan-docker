@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+docker compose ps --status running >/dev/null
+
+docker compose exec -T ckan wget -q --spider http://localhost:5000/@id-sk/frontend-3.0.0-beta.0.min.css
+docker compose exec -T ckan wget -q --spider http://localhost:5000/assets/images/logo-moje.png
+docker compose exec -T ckan wget -q --spider http://localhost:5000/catalog.ttl
+
+docker compose exec -T ckan wget -qO- http://localhost:5000/api/action/status_show | grep -q '"site_url": "https://localhost:8443"'
+docker compose exec -T ckan wget -qO- http://localhost:5000/api/action/status_show | grep -q '"locale_default": "sk"'
+
+docker compose exec -T ckan wget -qO- http://localhost:5000/api/action/status_show | grep -q '"success": true'

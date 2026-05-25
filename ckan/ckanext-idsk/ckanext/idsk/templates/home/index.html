@@ -1,0 +1,71 @@
+{% ckan_extends %}
+
+{% block content %}
+<div class="govuk-width-container">
+    <main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+
+        <div class="govuk-grid-row govuk-!-margin-bottom-9 govuk-!-padding-top-8 govuk-!-padding-bottom-8"
+            style="background-color: #f3f2f1; border-bottom: 1px solid #b1b4b6;">
+            <div class="govuk-grid-column-full govuk-!-text-align-center">
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Vyhľadávanie v otvorených dátach</h1>
+
+                <form action="/dataset" method="GET">
+                    <div class="govuk-form-group govuk-!-margin-bottom-0">
+                        <div class="govuk-input__wrapper govuk-!-width-two-thirds"
+                            style="margin: 0 auto; display: flex; border: 2px solid #0b0c0c;">
+                            <input class="govuk-input" id="main-search" name="q" type="text"
+                                placeholder="Zadajte hľadaný výraz..."
+                                style="border: none; padding: 12px 15px; font-size: 19px; flex-grow: 1;">
+                            <button class="govuk-button govuk-!-margin-bottom-0" type="submit"
+                                style="min-width: 60px; display: flex; align-items: center; justify-content: center; box-shadow: none;">
+                                <span class="material-icons" style="color: white; font-size: 28px;">search</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <h2 class="govuk-heading-l govuk-!-margin-bottom-6">Organizácie</h2>
+
+                <div class="govuk-grid-row">
+                    {% set orgs = h.organizations_available() %}
+
+                    {% if orgs %}
+                    {% for org in orgs %}
+                    <div class="govuk-grid-column-one-third govuk-!-margin-bottom-6">
+
+                        <div class="govuk-signpost govuk-signpost__card govuk-signpost__card--vertical">
+                            <div class="govuk-signpost__container">
+                                <div>
+                                    <h3 class="govuk-signpost__title" id="signWithAction_{{ loop.index }}">
+                                        {{ org.display_name or org.title or org.name }}
+                                    </h3>
+                                    <p class="govuk-signpost__description">
+                                        {{ org.description | truncate(100, true) if org.description else 'Organizácia
+                                        publikujúca otvorené dáta.' }}
+                                    </p>
+                                    <div class="govuk-signpost__actions">
+                                        <a href="/organization/{{ org.name }}" class="govuk-button govuk-button__basic"
+                                            aria-labelledby="signWithAction_{{ loop.index }}">
+                                            Zobraziť dáta
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="govuk-body">Zatiaľ nie sú registrované žiadne organizácie.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+{% endblock %}

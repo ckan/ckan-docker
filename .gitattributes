@@ -1,0 +1,4 @@
+*.sh text eol=lf
+bin/* text eol=lf
+ckan/docker-entrypoint.d/*.sh text eol=lf
+postgresql/docker-entrypoint-initdb.d/*.sh text eol=lf

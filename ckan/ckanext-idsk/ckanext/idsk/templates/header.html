@@ -1,0 +1,181 @@
+{% ckan_extends %}
+
+{% block header_wrapper %}
+<div class="govuk-header__wrapper">
+
+    <header class="govuk-header idsk-shadow-head" data-module="govuk-header">
+        <div class="govuk-header__container ">
+
+            <div class="idsk-secondary-navigation govuk-width-container">
+                <div class="idsk-secondary-navigation__header">
+                    <div class="idsk-secondary-navigation__heading">
+                        <div class="idsk-secondary-navigation__heading-title">
+                            <span class="idsk-secondary-navigation__heading-mobile">SK</span>
+                            <span class="idsk-secondary-navigation__heading-desktop">Oficiálna stránka</span>
+
+                            <button
+                                class="govuk-button govuk-button--texted--inverse idsk-secondary-navigation__heading-button"
+                                aria-expanded="false" aria-label="Oficiálna stránka verejnej správy">
+                                <span class="idsk-secondary-navigation__heading-mobile">e-Gov</span>
+                                <span class="idsk-secondary-navigation__heading-desktop"><b>verejnej správy</b></span>
+                                <span class="material-icons">arrow_drop_down</span>
+                            </button>
+                        </div>
+                        <div class="idsk-secondary-navigation__body hidden" data-testid="secnav-children">
+                            <div class="idsk-secondary-navigation__text">
+                                <div>
+                                    <h3 class="govuk-body-s"><b>Doména gov.sk je oficiálna</b></h3>
+                                    <p class="govuk-body-s">Toto je oficiálna webová stránka orgánu verejnej moci
+                                        Slovenskej republiky. Oficiálne stránky využívajú najmä doménu gov.sk. <a
+                                            class="govuk-link--inverse"
+                                            href="https://www.slovensko.sk/sk/agendy/agenda/_organy-verejnej-moci"
+                                            target="_blank">Odkazy na jednotlivé webové sídla orgánov verejnej moci
+                                            nájdete na tomto odkaze.</a></p>
+                                </div>
+                                <div>
+                                    <h3 class="govuk-body-s"><b>Táto stránka je zabezpečená</b></h3>
+                                    <p class="govuk-body-s max-width77-desktop">Buďte pozorní a vždy sa uistite, že
+                                        zdieľate informácie iba cez zabezpečenú webovú stránku verejnej správy SR.
+                                        Zabezpečená stránka vždy začína https:// pred názvom domény webového sídla.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="idsk-dropdown__wrapper idsk-secondary-navigation__dropdown"
+                        data-pseudolabel="jazykové menu">
+                        <button
+                            class="govuk-button govuk-button--texted--inverse idsk-secondary-navigation__heading-button idsk-dropdown"
+                            aria-label="Rozbaliť jazykové menu" aria-haspopup="listbox">
+
+                            <span>slovenčina</span>
+                            <span class="material-icons" aria-hidden="true">arrow_drop_down</span>
+                        </button>
+                        <ul class="idsk-dropdown__options idsk-shadow-medium">
+                            <li class="idsk-dropdown__option idsk-pseudolabel__wrapper " data-pseudolabel="eng">
+                                <a href="#" lang="en">
+                                    eng
+                                </a>
+                            </li>
+                            <li class="idsk-dropdown__option idsk-pseudolabel__wrapper " data-pseudolabel="slo">
+                                <a href="#" lang="sk">
+                                    slo
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="govuk-predheader govuk-width-container">
+            <div class="govuk-header__logo">
+                <a href="/" class="govuk-header__link govuk-header__link--homepage" title="Odkaz na titulnú stránku">
+
+                    <img src="{{ h.url_for_static('assets/images/logo-moje.png') }}"
+                        alt="Open Data Portál" />
+
+                </a>
+            </div>
+            <div class="govuk-header__btns-search" style="width: 100%">
+
+
+                <nav aria-label="Menu" class="govuk-header__navigation mobile-hidden">
+                    <ul class="govuk-header__navigation-list" style="border-top: 0">
+                        <li class="govuk-header__navigation-item govuk-header__navigation-item--active"
+                            aria-current="page">
+                            <div class="govuk-header__link--wrapper">
+                                <a class="govuk-header__link" href="/dataset" title="Datasety">
+                                    Datasety
+                                </a>
+                            </div>
+                        </li>
+                        <li class="govuk-header__navigation-item">
+                            <div class="govuk-header__link--wrapper">
+                                <a class="govuk-header__link" href="/organization" title="Organizácie">
+                                    Organizácie
+                                </a>
+                            </div>
+                        </li>
+                        <li class="govuk-header__navigation-item">
+                            <div class="govuk-header__link--wrapper">
+                                <a class="govuk-header__link" href="/about" title="O projekte">
+                                    O projekte
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+
+                <div class="govuk-header__mobile-menu desktop-hidden">
+                    <button type="button" class="govuk-header__menu-button font-bold govuk-js-header-toggle"
+                        aria-controls="navigation" hidden>
+                        Menu
+                    </button>
+                    <div class="govuk-header__actionPanel mobile desktop-hidden">
+                        <button class="govuk-button" title="Notifikácie"><span role="button" class="material-icons"
+                                aria-hidden="true">notifications</span></button>
+                        <button class="govuk-button" title="Informácie o portáli"><span role="button"
+                                class="material-icons" aria-hidden="true">info</span></button>
+                    </div>
+                </div>
+
+                <div class="govuk-header__actionPanel desktop mobile-hidden">
+                    <button class="govuk-button" title="Notifikácie"><span role="button" class="material-icons"
+                            aria-hidden="true">notifications</span></button>
+                    <button class="govuk-button" title="Informácie o portáli"><span role="button" class="material-icons"
+                            aria-hidden="true">info</span></button>
+
+                    {% if c.user %}
+                    <a href="/user/{{ c.user }}" class="govuk-button govuk-header__profile_button" title="Profil">{{
+                        c.user[0:2] | upper }}</a>
+                    {% else %}
+                    <a href="/user/login" class="govuk-button govuk-header__profile_button" title="Prihlásiť sa"><span
+                            class="material-icons">person</span></a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+
+        <nav id="navigation" aria-label="Menu" class="govuk-header__navigation govuk-width-container">
+            <dialog id="navigationProfileDialog">
+                <div class="govuk-header__profile">
+                    <div class="govuk-header__profile__header mobile-hidden">
+                        <div class="govuk-heading-m">Profil</div>
+                        <button class="govuk-button govuk-button--texted govuk-header__profile_close_button"><span
+                                class="material-icons">close</span></button>
+                    </div>
+                    <div class="govuk-header__profile__body">
+                        <img class="profile" src="https://placehold.co/100x100/072C66/FFFFFF?text=JH" alt="Profile" />
+                        <h4 class="govuk-heading-l">Janko Hruska</h4>
+                        <span>RČ 123456/1234</span>
+
+                        <button class="govuk-button govuk-button__basic">Primárne tlačidlo</button>
+                        <button class="govuk-button govuk-button--texted govuk-button--texted__warning">Textové
+                            tlačidlo</button>
+                    </div>
+                </div>
+            </dialog>
+            <span class="text">Menu</span>
+
+            <div class="govuk-header__navigation-list desktop-hidden ">
+                <ul>
+                    <li class="govuk-header__navigation-item govuk-header__navigation-item--active" aria-current="page">
+                        <a class="govuk-header__link" href="/dataset" title="Datasety">
+                            Datasety
+                        </a>
+                    </li>
+                    <li class="govuk-header__navigation-item">
+                        <a class="govuk-header__link" href="/organization" title="Organizácie">
+                            Organizácie
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+</div>
+</header>
+</div>
+{% endblock %}

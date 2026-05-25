@@ -3,6 +3,8 @@
 .vagrant
 
 # code & config
+__pycache__/
+*.py[cod]
 _service-provider/*
 _solr/schema.xml
 _src/*

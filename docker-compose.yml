@@ -44,6 +44,7 @@ services:
       - ckan_storage:/var/lib/ckan
       - pip_cache:/root/.cache/pip
       - site_packages:/usr/lib/python3.10/site-packages
+      - ./ckan/ckanext-idsk:/srv/app/src/ckanext-idsk
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000/api/action/status_show"]

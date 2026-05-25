@@ -17,7 +17,7 @@ COPY ckanext-idsk /srv/app/src/ckanext-idsk
 # Nainštalujeme ho v "editovateľnom" móde (-e)
 RUN pip3 install -e /srv/app/src/ckanext-idsk
 
-RUN pip3 install ckanext-dcat ckanext-scheming
+RUN pip3 install ckanext-dcat ckanext-scheming pytest
 
 USER ckan
 

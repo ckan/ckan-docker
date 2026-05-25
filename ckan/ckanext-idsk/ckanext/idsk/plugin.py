@@ -14,7 +14,12 @@ class IDSKThemePlugin(plugins.SingletonPlugin):
         toolkit.add_public_directory(config, 'public')
 
     def get_helpers(self):
-        return {}
+        from ckanext.idsk import helpers
+
+        return {
+            "idsk_catalog_ttl_url": helpers.catalog_ttl_url,
+            "idsk_dataset_ttl_url": helpers.dataset_ttl_url,
+        }
 
     def get_commands(self):
         return cli.get_commands()

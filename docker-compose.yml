@@ -19,6 +19,7 @@ services:
         condition: service_healthy
     ports:
       - "0.0.0.0:${NGINX_SSLPORT_HOST}:${NGINX_SSLPORT}"
+    restart: unless-stopped
     
   ckan:
     platform: linux/amd64

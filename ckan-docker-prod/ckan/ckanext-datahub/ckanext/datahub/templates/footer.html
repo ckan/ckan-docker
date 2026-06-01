@@ -1,0 +1,33 @@
+{% set dataset_type = h.default_package_type() %}
+{% set org_type = h.default_group_type('organization') %}
+
+<footer class="site-footer">
+  <div class="container">
+    {% block footer_content %}
+    <div class="row">
+      <div class="col-md-8 footer-links">
+        {% block footer_nav %}
+          <ul class="list-unstyled">
+            {% block footer_links %}
+              <li><a href="{{ h.url_for('home.about') }}">{{ _('About {0}').format(g.site_title) }}</a></li>
+              <li><a href="{{ h.url_for(dataset_type ~ '.search') }}">{{ _('Datasets') }}</a></li>
+              <li><a href="{{ h.url_for(org_type ~ '.index') }}">{{ _('Organizations') }}</a></li>
+            {% endblock %}
+          </ul>
+        {% endblock %}
+      </div>
+      <div class="col-md-4 attribution">
+        {% block footer_attribution %}
+          <p><strong>DataHub Open Data</strong></p>
+          {% if g.site_description %}
+            <p>{{ g.site_description }}</p>
+          {% endif %}
+        {% endblock %}
+        {% block footer_lang %}
+          {% snippet "snippets/language_selector.html" %}
+        {% endblock %}
+      </div>
+    </div>
+    {% endblock %}
+  </div>
+</footer>

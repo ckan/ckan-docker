@@ -4,6 +4,8 @@ set -e
 echo "Applying production CKAN configuration"
 
 ckan config-tool "$CKAN_INI" "ckan.site_url=${CKAN__SITE_URL:-$CKAN_SITE_URL}"
+ckan config-tool "$CKAN_INI" "ckan.site_title=${CKAN__SITE_TITLE:-DataHub Open Data}"
+ckan config-tool "$CKAN_INI" "ckan.site_description=${CKAN__SITE_DESCRIPTION:-Katalog otvorenych dat}"
 ckan config-tool "$CKAN_INI" "ckan.locale_default=${CKAN__LOCALE_DEFAULT:-sk}"
 ckan config-tool "$CKAN_INI" "ckan.uploads_enabled=${CKAN__UPLOADS_ENABLED:-true}"
 ckan config-tool "$CKAN_INI" "ckan.storage_path=${CKAN__STORAGE_PATH:-$CKAN_STORAGE_PATH}"

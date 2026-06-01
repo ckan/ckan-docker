@@ -13,13 +13,27 @@ fi
 
 docker compose ps --status running >/dev/null
 
-docker compose exec -T ckan wget -qO- http://localhost:5000/api/action/status_show | grep -q '"success": true'
+status_json="$(docker compose exec -T ckan wget -qO- http://localhost:5000/api/action/status_show)"
+printf '%s' "$status_json" | grep -q '"success": true'
+printf '%s' "$status_json" | grep -q '"datahub_branding"'
+printf '%s' "$status_json" | grep -Eq '"site_title" ?: ?"DataHub Open Data"'
+
 docker compose exec -T ckan wget -qO- http://localhost:5000/catalog.ttl | grep -q "dcat:Catalog"
 
+docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_url ?= ?' /srv/app/ckan.ini"
+docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_title ?= ?DataHub Open Data$' /srv/app/ckan.ini"
+docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_description ?= ?Katalog otvorenych dat$' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.uploads_enabled ?= ?true$' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.locale_default ?= ?sk$' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^scheming.dataset_schemas ?= ?ckanext.idsk:schemas/dcat_ap_sk.yaml$' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^ckanext.dcat.rdf.profiles ?= ?euro_dcat_ap_2 euro_dcat_ap_scheming$' /srv/app/ckan.ini"
+
+home_html="$(docker compose exec -T ckan wget -qO- http://localhost:5000)"
+printf '%s' "$home_html" | grep -q "DataHub Open Data"
+if printf '%s' "$home_html" | grep -Eq "Powered by CKAN|CKAN API|CKAN Association|ckan-footer-logo"; then
+  echo "Visible CKAN branding is still present on the homepage." >&2
+  exit 1
+fi
 
 site_url="$(docker compose exec -T ckan sh -c "grep -E '^ckan.site_url ?= ?' /srv/app/ckan.ini | sed -E 's/^ckan.site_url ?= ?//'")"
 echo "CKAN site URL: $site_url"

@@ -12,6 +12,10 @@ The stack does not terminate public HTTPS. Put it behind an external reverse pro
 - Redis
 - DataPusher
 
+## Branding
+
+The production bundle uses the default CKAN layout with a small DataHub branding extension. Users should see `DataHub Open Data` instead of visible CKAN branding such as `Powered by CKAN`.
+
 ## First Setup
 
 This prepared local bundle includes an ignored `.env` file with generated secrets. Keep that file with the deployment package when copying `ckan-docker-prod` to a server.
@@ -82,19 +86,26 @@ The script checks:
 - running compose services
 - CKAN status API
 - `catalog.ttl`
+- DataHub branding
 - upload configuration
 - Slovak locale configuration
 - configured public site URL
 
-## Default Organization
+## Demo Organization And Dataset
 
-If the IDSK extension CLI is available, create or verify the default organization:
+Seed the default publisher organization and demo schools dataset after the stack is running:
 
 ```bash
-docker compose exec -T ckan ckan -c /srv/app/ckan.ini idsk ensure-default-organization
+bash bin/seed-demo-data
 ```
 
-If the CLI is not available in the deployed extension version, create organization `minedu` manually in CKAN before publishing datasets.
+The command creates or updates:
+
+- organization `minedu`
+- dataset `testovaci-zoznam-skol`
+- one uploaded CSV resource with 10 synthetic school rows
+
+The command is idempotent and can be run repeatedly without creating duplicate organizations, datasets, or resources.
 
 ## LKOD Publication Checklist
 
@@ -105,6 +116,14 @@ Before registering the catalog URL through the Slovak open data publication flow
 - At least one public dataset exists.
 - The dataset has at least one resource or distribution.
 - The catalog URL is publicly reachable:
+
+For local testing on this machine, the catalog URL is:
+
+```text
+http://localhost:5000/catalog.ttl
+```
+
+For slovensko.sk registration, use the public HTTPS URL exposed by the server reverse proxy:
 
 ```text
 https://your-public-domain.example/catalog.ttl

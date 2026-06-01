@@ -1,0 +1,8 @@
+{% ckan_extends %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ h.url_for_static('@id-sk/frontend-3.0.0-beta.0.min.css') }}" />
+<link rel="stylesheet" href="{{ h.url_for_static('css/idsk-ckan.css') }}" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}

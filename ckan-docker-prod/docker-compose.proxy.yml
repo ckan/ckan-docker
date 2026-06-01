@@ -1,0 +1,11 @@
+services:
+  ckan:
+    networks:
+      reverse-proxy:
+        aliases:
+          - ckan-prod
+
+networks:
+  reverse-proxy:
+    external: true
+    name: ${REVERSE_PROXY_NETWORK}

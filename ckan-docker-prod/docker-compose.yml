@@ -1,0 +1,155 @@
+name: ckan-docker-prod
+
+volumes:
+  ckan_storage:
+  pg_data:
+  solr_data:
+  pip_cache:
+  site_packages:
+
+services:
+  ckan:
+    build:
+      context: ./ckan
+      dockerfile: Dockerfile
+      args:
+        TZ: ${TZ}
+    networks:
+      ckannet:
+      dbnet:
+      solrnet:
+      redisnet:
+    ports:
+      - "127.0.0.1:${CKAN_PORT_HOST}:5000"
+    environment:
+      TZ: ${TZ}
+      CKAN_SITE_ID: ${CKAN_SITE_ID}
+      CKAN__SITE_ID: ${CKAN__SITE_ID}
+      CKAN_SITE_URL: ${CKAN_SITE_URL}
+      CKAN__SITE_URL: ${CKAN__SITE_URL}
+      CKAN__SITE_TITLE: ${CKAN__SITE_TITLE}
+      CKAN__SITE_DESCRIPTION: ${CKAN__SITE_DESCRIPTION}
+      CKAN__LOCALE_DEFAULT: ${CKAN__LOCALE_DEFAULT}
+      CKAN_SQLALCHEMY_URL: ${CKAN_SQLALCHEMY_URL}
+      CKAN_DATASTORE_WRITE_URL: ${CKAN_DATASTORE_WRITE_URL}
+      CKAN_DATASTORE_READ_URL: ${CKAN_DATASTORE_READ_URL}
+      CKAN_SOLR_URL: ${CKAN_SOLR_URL}
+      CKAN_REDIS_URL: ${CKAN_REDIS_URL}
+      CKAN__REDIS__URL: ${CKAN__REDIS__URL}
+      CKAN_DATAPUSHER_URL: ${CKAN_DATAPUSHER_URL}
+      CKAN__DATAPUSHER__URL: ${CKAN__DATAPUSHER__URL}
+      CKAN__DATAPUSHER__CALLBACK_URL_BASE: ${CKAN__DATAPUSHER__CALLBACK_URL_BASE}
+      CKAN__DATAPUSHER__API_TOKEN: ${CKAN__DATAPUSHER__API_TOKEN}
+      CKAN_STORAGE_PATH: ${CKAN_STORAGE_PATH}
+      CKAN__STORAGE_PATH: ${CKAN__STORAGE_PATH}
+      CKAN__UPLOADS_ENABLED: ${CKAN__UPLOADS_ENABLED}
+      CKAN__MAX_RESOURCE_SIZE: ${CKAN__MAX_RESOURCE_SIZE}
+      CKAN__MAX_IMAGE_SIZE: ${CKAN__MAX_IMAGE_SIZE}
+      CKAN_MAX_UPLOAD_SIZE_MB: ${CKAN_MAX_UPLOAD_SIZE_MB}
+      CKAN___BEAKER__SESSION__SECRET: ${CKAN___BEAKER__SESSION__SECRET}
+      CKAN___API_TOKEN__JWT__ENCODE__SECRET: ${CKAN___API_TOKEN__JWT__ENCODE__SECRET}
+      CKAN___API_TOKEN__JWT__DECODE__SECRET: ${CKAN___API_TOKEN__JWT__DECODE__SECRET}
+      CKAN_SYSADMIN_NAME: ${CKAN_SYSADMIN_NAME}
+      CKAN_SYSADMIN_PASSWORD: ${CKAN_SYSADMIN_PASSWORD}
+      CKAN_SYSADMIN_EMAIL: ${CKAN_SYSADMIN_EMAIL}
+      CKAN_SMTP_SERVER: ${CKAN_SMTP_SERVER}
+      CKAN_SMTP_STARTTLS: ${CKAN_SMTP_STARTTLS}
+      CKAN_SMTP_USER: ${CKAN_SMTP_USER}
+      CKAN_SMTP_PASSWORD: ${CKAN_SMTP_PASSWORD}
+      CKAN_SMTP_MAIL_FROM: ${CKAN_SMTP_MAIL_FROM}
+      CKAN__PLUGINS: ${CKAN__PLUGINS}
+      CKAN__VIEWS__DEFAULT_VIEWS: ${CKAN__VIEWS__DEFAULT_VIEWS}
+      CKANEXT__DCAT__RDF__PROFILES: ${CKANEXT__DCAT__RDF__PROFILES}
+      CKAN___SCHEMING__DATASET_SCHEMAS: ${CKAN___SCHEMING__DATASET_SCHEMAS}
+      CKAN___SCHEMING__PRESETS: ${CKAN___SCHEMING__PRESETS}
+      CKANEXT__IDSK__DEFAULT_ORGANIZATION: ${CKANEXT__IDSK__DEFAULT_ORGANIZATION}
+      CKANEXT__IDSK__DEFAULT_ORGANIZATION_TITLE: ${CKANEXT__IDSK__DEFAULT_ORGANIZATION_TITLE}
+      CKANEXT__IDSK__DEFAULT_ORGANIZATION_DESCRIPTION: ${CKANEXT__IDSK__DEFAULT_ORGANIZATION_DESCRIPTION}
+      CKAN__AUTH__CREATE_USER_VIA_WEB: ${CKAN__AUTH__CREATE_USER_VIA_WEB}
+      CKAN__AUTH__PUBLIC_USER_DETAILS: ${CKAN__AUTH__PUBLIC_USER_DETAILS}
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ckan_storage:/var/lib/ckan
+      - pip_cache:/root/.cache/pip
+      - site_packages:/usr/lib/python3.10/site-packages
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000/api/action/status_show"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+
+  datapusher:
+    image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
+    networks:
+      ckannet:
+      dbnet:
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+
+  db:
+    build:
+      context: ./postgresql
+    networks:
+      dbnet:
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      CKAN_DB_USER: ${CKAN_DB_USER}
+      CKAN_DB_PASSWORD: ${CKAN_DB_PASSWORD}
+      CKAN_DB: ${CKAN_DB}
+      DATASTORE_READONLY_USER: ${DATASTORE_READONLY_USER}
+      DATASTORE_READONLY_PASSWORD: ${DATASTORE_READONLY_PASSWORD}
+      DATASTORE_DB: ${DATASTORE_DB}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  solr:
+    image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
+    networks:
+      solrnet:
+    volumes:
+      - solr_data:/var/solr
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:${REDIS_VERSION}
+    networks:
+      redisnet:
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "-e", "QUIT"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  ckannet:
+  dbnet:
+    internal: true
+  solrnet:
+    internal: true
+  redisnet:
+    internal: true

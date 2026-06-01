@@ -1,0 +1,167 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+PROJECT_DIR="$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)"
+
+cd "$PROJECT_DIR"
+
+if [ ! -f .env ]; then
+  echo "Missing .env. Copy .env.example to .env and set production values first." >&2
+  exit 1
+fi
+
+docker compose ps --status running ckan >/dev/null
+
+docker compose exec -T ckan bash -s <<'REMOTE'
+set -euo pipefail
+
+CONFIG=/srv/app/ckan.ini
+CKAN_USER="${CKAN_SYSADMIN_NAME:-ckan_admin}"
+CSV=/tmp/datahub-demo-schools.csv
+PACKAGE_ID=testovaci-zoznam-skol
+
+cat > "$CSV" <<'CSV'
+nazov_skoly,typ_skoly,obec,okres,kraj
+Zakladna skola Demo 01,zakladna skola,Bratislava,Bratislava I,Bratislavsky
+Gymnazium Demo 02,gymnazium,Kosice,Kosice I,Kosicky
+Stredna odborna skola Demo 03,stredna odborna skola,Zilina,Zilina,Zilinsky
+Zakladna skola Demo 04,zakladna skola,Nitra,Nitra,Nitriansky
+Gymnazium Demo 05,gymnazium,Presov,Presov,Presovsky
+Stredna priemyselna skola Demo 06,stredna odborna skola,Trnava,Trnava,Trnavsky
+Zakladna skola Demo 07,zakladna skola,Banska Bystrica,Banskobystricky
+Spojena skola Demo 08,spojena skola,Trencin,Trencin,Trenciansky
+Zakladna skola Demo 09,zakladna skola,Martin,Martin,Zilinsky
+Gymnazium Demo 10,gymnazium,Poprad,Poprad,Presovsky
+CSV
+
+if ckanapi -c "$CONFIG" -u "$CKAN_USER" action organization_show id=minedu -j >/tmp/datahub-org.json 2>/tmp/datahub-org.err; then
+  if ! ckanapi -c "$CONFIG" -u "$CKAN_USER" action organization_patch \
+    id=minedu \
+    title="Ministerstvo školstva, výskumu, vývoja a mládeže Slovenskej republiky" \
+    description="Publikacna organizacia pre otvorene data rezortu skolstva." \
+    state=active >/dev/null 2>/tmp/datahub-org-update.err; then
+    cat /tmp/datahub-org-update.err >&2
+    exit 1
+  fi
+else
+  if ! ckanapi -c "$CONFIG" -u "$CKAN_USER" action organization_create \
+    name=minedu \
+    title="Ministerstvo školstva, výskumu, vývoja a mládeže Slovenskej republiky" \
+    description="Publikacna organizacia pre otvorene data rezortu skolstva." \
+    state=active >/dev/null 2>/tmp/datahub-org-create.err; then
+    cat /tmp/datahub-org-create.err >&2
+    exit 1
+  fi
+fi
+
+if ckanapi -c "$CONFIG" -u "$CKAN_USER" action package_show id="$PACKAGE_ID" -j >/tmp/datahub-package.json 2>/tmp/datahub-package.err; then
+  if ! ckanapi -c "$CONFIG" -u "$CKAN_USER" action package_patch \
+    id="$PACKAGE_ID" \
+    title="Testovaci zoznam skol" \
+    notes="Synteticky testovaci dataset s 10 skolami na overenie publikovania CSV zdroja a DCAT katalogu." \
+    owner_org=minedu \
+    theme=http://publications.europa.eu/resource/authority/data-theme/EDUC \
+    frequency=http://publications.europa.eu/resource/authority/frequency/ANNUAL \
+    license_id=cc-by \
+    tag_string=demo,skoly,vzdelavanie \
+    contact_name="DataHub Open Data" \
+    contact_email=opendata@example.gov.sk \
+    private:false >/dev/null 2>/tmp/datahub-package-update.err; then
+    cat /tmp/datahub-package-update.err >&2
+    exit 1
+  fi
+else
+  if ! ckanapi -c "$CONFIG" -u "$CKAN_USER" action package_create \
+    name="$PACKAGE_ID" \
+    title="Testovaci zoznam skol" \
+    notes="Synteticky testovaci dataset s 10 skolami na overenie publikovania CSV zdroja a DCAT katalogu." \
+    owner_org=minedu \
+    theme=http://publications.europa.eu/resource/authority/data-theme/EDUC \
+    frequency=http://publications.europa.eu/resource/authority/frequency/ANNUAL \
+    license_id=cc-by \
+    tag_string=demo,skoly,vzdelavanie \
+    contact_name="DataHub Open Data" \
+    contact_email=opendata@example.gov.sk \
+    private:false >/dev/null 2>/tmp/datahub-package-create.err; then
+    cat /tmp/datahub-package-create.err >&2
+    exit 1
+  fi
+fi
+
+ckanapi -c "$CONFIG" -u "$CKAN_USER" action package_show id="$PACKAGE_ID" -j >/tmp/datahub-package.json 2>/tmp/datahub-package-show.err
+
+cat >/tmp/datahub-seed-resource.py <<'PY'
+import os
+
+from werkzeug.datastructures import FileStorage
+
+from ckan import model
+from ckan.plugins import toolkit
+
+config_path = "/srv/app/ckan.ini"
+csv_path = "/tmp/datahub-demo-schools.csv"
+ckan_user = os.environ.get("CKAN_SYSADMIN_NAME", "ckan_admin")
+package_id = "testovaci-zoznam-skol"
+resource_name = "Zoznam skol - demo CSV"
+
+context = {
+    "model": model,
+    "session": model.Session,
+    "user": ckan_user,
+}
+
+package = toolkit.get_action("package_show")(context, {"id": package_id})
+resources = []
+resource_payload = None
+
+for resource in package.get("resources", []):
+    if resource.get("name") == resource_name:
+        resource_payload = dict(resource)
+    else:
+        resources.append(resource)
+
+if resource_payload is None:
+    resource_payload = {}
+
+resource_payload.update(
+    {
+        "name": resource_name,
+        "description": "Synteticky CSV subor s 10 demo skolami.",
+        "format": "CSV",
+    }
+)
+
+with open(csv_path, "rb") as csv_file:
+    resource_payload["upload"] = FileStorage(
+        stream=csv_file,
+        filename="datahub-demo-schools.csv",
+    )
+    resources.append(resource_payload)
+    package["resources"] = resources
+    package["tag_string"] = "demo,skoly,vzdelavanie"
+    toolkit.get_action("package_update")(context, package)
+PY
+
+if ! printf 'exec(open("/tmp/datahub-seed-resource.py", encoding="utf-8").read())\n' | ckan -c "$CONFIG" shell >/tmp/datahub-seed-resource.log 2>&1; then
+  cat /tmp/datahub-seed-resource.log >&2
+  exit 1
+fi
+
+if grep -Eq "Traceback|SyntaxError|ValidationError" /tmp/datahub-seed-resource.log; then
+  cat /tmp/datahub-seed-resource.log >&2
+  exit 1
+fi
+
+if ! ckan -c "$CONFIG" search-index rebuild -q "$PACKAGE_ID" >/tmp/datahub-search-index.log 2>&1; then
+  cat /tmp/datahub-search-index.log >&2
+  exit 1
+fi
+
+site_url="$(ckanapi -c "$CONFIG" -u "$CKAN_USER" action status_show -j 2>/tmp/datahub-status.err | python3 -c 'import json, sys; print(json.load(sys.stdin)["site_url"].rstrip("/"))')"
+
+echo "Demo data seeded."
+echo "Organization: ${site_url}/organization/minedu"
+echo "Dataset: ${site_url}/dataset/testovaci-zoznam-skol"
+echo "Catalog: ${site_url}/catalog.ttl"
+REMOTE

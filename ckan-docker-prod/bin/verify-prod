@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+PROJECT_DIR="$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)"
+
+cd "$PROJECT_DIR"
+
+if [ ! -f .env ]; then
+  echo "Missing .env. Copy .env.example to .env and set production values first." >&2
+  exit 1
+fi
+
+docker compose ps --status running >/dev/null
+
+docker compose exec -T ckan wget -qO- http://localhost:5000/api/action/status_show | grep -q '"success": true'
+docker compose exec -T ckan wget -qO- http://localhost:5000/catalog.ttl | grep -q "dcat:Catalog"
+
+docker compose exec -T ckan sh -c "grep -q '^ckan.uploads_enabled = true$' /srv/app/ckan.ini"
+docker compose exec -T ckan sh -c "grep -q '^ckan.locale_default = sk$' /srv/app/ckan.ini"
+
+site_url="$(docker compose exec -T ckan sh -c "grep '^ckan.site_url = ' /srv/app/ckan.ini | sed 's/^ckan.site_url = //'")"
+echo "CKAN site URL: $site_url"
+
+if [ "$site_url" = "https://CHANGE-ME.example.sk" ]; then
+  echo "Warning: CKAN_SITE_URL still uses the example value. Do not register LKOD until this is the final public HTTPS URL." >&2
+fi
+
+echo "Production smoke check passed."

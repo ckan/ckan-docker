@@ -14,20 +14,24 @@ The stack does not terminate public HTTPS. Put it behind an external reverse pro
 
 ## First Setup
 
-Copy the environment template:
+This prepared local bundle includes an ignored `.env` file with generated secrets. Keep that file with the deployment package when copying `ckan-docker-prod` to a server.
 
-```bash
-cp .env.example .env
+The tracked `.env.example` file remains a template only.
+
+Before exposing the portal publicly:
+
+- Keep `.env` out of Git.
+- Check `CKAN_SYSADMIN_EMAIL`.
+- Set SMTP values if password reset or mail notifications are required.
+- Replace `CKAN_SITE_URL` and `CKAN__SITE_URL` with the final public HTTPS URL.
+
+The current local default is:
+
+```text
+http://localhost:5000
 ```
 
-Edit `.env` before exposing the portal:
-
-- Replace `CKAN_SITE_URL` and `CKAN__SITE_URL` with the final public HTTPS URL.
-- Replace every `CHANGE_ME` secret.
-- Set a real `CKAN_SYSADMIN_EMAIL`.
-- Set SMTP values if password reset or mail notifications are required.
-
-Do not register the LKOD catalog while `CKAN_SITE_URL` is `https://CHANGE-ME.example.sk`.
+Do not register the LKOD catalog while `CKAN_SITE_URL` is `http://localhost:5000`.
 
 ## Start
 

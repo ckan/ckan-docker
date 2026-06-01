@@ -22,8 +22,8 @@ docker compose exec -T ckan sh -c "grep -q '^ckan.locale_default = sk$' /srv/app
 site_url="$(docker compose exec -T ckan sh -c "grep '^ckan.site_url = ' /srv/app/ckan.ini | sed 's/^ckan.site_url = //'")"
 echo "CKAN site URL: $site_url"
 
-if [ "$site_url" = "https://CHANGE-ME.example.sk" ]; then
-  echo "Warning: CKAN_SITE_URL still uses the example value. Do not register LKOD until this is the final public HTTPS URL." >&2
+if [ "$site_url" = "https://CHANGE-ME.example.sk" ] || [ "$site_url" = "http://localhost:5000" ]; then
+  echo "Warning: CKAN_SITE_URL is not a final public HTTPS URL. Do not register LKOD until this is updated." >&2
 fi
 
 echo "Production smoke check passed."

@@ -16,8 +16,10 @@ docker compose ps --status running >/dev/null
 docker compose exec -T ckan wget -qO- http://localhost:5000/api/action/status_show | grep -q '"success": true'
 docker compose exec -T ckan wget -qO- http://localhost:5000/catalog.ttl | grep -q "dcat:Catalog"
 
-docker compose exec -T ckan sh -c "grep -q '^ckan.uploads_enabled = true$' /srv/app/ckan.ini"
-docker compose exec -T ckan sh -c "grep -q '^ckan.locale_default = sk$' /srv/app/ckan.ini"
+docker compose exec -T ckan sh -c "grep -Eq '^ckan.uploads_enabled ?= ?true$' /srv/app/ckan.ini"
+docker compose exec -T ckan sh -c "grep -Eq '^ckan.locale_default ?= ?sk$' /srv/app/ckan.ini"
+docker compose exec -T ckan sh -c "grep -Eq '^scheming.dataset_schemas ?= ?ckanext.idsk:schemas/dcat_ap_sk.yaml$' /srv/app/ckan.ini"
+docker compose exec -T ckan sh -c "grep -Eq '^ckanext.dcat.rdf.profiles ?= ?euro_dcat_ap_2 euro_dcat_ap_scheming$' /srv/app/ckan.ini"
 
 site_url="$(docker compose exec -T ckan sh -c "grep '^ckan.site_url = ' /srv/app/ckan.ini | sed 's/^ckan.site_url = //'")"
 echo "CKAN site URL: $site_url"

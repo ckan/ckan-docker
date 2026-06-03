@@ -830,7 +830,15 @@ Add:
 
 - [ ] **Step 6: Make keywords language-tagged**
 
-Replace the final add loop in `_ensure_keywords` with:
+Remove the current early return:
+
+```python
+        if list(self.g.objects(dataset_ref, DCAT.keyword)):
+            return
+```
+
+Then replace the final add loop in `_ensure_keywords` with:
+
 
 ```python
         self.g.remove((dataset_ref, DCAT.keyword, None))

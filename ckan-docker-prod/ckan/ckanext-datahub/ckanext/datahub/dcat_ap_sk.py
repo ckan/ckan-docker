@@ -44,9 +44,11 @@ class DataHubDCATAPSKProfile(RDFProfile):
         return
 
     def graph_from_catalog(self, catalog_dict, catalog_ref):
+        self._bind_namespaces()
         self._normalize_publisher(catalog_ref)
 
     def graph_from_dataset(self, dataset_dict, dataset_ref):
+        self._bind_namespaces()
         self._normalize_publisher(dataset_ref)
         self._ensure_keywords(dataset_dict, dataset_ref)
         self._ensure_contact_point(dataset_ref)
@@ -61,6 +63,9 @@ class DataHubDCATAPSKProfile(RDFProfile):
 
     def _publisher(self):
         return URIRef(self._setting("DATAHUB_DCAT_PUBLISHER_URI"))
+
+    def _bind_namespaces(self):
+        self.g.bind("leg", LEG)
 
     def _normalize_publisher(self, subject):
         publisher = self._publisher()

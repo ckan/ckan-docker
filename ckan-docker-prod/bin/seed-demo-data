@@ -114,12 +114,21 @@ context = {
 package = toolkit.get_action("package_show")(context, {"id": package_id})
 resources = []
 resource_payload = None
+demo_resource_names = {resource_name, "Zoznam skol - demo CSV"}
 
 for resource in package.get("resources", []):
-    if resource.get("name") == resource_name:
-        resource_payload = dict(resource)
-    else:
-        resources.append(resource)
+    url = resource.get("url") or ""
+    is_demo_resource = (
+        resource.get("name") in demo_resource_names
+        or "datahub-demo-schools.csv" in url
+    )
+
+    if is_demo_resource:
+        if resource.get("name") == resource_name and resource_payload is None:
+            resource_payload = dict(resource)
+        continue
+
+    resources.append(resource)
 
 if resource_payload is None:
     resource_payload = {}

@@ -1,0 +1,105 @@
+scheming_version: 2
+dataset_type: dataset
+about: DCAT-AP-SK aligned dataset schema for the IDSK LKOD portal
+about_url: https://datova-kancelaria.github.io/dcat-ap-sk-2.0/
+
+dataset_fields:
+  - field_name: title
+    label: Názov datasetu
+    preset: title
+    validators: not_empty unicode_safe
+
+  - field_name: name
+    label: URL identifikátor
+    preset: dataset_slug
+    validators: not_empty unicode_safe name_validator package_name_validator
+
+  - field_name: notes
+    label: Popis
+    preset: markdown
+    validators: not_empty unicode_safe
+
+  - field_name: owner_org
+    label: Organizácia
+    preset: dataset_organization
+    validators: owner_org_validator unicode_safe
+
+  - field_name: theme
+    label: Téma
+    preset: select
+    validators: not_empty unicode_safe
+    choices:
+      - value: http://publications.europa.eu/resource/authority/data-theme/EDUC
+        label: Vzdelávanie, kultúra a šport
+      - value: http://publications.europa.eu/resource/authority/data-theme/GOVE
+        label: Vláda a verejný sektor
+      - value: http://publications.europa.eu/resource/authority/data-theme/SOCI
+        label: Populácia a spoločnosť
+
+  - field_name: frequency
+    label: Periodicita aktualizácie
+    preset: select
+    validators: not_empty unicode_safe
+    choices:
+      - value: http://publications.europa.eu/resource/authority/frequency/DAILY
+        label: Denne
+      - value: http://publications.europa.eu/resource/authority/frequency/WEEKLY
+        label: Týždenne
+      - value: http://publications.europa.eu/resource/authority/frequency/MONTHLY
+        label: Mesačne
+      - value: http://publications.europa.eu/resource/authority/frequency/ANNUAL
+        label: Ročne
+      - value: http://publications.europa.eu/resource/authority/frequency/IRREG
+        label: Nepravidelne
+
+  - field_name: license_id
+    label: Licencia
+    preset: select
+    validators: not_empty unicode_safe
+    choices_helper: license_options
+
+  - field_name: tag_string
+    label: Kľúčové slová
+    preset: tag_string_autocomplete
+    validators: not_empty unicode_safe
+
+  - field_name: contact_name
+    label: Kontaktná osoba alebo útvar
+    form_snippet: text.html
+    validators: not_empty unicode_safe
+
+  - field_name: contact_email
+    label: Kontaktný e-mail
+    form_snippet: text.html
+    validators: not_empty email_validator unicode_safe
+
+  - field_name: temporal_start
+    label: Začiatok časového pokrytia
+    preset: date
+    validators: ignore_missing isodate
+
+  - field_name: temporal_end
+    label: Koniec časového pokrytia
+    preset: date
+    validators: ignore_missing isodate
+
+resource_fields:
+  - field_name: url
+    label: URL alebo nahraný súbor
+    preset: resource_url_upload
+    validators: not_empty unicode_safe
+
+  - field_name: name
+    label: Názov distribúcie
+    form_snippet: text.html
+    validators: not_empty unicode_safe
+
+  - field_name: description
+    label: Popis distribúcie
+    preset: markdown
+    validators: ignore_missing unicode_safe
+
+  - field_name: format
+    label: Formát
+    preset: resource_format_autocomplete
+    validators: not_empty unicode_safe

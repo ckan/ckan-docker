@@ -18,4 +18,4 @@ ckan config-tool "$CKAN_INI" "ckan.datapusher.api_token=${CKAN__DATAPUSHER__API_
 
 ckan config-tool "$CKAN_INI" "scheming.dataset_schemas=${CKAN___SCHEMING__DATASET_SCHEMAS:-ckanext.idsk:schemas/dcat_ap_sk.yaml}"
 ckan config-tool "$CKAN_INI" "scheming.presets=${CKAN___SCHEMING__PRESETS:-ckanext.scheming:presets.json ckanext.dcat.schemas:presets.yaml}"
-ckan config-tool "$CKAN_INI" "ckanext.dcat.rdf.profiles=${CKANEXT__DCAT__RDF__PROFILES:-euro_dcat_ap_2 euro_dcat_ap_scheming}"
+ckan config-tool "$CKAN_INI" "ckanext.dcat.rdf.profiles=${CKANEXT__DCAT__RDF__PROFILES:-euro_dcat_ap_2 euro_dcat_ap_scheming datahub_dcat_ap_sk}"

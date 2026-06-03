@@ -5,7 +5,7 @@ echo "Applying production CKAN configuration"
 
 ckan config-tool "$CKAN_INI" "ckan.site_url=${CKAN__SITE_URL:-$CKAN_SITE_URL}"
 ckan config-tool "$CKAN_INI" "ckan.site_title=${CKAN__SITE_TITLE:-DataHub Open Data}"
-ckan config-tool "$CKAN_INI" "ckan.site_description=${CKAN__SITE_DESCRIPTION:-Katalog otvorenych dat}"
+ckan config-tool "$CKAN_INI" "ckan.site_description=${CKAN__SITE_DESCRIPTION:-Katalóg otvorených dát}"
 ckan config-tool "$CKAN_INI" "ckan.locale_default=${CKAN__LOCALE_DEFAULT:-sk}"
 ckan config-tool "$CKAN_INI" "ckan.uploads_enabled=${CKAN__UPLOADS_ENABLED:-true}"
 ckan config-tool "$CKAN_INI" "ckan.storage_path=${CKAN__STORAGE_PATH:-$CKAN_STORAGE_PATH}"
@@ -18,4 +18,4 @@ ckan config-tool "$CKAN_INI" "ckan.datapusher.api_token=${CKAN__DATAPUSHER__API_
 
 ckan config-tool "$CKAN_INI" "scheming.dataset_schemas=${CKAN___SCHEMING__DATASET_SCHEMAS:-ckanext.idsk:schemas/dcat_ap_sk.yaml}"
 ckan config-tool "$CKAN_INI" "scheming.presets=${CKAN___SCHEMING__PRESETS:-ckanext.scheming:presets.json ckanext.dcat.schemas:presets.yaml}"
-ckan config-tool "$CKAN_INI" "ckanext.dcat.rdf.profiles=${CKANEXT__DCAT__RDF__PROFILES:-euro_dcat_ap_2 euro_dcat_ap_scheming datahub_dcat_ap_sk}"
+ckan config-tool "$CKAN_INI" "ckanext.dcat.rdf.profiles=${CKANEXT__DCAT__RDF__PROFILES:-euro_dcat_ap_3 euro_dcat_ap_scheming datahub_dcat_ap_sk}"

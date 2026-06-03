@@ -41,7 +41,7 @@ DEFAULTS = {
 
 class DataHubDCATAPSKProfile(RDFProfile):
     def parse_dataset(self, dataset_dict, dataset_ref):
-        return
+        return dataset_dict
 
     def graph_from_catalog(self, catalog_dict, catalog_ref):
         self._bind_namespaces()

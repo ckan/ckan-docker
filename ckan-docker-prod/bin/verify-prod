@@ -24,6 +24,7 @@ docker compose exec -T ckan python - <<'PY'
 import os
 import sys
 import urllib.request
+from urllib.parse import urlparse
 
 from rdflib import Graph, URIRef, Literal
 from rdflib.namespace import DCTERMS, FOAF, RDF
@@ -48,6 +49,69 @@ def report_failures(failures):
 
 def format_values(values):
     return "{" + ", ".join(sorted(value.n3() for value in values)) + "}"
+
+
+def path_ends_with(value, suffix):
+    path = urlparse(str(value).strip().lower()).path.rstrip("/")
+    return path.endswith(suffix)
+
+
+def value_is_csv_format(value, default_format, default_media_type):
+    value_text = str(value).strip().lower()
+    return value_text in {
+        "csv",
+        "text/csv",
+        str(default_format).lower(),
+        str(default_media_type).lower(),
+    }
+
+
+def is_csv_distribution(graph, distribution, default_format, default_media_type):
+    url_values = list(graph.objects(distribution, term(DCAT, "accessURL")))
+    url_values.extend(graph.objects(distribution, term(DCAT, "downloadURL")))
+    if any(path_ends_with(value, ".csv") for value in url_values):
+        return True
+
+    non_csv_suffixes = (
+        ".json",
+        ".xml",
+        ".rdf",
+        ".ttl",
+        ".nt",
+        ".xlsx",
+        ".xls",
+        ".zip",
+        ".txt",
+    )
+    if any(
+        path_ends_with(value, suffix)
+        for value in url_values
+        for suffix in non_csv_suffixes
+    ):
+        return False
+
+    format_or_media_values = list(graph.objects(distribution, DCTERMS.format))
+    format_or_media_values.extend(graph.objects(distribution, term(DCAT, "mediaType")))
+    return any(
+        value_is_csv_format(value, default_format, default_media_type)
+        for value in format_or_media_values
+    )
+
+
+def verify_non_csv_regression_guard(failures, default_format, default_media_type):
+    graph = Graph()
+    distribution = URIRef("urn:datahub:verify:json-distribution")
+    json_url = URIRef("https://example.gov.sk/data.json")
+    graph.add((distribution, term(DCAT, "accessURL"), json_url))
+    graph.add((distribution, term(DCAT, "downloadURL"), json_url))
+    graph.add((distribution, DCTERMS.format, default_format))
+    graph.add((distribution, term(DCAT, "mediaType"), default_media_type))
+
+    if is_csv_distribution(graph, distribution, default_format, default_media_type):
+        failures.append(
+            "Non-CSV distribution regression failed: .json URL must not be "
+            "classified as CSV only because CSV default values are present."
+        )
 
 
 failures = []
@@ -99,6 +163,8 @@ terms_database_protected_by_special_rights_type = URIRef(
     terms_database_protected_by_special_rights_type_uri
 )
 terms_personal_data_containment_type = URIRef(terms_personal_data_containment_type_uri)
+
+verify_non_csv_regression_guard(failures, default_format, default_media_type)
 
 graph = Graph()
 try:
@@ -175,21 +241,35 @@ for distribution in distributions:
             add_missing(failures, distribution, predicate_name)
 
     distribution_formats = set(graph.objects(distribution, DCTERMS.format))
-    expected_formats = {default_format}
-    if distribution_formats != expected_formats:
-        failures.append(
-            f"{distribution} dct:format must exactly match "
-            f"expected {format_values(expected_formats)}, "
-            f"actual {format_values(distribution_formats)}."
-        )
     distribution_media_types = set(graph.objects(distribution, term(DCAT, "mediaType")))
+    expected_formats = {default_format}
     expected_media_types = {default_media_type}
-    if distribution_media_types != expected_media_types:
-        failures.append(
-            f"{distribution} dcat:mediaType must exactly match "
-            f"expected {format_values(expected_media_types)}, "
-            f"actual {format_values(distribution_media_types)}."
-        )
+
+    if is_csv_distribution(graph, distribution, default_format, default_media_type):
+        if distribution_formats != expected_formats:
+            failures.append(
+                f"{distribution} CSV dct:format must exactly match "
+                f"expected {format_values(expected_formats)}, "
+                f"actual {format_values(distribution_formats)}."
+            )
+        if distribution_media_types != expected_media_types:
+            failures.append(
+                f"{distribution} CSV dcat:mediaType must exactly match "
+                f"expected {format_values(expected_media_types)}, "
+                f"actual {format_values(distribution_media_types)}."
+            )
+    else:
+        if default_format in distribution_formats:
+            failures.append(
+                f"{distribution} non-CSV dct:format must not equal "
+                "DATAHUB_DCAT_DEFAULT_FORMAT_URI."
+            )
+        if default_media_type in distribution_media_types:
+            failures.append(
+                f"{distribution} non-CSV dcat:mediaType must not equal "
+                "DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI."
+            )
+
     if (distribution, DCTERMS.format, Literal("CSV")) in graph:
         failures.append(f'{distribution} keeps literal dct:format "CSV".')
     if (distribution, term(DCAT, "mediaType"), Literal("text/csv")) in graph:

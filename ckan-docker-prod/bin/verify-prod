@@ -26,11 +26,13 @@ import sys
 import urllib.request
 from urllib.parse import urlparse
 
-from rdflib import Graph, URIRef, Literal
-from rdflib.namespace import DCTERMS, FOAF, RDF
+from rdflib import Graph, URIRef, Literal, Namespace
+from rdflib.namespace import DCTERMS, FOAF, RDF, XSD
 
-DCAT = URIRef("http://www.w3.org/ns/dcat#")
-LEG = URIRef("https://data.gov.sk/def/ontology/legislation/")
+DCAT = Namespace("http://www.w3.org/ns/dcat#")
+DCATAP = Namespace("http://data.europa.eu/r5r/")
+LEG = Namespace("https://data.gov.sk/def/ontology/legislation/")
+VCARD = Namespace("http://www.w3.org/2006/vcard/ns#")
 
 
 def term(namespace, name):
@@ -49,6 +51,35 @@ def report_failures(failures):
 
 def format_values(values):
     return "{" + ", ".join(sorted(value.n3() for value in values)) + "}"
+
+
+def literals_with_lang(graph, subject, predicate, lang):
+    return {
+        value
+        for value in graph.objects(subject, predicate)
+        if isinstance(value, Literal) and value.language == lang
+    }
+
+
+def require_lang_literal(failures, graph, subject, predicate, predicate_name, lang):
+    values = literals_with_lang(graph, subject, predicate, lang)
+    if not values:
+        failures.append(f"{subject} is missing {predicate_name} literal with @{lang}.")
+
+
+def require_exact_objects(failures, graph, subject, predicate, predicate_name, expected):
+    actual = set(graph.objects(subject, predicate))
+    if actual != expected:
+        failures.append(
+            f"{subject} {predicate_name} must exactly match "
+            f"expected {format_values(expected)}, actual {format_values(actual)}."
+        )
+
+
+def require_iri(failures, graph, subject, predicate, predicate_name):
+    for value in graph.objects(subject, predicate):
+        if not isinstance(value, URIRef):
+            failures.append(f"{subject} {predicate_name} must be an IRI, got {value.n3()}.")
 
 
 def path_ends_with(value, suffix):
@@ -114,10 +145,131 @@ def verify_non_csv_regression_guard(failures, default_format, default_media_type
         )
 
 
+def validate_distributions(
+    failures,
+    graph,
+    default_format,
+    default_media_type,
+    terms_authors_work_type,
+    terms_original_database_type,
+    terms_database_protected_by_special_rights_type,
+    terms_personal_data_containment_type,
+    default_language,
+):
+    distributions = list(graph.subjects(RDF.type, term(DCAT, "Distribution")))
+    if not distributions:
+        failures.append("No dcat:Distribution found.")
+
+    for distribution in distributions:
+        required_distribution_predicates = [
+            (term(DCAT, "accessURL"), "dcat:accessURL"),
+            (term(DCAT, "downloadURL"), "dcat:downloadURL"),
+            (DCTERMS.format, "dct:format"),
+            (term(DCAT, "mediaType"), "dcat:mediaType"),
+            (term(LEG, "termsOfUse"), "leg:termsOfUse"),
+        ]
+        for predicate, predicate_name in required_distribution_predicates:
+            if not list(graph.objects(distribution, predicate)):
+                add_missing(failures, distribution, predicate_name)
+
+        require_lang_literal(
+            failures,
+            graph,
+            distribution,
+            DCTERMS.title,
+            "dct:title",
+            default_language,
+        )
+        if list(graph.objects(distribution, DCTERMS.description)):
+            require_lang_literal(
+                failures,
+                graph,
+                distribution,
+                DCTERMS.description,
+                "dct:description",
+                default_language,
+            )
+
+        access_urls = set(graph.objects(distribution, term(DCAT, "accessURL")))
+        download_urls = set(graph.objects(distribution, term(DCAT, "downloadURL")))
+        if access_urls and download_urls and access_urls != download_urls:
+            failures.append(
+                f"{distribution} dcat:accessURL must equal dcat:downloadURL for file resources."
+            )
+
+        distribution_formats = set(graph.objects(distribution, DCTERMS.format))
+        distribution_media_types = set(graph.objects(distribution, term(DCAT, "mediaType")))
+        expected_formats = {default_format}
+        expected_media_types = {default_media_type}
+
+        if is_csv_distribution(graph, distribution, default_format, default_media_type):
+            if distribution_formats != expected_formats:
+                failures.append(
+                    f"{distribution} CSV dct:format must exactly match "
+                    f"expected {format_values(expected_formats)}, "
+                    f"actual {format_values(distribution_formats)}."
+                )
+            if distribution_media_types != expected_media_types:
+                failures.append(
+                    f"{distribution} CSV dcat:mediaType must exactly match "
+                    f"expected {format_values(expected_media_types)}, "
+                    f"actual {format_values(distribution_media_types)}."
+                )
+        else:
+            if default_format in distribution_formats:
+                failures.append(
+                    f"{distribution} non-CSV dct:format must not equal "
+                    "DATAHUB_DCAT_DEFAULT_FORMAT_URI."
+                )
+            if default_media_type in distribution_media_types:
+                failures.append(
+                    f"{distribution} non-CSV dcat:mediaType must not equal "
+                    "DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI."
+                )
+
+        if (distribution, DCTERMS.format, Literal("CSV")) in graph:
+            failures.append(f'{distribution} keeps literal dct:format "CSV".')
+        if (distribution, term(DCAT, "mediaType"), Literal("text/csv")) in graph:
+            failures.append(f'{distribution} keeps literal dcat:mediaType "text/csv".')
+
+        for terms_of_use in graph.objects(distribution, term(LEG, "termsOfUse")):
+            if (terms_of_use, RDF.type, term(LEG, "TermsOfUse")) not in graph:
+                add_missing(failures, terms_of_use, "rdf:type leg:TermsOfUse")
+
+            exact_terms_predicates = [
+                (term(LEG, "authorsWorkType"), "leg:authorsWorkType", terms_authors_work_type),
+                (term(LEG, "originalDatabaseType"), "leg:originalDatabaseType", terms_original_database_type),
+                (
+                    term(LEG, "databaseProtectedBySpecialRightsType"),
+                    "leg:databaseProtectedBySpecialRightsType",
+                    terms_database_protected_by_special_rights_type,
+                ),
+                (
+                    term(LEG, "personalDataContainmentType"),
+                    "leg:personalDataContainmentType",
+                    terms_personal_data_containment_type,
+                ),
+            ]
+            for predicate, predicate_name, expected_object in exact_terms_predicates:
+                require_exact_objects(
+                    failures,
+                    graph,
+                    terms_of_use,
+                    predicate,
+                    predicate_name,
+                    {expected_object},
+                )
+
+
 failures = []
 
 publisher_uri = os.environ.get("DATAHUB_DCAT_PUBLISHER_URI")
 publisher_name = os.environ.get("DATAHUB_DCAT_PUBLISHER_NAME")
+catalog_title = os.environ.get("DATAHUB_DCAT_CATALOG_TITLE")
+catalog_description = os.environ.get("DATAHUB_DCAT_CATALOG_DESCRIPTION")
+default_language = os.environ.get("DATAHUB_DCAT_DEFAULT_LANGUAGE")
+default_spatial_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_SPATIAL_URI")
+default_dataset_type_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_DATASET_TYPE_URI")
 default_format_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_FORMAT_URI")
 default_media_type_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI")
 terms_authors_work_type_uri = os.environ.get("DATAHUB_DCAT_TERMS_AUTHORS_WORK_TYPE")
@@ -130,11 +282,23 @@ terms_database_protected_by_special_rights_type_uri = os.environ.get(
 terms_personal_data_containment_type_uri = os.environ.get(
     "DATAHUB_DCAT_TERMS_PERSONAL_DATA_CONTAINMENT_TYPE"
 )
+site_url = os.environ.get("CKAN_SITE_URL") or os.environ.get("CKAN__SITE_URL")
+demo_dataset_name = "testovaci-zoznam-skol"
 
 if not publisher_uri:
     failures.append("Missing DATAHUB_DCAT_PUBLISHER_URI.")
 if not publisher_name:
     failures.append("Missing DATAHUB_DCAT_PUBLISHER_NAME.")
+if not catalog_title:
+    failures.append("Missing DATAHUB_DCAT_CATALOG_TITLE.")
+if not catalog_description:
+    failures.append("Missing DATAHUB_DCAT_CATALOG_DESCRIPTION.")
+if not default_language:
+    failures.append("Missing DATAHUB_DCAT_DEFAULT_LANGUAGE.")
+if not default_spatial_uri:
+    failures.append("Missing DATAHUB_DCAT_DEFAULT_SPATIAL_URI.")
+if not default_dataset_type_uri:
+    failures.append("Missing DATAHUB_DCAT_DEFAULT_DATASET_TYPE_URI.")
 if not default_format_uri:
     failures.append("Missing DATAHUB_DCAT_DEFAULT_FORMAT_URI.")
 if not default_media_type_uri:
@@ -149,12 +313,16 @@ if not terms_database_protected_by_special_rights_type_uri:
     )
 if not terms_personal_data_containment_type_uri:
     failures.append("Missing DATAHUB_DCAT_TERMS_PERSONAL_DATA_CONTAINMENT_TYPE.")
+if not site_url:
+    failures.append("Missing CKAN_SITE_URL or CKAN__SITE_URL.")
 
 if failures:
     report_failures(failures)
     sys.exit(1)
 
 publisher = URIRef(publisher_uri)
+default_spatial = URIRef(default_spatial_uri)
+default_dataset_type = URIRef(default_dataset_type_uri)
 default_format = URIRef(default_format_uri)
 default_media_type = URIRef(default_media_type_uri)
 terms_authors_work_type = URIRef(terms_authors_work_type_uri)
@@ -163,6 +331,10 @@ terms_database_protected_by_special_rights_type = URIRef(
     terms_database_protected_by_special_rights_type_uri
 )
 terms_personal_data_containment_type = URIRef(terms_personal_data_containment_type_uri)
+site_url = site_url.rstrip("/")
+expected_catalog = URIRef(site_url)
+expected_demo_dataset_document = URIRef(f"{site_url}/dataset/{demo_dataset_name}.ttl")
+expected_demo_dataset_page = URIRef(f"{site_url}/dataset/{demo_dataset_name}")
 
 verify_non_csv_regression_guard(failures, default_format, default_media_type)
 
@@ -172,6 +344,16 @@ try:
         graph.parse(data=response.read(), format="turtle")
 except Exception as exc:
     failures.append(f"Unable to fetch or parse catalog.ttl: {exc}")
+    report_failures(failures)
+    sys.exit(1)
+
+dataset_graph = Graph()
+try:
+    dataset_url = f"http://localhost:5000/dataset/{demo_dataset_name}.ttl"
+    with urllib.request.urlopen(dataset_url) as response:
+        dataset_graph.parse(data=response.read(), format="turtle")
+except Exception as exc:
+    failures.append(f"Unable to fetch or parse dataset detail TTL: {exc}")
     report_failures(failures)
     sys.exit(1)
 
@@ -189,10 +371,54 @@ for catalog in catalogs:
             f"actual {format_values(catalog_publishers)}."
         )
 
+    require_lang_literal(
+        failures,
+        graph,
+        catalog,
+        DCTERMS.title,
+        "dct:title",
+        default_language,
+    )
+    require_lang_literal(
+        failures,
+        graph,
+        catalog,
+        DCTERMS.description,
+        "dct:description",
+        default_language,
+    )
+    require_exact_objects(
+        failures,
+        graph,
+        catalog,
+        DCTERMS.title,
+        "dct:title",
+        {Literal(catalog_title, lang=default_language)},
+    )
+    require_exact_objects(
+        failures,
+        graph,
+        catalog,
+        DCTERMS.description,
+        "dct:description",
+        {Literal(catalog_description, lang=default_language)},
+    )
+
+    dataset_links = set(graph.objects(catalog, term(DCAT, "dataset")))
+    if expected_demo_dataset_document not in dataset_links:
+        failures.append(
+            f"{catalog} dcat:dataset must include {expected_demo_dataset_document.n3()}."
+        )
+    for dataset_link in dataset_links:
+        if not isinstance(dataset_link, URIRef):
+            failures.append(f"{catalog} dcat:dataset must be an IRI, got {dataset_link.n3()}.")
+        elif not str(dataset_link).endswith(".ttl"):
+            failures.append(f"{catalog} dcat:dataset must point to a .ttl document: {dataset_link}.")
+
 if (publisher, RDF.type, FOAF.Agent) not in graph:
     failures.append("Publisher URI is missing rdf:type foaf:Agent.")
 publisher_names = set(graph.objects(publisher, FOAF.name))
-expected_publisher_names = {Literal(publisher_name)}
+expected_publisher_names = {Literal(publisher_name, lang=default_language)}
 if publisher_names != expected_publisher_names:
     failures.append(
         "Publisher URI foaf:name must exactly equal DATAHUB_DCAT_PUBLISHER_NAME; "
@@ -224,92 +450,93 @@ for dataset in datasets:
             f"actual {format_values(dataset_publishers)}."
         )
 
-distributions = list(graph.subjects(RDF.type, term(DCAT, "Distribution")))
-if not distributions:
-    failures.append("No dcat:Distribution found.")
+detail_datasets = list(dataset_graph.subjects(RDF.type, term(DCAT, "Dataset")))
+if expected_demo_dataset_document not in detail_datasets:
+    failures.append(
+        "Dataset detail document must contain the demo dcat:Dataset subject "
+        f"{expected_demo_dataset_document.n3()}."
+    )
 
-for distribution in distributions:
-    required_distribution_predicates = [
-        (term(DCAT, "accessURL"), "dcat:accessURL"),
-        (term(DCAT, "downloadURL"), "dcat:downloadURL"),
-        (DCTERMS.format, "dct:format"),
-        (term(DCAT, "mediaType"), "dcat:mediaType"),
-        (term(LEG, "termsOfUse"), "leg:termsOfUse"),
-    ]
-    for predicate, predicate_name in required_distribution_predicates:
-        if not list(graph.objects(distribution, predicate)):
-            add_missing(failures, distribution, predicate_name)
+for dataset in detail_datasets:
+    require_lang_literal(
+        failures,
+        dataset_graph,
+        dataset,
+        DCTERMS.title,
+        "dct:title",
+        default_language,
+    )
+    require_lang_literal(
+        failures,
+        dataset_graph,
+        dataset,
+        DCTERMS.description,
+        "dct:description",
+        default_language,
+    )
+    require_lang_literal(
+        failures,
+        dataset_graph,
+        dataset,
+        term(DCAT, "keyword"),
+        "dcat:keyword",
+        default_language,
+    )
+    require_exact_objects(
+        failures,
+        dataset_graph,
+        dataset,
+        DCTERMS.publisher,
+        "dct:publisher",
+        {publisher},
+    )
+    require_exact_objects(
+        failures,
+        dataset_graph,
+        dataset,
+        DCTERMS.spatial,
+        "dct:spatial",
+        {default_spatial},
+    )
+    require_exact_objects(
+        failures,
+        dataset_graph,
+        dataset,
+        DCTERMS.type,
+        "dct:type",
+        {default_dataset_type},
+    )
+    landing_pages = set(dataset_graph.objects(dataset, term(DCAT, "landingPage")))
+    if expected_demo_dataset_page not in landing_pages:
+        failures.append(
+            f"{dataset} dcat:landingPage must include {expected_demo_dataset_page.n3()}."
+        )
+    for distribution in dataset_graph.objects(dataset, term(DCAT, "distribution")):
+        if not isinstance(distribution, URIRef):
+            failures.append(f"{dataset} dcat:distribution must be an IRI, got {distribution.n3()}.")
 
-    distribution_formats = set(graph.objects(distribution, DCTERMS.format))
-    distribution_media_types = set(graph.objects(distribution, term(DCAT, "mediaType")))
-    expected_formats = {default_format}
-    expected_media_types = {default_media_type}
-
-    if is_csv_distribution(graph, distribution, default_format, default_media_type):
-        if distribution_formats != expected_formats:
-            failures.append(
-                f"{distribution} CSV dct:format must exactly match "
-                f"expected {format_values(expected_formats)}, "
-                f"actual {format_values(distribution_formats)}."
-            )
-        if distribution_media_types != expected_media_types:
-            failures.append(
-                f"{distribution} CSV dcat:mediaType must exactly match "
-                f"expected {format_values(expected_media_types)}, "
-                f"actual {format_values(distribution_media_types)}."
-            )
-    else:
-        if default_format in distribution_formats:
-            failures.append(
-                f"{distribution} non-CSV dct:format must not equal "
-                "DATAHUB_DCAT_DEFAULT_FORMAT_URI."
-            )
-        if default_media_type in distribution_media_types:
-            failures.append(
-                f"{distribution} non-CSV dcat:mediaType must not equal "
-                "DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI."
-            )
-
-    if (distribution, DCTERMS.format, Literal("CSV")) in graph:
-        failures.append(f'{distribution} keeps literal dct:format "CSV".')
-    if (distribution, term(DCAT, "mediaType"), Literal("text/csv")) in graph:
-        failures.append(f'{distribution} keeps literal dcat:mediaType "text/csv".')
-
-    for terms_of_use in graph.objects(distribution, term(LEG, "termsOfUse")):
-        if (terms_of_use, RDF.type, term(LEG, "TermsOfUse")) not in graph:
-            add_missing(failures, terms_of_use, "rdf:type leg:TermsOfUse")
-
-        exact_terms_predicates = [
-            (
-                term(LEG, "authorsWorkType"),
-                "leg:authorsWorkType",
-                terms_authors_work_type,
-            ),
-            (
-                term(LEG, "originalDatabaseType"),
-                "leg:originalDatabaseType",
-                terms_original_database_type,
-            ),
-            (
-                term(LEG, "databaseProtectedBySpecialRightsType"),
-                "leg:databaseProtectedBySpecialRightsType",
-                terms_database_protected_by_special_rights_type,
-            ),
-            (
-                term(LEG, "personalDataContainmentType"),
-                "leg:personalDataContainmentType",
-                terms_personal_data_containment_type,
-            ),
-        ]
-        for predicate, predicate_name, expected_object in exact_terms_predicates:
-            actual_objects = set(graph.objects(terms_of_use, predicate))
-            expected_objects = {expected_object}
-            if actual_objects != expected_objects:
-                failures.append(
-                    f"{terms_of_use} {predicate_name} must exactly match "
-                    f"expected {format_values(expected_objects)}, "
-                    f"actual {format_values(actual_objects)}."
-                )
+validate_distributions(
+    failures,
+    graph,
+    default_format,
+    default_media_type,
+    terms_authors_work_type,
+    terms_original_database_type,
+    terms_database_protected_by_special_rights_type,
+    terms_personal_data_containment_type,
+    default_language,
+)
+validate_distributions(
+    failures,
+    dataset_graph,
+    default_format,
+    default_media_type,
+    terms_authors_work_type,
+    terms_original_database_type,
+    terms_database_protected_by_special_rights_type,
+    terms_personal_data_containment_type,
+    default_language,
+)
 
 if failures:
     report_failures(failures)
@@ -320,11 +547,11 @@ PY
 
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_url ?= ?' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_title ?= ?DataHub Open Data$' /srv/app/ckan.ini"
-docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_description ?= ?Katalog otvorenych dat$' /srv/app/ckan.ini"
+docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_description ?= ?Katalóg otvorených dát$' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.uploads_enabled ?= ?true$' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.locale_default ?= ?sk$' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^scheming.dataset_schemas ?= ?ckanext.idsk:schemas/dcat_ap_sk.yaml$' /srv/app/ckan.ini"
-docker compose exec -T ckan sh -c "grep -Eq '^ckanext.dcat.rdf.profiles ?= ?euro_dcat_ap_2 euro_dcat_ap_scheming datahub_dcat_ap_sk$' /srv/app/ckan.ini"
+docker compose exec -T ckan sh -c "grep -Eq '^ckanext.dcat.rdf.profiles ?= ?euro_dcat_ap_3 euro_dcat_ap_scheming datahub_dcat_ap_sk$' /srv/app/ckan.ini"
 
 home_html="$(docker compose exec -T ckan wget -qO- http://localhost:5000)"
 printf '%s' "$home_html" | grep -q "DataHub Open Data"

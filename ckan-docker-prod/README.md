@@ -137,6 +137,21 @@ https://your-public-domain.example/dataset/<dataset-name>.ttl
 
 The national portal should receive the public `catalog.ttl` URL, not a localhost URL, private IP address, or Docker hostname.
 
+## DCAT-AP-SK Metadata
+
+The final RDF profile `datahub_dcat_ap_sk` reads Slovak publisher and legal metadata from `.env`.
+
+The Ministry of Education defaults are:
+
+```env
+DATAHUB_DCAT_PUBLISHER_URI=https://data.gov.sk/id/legal-subject/00164381
+DATAHUB_DCAT_PUBLISHER_NAME=Ministerstvo školstva, výskumu, vývoja a mládeže Slovenskej republiky
+DATAHUB_DCAT_DEFAULT_FORMAT_URI=http://publications.europa.eu/resource/authority/file-type/CSV
+DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI=http://www.iana.org/assignments/media-types/text/csv
+```
+
+Before LKOD registration, these values must match the real publisher and `CKAN_SITE_URL` must be the final public HTTPS URL.
+
 ## Useful Commands
 
 Show services:

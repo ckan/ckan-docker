@@ -40,6 +40,12 @@ def add_missing(failures, subject, predicate_name):
     failures.append(f"{subject} is missing {predicate_name}.")
 
 
+def report_failures(failures):
+    print("DCAT-AP-SK RDF validation failed:", file=sys.stderr)
+    for failure in failures:
+        print(f"- {failure}", file=sys.stderr)
+
+
 failures = []
 
 publisher_uri = os.environ.get("DATAHUB_DCAT_PUBLISHER_URI")
@@ -54,9 +60,7 @@ if not default_media_type_uri:
     failures.append("Missing DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI.")
 
 if failures:
-    print("DCAT-AP-SK RDF validation failed:", file=sys.stderr)
-    for failure in failures:
-        print(f"- {failure}", file=sys.stderr)
+    report_failures(failures)
     sys.exit(1)
 
 publisher = URIRef(publisher_uri)
@@ -64,8 +68,13 @@ default_format = URIRef(default_format_uri)
 default_media_type = URIRef(default_media_type_uri)
 
 graph = Graph()
-with urllib.request.urlopen("http://localhost:5000/catalog.ttl") as response:
-    graph.parse(data=response.read(), format="turtle")
+try:
+    with urllib.request.urlopen("http://localhost:5000/catalog.ttl") as response:
+        graph.parse(data=response.read(), format="turtle")
+except Exception as exc:
+    failures.append(f"Unable to fetch or parse catalog.ttl: {exc}")
+    report_failures(failures)
+    sys.exit(1)
 
 catalogs = list(graph.subjects(RDF.type, term(DCAT, "Catalog")))
 if not catalogs:
@@ -157,9 +166,7 @@ for distribution in distributions:
                 add_missing(failures, terms_of_use, predicate_name)
 
 if failures:
-    print("DCAT-AP-SK RDF validation failed:", file=sys.stderr)
-    for failure in failures:
-        print(f"- {failure}", file=sys.stderr)
+    report_failures(failures)
     sys.exit(1)
 
 print("DCAT-AP-SK RDF validation passed.")

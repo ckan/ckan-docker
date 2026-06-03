@@ -244,7 +244,7 @@ docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_description ?= ?Katalog 
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.uploads_enabled ?= ?true$' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.locale_default ?= ?sk$' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^scheming.dataset_schemas ?= ?ckanext.idsk:schemas/dcat_ap_sk.yaml$' /srv/app/ckan.ini"
-docker compose exec -T ckan sh -c "grep -Eq '^ckanext.dcat.rdf.profiles ?= ?euro_dcat_ap_2 euro_dcat_ap_scheming$' /srv/app/ckan.ini"
+docker compose exec -T ckan sh -c "grep -Eq '^ckanext.dcat.rdf.profiles ?= ?euro_dcat_ap_2 euro_dcat_ap_scheming datahub_dcat_ap_sk$' /srv/app/ckan.ini"
 
 home_html="$(docker compose exec -T ckan wget -qO- http://localhost:5000)"
 printf '%s' "$home_html" | grep -q "DataHub Open Data"

@@ -20,6 +20,8 @@ CONFIG=/srv/app/ckan.ini
 CKAN_USER="${CKAN_SYSADMIN_NAME:-ckan_admin}"
 CSV=/tmp/datahub-demo-schools.csv
 PACKAGE_ID=testovaci-zoznam-skol
+MINISTRY_TITLE="Ministerstvo školstva, výskumu, vývoja a mládeže SR"
+DATASET_KEYWORDS="školy,vzdelávanie,základné školy,stredné školy"
 
 cat > "$CSV" <<'CSV'
 nazov_skoly,typ_skoly,obec,okres,kraj
@@ -38,7 +40,7 @@ CSV
 if ckanapi -c "$CONFIG" -u "$CKAN_USER" action organization_show id=minedu -j >/tmp/datahub-org.json 2>/tmp/datahub-org.err; then
   if ! ckanapi -c "$CONFIG" -u "$CKAN_USER" action organization_patch \
     id=minedu \
-    title="Ministerstvo školstva, výskumu, vývoja a mládeže Slovenskej republiky" \
+    title="$MINISTRY_TITLE" \
     description="Publikačná organizácia pre otvorené dáta rezortu školstva." \
     state=active >/dev/null 2>/tmp/datahub-org-update.err; then
     cat /tmp/datahub-org-update.err >&2
@@ -47,7 +49,7 @@ if ckanapi -c "$CONFIG" -u "$CKAN_USER" action organization_show id=minedu -j >/
 else
   if ! ckanapi -c "$CONFIG" -u "$CKAN_USER" action organization_create \
     name=minedu \
-    title="Ministerstvo školstva, výskumu, vývoja a mládeže Slovenskej republiky" \
+    title="$MINISTRY_TITLE" \
     description="Publikačná organizácia pre otvorené dáta rezortu školstva." \
     state=active >/dev/null 2>/tmp/datahub-org-create.err; then
     cat /tmp/datahub-org-create.err >&2
@@ -64,7 +66,7 @@ if ckanapi -c "$CONFIG" -u "$CKAN_USER" action package_show id="$PACKAGE_ID" -j 
     theme=http://publications.europa.eu/resource/authority/data-theme/EDUC \
     frequency=http://publications.europa.eu/resource/authority/frequency/ANNUAL \
     license_id=cc-by \
-    tag_string=demo,školy,vzdelávanie \
+    tag_string="$DATASET_KEYWORDS" \
     contact_name="DataHub Open Data tím" \
     contact_email=opendata@example.gov.sk \
     private:false >/dev/null 2>/tmp/datahub-package-update.err; then
@@ -80,7 +82,7 @@ else
     theme=http://publications.europa.eu/resource/authority/data-theme/EDUC \
     frequency=http://publications.europa.eu/resource/authority/frequency/ANNUAL \
     license_id=cc-by \
-    tag_string=demo,školy,vzdelávanie \
+    tag_string="$DATASET_KEYWORDS" \
     contact_name="DataHub Open Data tím" \
     contact_email=opendata@example.gov.sk \
     private:false >/dev/null 2>/tmp/datahub-package-create.err; then
@@ -104,6 +106,7 @@ csv_path = "/tmp/datahub-demo-schools.csv"
 ckan_user = os.environ.get("CKAN_SYSADMIN_NAME", "ckan_admin")
 package_id = "testovaci-zoznam-skol"
 resource_name = "Zoznam škôl - demo CSV"
+dataset_keywords = "školy,vzdelávanie,základné školy,stredné školy"
 
 context = {
     "model": model,
@@ -148,7 +151,13 @@ with open(csv_path, "rb") as csv_file:
     )
     resources.append(resource_payload)
     package["resources"] = resources
-    package["tag_string"] = "demo,školy,vzdelávanie"
+    package["tag_string"] = dataset_keywords
+    package["tags"] = [
+        {"name": "školy"},
+        {"name": "vzdelávanie"},
+        {"name": "základné školy"},
+        {"name": "stredné školy"},
+    ]
     toolkit.get_action("package_update")(context, package)
 PY
 

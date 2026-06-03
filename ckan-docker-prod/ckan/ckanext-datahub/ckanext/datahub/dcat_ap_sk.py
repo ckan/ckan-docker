@@ -11,6 +11,7 @@ DCAT = Namespace("http://www.w3.org/ns/dcat#")
 DCATAP = Namespace("http://data.europa.eu/r5r/")
 FILETYPE = Namespace("http://publications.europa.eu/resource/authority/file-type/")
 FREQ = Namespace("http://publications.europa.eu/resource/authority/frequency/")
+LANGUAGE = Namespace("http://publications.europa.eu/resource/authority/language/")
 LEG = Namespace("https://data.gov.sk/def/ontology/legislation/")
 TEXT = Namespace("http://www.iana.org/assignments/media-types/text/")
 THEME = Namespace("http://publications.europa.eu/resource/authority/data-theme/")
@@ -20,13 +21,16 @@ VCARD = Namespace("http://www.w3.org/2006/vcard/ns#")
 DEFAULTS = {
     "DATAHUB_DCAT_PUBLISHER_URI": "https://data.gov.sk/id/legal-subject/00164381",
     "DATAHUB_DCAT_PUBLISHER_NAME": (
-        "Ministerstvo školstva, výskumu, vývoja a mládeže Slovenskej republiky"
+        "Ministerstvo školstva, výskumu, vývoja a mládeže SR"
     ),
     "DATAHUB_DCAT_CONTACT_NAME": "DataHub Open Data tím",
     "DATAHUB_DCAT_CONTACT_EMAIL": "opendata@example.gov.sk",
     "DATAHUB_DCAT_CATALOG_TITLE": "DataHub Open Data",
     "DATAHUB_DCAT_CATALOG_DESCRIPTION": "Katalóg otvorených dát",
     "DATAHUB_DCAT_DEFAULT_LANGUAGE": "sk",
+    "DATAHUB_DCAT_DEFAULT_LANGUAGE_URI": (
+        "http://publications.europa.eu/resource/authority/language/SLK"
+    ),
     "DATAHUB_DCAT_DEFAULT_SPATIAL_URI": "https://data.gov.sk/id/nuts1/SK0",
     "DATAHUB_DCAT_DEFAULT_DATASET_TYPE_URI": "https://data.gov.sk/def/dataset-type/1",
     "DATAHUB_DCAT_DEFAULT_FORMAT_URI": (
@@ -175,6 +179,7 @@ class DataHubDCATAPSKProfile(RDFProfile):
         self.g.bind("filetype", FILETYPE)
         self.g.bind("foaf", FOAF)
         self.g.bind("freq", FREQ)
+        self.g.bind("language", LANGUAGE)
         self.g.bind("leg", LEG)
         self.g.bind("text", TEXT)
         self.g.bind("theme", THEME)
@@ -262,6 +267,15 @@ class DataHubDCATAPSKProfile(RDFProfile):
                     URIRef(self._setting("DATAHUB_DCAT_DEFAULT_DATASET_TYPE_URI")),
                 )
             )
+
+        self.g.remove((dataset_ref, DCTERMS.language, None))
+        self.g.add(
+            (
+                dataset_ref,
+                DCTERMS.language,
+                URIRef(self._setting("DATAHUB_DCAT_DEFAULT_LANGUAGE_URI")),
+            )
+        )
 
         landing_page = self._dataset_page_uri(dataset_dict, dataset_ref)
         self.g.remove((dataset_ref, DCAT.landingPage, None))

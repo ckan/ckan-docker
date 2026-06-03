@@ -268,6 +268,7 @@ publisher_name = os.environ.get("DATAHUB_DCAT_PUBLISHER_NAME")
 catalog_title = os.environ.get("DATAHUB_DCAT_CATALOG_TITLE")
 catalog_description = os.environ.get("DATAHUB_DCAT_CATALOG_DESCRIPTION")
 default_language = os.environ.get("DATAHUB_DCAT_DEFAULT_LANGUAGE")
+default_language_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_LANGUAGE_URI")
 default_spatial_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_SPATIAL_URI")
 default_dataset_type_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_DATASET_TYPE_URI")
 default_format_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_FORMAT_URI")
@@ -295,6 +296,8 @@ if not catalog_description:
     failures.append("Missing DATAHUB_DCAT_CATALOG_DESCRIPTION.")
 if not default_language:
     failures.append("Missing DATAHUB_DCAT_DEFAULT_LANGUAGE.")
+if not default_language_uri:
+    failures.append("Missing DATAHUB_DCAT_DEFAULT_LANGUAGE_URI.")
 if not default_spatial_uri:
     failures.append("Missing DATAHUB_DCAT_DEFAULT_SPATIAL_URI.")
 if not default_dataset_type_uri:
@@ -321,6 +324,7 @@ if failures:
     sys.exit(1)
 
 publisher = URIRef(publisher_uri)
+default_language_ref = URIRef(default_language_uri)
 default_spatial = URIRef(default_spatial_uri)
 default_dataset_type = URIRef(default_dataset_type_uri)
 default_format = URIRef(default_format_uri)
@@ -335,27 +339,60 @@ site_url = site_url.rstrip("/")
 expected_catalog = URIRef(site_url)
 expected_demo_dataset_document = URIRef(f"{site_url}/dataset/{demo_dataset_name}.ttl")
 expected_demo_dataset_page = URIRef(f"{site_url}/dataset/{demo_dataset_name}")
+expected_demo_keywords = {
+    Literal("školy", lang=default_language),
+    Literal("vzdelávanie", lang=default_language),
+    Literal("základné školy", lang=default_language),
+    Literal("stredné školy", lang=default_language),
+}
 
 verify_non_csv_regression_guard(failures, default_format, default_media_type)
 
 graph = Graph()
+catalog_content_type = ""
+catalog_payload = b""
 try:
     with urllib.request.urlopen("http://localhost:5000/catalog.ttl") as response:
-        graph.parse(data=response.read(), format="turtle")
+        catalog_content_type = response.headers.get("Content-Type", "")
+        catalog_payload = response.read()
+        graph.parse(data=catalog_payload, format="turtle")
 except Exception as exc:
     failures.append(f"Unable to fetch or parse catalog.ttl: {exc}")
     report_failures(failures)
     sys.exit(1)
 
 dataset_graph = Graph()
+dataset_content_type = ""
+dataset_payload = b""
 try:
     dataset_url = f"http://localhost:5000/dataset/{demo_dataset_name}.ttl"
     with urllib.request.urlopen(dataset_url) as response:
-        dataset_graph.parse(data=response.read(), format="turtle")
+        dataset_content_type = response.headers.get("Content-Type", "")
+        dataset_payload = response.read()
+        dataset_graph.parse(data=dataset_payload, format="turtle")
 except Exception as exc:
     failures.append(f"Unable to fetch or parse dataset detail TTL: {exc}")
     report_failures(failures)
     sys.exit(1)
+
+if "charset=utf-8" not in catalog_content_type.lower():
+    failures.append(
+        "catalog.ttl must be served with Content-Type text/turtle; charset=utf-8, "
+        f"got {catalog_content_type!r}."
+    )
+if "charset=utf-8" not in dataset_content_type.lower():
+    failures.append(
+        "Dataset detail TTL must be served with Content-Type text/turtle; charset=utf-8, "
+        f"got {dataset_content_type!r}."
+    )
+
+catalog_text = catalog_payload.decode("utf-8")
+dataset_text = dataset_payload.decode("utf-8")
+if "hydra:" in catalog_text or "http://www.w3.org/ns/hydra/core#" in catalog_text:
+    failures.append("catalog.ttl must not include Hydra pagination triples.")
+for marker in ("TestovacĂ", "Ministerstvo Ĺ", "KatalĂ", "DataHub Open Data tĂ"):
+    if marker in catalog_text or marker in dataset_text:
+        failures.append(f"RDF output contains mojibake marker {marker!r}.")
 
 catalogs = list(graph.subjects(RDF.type, term(DCAT, "Catalog")))
 if not catalogs:
@@ -437,6 +474,7 @@ for dataset in datasets:
         (DCTERMS.accrualPeriodicity, "dct:accrualPeriodicity"),
         (term(DCAT, "keyword"), "dcat:keyword"),
         (term(DCAT, "distribution"), "dcat:distribution"),
+        (DCTERMS.language, "dct:language"),
     ]
     for predicate, predicate_name in required_dataset_predicates:
         if not list(graph.objects(dataset, predicate)):
@@ -506,6 +544,22 @@ for dataset in detail_datasets:
         "dct:type",
         {default_dataset_type},
     )
+    require_exact_objects(
+        failures,
+        dataset_graph,
+        dataset,
+        DCTERMS.language,
+        "dct:language",
+        {default_language_ref},
+    )
+    if dataset == expected_demo_dataset_document:
+        actual_keywords = set(dataset_graph.objects(dataset, term(DCAT, "keyword")))
+        if actual_keywords != expected_demo_keywords:
+            failures.append(
+                f"{dataset} dcat:keyword must exactly match demo education keywords; "
+                f"expected {format_values(expected_demo_keywords)}, "
+                f"actual {format_values(actual_keywords)}."
+            )
     landing_pages = set(dataset_graph.objects(dataset, term(DCAT, "landingPage")))
     if expected_demo_dataset_page not in landing_pages:
         failures.append(

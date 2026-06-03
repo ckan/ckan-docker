@@ -10,6 +10,7 @@ volumes:
 services:
 
   ckan-dev:
+    platform: linux/amd64
     build:
       context: ckan/
       dockerfile: Dockerfile.dev
@@ -38,6 +39,7 @@ services:
       retries: 3
 
   datapusher:
+    platform: linux/amd64
     image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
     restart: unless-stopped
     healthcheck:
@@ -66,6 +68,7 @@ services:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
      
   solr:
+    platform: linux/amd64
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
     volumes:
       - solr_data:/var/solr

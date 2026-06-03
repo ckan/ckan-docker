@@ -21,6 +21,7 @@ services:
       - "0.0.0.0:${NGINX_SSLPORT_HOST}:${NGINX_SSLPORT}"
     
   ckan:
+    platform: linux/amd64
     build:
       context: ckan/
       dockerfile: Dockerfile
@@ -53,6 +54,7 @@ services:
       retries: 3
     
   datapusher:
+    platform: linux/amd64
     networks:
       - ckannet
       - dbnet
@@ -86,6 +88,7 @@ services:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
      
   solr:
+    platform: linux/amd64
     networks:
       - solrnet
     image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}

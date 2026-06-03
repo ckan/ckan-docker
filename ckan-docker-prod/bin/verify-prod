@@ -114,9 +114,13 @@ if not catalogs:
     failures.append("No dcat:Catalog found.")
 
 for catalog in catalogs:
-    if (catalog, DCTERMS.publisher, publisher) not in graph:
+    catalog_publishers = set(graph.objects(catalog, DCTERMS.publisher))
+    expected_publishers = {publisher}
+    if catalog_publishers != expected_publishers:
         failures.append(
-            f"{catalog} dct:publisher must equal DATAHUB_DCAT_PUBLISHER_URI."
+            f"{catalog} dct:publisher must exactly match "
+            f"expected {format_values(expected_publishers)}, "
+            f"actual {format_values(catalog_publishers)}."
         )
 
 if (publisher, RDF.type, FOAF.Agent) not in graph:
@@ -145,9 +149,13 @@ for dataset in datasets:
     for predicate, predicate_name in required_dataset_predicates:
         if not list(graph.objects(dataset, predicate)):
             add_missing(failures, dataset, predicate_name)
-    if (dataset, DCTERMS.publisher, publisher) not in graph:
+    dataset_publishers = set(graph.objects(dataset, DCTERMS.publisher))
+    expected_publishers = {publisher}
+    if dataset_publishers != expected_publishers:
         failures.append(
-            f"{dataset} dct:publisher must equal DATAHUB_DCAT_PUBLISHER_URI."
+            f"{dataset} dct:publisher must exactly match "
+            f"expected {format_values(expected_publishers)}, "
+            f"actual {format_values(dataset_publishers)}."
         )
 
 distributions = list(graph.subjects(RDF.type, term(DCAT, "Distribution")))
@@ -166,15 +174,21 @@ for distribution in distributions:
         if not list(graph.objects(distribution, predicate)):
             add_missing(failures, distribution, predicate_name)
 
-    if (distribution, DCTERMS.format, default_format) not in graph:
+    distribution_formats = set(graph.objects(distribution, DCTERMS.format))
+    expected_formats = {default_format}
+    if distribution_formats != expected_formats:
         failures.append(
-            f"{distribution} dct:format must equal "
-            "DATAHUB_DCAT_DEFAULT_FORMAT_URI as a URIRef."
+            f"{distribution} dct:format must exactly match "
+            f"expected {format_values(expected_formats)}, "
+            f"actual {format_values(distribution_formats)}."
         )
-    if (distribution, term(DCAT, "mediaType"), default_media_type) not in graph:
+    distribution_media_types = set(graph.objects(distribution, term(DCAT, "mediaType")))
+    expected_media_types = {default_media_type}
+    if distribution_media_types != expected_media_types:
         failures.append(
-            f"{distribution} dcat:mediaType must equal "
-            "DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI as a URIRef."
+            f"{distribution} dcat:mediaType must exactly match "
+            f"expected {format_values(expected_media_types)}, "
+            f"actual {format_values(distribution_media_types)}."
         )
     if (distribution, DCTERMS.format, Literal("CSV")) in graph:
         failures.append(f'{distribution} keeps literal dct:format "CSV".')

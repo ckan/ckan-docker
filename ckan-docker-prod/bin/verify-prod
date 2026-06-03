@@ -46,6 +46,10 @@ def report_failures(failures):
         print(f"- {failure}", file=sys.stderr)
 
 
+def format_values(values):
+    return "{" + ", ".join(sorted(value.n3() for value in values)) + "}"
+
+
 failures = []
 
 publisher_uri = os.environ.get("DATAHUB_DCAT_PUBLISHER_URI")
@@ -117,10 +121,14 @@ for catalog in catalogs:
 
 if (publisher, RDF.type, FOAF.Agent) not in graph:
     failures.append("Publisher URI is missing rdf:type foaf:Agent.")
-if not list(graph.objects(publisher, FOAF.name)):
-    failures.append("Publisher URI is missing foaf:name.")
-if (publisher, FOAF.name, Literal(publisher_name)) not in graph:
-    failures.append("Publisher URI foaf:name must equal DATAHUB_DCAT_PUBLISHER_NAME.")
+publisher_names = set(graph.objects(publisher, FOAF.name))
+expected_publisher_names = {Literal(publisher_name)}
+if publisher_names != expected_publisher_names:
+    failures.append(
+        "Publisher URI foaf:name must exactly equal DATAHUB_DCAT_PUBLISHER_NAME; "
+        f"expected {format_values(expected_publisher_names)}, "
+        f"actual {format_values(publisher_names)}."
+    )
 
 datasets = list(graph.subjects(RDF.type, term(DCAT, "Dataset")))
 if not datasets:
@@ -174,8 +182,10 @@ for distribution in distributions:
         failures.append(f'{distribution} keeps literal dcat:mediaType "text/csv".')
 
     for terms_of_use in graph.objects(distribution, term(LEG, "termsOfUse")):
-        required_terms_predicates = [
-            (RDF.type, "rdf:type leg:TermsOfUse", term(LEG, "TermsOfUse")),
+        if (terms_of_use, RDF.type, term(LEG, "TermsOfUse")) not in graph:
+            add_missing(failures, terms_of_use, "rdf:type leg:TermsOfUse")
+
+        exact_terms_predicates = [
             (
                 term(LEG, "authorsWorkType"),
                 "leg:authorsWorkType",
@@ -197,12 +207,15 @@ for distribution in distributions:
                 terms_personal_data_containment_type,
             ),
         ]
-        for predicate, predicate_name, expected_object in required_terms_predicates:
-            if expected_object is None:
-                if not list(graph.objects(terms_of_use, predicate)):
-                    add_missing(failures, terms_of_use, predicate_name)
-            elif (terms_of_use, predicate, expected_object) not in graph:
-                add_missing(failures, terms_of_use, predicate_name)
+        for predicate, predicate_name, expected_object in exact_terms_predicates:
+            actual_objects = set(graph.objects(terms_of_use, predicate))
+            expected_objects = {expected_object}
+            if actual_objects != expected_objects:
+                failures.append(
+                    f"{terms_of_use} {predicate_name} must exactly match "
+                    f"expected {format_values(expected_objects)}, "
+                    f"actual {format_values(actual_objects)}."
+                )
 
 if failures:
     report_failures(failures)

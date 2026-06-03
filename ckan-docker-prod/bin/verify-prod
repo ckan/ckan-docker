@@ -20,6 +20,151 @@ printf '%s' "$status_json" | grep -Eq '"site_title" ?: ?"DataHub Open Data"'
 
 docker compose exec -T ckan wget -qO- http://localhost:5000/catalog.ttl | grep -q "dcat:Catalog"
 
+docker compose exec -T ckan python - <<'PY'
+import os
+import sys
+import urllib.request
+
+from rdflib import Graph, URIRef, Literal
+from rdflib.namespace import DCTERMS, FOAF, RDF
+
+DCAT = URIRef("http://www.w3.org/ns/dcat#")
+LEG = URIRef("https://data.gov.sk/def/ontology/legislation/")
+
+
+def term(namespace, name):
+    return URIRef(str(namespace) + name)
+
+
+def add_missing(failures, subject, predicate_name):
+    failures.append(f"{subject} is missing {predicate_name}.")
+
+
+failures = []
+
+publisher_uri = os.environ.get("DATAHUB_DCAT_PUBLISHER_URI")
+default_format_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_FORMAT_URI")
+default_media_type_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI")
+
+if not publisher_uri:
+    failures.append("Missing DATAHUB_DCAT_PUBLISHER_URI.")
+if not default_format_uri:
+    failures.append("Missing DATAHUB_DCAT_DEFAULT_FORMAT_URI.")
+if not default_media_type_uri:
+    failures.append("Missing DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI.")
+
+if failures:
+    print("DCAT-AP-SK RDF validation failed:", file=sys.stderr)
+    for failure in failures:
+        print(f"- {failure}", file=sys.stderr)
+    sys.exit(1)
+
+publisher = URIRef(publisher_uri)
+default_format = URIRef(default_format_uri)
+default_media_type = URIRef(default_media_type_uri)
+
+graph = Graph()
+with urllib.request.urlopen("http://localhost:5000/catalog.ttl") as response:
+    graph.parse(data=response.read(), format="turtle")
+
+catalogs = list(graph.subjects(RDF.type, term(DCAT, "Catalog")))
+if not catalogs:
+    failures.append("No dcat:Catalog found.")
+
+for catalog in catalogs:
+    if (catalog, DCTERMS.publisher, publisher) not in graph:
+        failures.append(
+            f"{catalog} dct:publisher must equal DATAHUB_DCAT_PUBLISHER_URI."
+        )
+
+if (publisher, RDF.type, FOAF.Agent) not in graph:
+    failures.append("Publisher URI is missing rdf:type foaf:Agent.")
+if not list(graph.objects(publisher, FOAF.name)):
+    failures.append("Publisher URI is missing foaf:name.")
+
+datasets = list(graph.subjects(RDF.type, term(DCAT, "Dataset")))
+if not datasets:
+    failures.append("No dcat:Dataset found.")
+
+for dataset in datasets:
+    required_dataset_predicates = [
+        (DCTERMS.publisher, "dct:publisher"),
+        (term(DCAT, "theme"), "dcat:theme"),
+        (DCTERMS.accrualPeriodicity, "dct:accrualPeriodicity"),
+        (term(DCAT, "keyword"), "dcat:keyword"),
+        (term(DCAT, "distribution"), "dcat:distribution"),
+    ]
+    for predicate, predicate_name in required_dataset_predicates:
+        if not list(graph.objects(dataset, predicate)):
+            add_missing(failures, dataset, predicate_name)
+    if (dataset, DCTERMS.publisher, publisher) not in graph:
+        failures.append(
+            f"{dataset} dct:publisher must equal DATAHUB_DCAT_PUBLISHER_URI."
+        )
+
+distributions = list(graph.subjects(RDF.type, term(DCAT, "Distribution")))
+if not distributions:
+    failures.append("No dcat:Distribution found.")
+
+for distribution in distributions:
+    required_distribution_predicates = [
+        (term(DCAT, "accessURL"), "dcat:accessURL"),
+        (term(DCAT, "downloadURL"), "dcat:downloadURL"),
+        (DCTERMS.format, "dct:format"),
+        (term(DCAT, "mediaType"), "dcat:mediaType"),
+        (term(LEG, "termsOfUse"), "leg:termsOfUse"),
+    ]
+    for predicate, predicate_name in required_distribution_predicates:
+        if not list(graph.objects(distribution, predicate)):
+            add_missing(failures, distribution, predicate_name)
+
+    if (distribution, DCTERMS.format, default_format) not in graph:
+        failures.append(
+            f"{distribution} dct:format must equal "
+            "DATAHUB_DCAT_DEFAULT_FORMAT_URI as a URIRef."
+        )
+    if (distribution, term(DCAT, "mediaType"), default_media_type) not in graph:
+        failures.append(
+            f"{distribution} dcat:mediaType must equal "
+            "DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI as a URIRef."
+        )
+    if (distribution, DCTERMS.format, Literal("CSV")) in graph:
+        failures.append(f'{distribution} keeps literal dct:format "CSV".')
+    if (distribution, term(DCAT, "mediaType"), Literal("text/csv")) in graph:
+        failures.append(f'{distribution} keeps literal dcat:mediaType "text/csv".')
+
+    for terms_of_use in graph.objects(distribution, term(LEG, "termsOfUse")):
+        required_terms_predicates = [
+            (RDF.type, "rdf:type leg:TermsOfUse", term(LEG, "TermsOfUse")),
+            (term(LEG, "authorsWorkType"), "leg:authorsWorkType", None),
+            (term(LEG, "originalDatabaseType"), "leg:originalDatabaseType", None),
+            (
+                term(LEG, "databaseProtectedBySpecialRightsType"),
+                "leg:databaseProtectedBySpecialRightsType",
+                None,
+            ),
+            (
+                term(LEG, "personalDataContainmentType"),
+                "leg:personalDataContainmentType",
+                None,
+            ),
+        ]
+        for predicate, predicate_name, expected_object in required_terms_predicates:
+            if expected_object is None:
+                if not list(graph.objects(terms_of_use, predicate)):
+                    add_missing(failures, terms_of_use, predicate_name)
+            elif (terms_of_use, predicate, expected_object) not in graph:
+                add_missing(failures, terms_of_use, predicate_name)
+
+if failures:
+    print("DCAT-AP-SK RDF validation failed:", file=sys.stderr)
+    for failure in failures:
+        print(f"- {failure}", file=sys.stderr)
+    sys.exit(1)
+
+print("DCAT-AP-SK RDF validation passed.")
+PY
+
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_url ?= ?' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_title ?= ?DataHub Open Data$' /srv/app/ckan.ini"
 docker compose exec -T ckan sh -c "grep -Eq '^ckan.site_description ?= ?Katalog otvorenych dat$' /srv/app/ckan.ini"

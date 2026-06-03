@@ -8,6 +8,7 @@ setup(
     package_data={
         "ckanext.datahub": [
             "templates/*.html",
+            "templates/**/*.html",
         ],
     },
     entry_points="""

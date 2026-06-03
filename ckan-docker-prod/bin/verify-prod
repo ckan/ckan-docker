@@ -30,7 +30,9 @@ docker compose exec -T ckan sh -c "grep -Eq '^ckanext.dcat.rdf.profiles ?= ?euro
 
 home_html="$(docker compose exec -T ckan wget -qO- http://localhost:5000)"
 printf '%s' "$home_html" | grep -q "DataHub Open Data"
-if printf '%s' "$home_html" | grep -Eq "Powered by CKAN|CKAN API|CKAN Association|ckan-footer-logo"; then
+printf '%s' "$home_html" | grep -q "Open Data"
+printf '%s' "$home_html" | grep -q "Vitajte v Open Data"
+if printf '%s' "$home_html" | grep -Eq "Vitajte v CKAN|Welcome to CKAN|This is a nice introductory paragraph about CKAN|/base/images/ckan-logo.png|ckan-footer-logo|Powered by CKAN|CKAN API|CKAN Association"; then
   echo "Visible CKAN branding is still present on the homepage." >&2
   exit 1
 fi

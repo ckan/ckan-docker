@@ -49,15 +49,38 @@ def report_failures(failures):
 failures = []
 
 publisher_uri = os.environ.get("DATAHUB_DCAT_PUBLISHER_URI")
+publisher_name = os.environ.get("DATAHUB_DCAT_PUBLISHER_NAME")
 default_format_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_FORMAT_URI")
 default_media_type_uri = os.environ.get("DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI")
+terms_authors_work_type_uri = os.environ.get("DATAHUB_DCAT_TERMS_AUTHORS_WORK_TYPE")
+terms_original_database_type_uri = os.environ.get(
+    "DATAHUB_DCAT_TERMS_ORIGINAL_DATABASE_TYPE"
+)
+terms_database_protected_by_special_rights_type_uri = os.environ.get(
+    "DATAHUB_DCAT_TERMS_DATABASE_PROTECTED_BY_SPECIAL_RIGHTS_TYPE"
+)
+terms_personal_data_containment_type_uri = os.environ.get(
+    "DATAHUB_DCAT_TERMS_PERSONAL_DATA_CONTAINMENT_TYPE"
+)
 
 if not publisher_uri:
     failures.append("Missing DATAHUB_DCAT_PUBLISHER_URI.")
+if not publisher_name:
+    failures.append("Missing DATAHUB_DCAT_PUBLISHER_NAME.")
 if not default_format_uri:
     failures.append("Missing DATAHUB_DCAT_DEFAULT_FORMAT_URI.")
 if not default_media_type_uri:
     failures.append("Missing DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI.")
+if not terms_authors_work_type_uri:
+    failures.append("Missing DATAHUB_DCAT_TERMS_AUTHORS_WORK_TYPE.")
+if not terms_original_database_type_uri:
+    failures.append("Missing DATAHUB_DCAT_TERMS_ORIGINAL_DATABASE_TYPE.")
+if not terms_database_protected_by_special_rights_type_uri:
+    failures.append(
+        "Missing DATAHUB_DCAT_TERMS_DATABASE_PROTECTED_BY_SPECIAL_RIGHTS_TYPE."
+    )
+if not terms_personal_data_containment_type_uri:
+    failures.append("Missing DATAHUB_DCAT_TERMS_PERSONAL_DATA_CONTAINMENT_TYPE.")
 
 if failures:
     report_failures(failures)
@@ -66,6 +89,12 @@ if failures:
 publisher = URIRef(publisher_uri)
 default_format = URIRef(default_format_uri)
 default_media_type = URIRef(default_media_type_uri)
+terms_authors_work_type = URIRef(terms_authors_work_type_uri)
+terms_original_database_type = URIRef(terms_original_database_type_uri)
+terms_database_protected_by_special_rights_type = URIRef(
+    terms_database_protected_by_special_rights_type_uri
+)
+terms_personal_data_containment_type = URIRef(terms_personal_data_containment_type_uri)
 
 graph = Graph()
 try:
@@ -90,6 +119,8 @@ if (publisher, RDF.type, FOAF.Agent) not in graph:
     failures.append("Publisher URI is missing rdf:type foaf:Agent.")
 if not list(graph.objects(publisher, FOAF.name)):
     failures.append("Publisher URI is missing foaf:name.")
+if (publisher, FOAF.name, Literal(publisher_name)) not in graph:
+    failures.append("Publisher URI foaf:name must equal DATAHUB_DCAT_PUBLISHER_NAME.")
 
 datasets = list(graph.subjects(RDF.type, term(DCAT, "Dataset")))
 if not datasets:
@@ -145,17 +176,25 @@ for distribution in distributions:
     for terms_of_use in graph.objects(distribution, term(LEG, "termsOfUse")):
         required_terms_predicates = [
             (RDF.type, "rdf:type leg:TermsOfUse", term(LEG, "TermsOfUse")),
-            (term(LEG, "authorsWorkType"), "leg:authorsWorkType", None),
-            (term(LEG, "originalDatabaseType"), "leg:originalDatabaseType", None),
+            (
+                term(LEG, "authorsWorkType"),
+                "leg:authorsWorkType",
+                terms_authors_work_type,
+            ),
+            (
+                term(LEG, "originalDatabaseType"),
+                "leg:originalDatabaseType",
+                terms_original_database_type,
+            ),
             (
                 term(LEG, "databaseProtectedBySpecialRightsType"),
                 "leg:databaseProtectedBySpecialRightsType",
-                None,
+                terms_database_protected_by_special_rights_type,
             ),
             (
                 term(LEG, "personalDataContainmentType"),
                 "leg:personalDataContainmentType",
-                None,
+                terms_personal_data_containment_type,
             ),
         ]
         for predicate, predicate_name, expected_object in required_terms_predicates:

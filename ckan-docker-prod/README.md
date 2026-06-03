@@ -115,37 +115,54 @@ Before registering the catalog URL through the Slovak open data publication flow
 - `CKAN_SITE_URL` and `CKAN__SITE_URL` match the public HTTPS URL.
 - At least one public dataset exists.
 - The dataset has at least one resource or distribution.
-- The catalog URL is publicly reachable:
+- The catalog URL is publicly reachable.
+- Dataset detail RDF URLs linked from the catalog are publicly reachable.
 
-For local testing on this machine, the catalog URL is:
+The national portal should receive the public `catalog.ttl` URL, not a localhost URL, private IP address, or Docker hostname.
+
+## DCAT-AP-SK 3.0 Endpoints
+
+For local testing:
 
 ```text
 http://localhost:5000/catalog.ttl
+http://localhost:5000/dataset/testovaci-zoznam-skol.ttl
 ```
 
-For slovensko.sk registration, use the public HTTPS URL exposed by the server reverse proxy:
+For slovensko.sk registration, use the public HTTPS catalog URL exposed by the server reverse proxy:
 
 ```text
 https://your-public-domain.example/catalog.ttl
 ```
 
-- Dataset RDF is publicly reachable:
+The catalog document links each dataset using `dcat:dataset`. The national catalog will fetch those dataset document URLs and expects a complete `dcat:Dataset` record including its distributions.
+
+Dataset RDF is publicly reachable at:
 
 ```text
 https://your-public-domain.example/dataset/<dataset-name>.ttl
 ```
 
-The national portal should receive the public `catalog.ttl` URL, not a localhost URL, private IP address, or Docker hostname.
-
 ## DCAT-AP-SK Metadata
 
-The final RDF profile `datahub_dcat_ap_sk` reads Slovak publisher and legal metadata from `.env`.
+The default CKAN DCAT profile chain is:
+
+```text
+euro_dcat_ap_3 euro_dcat_ap_scheming datahub_dcat_ap_sk
+```
+
+The final RDF profile `datahub_dcat_ap_sk` reads Slovak publisher, catalog, dataset, distribution, and legal metadata from `.env`.
 
 The Ministry of Education defaults are:
 
 ```env
 DATAHUB_DCAT_PUBLISHER_URI=https://data.gov.sk/id/legal-subject/00164381
 DATAHUB_DCAT_PUBLISHER_NAME=Ministerstvo školstva, výskumu, vývoja a mládeže Slovenskej republiky
+DATAHUB_DCAT_CATALOG_TITLE=DataHub Open Data
+DATAHUB_DCAT_CATALOG_DESCRIPTION=Katalóg otvorených dát
+DATAHUB_DCAT_DEFAULT_LANGUAGE=sk
+DATAHUB_DCAT_DEFAULT_SPATIAL_URI=https://data.gov.sk/id/nuts1/SK0
+DATAHUB_DCAT_DEFAULT_DATASET_TYPE_URI=https://data.gov.sk/def/dataset-type/1
 DATAHUB_DCAT_DEFAULT_FORMAT_URI=http://publications.europa.eu/resource/authority/file-type/CSV
 DATAHUB_DCAT_DEFAULT_MEDIA_TYPE_URI=http://www.iana.org/assignments/media-types/text/csv
 ```

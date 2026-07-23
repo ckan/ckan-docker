@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ckan
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ckan
+      app.kubernetes.io/component: web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ckan
+        app.kubernetes.io/component: web
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      securityContext:
+        fsGroup: 502
+        fsGroupChangePolicy: OnRootMismatch
+      initContainers:
+        - name: wait-for-initialization
+          image: docker.io/library/postgres:16-alpine
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              until [ "$(psql "$CKAN_SQLALCHEMY_URL" -tAc \
+                "SELECT count(*) FROM \"user\" WHERE name = '$CKAN_SYSADMIN_NAME'" \
+                2>/dev/null)" = "1" ]; do
+                echo "Waiting for CKAN initialization"
+                sleep 5
+              done
+          envFrom:
+            - secretRef:
+                name: ckan-secrets
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+      containers:
+        - name: ckan
+          image: docker.io/ckan/ckan-base:2.11
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MAINTENANCE_MODE
+              value: "true"
+          envFrom:
+            - configMapRef:
+                name: ckan-config
+            - secretRef:
+                name: ckan-secrets
+          ports:
+            - name: http
+              containerPort: 5000
+          startupProbe:
+            httpGet:
+              path: /api/action/status_show
+              port: http
+            failureThreshold: 30
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /api/action/status_show
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/action/status_show
+              port: http
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              memory: 2Gi
+          volumeMounts:
+            - name: storage
+              mountPath: /var/lib/ckan
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: ckan-storage

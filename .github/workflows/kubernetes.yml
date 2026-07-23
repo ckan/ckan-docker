@@ -1,0 +1,50 @@
+name: Validate Kubernetes manifests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: v1.30.0
+
+      - name: Render Kustomize targets
+        run: |
+          mkdir -p rendered
+          kubectl kustomize kubernetes/base > rendered/ckan-base.yaml
+          kubectl kustomize kubernetes/overlays/int > rendered/ckan-int.yaml
+          kubectl kustomize kubernetes/overlays/prod > rendered/ckan-prod.yaml
+
+      - name: Validate Kubernetes schemas
+        uses: docker://ghcr.io/yannh/kubeconform:v0.8.0
+        with:
+          args: >-
+            -strict
+            -summary
+            -kubernetes-version 1.30.0
+            /github/workspace/rendered
+
+      - name: Check immutable image promotion contract
+        run: |
+          int_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-int.yaml | sort -u)"
+          prod_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-prod.yaml | sort -u)"
+          test -n "$int_images"
+          test "$int_images" = "$prod_images"
+
+      - name: Reject committed Secret resources
+        run: |
+          if grep -q '^kind: Secret$' rendered/ckan-base.yaml; then
+            echo "The Kubernetes base must consume external Secrets, not render them"
+            exit 1
+          fi

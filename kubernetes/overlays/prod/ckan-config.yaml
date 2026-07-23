@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ckan-config
+data:
+  CKAN_SITE_ID: data-at-spark
+  CKAN_SITE_URL: https://data.buspark.io

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ckan-config
+data:
+  CKAN_SITE_ID: ckan
+  CKAN_SITE_URL: https://ckan.example.org
+  CKAN_STORAGE_PATH: /var/lib/ckan
+  CKAN_SOLR_URL: http://solr:8983/solr/ckan
+  CKAN_REDIS_URL: redis://redis:6379/1
+  CKAN_DATAPUSHER_URL: http://datapusher:8800
+  CKAN__DATAPUSHER__CALLBACK_URL_BASE: http://ckan:5000
+  CKAN__PLUGINS: image_view text_view datatables_view datastore datapusher envvars
+  UWSGI_HARAKIRI: "60"
+  TZ: UTC

@@ -1,5 +1,9 @@
 # Docker Compose setup for CKAN
 
+This fork contains a site-specific overlay for
+[Data@Spark](data-at-spark/README.md). The upstream Compose files remain the
+baseline and are combined with `data-at-spark/compose.yml` when building that
+site.
 
 - [Docker Compose setup for CKAN](#docker-compose-setup-for-ckan)
   - [1.  Overview](#1--overview)

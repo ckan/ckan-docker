@@ -1,0 +1,6 @@
+**
+!ckan/
+!ckan/docker-entrypoint.d/
+!ckan/docker-entrypoint.d/**
+!ckan/patches/
+!ckan/patches/**

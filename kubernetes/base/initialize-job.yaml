@@ -16,10 +16,19 @@ spec:
       securityContext:
         fsGroup: 502
         fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: initialize
           image: docker.io/ckan/ckan-base:2.11.5
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 503
           command:
             - /bin/sh
             - -ec

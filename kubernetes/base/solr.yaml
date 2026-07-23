@@ -17,10 +17,20 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/arch: amd64
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: solr
           image: docker.io/ckan/ckan-solr:2.11-solr9
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 8983
           ports:
             - name: solr
               containerPort: 8983

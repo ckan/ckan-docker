@@ -16,10 +16,20 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/arch: amd64
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: datapusher
           image: docker.io/ckan/ckan-base-datapusher:0.0.21
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 92
           ports:
             - name: http
               containerPort: 8800

@@ -13,10 +13,20 @@ spec:
       restartPolicy: OnFailure
       nodeSelector:
         kubernetes.io/arch: amd64
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: reindex
           image: docker.io/ckan/ckan-base:2.11.5
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 503
           command:
             - /bin/sh
             - -ec

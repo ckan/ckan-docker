@@ -21,10 +21,19 @@ spec:
       securityContext:
         fsGroup: 502
         fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
       initContainers:
         - name: wait-for-initialization
           image: docker.io/library/postgres:16-alpine
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 70
           command:
             - /bin/sh
             - -ec
@@ -55,6 +64,13 @@ spec:
         - name: ckan
           image: docker.io/ckan/ckan-base:2.11.5
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 503
           env:
             - name: MAINTENANCE_MODE
               value: "true"

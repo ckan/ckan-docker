@@ -36,6 +36,9 @@ jobs:
             -kubernetes-version 1.30.0
             /github/workspace/rendered
 
+      - name: Validate restricted profile controls
+        run: python3 kubernetes/validate_restricted_profile.py rendered/ckan-base.yaml rendered/ckan-example.yaml
+
       - name: Check immutable image promotion contract
         run: |
           base_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-base.yaml | sort -u)"

@@ -95,3 +95,7 @@ kubectl -n ckan-example delete job ckan-rebuild-search --ignore-not-found
 Deployments, StatefulSets, probes, and restart policies provide reconciliation
 after an ordinary process or container failure. This baseline does not claim
 multi-node database or Solr high availability.
+
+`readOnlyRootFilesystem` is intentionally deferred for now. These images still
+need image-specific writable paths, and that behavior has not yet been validated
+against the mounted volumes in this baseline.

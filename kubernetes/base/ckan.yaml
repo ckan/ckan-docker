@@ -31,10 +31,9 @@ spec:
             - |
               attempt=1
               max_attempts=60
-              until [ "$(psql "$CKAN_SQLALCHEMY_URL" -tAc \
-                -v "sysadmin_name=$CKAN_SYSADMIN_NAME" \
-                "SELECT count(*) FROM \"user\" WHERE name = :'sysadmin_name'" \
-                2>/dev/null)" = "1" ]; do
+              until [ "$(psql "$CKAN_SQLALCHEMY_URL" -tA -c \
+                "SELECT EXISTS (SELECT 1 FROM \"user\" WHERE sysadmin IS TRUE)" \
+                2>/dev/null)" = "t" ]; do
                 if [ "$attempt" -ge "$max_attempts" ]; then
                   echo "Timed out waiting for CKAN initialization" >&2
                   exit 1

@@ -23,7 +23,9 @@ spec:
           command:
             - /bin/sh
             - -ec
-            - python3 /srv/app/prerun.py
+            - |
+              ckan config-tool /srv/app/ckan.ini ckan.datapusher.api_token=xxx
+              python3 /srv/app/prerun.py
           envFrom:
             - configMapRef:
                 name: ckan-config

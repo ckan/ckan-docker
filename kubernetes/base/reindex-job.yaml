@@ -21,6 +21,7 @@ spec:
             - /bin/sh
             - -ec
             - |
+              ckan config-tool /srv/app/ckan.ini ckan.datapusher.api_token=xxx
               attempt=1
               max_attempts=60
               until ckan -c /srv/app/ckan.ini user show "$CKAN_SYSADMIN_NAME" \

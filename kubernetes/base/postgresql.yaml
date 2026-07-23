@@ -6,16 +6,23 @@ data:
   10_create_ckandb.sh: |
     #!/bin/bash
     set -e
-    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
-        CREATE ROLE "$CKAN_DB_USER" NOSUPERUSER CREATEDB CREATEROLE LOGIN PASSWORD '$CKAN_DB_PASSWORD';
-        CREATE DATABASE "$CKAN_DB" OWNER "$CKAN_DB_USER" ENCODING 'utf-8';
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" \
+        -v "ckan_db_user=$CKAN_DB_USER" \
+        -v "ckan_db_password=$CKAN_DB_PASSWORD" \
+        -v "ckan_db=$CKAN_DB" <<-'EOSQL'
+        CREATE ROLE :"ckan_db_user" NOSUPERUSER CREATEDB CREATEROLE LOGIN PASSWORD :'ckan_db_password';
+        CREATE DATABASE :"ckan_db" OWNER :"ckan_db_user" ENCODING 'utf-8';
     EOSQL
   20_create_datastore.sh: |
     #!/bin/bash
     set -e
-    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
-        CREATE ROLE "$DATASTORE_READONLY_USER" NOSUPERUSER NOCREATEDB NOCREATEROLE LOGIN PASSWORD '$DATASTORE_READONLY_PASSWORD';
-        CREATE DATABASE "$DATASTORE_DB" OWNER "$CKAN_DB_USER" ENCODING 'utf-8';
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" \
+        -v "datastore_readonly_user=$DATASTORE_READONLY_USER" \
+        -v "datastore_readonly_password=$DATASTORE_READONLY_PASSWORD" \
+        -v "datastore_db=$DATASTORE_DB" \
+        -v "ckan_db_user=$CKAN_DB_USER" <<-'EOSQL'
+        CREATE ROLE :"datastore_readonly_user" NOSUPERUSER NOCREATEDB NOCREATEROLE LOGIN PASSWORD :'datastore_readonly_password';
+        CREATE DATABASE :"datastore_db" OWNER :"ckan_db_user" ENCODING 'utf-8';
     EOSQL
 ---
 apiVersion: apps/v1

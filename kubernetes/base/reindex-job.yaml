@@ -21,9 +21,16 @@ spec:
             - /bin/sh
             - -ec
             - |
+              attempt=1
+              max_attempts=60
               until ckan -c /srv/app/ckan.ini user show "$CKAN_SYSADMIN_NAME" \
                 >/dev/null 2>&1; do
-                echo "Waiting for CKAN initialization"
+                if [ "$attempt" -ge "$max_attempts" ]; then
+                  echo "Timed out waiting for CKAN initialization" >&2
+                  exit 1
+                fi
+                echo "Waiting for CKAN initialization ($attempt/$max_attempts)"
+                attempt=$((attempt + 1))
                 sleep 5
               done
               ckan -c /srv/app/ckan.ini search-index rebuild

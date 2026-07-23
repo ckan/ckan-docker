@@ -29,10 +29,18 @@ spec:
             - /bin/sh
             - -ec
             - |
+              attempt=1
+              max_attempts=60
               until [ "$(psql "$CKAN_SQLALCHEMY_URL" -tAc \
-                "SELECT count(*) FROM \"user\" WHERE name = '$CKAN_SYSADMIN_NAME'" \
+                -v "sysadmin_name=$CKAN_SYSADMIN_NAME" \
+                "SELECT count(*) FROM \"user\" WHERE name = :'sysadmin_name'" \
                 2>/dev/null)" = "1" ]; do
-                echo "Waiting for CKAN initialization"
+                if [ "$attempt" -ge "$max_attempts" ]; then
+                  echo "Timed out waiting for CKAN initialization" >&2
+                  exit 1
+                fi
+                echo "Waiting for CKAN initialization ($attempt/$max_attempts)"
+                attempt=$((attempt + 1))
                 sleep 5
               done
           envFrom:

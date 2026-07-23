@@ -1,4 +1,4 @@
-FROM ckan/ckan-dev:2.11
+FROM docker.io/ckan/ckan-dev:2.11
 
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file

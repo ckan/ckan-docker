@@ -57,7 +57,7 @@ services:
     networks:
       - ckannet
       - dbnet
-    image: ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
+    image: docker.io/ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]
@@ -71,15 +71,15 @@ services:
     networks:
       - dbnet
     environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
-      - CKAN_DB_USER
-      - CKAN_DB_PASSWORD
-      - CKAN_DB
-      - DATASTORE_READONLY_USER
-      - DATASTORE_READONLY_PASSWORD
-      - DATASTORE_DB
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      CKAN_DB_USER: ${CKAN_DB_USER}
+      CKAN_DB_PASSWORD: ${CKAN_DB_PASSWORD}
+      CKAN_DB: ${CKAN_DB}
+      DATASTORE_READONLY_USER: ${DATASTORE_READONLY_USER}
+      DATASTORE_READONLY_PASSWORD: ${DATASTORE_READONLY_PASSWORD}
+      DATASTORE_DB: ${DATASTORE_DB}
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -90,7 +90,7 @@ services:
     platform: linux/amd64
     networks:
       - solrnet
-    image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
+    image: docker.io/ckan/ckan-solr:${SOLR_IMAGE_VERSION}
     volumes:
       - solr_data:/var/solr
     restart: unless-stopped
@@ -98,7 +98,7 @@ services:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/"]
 
   redis:
-    image: redis:${REDIS_VERSION}
+    image: docker.io/library/redis:${REDIS_VERSION}
     networks:
       - redisnet
     restart: unless-stopped

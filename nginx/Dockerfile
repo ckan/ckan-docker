@@ -1,4 +1,4 @@
-FROM nginx:stable-alpine
+FROM docker.io/library/nginx:stable-alpine
 
 ENV NGINX_DIR=/etc/nginx
 

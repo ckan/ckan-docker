@@ -3,7 +3,8 @@
 This fork contains a site-specific overlay for
 [Data@Spark](data-at-spark/README.md). The upstream Compose files remain the
 baseline and are combined with `data-at-spark/compose.yml` when building that
-site.
+site. Rootless Podman users can use the standard Compose files directly; Fedora
+and SELinux considerations are documented in [docs/podman.md](docs/podman.md).
 
 - [Docker Compose setup for CKAN](#docker-compose-setup-for-ckan)
   - [1.  Overview](#1--overview)

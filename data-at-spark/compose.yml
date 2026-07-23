@@ -1,0 +1,16 @@
+services:
+  ckan:
+    build:
+      context: .
+      dockerfile: data-at-spark/Dockerfile
+      args:
+        CKAN_VERSION: ${DATA_AT_SPARK_CKAN_VERSION:-2.11.5}
+        CKANEXT_SPARK_COMMIT: ${DATA_AT_SPARK_EXTENSION_COMMIT:-c7496bcb07d3e6ca12dcacb5b0b09f604d8f2203}
+    environment:
+      CKAN_SITE_URL: ${DATA_AT_SPARK_SITE_URL}
+      CKAN__SITE_TITLE: ${DATA_AT_SPARK_SITE_TITLE:-Data@Spark}
+      CKAN__SITE_DESCRIPTION: ${DATA_AT_SPARK_SITE_DESCRIPTION:-Spark's public data catalog}
+      CKAN__PLUGINS: ${DATA_AT_SPARK_CKAN_PLUGINS}
+
+  solr:
+    image: ckan/ckan-solr:${DATA_AT_SPARK_SOLR_VERSION:-2.11-solr9}

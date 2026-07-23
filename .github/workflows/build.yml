@@ -45,4 +45,22 @@ jobs:
           file: ./ckan/Dockerfile
           push: false
           tags: kowhai/ckan-docker-ckan:test-build-only
-      
+
+    -  name: Render Data@Spark Compose configuration
+       run: |
+          cp .env.example .env
+          cp data-at-spark/.env.example data-at-spark/.env
+          docker compose \
+            --env-file .env \
+            --env-file data-at-spark/.env \
+            -f docker-compose.yml \
+            -f data-at-spark/compose.yml \
+            config
+
+    -  name: Data@Spark CKAN build
+       uses: docker/build-push-action@v2
+       with:
+          context: .
+          file: ./data-at-spark/Dockerfile
+          push: false
+          tags: bu-spark/data-at-spark:test-build-only

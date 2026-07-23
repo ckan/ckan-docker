@@ -14,7 +14,7 @@ and secret manager.
 
 Downstream overlays should inherit the CKAN image reference from the base.
 Promote an immutable image digest by replacing
-`docker.io/ckan/ckan-base:2.11` at render or delivery time.
+`docker.io/ckan/ckan-base:2.11.5` at render or delivery time.
 
 ## Prerequisites
 
@@ -60,7 +60,7 @@ the image pipeline:
 
 ```bash
 kubectl kustomize kubernetes/examples/single-node |
-  sed 's|docker.io/ckan/ckan-base:2.11|registry.example/ckan@sha256:DIGEST|' |
+  sed 's|docker.io/ckan/ckan-base:2.11.5|registry.example/ckan@sha256:DIGEST|' |
   kubectl apply -f -
 ```
 

@@ -54,7 +54,7 @@ spec:
               memory: 128Mi
       containers:
         - name: ckan
-          image: docker.io/ckan/ckan-base:2.11
+          image: docker.io/ckan/ckan-base:2.11.5
           imagePullPolicy: IfNotPresent
           env:
             - name: MAINTENANCE_MODE

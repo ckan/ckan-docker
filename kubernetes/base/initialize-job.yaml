@@ -18,7 +18,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
       containers:
         - name: initialize
-          image: docker.io/ckan/ckan-base:2.11
+          image: docker.io/ckan/ckan-base:2.11.5
           imagePullPolicy: IfNotPresent
           command:
             - /bin/sh

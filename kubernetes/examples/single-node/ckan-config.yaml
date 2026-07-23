@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ckan-config
+data:
+  CKAN_SITE_ID: ckan-example
+  CKAN_SITE_URL: https://ckan.example.org

@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: data-at-spark-prod
+  name: ckan-example

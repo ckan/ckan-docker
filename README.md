@@ -5,8 +5,8 @@ This fork contains a site-specific overlay for
 baseline and are combined with `data-at-spark/compose.yml` when building that
 site. Rootless Podman users can use the standard Compose files directly; Fedora
 and SELinux considerations are documented in [docs/podman.md](docs/podman.md).
-Kubernetes users can start with the reusable Kustomize base and environment
-overlays documented in [kubernetes/README.md](kubernetes/README.md).
+Kubernetes users can start with the reusable Kustomize base and overlays
+documented in [kubernetes/README.md](kubernetes/README.md).
 
 - [Docker Compose setup for CKAN](#docker-compose-setup-for-ckan)
   - [1.  Overview](#1--overview)

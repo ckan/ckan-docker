@@ -9,12 +9,12 @@ and secret manager.
 
 - `base/` contains the reusable workloads, services, probes, and storage
   interfaces.
-- `overlays/int/` and `overlays/prod/` demonstrate environment-specific
-  namespaces and public CKAN configuration.
+- `examples/single-node/` demonstrates a neutral namespace and public CKAN
+  configuration without carrying any downstream deployment identity.
 
-Both overlays inherit the same CKAN image reference. Promote one immutable
-image digest by replacing `docker.io/ckan/ckan-base:2.11` at render or delivery
-time in both environments.
+Downstream overlays should inherit the CKAN image reference from the base.
+Promote an immutable image digest by replacing
+`docker.io/ckan/ckan-base:2.11` at render or delivery time.
 
 ## Prerequisites
 
@@ -51,21 +51,22 @@ The three database URLs must use the Kubernetes Service hostname `db`.
 Kustomize is built into `kubectl`:
 
 ```bash
-kubectl kustomize kubernetes/overlays/int
-kubectl kustomize kubernetes/overlays/prod
+kubectl kustomize kubernetes/base
+kubectl kustomize kubernetes/examples/single-node
 ```
 
 Before deployment, replace the CKAN image with the exact digest produced by
 the image pipeline:
 
 ```bash
-kubectl kustomize kubernetes/overlays/int |
+kubectl kustomize kubernetes/examples/single-node |
   sed 's|docker.io/ckan/ckan-base:2.11|registry.example/ckan@sha256:DIGEST|' |
   kubectl apply -f -
 ```
 
 Use a delivery system's native image substitution in production rather than
-the illustrative `sed` command. Supply the same digest to both overlays.
+the illustrative `sed` command. Supply the same digest to each downstream
+environment.
 
 ## Fresh deployment order
 
@@ -87,8 +88,8 @@ configuration that requires another migration or reindex, delete only the
 relevant completed Job and reapply the overlay:
 
 ```bash
-kubectl -n data-at-spark-int delete job ckan-initialize --ignore-not-found
-kubectl -n data-at-spark-int delete job ckan-rebuild-search --ignore-not-found
+kubectl -n ckan-example delete job ckan-initialize --ignore-not-found
+kubectl -n ckan-example delete job ckan-rebuild-search --ignore-not-found
 ```
 
 Deployments, StatefulSets, probes, and restart policies provide reconciliation

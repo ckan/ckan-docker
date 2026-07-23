@@ -23,8 +23,7 @@ jobs:
         run: |
           mkdir -p rendered
           kubectl kustomize kubernetes/base > rendered/ckan-base.yaml
-          kubectl kustomize kubernetes/overlays/int > rendered/ckan-int.yaml
-          kubectl kustomize kubernetes/overlays/prod > rendered/ckan-prod.yaml
+          kubectl kustomize kubernetes/examples/single-node > rendered/ckan-example.yaml
 
       - name: Validate Kubernetes schemas
         uses: docker://ghcr.io/yannh/kubeconform:v0.8.0
@@ -37,14 +36,14 @@ jobs:
 
       - name: Check immutable image promotion contract
         run: |
-          int_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-int.yaml | sort -u)"
-          prod_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-prod.yaml | sort -u)"
-          test -n "$int_images"
-          test "$int_images" = "$prod_images"
+          base_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-base.yaml | sort -u)"
+          example_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-example.yaml | sort -u)"
+          test -n "$base_images"
+          test "$base_images" = "$example_images"
 
       - name: Reject committed Secret resources
         run: |
-          if grep -q '^kind: Secret$' rendered/ckan-base.yaml; then
+          if grep -q '^kind: Secret$' rendered/*.yaml; then
             echo "The Kubernetes base must consume external Secrets, not render them"
             exit 1
           fi

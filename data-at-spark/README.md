@@ -19,8 +19,13 @@ cp data-at-spark/.env.example data-at-spark/.env
 ```
 
 Replace every credential and secret in `.env`. The Data@Spark file contains
-only site and version settings; use a different site URL for a local or future
-integration environment.
+only site and version settings.
+
+`int` is an environment name, not a source branch. Keep the Data@Spark site
+URLs aligned with the deployment target:
+
+- `https://int.data.buspark.io` for integration
+- `https://data.buspark.io` for production
 
 ## Render the merged configuration
 
@@ -59,3 +64,41 @@ Data@Spark application configuration.
 
 Build and tag the image with the source Git SHA. Integration and production
 must deploy that same immutable image; only their configuration differs.
+
+## Kubernetes overlays
+
+The Kubernetes deployment overlays live under `data-at-spark/kubernetes/`:
+
+- `data-at-spark/kubernetes/int`
+- `data-at-spark/kubernetes/prod`
+
+Render either overlay with `kubectl kustomize`:
+
+```bash
+kubectl kustomize data-at-spark/kubernetes/int
+kubectl kustomize data-at-spark/kubernetes/prod
+```
+
+Both overlays inherit `kubernetes/base` and only layer Data@Spark-specific
+identity, namespaces, and environment labels. Their namespaces enforce the
+Kubernetes restricted Pod Security profile. Ingress, TLS, storage class, and
+secret-manager wiring stay cluster-specific and must be supplied by the
+deployment environment.
+
+Before applying either overlay, render it and substitute the exact Data@Spark
+image digest produced by the release pipeline:
+
+```bash
+kubectl kustomize data-at-spark/kubernetes/int > rendered-int.yaml
+python3 kubernetes/substitute_ckan_image.py \
+  registry.example/data-at-spark@sha256:DIGEST \
+  rendered-int.yaml
+```
+
+Use the same immutable image reference for production. The substitution helper
+fails unless the reference contains a full SHA-256 digest and exactly the CKAN
+web, initialization, and reindex images are replaced.
+
+For a fresh environment, apply the overlay's `namespace.yaml` first, create the
+external `ckan-secrets` Secret in that namespace, then apply the promoted
+rendered manifest. Do not commit the rendered manifest or Secret values.

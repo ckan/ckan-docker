@@ -113,6 +113,10 @@ def main() -> int:
     )
     client.upload_file(str(source), bucket, object_key, Config=transfer)
 
+    resource_package_id = package["id"]
+    if os.environ.get("CKAN_TEST_FORCE_REGISTRATION_FAILURE") == "1":
+        resource_package_id = str(uuid.uuid4())
+
     try:
         result = action(
             site_url,
@@ -120,7 +124,7 @@ def main() -> int:
             "resource_create",
             {
                 "id": resource_id,
-                "package_id": package["id"],
+                "package_id": resource_package_id,
                 "name": source.name,
                 "url": source.name,
                 "url_type": "upload",

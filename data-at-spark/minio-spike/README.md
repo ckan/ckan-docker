@@ -132,10 +132,17 @@ The complete local path was exercised on 2026-07-24 with CKAN 2.11.5:
   in DataStore while the dataset remained private.
 - after a separate publication action, anonymous CKAN download redirected to a
   working signed URL.
+- forced final-registration failure removed the already-uploaded object rather
+  than silently leaving it orphaned.
 
 Creating a placeholder resource before uploading was also tested and rejected:
 it caused DataPusher to fetch the placeholder immediately. The UUID-first,
 object-first sequence in `direct_upload.py` avoids that race.
+
+CKAN `resource_delete` returned success but did **not** delete the corresponding
+MinIO object. This is explicit, reproducible behavior—not a silently accepted
+partial failure—but it blocks production acceptance until Data@Spark defines
+and implements deletion/purge and retention semantics.
 
 ## Security boundary
 
@@ -172,3 +179,7 @@ This extension is not patched or forked in this task. Automated imports should
 use the direct multipart path demonstrated by `direct_upload.py`; interactive
 web uploads still require an upstream fix, a maintained fork, or a conservative
 upload-size ceiling before accepting large files in production.
+
+`resource_delete` also leaves the stored object in place. Production must add
+an explicit object purge/retention path and verify it against the selected
+object store.

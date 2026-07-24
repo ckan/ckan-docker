@@ -1,0 +1,68 @@
+# Test-only overlay: local MinIO backend for the ckanext-s3filestore Phase 1
+# spike (issue #9). Layers on top of the base Compose stack and the
+# data-at-spark/compose.yml layer; adds services and env-driven ckan config,
+# does not modify or duplicate either.
+#
+# LOCAL/TEST ONLY. Every credential below is an example value meant to be
+# copied from .env.example. Never point this overlay at a real S3/R2 account.
+
+volumes:
+  minio_data:
+
+services:
+
+  minio:
+    image: quay.io/minio/minio:${MINIO_IMAGE_VERSION:-RELEASE.2025-09-07T16-13-09Z}
+    command: server /data --console-address ":9001"
+    networks:
+      - ckannet
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin123}
+    volumes:
+      - minio_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio-init:
+    image: quay.io/minio/mc:${MINIO_MC_IMAGE_VERSION:-RELEASE.2025-08-13T08-35-41Z}
+    networks:
+      - ckannet
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MINIO_ENDPOINT_URL: "http://minio:9000"
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin123}
+      MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME:-data-at-spark-local-test}
+    entrypoint: ["/bin/sh", "/minio-init/init-bucket.sh"]
+    volumes:
+      # Compose resolves bind-mount paths relative to the project directory
+      # (the first -f file's directory, i.e. the repo root in every
+      # documented invocation here) — not relative to this file.
+      - ./data-at-spark/minio-spike/init-bucket.sh:/minio-init/init-bucket.sh:ro,Z
+    restart: "no"
+
+  ckan:
+    depends_on:
+      minio-init:
+        condition: service_completed_successfully
+    environment:
+      CKAN_SITE_URL: ${DATA_AT_SPARK_SITE_URL:-https://localhost:8443}
+      CKAN__PLUGINS: ${DATA_AT_SPARK_CKAN_PLUGINS_WITH_S3FILESTORE:-image_view text_view datatables_view datastore datapusher envvars spark s3filestore}
+      CKANEXT__S3FILESTORE__AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER:-minioadmin}
+      CKANEXT__S3FILESTORE__AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin123}
+      CKANEXT__S3FILESTORE__AWS_BUCKET_NAME: ${MINIO_BUCKET_NAME:-data-at-spark-local-test}
+      CKANEXT__S3FILESTORE__REGION_NAME: ${MINIO_REGION:-us-east-1}
+      CKANEXT__S3FILESTORE__HOST_NAME: "http://minio:9000"
+      CKANEXT__S3FILESTORE__SIGNATURE_VERSION: s3v4
+      CKANEXT__S3FILESTORE__ADDRESSING_STYLE: path
+      CKANEXT__S3FILESTORE__ACL: private
+      CKANEXT__S3FILESTORE__SIGNED_URL_EXPIRY: ${S3FILESTORE_SIGNED_URL_EXPIRY:-60}
+    volumes:
+      - ./data-at-spark/minio-spike/direct_upload.py:/opt/data-at-spark/direct_upload.py:ro,Z

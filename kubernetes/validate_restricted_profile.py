@@ -3,10 +3,10 @@
 
 from __future__ import annotations
 
-import json
-import subprocess
 import sys
 from pathlib import Path
+
+import yaml
 
 EXPECTED_UIDS = {
     "postgres": 70,
@@ -71,33 +71,19 @@ def check_doc(doc: dict, source: Path) -> None:
         check_container(container, doc_name, "initContainer")
 
 
+def load_docs(path: Path) -> list[dict]:
+    with path.open("r", encoding="utf-8") as handle:
+        return [doc for doc in yaml.safe_load_all(handle) if doc is not None]
+
+
 def main(argv: list[str]) -> int:
     if len(argv) < 2:
         fail("usage: validate_restricted_profile.py RENDERED_YAML...")
 
     for path_str in argv[1:]:
         path = Path(path_str)
-        result = subprocess.run(
-            [
-                "kubectl",
-                "create",
-                "--dry-run=client",
-                "-f",
-                str(path),
-                "-o",
-                "json",
-            ],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-        decoder = json.JSONDecoder()
-        offset = 0
-        while offset < len(result.stdout):
-            doc, offset = decoder.raw_decode(result.stdout, offset)
+        for doc in load_docs(path):
             check_doc(doc, path)
-            while offset < len(result.stdout) and result.stdout[offset].isspace():
-                offset += 1
     return 0
 
 

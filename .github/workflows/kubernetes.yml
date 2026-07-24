@@ -1,5 +1,8 @@
 name: Validate Kubernetes manifests
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
@@ -20,6 +23,9 @@ jobs:
         uses: azure/setup-kubectl@v4
         with:
           version: v1.30.0
+
+      - name: Install Python parser dependency
+        run: python3 -m pip install PyYAML==6.0.2
 
       - name: Render Kustomize targets
         run: |

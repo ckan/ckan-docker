@@ -32,6 +32,15 @@ jobs:
           mkdir -p rendered
           kubectl kustomize kubernetes/base > rendered/ckan-base.yaml
           kubectl kustomize kubernetes/examples/single-node > rendered/ckan-example.yaml
+          kubectl kustomize data-at-spark/kubernetes/int > rendered/ckan-int.yaml
+          kubectl kustomize data-at-spark/kubernetes/prod > rendered/ckan-prod.yaml
+
+      - name: Substitute a deterministic CKAN delivery digest for validation
+        run: |
+          python3 kubernetes/substitute_ckan_image.py \
+            "test.registry.local/data-at-spark@sha256:1111111111111111111111111111111111111111111111111111111111111111" \
+            rendered/ckan-int.yaml \
+            rendered/ckan-prod.yaml
 
       - name: Validate Kubernetes schemas
         uses: docker://ghcr.io/yannh/kubeconform:v0.8.0
@@ -43,14 +52,10 @@ jobs:
             /github/workspace/rendered
 
       - name: Validate restricted profile controls
-        run: python3 kubernetes/validate_restricted_profile.py rendered/ckan-base.yaml rendered/ckan-example.yaml
+        run: python3 kubernetes/validate_restricted_profile.py rendered/*.yaml
 
       - name: Check immutable image promotion contract
-        run: |
-          base_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-base.yaml | sort -u)"
-          example_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-example.yaml | sort -u)"
-          test -n "$base_images"
-          test "$base_images" = "$example_images"
+        run: python3 kubernetes/verify_shared_ckan_image.py rendered/ckan-int.yaml rendered/ckan-prod.yaml
 
       - name: Reject committed Secret resources
         run: |

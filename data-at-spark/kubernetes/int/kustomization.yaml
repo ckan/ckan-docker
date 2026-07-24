@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: data-at-spark-int
+
+resources:
+  - namespace.yaml
+  - ../../../kubernetes/base
+
+configMapGenerator:
+  - name: ckan-config
+    behavior: merge
+    literals:
+      - CKAN_SITE_ID=int.data.buspark.io
+      - CKAN__SITE_TITLE=Data@Spark
+      - CKAN__SITE_DESCRIPTION=Spark's public data catalog
+      - CKAN_SITE_URL=https://int.data.buspark.io
+      - CKAN__PLUGINS=image_view text_view datatables_view datastore datapusher envvars spark
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: data-at-spark
+      app.kubernetes.io/environment: int

@@ -18,6 +18,8 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
       securityContext:
+        fsGroup: 8983
+        fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
       containers:

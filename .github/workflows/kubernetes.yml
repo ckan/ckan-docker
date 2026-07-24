@@ -1,0 +1,60 @@
+name: Validate Kubernetes manifests
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: v1.30.0
+
+      - name: Install Python parser dependency
+        run: python3 -m pip install PyYAML==6.0.2
+
+      - name: Render Kustomize targets
+        run: |
+          mkdir -p rendered
+          kubectl kustomize kubernetes/base > rendered/ckan-base.yaml
+          kubectl kustomize kubernetes/examples/single-node > rendered/ckan-example.yaml
+
+      - name: Validate Kubernetes schemas
+        uses: docker://ghcr.io/yannh/kubeconform:v0.8.0
+        with:
+          args: >-
+            -strict
+            -summary
+            -kubernetes-version 1.30.0
+            /github/workspace/rendered
+
+      - name: Validate restricted profile controls
+        run: python3 kubernetes/validate_restricted_profile.py rendered/ckan-base.yaml rendered/ckan-example.yaml
+
+      - name: Check immutable image promotion contract
+        run: |
+          base_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-base.yaml | sort -u)"
+          example_images="$(grep 'image: docker.io/ckan/ckan-base:' rendered/ckan-example.yaml | sort -u)"
+          test -n "$base_images"
+          test "$base_images" = "$example_images"
+
+      - name: Reject committed Secret resources
+        run: |
+          if grep -q '^kind: Secret$' rendered/*.yaml; then
+            echo "The Kubernetes base must consume external Secrets, not render them"
+            exit 1
+          fi

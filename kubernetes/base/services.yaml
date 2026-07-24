@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ckan
+spec:
+  selector:
+    app.kubernetes.io/name: ckan
+    app.kubernetes.io/component: web
+  ports:
+    - name: http
+      port: 5000
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  clusterIP: None
+  selector:
+    app.kubernetes.io/name: ckan
+    app.kubernetes.io/component: database
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: solr
+spec:
+  clusterIP: None
+  selector:
+    app.kubernetes.io/name: ckan
+    app.kubernetes.io/component: search
+  ports:
+    - name: solr
+      port: 8983
+      targetPort: solr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app.kubernetes.io/name: ckan
+    app.kubernetes.io/component: cache
+  ports:
+    - name: redis
+      port: 6379
+      targetPort: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: datapusher
+spec:
+  selector:
+    app.kubernetes.io/name: ckan
+    app.kubernetes.io/component: datapusher
+  ports:
+    - name: http
+      port: 8800
+      targetPort: http

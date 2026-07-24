@@ -12,8 +12,8 @@ configMapGenerator:
     behavior: merge
     literals:
       - CKAN_SITE_ID=int.data.buspark.io
-      - CKAN_SITE_TITLE=Data@Spark
-      - CKAN_SITE_DESCRIPTION=Spark's public data catalog
+      - CKAN__SITE_TITLE=Data@Spark
+      - CKAN__SITE_DESCRIPTION=Spark's public data catalog
       - CKAN_SITE_URL=https://int.data.buspark.io
       - CKAN__PLUGINS=image_view text_view datatables_view datastore datapusher envvars spark
 

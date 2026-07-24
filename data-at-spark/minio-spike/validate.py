@@ -64,15 +64,18 @@ def check_compose_arg_default() -> None:
 def check_no_committed_secrets() -> None:
     # No committed .env files (only .env.example) anywhere ckanext-s3filestore
     # config is introduced, and no Kubernetes Secret manifests in this phase.
-    result = subprocess.run(
-        ["git", "ls-files", "--error-unmatch", "data-at-spark/.env",
-         "data-at-spark/minio-spike/.env"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode == 0:
-        fail("a real .env file is tracked; only .env.example files may be committed")
+    for env_path in ("data-at-spark/.env", "data-at-spark/minio-spike/.env"):
+        result = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", env_path],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            fail(
+                f"a real .env file is tracked: {env_path}; "
+                "only .env.example files may be committed"
+            )
 
     for path in [SPIKE_DIR / "compose.yml"]:
         text = path.read_text(errors="ignore")

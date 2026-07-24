@@ -26,19 +26,26 @@ of scope here and no R2 configuration is added by this overlay.
 - `direct_upload.py`: an import-path proof that creates a private CKAN
   dataset, generates a resource UUID, uploads bytes directly to its
   deterministic key with boto3's multipart transfer manager, creates the CKAN
-  resource once the object exists, and only then publishes the dataset.
+  resource once the object exists, and leaves the dataset private for review.
 
 ## Configure
 
+Run every command in this document from the repository root:
+
 ```bash
 cp .env.example .env
+cp data-at-spark/minio-spike/.env.example data-at-spark/minio-spike/.env
+
+set -a
+. data-at-spark/minio-spike/.env
+set +a
 ```
 
 Every value in `data-at-spark/minio-spike/.env.example` is a local/example
 credential for a throwaway container on your own machine. Never reuse them
 and never point `CKANEXT__S3FILESTORE__HOST_NAME` at a real S3/R2 endpoint
-with this overlay. The overlay supplies those local defaults directly; export
-matching variables before running Compose when you need to override them.
+with this overlay. The root `.env` supplies the base stack's required image
+versions and settings; the exported spike environment supplies MinIO overrides.
 
 ## Render the merged configuration
 
@@ -95,20 +102,23 @@ Once the stack is running, copy a test CSV into the CKAN container, where
 boto3 and requests are already installed, then execute the import-path proof:
 
 ```bash
-podman cp ./sample.csv 9-s3-filestore-minio_ckan_1:/tmp/sample.csv
+das_compose=(
+  podman compose
+  --env-file .env
+  -f docker-compose.yml
+  -f data-at-spark/compose.yml
+  -f data-at-spark/minio-spike/compose.yml
+)
+
+"${das_compose[@]}" cp ./sample.csv ckan:/tmp/sample.csv
 
 token=$(
-  podman exec 9-s3-filestore-minio_ckan_1 \
+  "${das_compose[@]}" exec -T ckan \
     ckan user token add -q ckan_admin minio-spike 2>/dev/null |
   tail -1
 )
 
-podman compose \
-  --env-file .env \
-  -f docker-compose.yml \
-  -f data-at-spark/compose.yml \
-  -f data-at-spark/minio-spike/compose.yml \
-  exec -T \
+"${das_compose[@]}" exec -T \
   -e CKAN_API_TOKEN="$token" \
   ckan python /opt/data-at-spark/direct_upload.py /tmp/sample.csv
 ```

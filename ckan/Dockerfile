@@ -1,3 +1,15 @@
+
+# --- Build the legend JS source code and ship it with CKAN ---
+FROM node:26-alpine AS mapboxgl-legend-builder
+
+WORKDIR /tmp/mapbox-gl-legend
+RUN apk add git && \
+  git clone https://github.com/natcap/mapbox-gl-legend.git . && \
+  git checkout edecbdda495bf8a3654679c11bc0555ce90725cb && \
+  npm install && \
+  npm run build
+
+# --- Build CKAN but use the modified JS source for the legend ---
 FROM ckan/ckan-base:2.11.2
 
 ARG GITHUB_USER
@@ -63,6 +75,8 @@ RUN ckan config-tool $CKAN_INI --section app:main 'scheming.dataset_schemas=ckan
 
 # Copy custom initialization scripts
 COPY ./ckan/docker-entrypoint.d/* /docker-entrypoint.d/
+
+COPY --from=mapboxgl-legend-builder /tmp/mapbox-gl-legend/dist/cdn/mapbox-gl-legend.js /srv/app/src/ckanext-mappreview/ckanext/mappreview/assets/js/vendor/mapbox-gl-legend.js
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)

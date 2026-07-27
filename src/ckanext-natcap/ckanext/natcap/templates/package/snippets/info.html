@@ -20,23 +20,34 @@
 
   {% block collection_info %}
   {% if pkg.collection %}
-    {% set collection_tag = pkg.collection[0] %}
+    {% set collection_tags = pkg.collection %}
 
     {% if pkg.type=='dataset' %}
-      {% set collection_packages = h.natcap_get_collection_name_url(collection_tag) %}
+      {% set collection_packages_map = h.natcap_get_collection_name_url(collection_tags) %}
       <div class="collection-info">
         <i class="fa fa-layer-group" aria-hidden="true"></i>
-        {% if not collection_packages %}
-          <span>This dataset is part of a collection: <a href="{% url_for 'dataset.search', vocab_collection=collection_tag %}">{{ collection_tag }}</a></span>
-        {% elif collection_packages|length == 1 %}
-        <span>This dataset is part of a collection: <a href="/collection/{{collection_packages[0]['name']}}">{{ collection_packages[0]['title'] }}</a></span>
+        {% if collection_tags|length == 1 %}
+        {% set collection_tag = collection_tags[0] %}
+          <span>This dataset is part of a Collection:
+            {% if collection_packages_map[collection_tag] %}
+            {% set collection_package = collection_packages_map[collection_tag][0] %}
+            <a href="/collection/{{collection_package['name']}}">{{ collection_package['title'] }}</a>
+            {% else %}
+            <a href="{% url_for 'dataset.search', vocab_collection=collection_tag %}">{{ collection_tag }}</a>
+            {% endif %}
+          </span>
         {% else %}
-        <span>This dataset is part of these collections:</span>
-        <ul>
-          {% for coll_pkg in collection_packages %}
-          <li><a href="/collection/{{coll_pkg['name']}}">{{ coll_pkg['title'] }}</a></span>
+          <span>This dataset is part of the Collections:</span>
+          <ul class="collection-inline">
+          {% for tag in collection_tags %}
+          {% set coll_pkg = collection_packages_map[tag] %}
+            {% if coll_pkg %}
+            <li><a href="/collection/{{coll_pkg[0]['name']}}">{{ coll_pkg[0]['title'] }}</a></li>
+            {% else %}
+            <li><a href="{% url_for 'dataset.search', vocab_collection=tag %}">{{ tag }}</a></li>
+            {% endif %}
           {% endfor %}
-        </ul>
+          </ul>
         {% endif %}
 
       {% set lulc, biotable = h.natcap_collection_lulc_biotable(pkg) %}
@@ -48,6 +59,7 @@
       </div>
 
     {% elif pkg.type=='collection' and h.natcap_collection_has_datasets(pkg.collection[0]) %}
+    {% set collection_tag = pkg.collection[0] %}
       <div>
         <a href="{% url_for 'dataset.search', vocab_collection=collection_tag %}" role="button" type="button" class="btn btn-collection btn-lg btn-block">
           <i class="fa fa-layer-group" aria-hidden="true"></i>

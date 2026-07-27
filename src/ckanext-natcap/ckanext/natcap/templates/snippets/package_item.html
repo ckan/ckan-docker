@@ -52,13 +52,16 @@
         {% endblock %}
         {% block collection %}
           {% if package.collection and package.type == 'dataset' %}
-            {% set collection_tag = package.collection[0] %}
-            {% set collection_packages = h.natcap_get_collection_name_url(collection_tag) %}
-            {% if not collection_packages %}
-              <span>This dataset is part of a Collection: <a href="{% url_for 'dataset.search', vocab_collection=collection_tag %}">{{ collection_tag }}</a></span>
-            {% elif collection_packages|length == 1 %}
-              <span>This dataset is part of a Collection: <a href="/collection/{{collection_packages[0]['name']}}" target="_blank">{{ collection_packages[0]['title'] }}</a></span>
-            {% endif %}
+            {% set collection_packages = h.natcap_get_collection_name_url(package.collection) %}
+            <p class="collection-inline">This dataset is part of the Collections:&nbsp;
+            {% for tag in package.collection %}
+              {% if collection_packages[tag] %}
+              <span><a href="/collection/{{collection_packages[tag][0]['name']}}" target="_blank">{{ tag }}&nbsp;</a></span>
+              {% else %}
+              <span><a href="{% url_for 'dataset.search', vocab_collection=tag %}">{{ tag }}&nbsp;</a></span>
+              {% endif %}
+            {% endfor %}
+            </p>
           {% endif %}
         {% endblock %}
         {% block notes %}

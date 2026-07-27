@@ -1365,3 +1365,7 @@ div#invest-model-list-container div {
     padding: 1rem;
     margin-top: 1rem;
 }
+
+.collection-inline {
+    margin-bottom: 0rem;
+}

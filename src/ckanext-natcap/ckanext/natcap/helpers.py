@@ -191,18 +191,22 @@ def get_collection_name(collection_name):
     return dataset.get('title', '')
 
 
-def get_collection_name_url(collection_tag):
-    results = toolkit.get_action('package_search')(
-        {},
-        {
-            "fq": f'extras_collection:"{collection_tag}"',
-            "q": "type:collection",
-            "fl": "title, name",
-        }
-    )
-    if results['count'] > 0:
-        return results['results']
-    return None
+def get_collection_name_url(collection_tags):
+    tag_collection_map = {}
+    for tag in collection_tags:
+        results = toolkit.get_action('package_search')(
+            {},
+            {
+                "fq": f'extras_collection:"{tag}"',
+                "q": "type:collection",
+                "fl": "title, name",
+            }
+        )
+        if results['count'] > 0:
+            tag_collection_map[tag] = results['results']
+        else:
+            tag_collection_map[tag] = None
+    return tag_collection_map
 
 
 def collection_lulc_biotable(pkg):

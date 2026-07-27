@@ -6,6 +6,7 @@ services:
       args:
         CKAN_VERSION: ${DATA_AT_SPARK_CKAN_VERSION:-2.11.5}
         CKANEXT_SPARK_COMMIT: ${DATA_AT_SPARK_EXTENSION_COMMIT:-6b040acc1b4048ac9c2f2b4941943f2617ee3bd7}
+        CKANEXT_S3FILESTORE_COMMIT: ${DATA_AT_SPARK_S3FILESTORE_COMMIT:-e972ae3c36489dcfc716f75063ac64c13cde1146}
     environment:
       CKAN_SITE_URL: ${DATA_AT_SPARK_SITE_URL}
       CKAN__SITE_TITLE: ${DATA_AT_SPARK_SITE_TITLE:-Data@Spark}
@@ -13,4 +14,4 @@ services:
       CKAN__PLUGINS: ${DATA_AT_SPARK_CKAN_PLUGINS}
 
   solr:
-    image: ckan/ckan-solr:${DATA_AT_SPARK_SOLR_VERSION:-2.11-solr9}
+    image: docker.io/ckan/ckan-solr:${DATA_AT_SPARK_SOLR_VERSION:-2.11-solr9}

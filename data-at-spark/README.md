@@ -7,6 +7,8 @@ The image pins:
 
 - CKAN `2.11.5`
 - `ckanext-spark` at an immutable Git commit
+- `ckanext-s3filestore` at an immutable Git commit (installed unconditionally;
+  disabled by default — see below)
 - the CKAN 2.11 Solr 9 image
 
 ## Configure
@@ -64,6 +66,17 @@ Data@Spark application configuration.
 
 Build and tag the image with the source Git SHA. Integration and production
 must deploy that same immutable image; only their configuration differs.
+
+## Local MinIO filestore spike (issue #9, Phase 1)
+
+`ckanext-s3filestore` is installed in the image but is **not enabled** by the
+plugin list above. A separate, test-only Compose overlay under
+`data-at-spark/minio-spike/` adds a local MinIO backend, enables the plugin,
+and configures it with example-only credentials, so it can be exercised
+end-to-end without a real cloud account. See
+`data-at-spark/minio-spike/README.md` for how to render, start, and validate
+it, and for the security boundary and a known upstream streaming/multipart
+limitation affecting large interactive web uploads.
 
 ## Kubernetes overlays
 

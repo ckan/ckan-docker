@@ -9,3 +9,6 @@ _src/*
 local/*
 .env
 data-at-spark/.env
+data-at-spark/minio-spike/.env
+__pycache__/
+*.py[cod]

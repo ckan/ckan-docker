@@ -67,10 +67,11 @@ Data@Spark application configuration.
 The `Build CKAN Docker` workflow publishes the application image to
 `ghcr.io/bu-spark/data-at-spark`. A successful push to `master` publishes the
 full source Git SHA as a release tag, records its immutable image digest, and
-then advances the `integration` tag to that exact digest. The workflow will
-reuse, but never overwrite, an existing source-SHA tag. Production must deploy
-the integration-tested digest rather than rebuilding or deploying a moving
-tag.
+then advances the `integration` tag to that exact digest. The workflow reuses
+an existing source-SHA tag only after verifying its provenance. If an earlier
+run pushed the image but failed before attestation, a retry rebuilds the
+incomplete publication. Production must deploy the integration-tested digest
+rather than rebuilding or deploying a moving tag.
 
 Publish the package publicly so the host can pull it without a registry
 credential. GitHub creates a new container package as private. After the first

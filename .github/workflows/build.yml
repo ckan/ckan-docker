@@ -131,8 +131,44 @@ jobs:
               ;;
           esac
 
+    -  name: Check existing image provenance
+       if: steps.existing.outputs.exists == 'true'
+       id: provenance
+       env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IMAGE_DIGEST: ${{ steps.existing.outputs.digest }}
+       run: |
+          verify_error="$(mktemp)"
+          trap 'rm -f "${verify_error}"' EXIT
+          set +e
+          gh attestation verify \
+            "oci://${DATA_AT_SPARK_IMAGE}@${IMAGE_DIGEST}" \
+            --repo "${GITHUB_REPOSITORY}" 2>"${verify_error}"
+          verify_status=$?
+          set -e
+
+          if [ "${verify_status}" -eq 0 ]; then
+            echo "reuse=true" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+
+          verify_output="$(cat "${verify_error}")"
+          case "${verify_output}" in
+            *"no attestations found"*|*"no attestation found"*)
+              echo "reuse=false" >> "${GITHUB_OUTPUT}"
+              echo "The existing SHA image has no provenance; rebuilding it."
+              ;;
+            *)
+              echo "Unable to verify existing image provenance:" >&2
+              echo "${verify_output}" >&2
+              exit "${verify_status}"
+              ;;
+          esac
+
     -  name: Publish immutable Data@Spark image
-       if: steps.existing.outputs.exists == 'false'
+       if: >-
+          steps.existing.outputs.exists == 'false' ||
+          steps.provenance.outputs.reuse == 'false'
        id: publish
        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
        with:
@@ -158,18 +194,8 @@ jobs:
           fi
           echo "digest=${digest}" >> "${GITHUB_OUTPUT}"
 
-    -  name: Verify existing image provenance
-       if: steps.existing.outputs.exists == 'true'
-       env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          IMAGE_DIGEST: ${{ steps.resolve.outputs.digest }}
-       run: |
-          gh attestation verify \
-            "oci://${DATA_AT_SPARK_IMAGE}@${IMAGE_DIGEST}" \
-            --repo "${GITHUB_REPOSITORY}"
-
     -  name: Attest resolved image
-       if: steps.existing.outputs.exists == 'false'
+       if: steps.publish.outcome == 'success'
        uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373 # v4.1.1
        with:
           subject-name: ${{ env.DATA_AT_SPARK_IMAGE }}

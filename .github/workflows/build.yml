@@ -1,8 +1,6 @@
-name: Build CKAN Docker 
+name: Build CKAN Docker
 
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the master branch
   push:
     branches:
       - master
@@ -10,20 +8,25 @@ on:
     branches:
       - master
 
-jobs: 
-  build:  
+permissions:
+  contents: read
+
+env:
+  DATA_AT_SPARK_IMAGE: ghcr.io/bu-spark/data-at-spark
+
+jobs:
+  build:
     runs-on: ubuntu-latest
-    steps: 
-    -  uses: actions/checkout@v2
+    steps:
+    -  uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+       with:
+          persist-credentials: false
 
     -  name: Set up Docker Buildx
-       uses: docker/setup-buildx-action@v1
-      
-    -  name: Set up QEMU
-       uses: docker/setup-qemu-action@v1
+       uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
 
     -  name: NGINX build
-       uses: docker/build-push-action@v2
+       uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
        with:
           context: ./nginx
           file: ./nginx/Dockerfile
@@ -31,7 +34,7 @@ jobs:
           tags: kowhai/ckan-docker-nginx:test-build-only
 
     -  name: PostgreSQL build
-       uses: docker/build-push-action@v2
+       uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
        with:
           context: ./postgresql
           file: ./postgresql/Dockerfile
@@ -39,7 +42,7 @@ jobs:
           tags: kowhai/ckan-docker-postgresql:test-build-only
 
     -  name: CKAN build
-       uses: docker/build-push-action@v2
+       uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
        with:
           context: ./ckan
           file: ./ckan/Dockerfile
@@ -58,9 +61,184 @@ jobs:
             config
 
     -  name: Data@Spark CKAN build
-       uses: docker/build-push-action@v2
+       uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
        with:
           context: .
           file: ./data-at-spark/Dockerfile
           push: false
           tags: bu-spark/data-at-spark:test-build-only
+
+  publish-data-at-spark:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    concurrency:
+      group: data-at-spark-publish-${{ github.sha }}
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    outputs:
+      digest: ${{ steps.resolve.outputs.digest }}
+      image: ${{ env.DATA_AT_SPARK_IMAGE }}
+      image-ref: ${{ env.DATA_AT_SPARK_IMAGE }}@${{ steps.resolve.outputs.digest }}
+    steps:
+    -  uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+       with:
+          persist-credentials: false
+
+    -  name: Set up Docker Buildx
+       uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
+
+    -  name: Log in to GHCR
+       uses: docker/login-action@abd2ef45e78c5afb21d64d4ca52ee8550d9572c7 # v4.5.1
+       with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+    -  name: Check for an existing source SHA tag
+       id: existing
+       run: |
+          inspect_error="$(mktemp)"
+          trap 'rm -f "${inspect_error}"' EXIT
+          set +e
+          digest="$(
+            docker buildx imagetools inspect \
+              "${DATA_AT_SPARK_IMAGE}:${GITHUB_SHA}" \
+              --format '{{ .Manifest.Digest }}' 2>"${inspect_error}"
+          )"
+          inspect_status=$?
+          set -e
+
+          if [ "${inspect_status}" -eq 0 ]; then
+            echo "exists=true" >> "${GITHUB_OUTPUT}"
+            echo "digest=${digest}" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+
+          inspect_output="$(cat "${inspect_error}")"
+          case "${inspect_output}" in
+            *"manifest unknown"*|*"not found"*)
+              echo "exists=false" >> "${GITHUB_OUTPUT}"
+              ;;
+            *)
+              echo "Unable to determine whether the source SHA tag exists:" >&2
+              echo "${inspect_output}" >&2
+              exit "${inspect_status}"
+              ;;
+          esac
+
+    -  name: Publish immutable Data@Spark image
+       if: steps.existing.outputs.exists == 'false'
+       id: publish
+       uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+       with:
+          context: .
+          file: ./data-at-spark/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.DATA_AT_SPARK_IMAGE }}:${{ github.sha }}
+          labels: |
+             org.opencontainers.image.revision=${{ github.sha }}
+             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+
+    -  name: Resolve published digest
+       id: resolve
+       env:
+          EXISTING_DIGEST: ${{ steps.existing.outputs.digest }}
+          PUBLISHED_DIGEST: ${{ steps.publish.outputs.digest }}
+       run: |
+          digest="${PUBLISHED_DIGEST:-${EXISTING_DIGEST}}"
+          if [[ ! "${digest}" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+            echo "Invalid or missing image digest: ${digest}" >&2
+            exit 1
+          fi
+          echo "digest=${digest}" >> "${GITHUB_OUTPUT}"
+
+    -  name: Verify existing image provenance
+       if: steps.existing.outputs.exists == 'true'
+       env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IMAGE_DIGEST: ${{ steps.resolve.outputs.digest }}
+       run: |
+          gh attestation verify \
+            "oci://${DATA_AT_SPARK_IMAGE}@${IMAGE_DIGEST}" \
+            --repo "${GITHUB_REPOSITORY}"
+
+    -  name: Attest resolved image
+       if: steps.existing.outputs.exists == 'false'
+       uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373 # v4.1.1
+       with:
+          subject-name: ${{ env.DATA_AT_SPARK_IMAGE }}
+          subject-digest: ${{ steps.resolve.outputs.digest }}
+          push-to-registry: true
+
+    -  name: Record published image
+       env:
+          IMAGE_DIGEST: ${{ steps.resolve.outputs.digest }}
+       run: |
+          echo "Published \`${DATA_AT_SPARK_IMAGE}@${IMAGE_DIGEST}\`" \
+            >> "${GITHUB_STEP_SUMMARY}"
+
+  promote-integration:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: publish-data-at-spark
+    runs-on: ubuntu-latest
+    concurrency:
+      group: data-at-spark-integration-promotion
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      packages: write
+    steps:
+    -  name: Set up Docker Buildx
+       uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
+
+    -  name: Log in to GHCR
+       uses: docker/login-action@abd2ef45e78c5afb21d64d4ca52ee8550d9572c7 # v4.5.1
+       with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+    -  name: Advance integration tag to the published digest
+       id: promote
+       env:
+          IMAGE_DIGEST: ${{ needs.publish-data-at-spark.outputs.digest }}
+          WORKFLOW_SHA: ${{ github.sha }}
+       run: |
+          master_sha="$(
+            git ls-remote \
+              "https://github.com/${GITHUB_REPOSITORY}.git" \
+              refs/heads/master |
+              cut -f1
+          )"
+          if [ "${master_sha}" != "${WORKFLOW_SHA}" ]; then
+            echo "promoted=false" >> "${GITHUB_OUTPUT}"
+            echo "Skipping stale integration promotion for ${WORKFLOW_SHA}"
+            exit 0
+          fi
+          docker buildx imagetools create \
+            --prefer-index=false \
+            --tag "${DATA_AT_SPARK_IMAGE}:integration" \
+            "${DATA_AT_SPARK_IMAGE}@${IMAGE_DIGEST}"
+          echo "promoted=true" >> "${GITHUB_OUTPUT}"
+
+    -  name: Verify integration tag digest
+       if: steps.promote.outputs.promoted == 'true'
+       env:
+          IMAGE_DIGEST: ${{ needs.publish-data-at-spark.outputs.digest }}
+       run: |
+          integration_digest="$(
+            docker buildx imagetools inspect \
+              "${DATA_AT_SPARK_IMAGE}:integration" \
+              --format '{{ .Manifest.Digest }}'
+          )"
+          test "${integration_digest}" = "${IMAGE_DIGEST}"
+          {
+            echo "Promoted \`${DATA_AT_SPARK_IMAGE}:integration\`"
+            echo "to \`${DATA_AT_SPARK_IMAGE}@${IMAGE_DIGEST}\`."
+          } >> "${GITHUB_STEP_SUMMARY}"

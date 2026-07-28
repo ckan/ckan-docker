@@ -64,8 +64,19 @@ Data@Spark application configuration.
 
 ## Artifact promotion
 
-Build and tag the image with the source Git SHA. Integration and production
-must deploy that same immutable image; only their configuration differs.
+The `Build CKAN Docker` workflow publishes the application image to
+`ghcr.io/bu-spark/data-at-spark`. A successful push to `master` publishes the
+full source Git SHA as a release tag, records its immutable image digest, and
+then advances the `integration` tag to that exact digest. The workflow will
+reuse, but never overwrite, an existing source-SHA tag. Production must deploy
+the integration-tested digest rather than rebuilding or deploying a moving
+tag.
+
+Publish the package publicly so the host can pull it without a registry
+credential. GitHub creates a new container package as private. After the first
+successful publish, an organization package administrator must change its
+visibility. Do not add a personal access token to this repository to automate
+that change.
 
 ## Local MinIO filestore spike (issue #9, Phase 1)
 

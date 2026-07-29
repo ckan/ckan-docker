@@ -1,0 +1,89 @@
+---
+- name: Render the disposable local Data@Spark smoke runtime
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  tasks:
+    - name: Check local smoke inputs
+      ansible.builtin.assert:
+        that:
+          - data_at_spark_smoke_source_root is match('^/')
+          - data_at_spark_smoke_state_root is match('^/')
+        fail_msg: Local smoke paths must be absolute.
+
+    - name: Create the private smoke runtime root
+      ansible.builtin.file:
+        path: "{{ data_at_spark_smoke_state_root }}"
+        state: directory
+        mode: '0700'
+
+    - name: Render the shared runtime role
+      ansible.builtin.include_role:
+        name: data_at_spark_runtime
+
+    - name: Check support contexts against the recorded revision
+      ansible.builtin.command:
+        argv:
+          - git
+          - -C
+          - "{{ data_at_spark_smoke_source_root }}"
+          - diff
+          - --quiet
+          - "{{ data_at_spark_runtime_source_sha }}"
+          - HEAD
+          - --
+          - nginx
+          - postgresql
+      changed_when: false
+
+    - name: Check tracked support-context changes
+      ansible.builtin.command:
+        argv:
+          - git
+          - -C
+          - "{{ data_at_spark_smoke_source_root }}"
+          - diff
+          - --quiet
+          - --
+          - nginx
+          - postgresql
+      changed_when: false
+
+    - name: Check untracked support-context changes
+      ansible.builtin.command:
+        argv:
+          - git
+          - -C
+          - "{{ data_at_spark_smoke_source_root }}"
+          - status
+          - --porcelain
+          - --untracked-files=all
+          - --ignored=matching
+          - --
+          - nginx
+          - postgresql
+      changed_when: false
+      register: data_at_spark_smoke_support_status
+
+    - name: Confirm support contexts are clean
+      ansible.builtin.assert:
+        that:
+          - data_at_spark_smoke_support_status.stdout | length == 0
+        fail_msg: Support-image contexts contain uncommitted files.
+
+    - name: Remove the previous support-context snapshots
+      ansible.builtin.file:
+        path: "{{ data_at_spark_environments[0].source_checkout }}/{{ item }}"
+        state: absent
+      loop:
+        - nginx
+        - postgresql
+
+    - name: Snapshot only local support-image build contexts
+      ansible.builtin.copy:
+        src: "{{ data_at_spark_smoke_source_root }}/{{ item }}/"
+        dest: "{{ data_at_spark_environments[0].source_checkout }}/{{ item }}/"
+        mode: preserve
+      loop:
+        - nginx
+        - postgresql

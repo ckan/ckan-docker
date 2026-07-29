@@ -1,0 +1,43 @@
+---
+# This is a non-routable example only. Put real host names and all credentials
+# in inventory outside Git or a secret manager.
+data_at_spark_runtime_deploy_user: dataspark
+data_at_spark_runtime_deploy_user_home: /home/dataspark
+data_at_spark_runtime_source_sha: "3385470929c42a4e648c574ab588df4c0fc1f5c0"
+
+# Each environment needs its own checkout at this exact source revision. This
+# lets locally built support services stay tied to a reviewable source tree.
+data_at_spark_environments:
+  - name: integration
+    compose_project_name: data-at-spark-int
+    site_hostname: int.data.buspark.io
+    site_url: https://int.data.buspark.io
+    loopback_port: 18080
+    source_checkout: /srv/data-at-spark/integration/source
+    ckan_image: ghcr.io/bu-spark/data-at-spark@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  - name: production
+    compose_project_name: data-at-spark-prod
+    site_hostname: data.buspark.io
+    site_url: https://data.buspark.io
+    loopback_port: 28080
+    source_checkout: /srv/data-at-spark/production/source
+    ckan_image: ghcr.io/bu-spark/data-at-spark@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+
+# Supply these values only from an external inventory, vault, or secret manager.
+# Each environment key needs the full mapping. Values must differ across
+# environments. The validation playbook supplies non-secret test values.
+# data_at_spark_secrets:
+#   integration:
+#     postgres_password: REQUIRED_EXTERNAL_VALUE
+#     ckan_db_password: REQUIRED_EXTERNAL_VALUE
+#     datastore_readonly_password: REQUIRED_EXTERNAL_VALUE
+#     ckan_sqlalchemy_url: REQUIRED_EXTERNAL_VALUE
+#     ckan_datastore_write_url: REQUIRED_EXTERNAL_VALUE
+#     ckan_datastore_read_url: REQUIRED_EXTERNAL_VALUE
+#     beaker_session_secret: REQUIRED_EXTERNAL_VALUE
+#     api_token_jwt_encode_secret: REQUIRED_EXTERNAL_VALUE
+#     api_token_jwt_decode_secret: REQUIRED_EXTERNAL_VALUE
+#     sysadmin_password: REQUIRED_EXTERNAL_VALUE
+#     smtp_password: REQUIRED_EXTERNAL_VALUE
+#   production:
+#     # Repeat every key above with production-specific values.

@@ -79,6 +79,25 @@ successful publish, an organization package administrator must change its
 visibility. Do not add a personal access token to this repository to automate
 that change.
 
+## Single-host runtime automation
+
+The secret-free Ansible scaffold under [`ansible/`](ansible/) renders two
+isolated rootless Podman projects behind a host Caddy proxy. It requires a full
+Data@Spark image digest and an exact source revision for the nginx and
+PostgreSQL support-image builds.
+
+Run its credential-free acceptance check before host work:
+
+```bash
+cd data-at-spark/ansible
+ansible-playbook playbooks/validate.yml
+```
+
+The check renders integration and production in a temporary directory, runs
+`podman compose config`, verifies the digest, loopback ports, and volume
+contract, then removes its output. AWS, Cloudflare, R2, backups, registry
+polling, and production promotion remain later automation slices.
+
 ## Local MinIO filestore spike (issue #9, Phase 1)
 
 `ckanext-s3filestore` is installed in the image but is **not enabled** by the

@@ -1,0 +1,115 @@
+# Managed by Ansible. This deployment-only stack avoids mutable Python-package
+# mounts and does not depend on Compose-specific merge tags.
+volumes:
+  ckan_storage:
+  pg_data:
+  solr_data:
+
+services:
+  nginx:
+    build:
+      context: nginx/
+      dockerfile: Dockerfile
+    networks:
+      - webnet
+      - ckannet
+    depends_on:
+      ckan:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:{{ item.loopback_port }}:443"
+    restart: unless-stopped
+
+  ckan:
+    platform: linux/amd64
+    image: {{ item.ckan_image }}
+    networks:
+      - ckannet
+      - dbnet
+      - solrnet
+      - redisnet
+    env_file:
+      - .env
+    environment:
+      CKAN_SITE_URL: {{ item.site_url }}
+      CKAN__SITE_TITLE: Data@Spark
+      CKAN__SITE_DESCRIPTION: Spark's public data catalog
+      CKAN__PLUGINS: image_view text_view datatables_view datastore datapusher envvars spark
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ckan_storage:/var/lib/ckan:Z
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000/api/action/status_show"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+
+  datapusher:
+    platform: linux/amd64
+    image: docker.io/ckan/ckan-base-datapusher:${DATAPUSHER_VERSION}
+    networks:
+      - ckannet
+      - dbnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8800"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+
+  db:
+    build:
+      context: postgresql/
+    networks:
+      - dbnet
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      CKAN_DB_USER: ${CKAN_DB_USER}
+      CKAN_DB_PASSWORD: ${CKAN_DB_PASSWORD}
+      CKAN_DB: ${CKAN_DB}
+      DATASTORE_READONLY_USER: ${DATASTORE_READONLY_USER}
+      DATASTORE_READONLY_PASSWORD: ${DATASTORE_READONLY_PASSWORD}
+      DATASTORE_DB: ${DATASTORE_DB}
+    volumes:
+      - pg_data:/var/lib/postgresql/data:Z
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
+
+  solr:
+    platform: linux/amd64
+    image: docker.io/ckan/ckan-solr:2.11-solr9
+    networks:
+      - solrnet
+    volumes:
+      - solr_data:/var/solr:Z
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/"]
+
+  redis:
+    image: docker.io/library/redis:6
+    networks:
+      - redisnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "-e", "QUIT"]
+
+networks:
+  webnet:
+  ckannet:
+  solrnet:
+    internal: true
+  dbnet:
+    internal: true
+  redisnet:
+    internal: true

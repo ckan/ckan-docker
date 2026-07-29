@@ -1,0 +1,200 @@
+#!/usr/bin/env bash
+# Check one hour of stability, then exercise CKAN create, upload, search, and
+# DataStore ingestion. Keep the created dataset for operator inspection.
+set -Eeuo pipefail
+
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+state_base=${XDG_STATE_HOME:-"${HOME}/.local/state"}
+state_root=${DATA_AT_SPARK_SMOKE_STATE_DIR:-"${state_base}/data-at-spark-smoke"}
+report_dir="${state_root}/reports"
+timestamp=$(date -u +%Y%m%dT%H%M%SZ)
+report="${report_dir}/hourly-smoke-${timestamp}.log"
+curl_config=
+csv_file=
+project=data-at-spark-smoke
+site_hostname=smoke.data-at-spark.test
+loopback_port=18443
+endpoint="https://${site_hostname}:${loopback_port}"
+curl_options=(
+  --silent
+  --show-error
+  --fail-with-body
+  --insecure
+  --connect-timeout 5
+  --max-time 60
+  --resolve "${site_hostname}:${loopback_port}:127.0.0.1"
+)
+
+mkdir -p -- "${report_dir}"
+chmod 700 -- "${state_root}" "${report_dir}"
+touch -- "${report}"
+chmod 600 -- "${report}"
+exec > >(tee -a "${report}") 2>&1
+
+cleanup() {
+  [[ -z "${curl_config}" ]] || rm -f -- "${curl_config}"
+  [[ -z "${csv_file}" ]] || rm -f -- "${csv_file}"
+}
+
+notify_failure() {
+  local exit_code=$?
+  printf 'Smoke exercise failed with exit code %s. Report: %s\n' \
+    "${exit_code}" "${report}"
+  /home/lwhite/bin/tg-notify \
+    "Data@Spark local smoke blocked: the one-hour exercise failed. Report: ${report}" \
+    alerts || true
+  exit "${exit_code}"
+}
+
+trap cleanup EXIT
+trap notify_failure ERR
+
+expected_containers=(
+  data-at-spark-smoke_datapusher_1
+  data-at-spark-smoke_db_1
+  data-at-spark-smoke_solr_1
+  data-at-spark-smoke_redis_1
+  data-at-spark-smoke_ckan_1
+  data-at-spark-smoke_nginx_1
+)
+healthchecked_containers=(
+  data-at-spark-smoke_datapusher_1
+  data-at-spark-smoke_db_1
+  data-at-spark-smoke_solr_1
+  data-at-spark-smoke_redis_1
+  data-at-spark-smoke_ckan_1
+)
+
+printf 'Data@Spark hourly smoke exercise started at %s\n' "${timestamp}"
+
+for container in "${expected_containers[@]}"; do
+  state=$(podman inspect --format '{{.State.Status}}' "${container}")
+  printf '%s state: %s\n' "${container}" "${state}"
+  [[ "${state}" == running ]]
+done
+
+for container in "${healthchecked_containers[@]}"; do
+  health=$(podman inspect --format '{{.State.Health.Status}}' "${container}")
+  printf '%s health: %s\n' "${container}" "${health}"
+  [[ "${health}" == healthy ]]
+done
+
+status_response=$(curl "${curl_options[@]}" \
+  "${endpoint}/api/action/status_show")
+jq -e '.success == true and .result.ckan_version == "2.11.5"' \
+  <<<"${status_response}" >/dev/null
+printf 'CKAN status: success, version 2.11.5\n'
+
+mapfile -t container_ids < <(
+  podman ps --filter "label=io.podman.compose.project=${project}" \
+    --format '{{.ID}}'
+)
+[[ ${#container_ids[@]} -eq ${#expected_containers[@]} ]]
+podman stats --no-stream \
+  --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}' \
+  "${container_ids[@]}"
+
+token_name="hourly-smoke-${timestamp}"
+api_token=$(
+  podman exec data-at-spark-smoke_ckan_1 \
+    ckan user token add -q ckan_admin "${token_name}" 2>>"${report}"
+)
+[[ "${api_token}" == *.*.* ]]
+
+curl_config=$(mktemp "${state_root}/curl-config.XXXXXX")
+chmod 600 -- "${curl_config}"
+printf 'header = "Authorization: %s"\n' "${api_token}" >"${curl_config}"
+unset api_token
+
+organization_name="data-at-spark-smoke-${timestamp,,}"
+organization_payload=$(
+  jq -nc \
+    --arg name "${organization_name}" \
+    --arg title "Data@Spark automated smoke ${timestamp}" \
+    '{name: $name, title: $title}'
+)
+organization_response=$(
+  curl "${curl_options[@]}" \
+    --config "${curl_config}" \
+    --header 'Content-Type: application/json' \
+    --data "${organization_payload}" \
+    "${endpoint}/api/action/organization_create"
+)
+jq -e --arg name "${organization_name}" \
+  '.success == true and .result.name == $name' \
+  <<<"${organization_response}" >/dev/null
+printf 'Created organization: %s\n' "${organization_name}"
+
+dataset_name="data-at-spark-smoke-${timestamp,,}"
+dataset_payload=$(
+  jq -nc \
+    --arg name "${dataset_name}" \
+    --arg title "Data@Spark automated smoke ${timestamp}" \
+    --arg owner_org "${organization_name}" \
+    '{
+      name: $name,
+      title: $title,
+      owner_org: $owner_org,
+      notes: "Disposable local runtime exercise."
+    }'
+)
+dataset_response=$(
+  curl "${curl_options[@]}" \
+    --config "${curl_config}" \
+    --header 'Content-Type: application/json' \
+    --data "${dataset_payload}" \
+    "${endpoint}/api/action/package_create"
+)
+jq -e --arg name "${dataset_name}" \
+  '.success == true and .result.name == $name' \
+  <<<"${dataset_response}" >/dev/null
+printf 'Created dataset: %s\n' "${dataset_name}"
+
+csv_file=$(mktemp "${state_root}/smoke-data.XXXXXX.csv")
+chmod 600 -- "${csv_file}"
+printf 'place,value\nBoston,1\nCambridge,2\n' >"${csv_file}"
+resource_response=$(
+  curl "${curl_options[@]}" \
+    --config "${curl_config}" \
+    --form "package_id=${dataset_name}" \
+    --form 'name=Smoke CSV' \
+    --form "upload=@${csv_file};type=text/csv" \
+    "${endpoint}/api/action/resource_create"
+)
+resource_id=$(jq -er '.result.id' <<<"${resource_response}")
+printf 'Uploaded resource: %s\n' "${resource_id}"
+
+search_response=$(
+  curl "${curl_options[@]}" \
+    --config "${curl_config}" \
+    --get \
+    --data-urlencode "q=name:${dataset_name}" \
+    "${endpoint}/api/action/package_search"
+)
+jq -e --arg name "${dataset_name}" \
+  '.success == true and any(.result.results[]; .name == $name)' \
+  <<<"${search_response}" >/dev/null
+printf 'Search found dataset: %s\n' "${dataset_name}"
+
+datastore_active=false
+for _attempt in $(seq 1 30); do
+  resource_response=$(
+    curl "${curl_options[@]}" \
+      --config "${curl_config}" \
+      --get \
+      --data-urlencode "id=${resource_id}" \
+      "${endpoint}/api/action/resource_show"
+  )
+  datastore_active=$(jq -r '.result.datastore_active // false' \
+    <<<"${resource_response}")
+  [[ "${datastore_active}" != true ]] || break
+  sleep 10
+done
+[[ "${datastore_active}" == true ]]
+printf 'DataStore ingested resource: %s\n' "${resource_id}"
+
+printf 'Data@Spark hourly smoke exercise passed. Report: %s\n' "${report}"
+/home/lwhite/bin/tg-notify \
+  "Data@Spark local smoke passed: stability, dataset creation, CSV upload, search, and DataStore ingestion succeeded. Report: ${report}" \
+  || true

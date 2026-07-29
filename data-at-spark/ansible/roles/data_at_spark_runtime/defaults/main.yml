@@ -1,0 +1,24 @@
+---
+data_at_spark_runtime_deploy_user: dataspark
+data_at_spark_runtime_deploy_user_home: "/home/{{ data_at_spark_runtime_deploy_user }}"
+data_at_spark_runtime_source_sha: ""
+data_at_spark_runtime_validate_only: false
+
+# These paths are intentionally host-local. The controller never writes secret
+# values to Git; callers supply data_at_spark_secrets from outside this repo.
+data_at_spark_runtime_caddy_fragment_path: /etc/caddy/Caddyfile.d/data-at-spark.caddy
+data_at_spark_runtime_systemd_user_dir: "{{ data_at_spark_runtime_deploy_user_home }}/.config/systemd/user"
+data_at_spark_runtime_manage_systemd: false
+
+data_at_spark_runtime_required_secret_keys:
+  - postgres_password
+  - ckan_db_password
+  - datastore_readonly_password
+  - ckan_sqlalchemy_url
+  - ckan_datastore_write_url
+  - ckan_datastore_read_url
+  - beaker_session_secret
+  - api_token_jwt_encode_secret
+  - api_token_jwt_decode_secret
+  - sysadmin_password
+  - smtp_password

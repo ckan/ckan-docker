@@ -1,0 +1,11 @@
+# Managed by Ansible. The host Caddyfile must import this fragment.
+{% for environment in data_at_spark_environments %}
+{{ environment.site_hostname }} {
+    # The bundled nginx terminates its own self-signed TLS on loopback only.
+    reverse_proxy https://127.0.0.1:{{ environment.loopback_port }} {
+        transport http {
+            tls_insecure_skip_verify
+        }
+    }
+}
+{% endfor %}

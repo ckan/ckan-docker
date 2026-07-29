@@ -1,0 +1,187 @@
+---
+- name: Validate the runtime inputs
+  ansible.builtin.assert:
+    that:
+      - data_at_spark_runtime_source_sha is match('^[0-9a-f]{40}$')
+      - data_at_spark_environments | length > 0
+      - data_at_spark_secrets is mapping
+      - data_at_spark_environments | map(attribute='name') | difference(data_at_spark_secrets.keys() | list) | length == 0
+      - data_at_spark_environments | map(attribute='name') | unique | length == data_at_spark_environments | length
+      - data_at_spark_environments | map(attribute='compose_project_name') | unique | length == data_at_spark_environments | length
+      - data_at_spark_environments | map(attribute='loopback_port') | unique | length == data_at_spark_environments | length
+      - data_at_spark_environments | map(attribute='site_hostname') | unique | length == data_at_spark_environments | length
+      - data_at_spark_environments | map(attribute='site_url') | unique | length == data_at_spark_environments | length
+    fail_msg: >-
+      Runtime environments require unique names, Compose projects, and loopback
+      ports. Supply every required credential as an external variable.
+
+- name: Validate each environment's secret mapping
+  ansible.builtin.assert:
+    that:
+      - data_at_spark_secrets[item.name] is mapping
+      - data_at_spark_runtime_required_secret_keys | difference(data_at_spark_secrets[item.name].keys() | list) | length == 0
+      - data_at_spark_secrets[item.name].api_token_jwt_encode_secret == data_at_spark_secrets[item.name].api_token_jwt_decode_secret
+      - >-
+        data_at_spark_runtime_validate_only | bool or
+        (data_at_spark_runtime_required_secret_keys |
+        map('extract', data_at_spark_secrets[item.name]) |
+        select('match', '^REQUIRED_EXTERNAL_VALUE$') |
+        list | length == 0)
+    fail_msg: >-
+      {{ item.name }} needs a complete external secret mapping. The JWT encode
+      and decode secrets must match for HS256.
+  loop: "{{ data_at_spark_environments }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Confirm secret values differ between environments
+  ansible.builtin.assert:
+    that:
+      - >-
+        data_at_spark_environments |
+        map(attribute='name') |
+        map('extract', data_at_spark_secrets) |
+        map(attribute=item) |
+        unique |
+        length == data_at_spark_environments | length
+    fail_msg: "Each environment needs a distinct {{ item }} value."
+  loop: "{{ data_at_spark_runtime_required_secret_keys }}"
+
+- name: Validate each environment's immutable application image
+  ansible.builtin.assert:
+    that:
+      - item.ckan_image is match('^ghcr\\.io/bu-spark/data-at-spark@sha256:[0-9a-f]{64}$')
+      - item.loopback_port | int > 1024
+      - item.loopback_port | int < 65536
+      - item.site_url is match('^https://')
+      - item.source_checkout is match('^/')
+    fail_msg: >-
+      {{ item.name }} must use the public Data@Spark image by a full SHA-256
+      digest, an unprivileged loopback port, an HTTPS URL, and an absolute
+      checkout path.
+  loop: "{{ data_at_spark_environments }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Create validation source-checkout directories
+  ansible.builtin.file:
+    path: "{{ item.source_checkout }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ data_at_spark_environments }}"
+  when: data_at_spark_runtime_validate_only | bool
+
+- name: Confirm each deployed support-service checkout is pinned
+  ansible.builtin.command:
+    argv:
+      - git
+      - -C
+      - "{{ item.source_checkout }}"
+      - rev-parse
+      - HEAD
+  changed_when: false
+  register: data_at_spark_runtime_checkout_revisions
+  loop: "{{ data_at_spark_environments }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Verify each deployed support-service checkout revision
+  ansible.builtin.assert:
+    that:
+      - item.stdout == data_at_spark_runtime_source_sha
+    fail_msg: >-
+      {{ item.item.name }} is not checked out at
+      {{ data_at_spark_runtime_source_sha }}. Do not build support services
+      from an unreviewed source tree.
+  loop: "{{ data_at_spark_runtime_checkout_revisions.results | default([]) }}"
+  loop_control:
+    label: "{{ item.item.name }}"
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Render rootless Podman environment files
+  ansible.builtin.template:
+    src: runtime.env.j2
+    dest: "{{ item.source_checkout }}/.env"
+    owner: "{{ data_at_spark_runtime_deploy_user }}"
+    group: "{{ data_at_spark_runtime_deploy_user }}"
+    mode: '0600'
+  loop: "{{ data_at_spark_environments }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Create the rootless systemd unit directory
+  ansible.builtin.file:
+    path: "{{ data_at_spark_runtime_systemd_user_dir }}"
+    state: directory
+    owner: "{{ data_at_spark_runtime_deploy_user }}"
+    group: "{{ data_at_spark_runtime_deploy_user }}"
+    mode: '0755'
+
+- name: Render standalone deployment Compose files
+  ansible.builtin.template:
+    src: runtime-compose.yml.j2
+    dest: "{{ item.source_checkout }}/runtime-compose.yml"
+    owner: "{{ data_at_spark_runtime_deploy_user }}"
+    group: "{{ data_at_spark_runtime_deploy_user }}"
+    mode: '0644'
+  loop: "{{ data_at_spark_environments }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Render rootless Podman systemd units
+  ansible.builtin.template:
+    src: data-at-spark.service.j2
+    dest: "{{ data_at_spark_runtime_systemd_user_dir }}/data-at-spark-{{ item.name }}.service"
+    owner: "{{ data_at_spark_runtime_deploy_user }}"
+    group: "{{ data_at_spark_runtime_deploy_user }}"
+    mode: '0644'
+  loop: "{{ data_at_spark_environments }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Create the Caddy fragment directory
+  ansible.builtin.file:
+    path: "{{ data_at_spark_runtime_caddy_fragment_path | dirname }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Render the Caddy site fragment
+  ansible.builtin.template:
+    src: data-at-spark.caddy.j2
+    dest: "{{ data_at_spark_runtime_caddy_fragment_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Resolve the rootless Podman account
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ data_at_spark_runtime_deploy_user }}"
+  when:
+    - data_at_spark_runtime_manage_systemd | bool
+    - not (data_at_spark_runtime_validate_only | bool)
+
+- name: Activate rootless systemd units when requested
+  ansible.builtin.systemd_service:
+    name: "data-at-spark-{{ item.name }}.service"
+    scope: user
+    daemon_reload: true
+    enabled: true
+    state: started
+  become: true
+  become_user: "{{ data_at_spark_runtime_deploy_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ getent_passwd[data_at_spark_runtime_deploy_user][1] }}"
+    DBUS_SESSION_BUS_ADDRESS: >-
+      unix:path=/run/user/{{ getent_passwd[data_at_spark_runtime_deploy_user][1] }}/bus
+  loop: "{{ data_at_spark_environments }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - data_at_spark_runtime_manage_systemd | bool
+    - not (data_at_spark_runtime_validate_only | bool)

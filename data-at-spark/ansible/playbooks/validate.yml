@@ -1,0 +1,103 @@
+---
+- name: Validate the Data@Spark runtime contract without credentials
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  tasks:
+    - name: Create an isolated validation directory
+      ansible.builtin.tempfile:
+        state: directory
+        prefix: data-at-spark-validation.
+      register: data_at_spark_validation_root
+
+    - name: Render and inspect the runtime contract
+      block:
+        - name: Define non-secret validation inputs
+          ansible.builtin.set_fact:
+            data_at_spark_runtime_validate_only: true
+            data_at_spark_runtime_deploy_user: "{{ ansible_facts['user_id'] }}"
+            data_at_spark_runtime_deploy_user_home: "{{ data_at_spark_validation_root.path }}"
+            data_at_spark_runtime_source_sha: "3385470929c42a4e648c574ab588df4c0fc1f5c0"
+            data_at_spark_secrets:
+              integration:
+                postgres_password: 'integration space # quote " dollar $HOME'
+                ckan_db_password: 'integration-backslash\\value'
+                datastore_readonly_password: integration-datastore-value
+                ckan_sqlalchemy_url: 'validation://integration:pass@example.invalid/db?x=#value'
+                ckan_datastore_write_url: integration-write-url
+                ckan_datastore_read_url: integration-read-url
+                beaker_session_secret: integration-beaker-value
+                api_token_jwt_encode_secret: integration-jwt-value
+                api_token_jwt_decode_secret: integration-jwt-value
+                sysadmin_password: integration-admin-value
+                smtp_password: integration-smtp-value
+              production:
+                postgres_password: 'production space # quote " dollar $USER'
+                ckan_db_password: 'production-backslash\\value'
+                datastore_readonly_password: production-datastore-value
+                ckan_sqlalchemy_url: 'validation://production:pass@example.invalid/db?x=#value'
+                ckan_datastore_write_url: production-write-url
+                ckan_datastore_read_url: production-read-url
+                beaker_session_secret: production-beaker-value
+                api_token_jwt_encode_secret: production-jwt-value
+                api_token_jwt_decode_secret: production-jwt-value
+                sysadmin_password: production-admin-value
+                smtp_password: production-smtp-value
+            data_at_spark_environments:
+              - name: integration
+                compose_project_name: data-at-spark-int
+                site_hostname: int.catalog.example.invalid
+                site_url: https://int.catalog.example.invalid
+                loopback_port: 18080
+                source_checkout: "{{ data_at_spark_validation_root.path }}/integration/source"
+                ckan_image: ghcr.io/bu-spark/data-at-spark@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              - name: production
+                compose_project_name: data-at-spark-prod
+                site_hostname: catalog.example.invalid
+                site_url: https://catalog.example.invalid
+                loopback_port: 28080
+                source_checkout: "{{ data_at_spark_validation_root.path }}/production/source"
+                ckan_image: ghcr.io/bu-spark/data-at-spark@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+
+        - name: Render the runtime role
+          ansible.builtin.include_role:
+            name: data_at_spark_runtime
+
+        - name: Render each Compose project with the local Podman provider
+          ansible.builtin.command:
+            argv:
+              - podman
+              - compose
+              - --project-name
+              - "{{ item.compose_project_name }}"
+              - --env-file
+              - .env
+              - -f
+              - runtime-compose.yml
+              - config
+            chdir: "{{ item.source_checkout }}"
+          changed_when: false
+          register: data_at_spark_rendered_compose
+          loop: "{{ data_at_spark_environments }}"
+          loop_control:
+            label: "{{ item.name }}"
+
+        - name: Confirm deployment renders without mutable Python volumes
+          ansible.builtin.assert:
+            that:
+              - "'site_packages' not in item.stdout"
+              - "'pip_cache' not in item.stdout"
+              - "'127.0.0.1:' ~ item.item.loopback_port ~ ':443' in item.stdout"
+              - item.item.ckan_image in item.stdout
+              - "'dollar $' in item.stdout"
+              - "'dollar $$' not in item.stdout"
+              - "'quote \\\" dollar' in item.stdout"
+              - "'backslash\\\\\\\\value' in item.stdout"
+          loop: "{{ data_at_spark_rendered_compose.results }}"
+          loop_control:
+            label: "{{ item.item.name }}"
+      always:
+        - name: Remove validation output
+          ansible.builtin.file:
+            path: "{{ data_at_spark_validation_root.path }}"
+            state: absent

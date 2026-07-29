@@ -1,0 +1,6 @@
+---
+- name: Render Data@Spark runtime configuration
+  hosts: data_at_spark_hosts
+  become: true
+  roles:
+    - role: data_at_spark_runtime

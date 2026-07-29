@@ -1,0 +1,179 @@
+#!/usr/bin/env bash
+# Render and operate one disposable local Data@Spark runtime. State, including
+# generated secrets and named volumes, is deliberately retained by `stop`.
+set -euo pipefail
+
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+ansible_dir=$(cd -- "${script_dir}/.." && pwd)
+source_root=$(cd -- "${ansible_dir}/../.." && pwd)
+state_base=${XDG_STATE_HOME:-"${HOME}/.local/state"}
+state_root=${DATA_AT_SPARK_SMOKE_STATE_DIR:-"${state_base}/data-at-spark-smoke"}
+runtime_dir="${state_root}/runtime"
+variables_file="${state_root}/local-smoke-vars.yml"
+compose_project=data-at-spark-smoke
+ckan_image=ghcr.io/bu-spark/data-at-spark@sha256:1fc58c217b46a5524d40498bdbc14965ddd9f76342b2cb8a4b4fa0fd58f2b546
+
+usage() {
+  printf '%s\n' "Usage: $(basename "$0") {render|start|status|measure|logs|stop} [logs arguments]" >&2
+}
+
+require_command() {
+  command -v "$1" >/dev/null 2>&1 || {
+    printf 'Required command not found: %s\n' "$1" >&2
+    exit 1
+  }
+}
+
+hex_secret() {
+  openssl rand -hex 32
+}
+
+write_variables() {
+  if [[ -f "${variables_file}" ]]; then
+    return
+  fi
+
+  require_command openssl
+  require_command python3
+  umask 077
+  mkdir -p -- "${state_root}"
+  local postgres_password ckan_db_password datastore_readonly_password
+  local beaker_secret jwt_secret sysadmin_password smtp_password
+  postgres_password=$(hex_secret)
+  ckan_db_password=$(hex_secret)
+  datastore_readonly_password=$(hex_secret)
+  beaker_secret=$(hex_secret)
+  jwt_secret=$(hex_secret)
+  sysadmin_password=$(hex_secret)
+  smtp_password=$(hex_secret)
+  local source_sha
+  source_sha=$(git -C "${source_root}" rev-parse HEAD)
+
+  printf '%s\0' \
+    "${source_root}" "${state_root}" "${USER}" "${source_sha}" \
+    "${postgres_password}" "${ckan_db_password}" \
+    "${datastore_readonly_password}" "${beaker_secret}" \
+    "${jwt_secret}" "${jwt_secret}" \
+    "${sysadmin_password}" "${smtp_password}" "${compose_project}" \
+    "${runtime_dir}" "${ckan_image}" |
+    python3 -c '
+import json
+import sys
+
+raw_values = sys.stdin.buffer.read().split(b"\0")
+if raw_values[-1] == b"":
+    raw_values.pop()
+values = [value.decode("utf-8") for value in raw_values]
+if len(values) != 15:
+    raise SystemExit("invalid local smoke variable count")
+if any(any(ord(char) < 32 or ord(char) == 127 for char in value)
+       for value in values):
+    raise SystemExit("local smoke variables cannot contain control characters")
+
+(source_root, state_root, deploy_user, source_sha, postgres_password,
+ ckan_db_password, datastore_password, beaker_secret, jwt_encode_secret,
+ jwt_decode_secret, sysadmin_password, smtp_password, compose_project,
+ runtime_dir, ckan_image) = values
+document = {
+    "data_at_spark_smoke_source_root": source_root,
+    "data_at_spark_smoke_state_root": state_root,
+    "data_at_spark_runtime_validate_only": True,
+    "data_at_spark_runtime_deploy_user": deploy_user,
+    "data_at_spark_runtime_deploy_user_home": state_root,
+    "data_at_spark_runtime_source_sha": source_sha,
+    "data_at_spark_runtime_manage_systemd": False,
+    "data_at_spark_secrets": {
+        "smoke": {
+            "postgres_password": postgres_password,
+            "ckan_db_password": ckan_db_password,
+            "datastore_readonly_password": datastore_password,
+            "ckan_sqlalchemy_url":
+                f"postgresql://ckandbuser:{ckan_db_password}@db/ckandb",
+            "ckan_datastore_write_url":
+                f"postgresql://ckandbuser:{ckan_db_password}@db/datastore",
+            "ckan_datastore_read_url":
+                f"postgresql://datastore_ro:{datastore_password}@db/datastore",
+            "beaker_session_secret": beaker_secret,
+            "api_token_jwt_encode_secret": jwt_encode_secret,
+            "api_token_jwt_decode_secret": jwt_decode_secret,
+            "sysadmin_password": sysadmin_password,
+            "smtp_password": smtp_password,
+        }
+    },
+    "data_at_spark_environments": [{
+        "name": "smoke",
+        "compose_project_name": compose_project,
+        "site_hostname": "smoke.data-at-spark.test",
+        "site_url": "https://smoke.data-at-spark.test:18443",
+        "loopback_port": 18443,
+        "source_checkout": runtime_dir,
+        "ckan_image": ckan_image,
+    }],
+}
+json.dump(document, sys.stdout, indent=2)
+sys.stdout.write("\n")
+' >"${variables_file}"
+  chmod 600 -- "${variables_file}"
+}
+
+render() {
+  require_command ansible-playbook
+  write_variables
+  (cd "${ansible_dir}" && ansible-playbook -i localhost, -c local \
+    playbooks/local-smoke.yml -e "@${variables_file}")
+  (cd "${runtime_dir}" && compose config >/dev/null)
+  printf 'Rendered local smoke runtime in %s\n' "${runtime_dir}"
+}
+
+compose() {
+  podman compose --project-name "${compose_project}" --env-file .env \
+    -f runtime-compose.yml "$@"
+}
+
+require_host_runtime() {
+  if [[ -e /run/.containerenv || -e /.dockerenv ]]; then
+    printf '%s\n' \
+      'Start the smoke stack from the host shell, not from a container or distrobox.' \
+      'Rootless Podman DNS startup requires access to the host user systemd manager.' >&2
+    exit 1
+  fi
+}
+
+case "${1:-}" in
+  render)
+    render
+    ;;
+  start)
+    require_host_runtime
+    render
+    (cd "${runtime_dir}" && compose up --detach --build)
+    ;;
+  status)
+    render
+    (cd "${runtime_dir}" && compose ps)
+    ;;
+  measure)
+    render
+    mapfile -t container_ids < <(podman ps \
+      --filter "label=io.podman.compose.project=${compose_project}" --format '{{.ID}}')
+    if [[ ${#container_ids[@]} -eq 0 ]]; then
+      printf 'No running containers for %s. Run start first.\n' "${compose_project}" >&2
+      exit 1
+    fi
+    podman stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}' \
+      "${container_ids[@]}"
+    ;;
+  logs)
+    render
+    shift
+    (cd "${runtime_dir}" && compose logs "$@")
+    ;;
+  stop)
+    render
+    (cd "${runtime_dir}" && compose stop)
+    ;;
+  *)
+    usage
+    exit 64
+    ;;
+esac

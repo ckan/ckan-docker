@@ -1,0 +1,150 @@
+#!/usr/bin/env bash
+# Create one self-contained, application-consistent runtime backup.
+#
+# Assumptions: --runtime-dir contains runtime-compose.yml and .env rendered by
+# the runtime role, the db service provides pg_dump, and ckan_storage is mounted
+# at /var/lib/ckan in the ckan service.
+set -euo pipefail
+umask 077
+
+usage() {
+  printf 'Usage: %s --runtime-dir DIR --compose-project NAME --backup-dir DIR\n' "$(basename "$0")" >&2
+}
+
+runtime_dir=
+compose_project=
+backup_dir=
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --runtime-dir) runtime_dir=${2:?missing value for --runtime-dir}; shift 2 ;;
+    --compose-project) compose_project=${2:?missing value for --compose-project}; shift 2 ;;
+    --backup-dir) backup_dir=${2:?missing value for --backup-dir}; shift 2 ;;
+    --help) usage; exit 0 ;;
+    *) usage; exit 64 ;;
+  esac
+done
+
+[[ -n "$runtime_dir" && -n "$compose_project" && -n "$backup_dir" ]] || { usage; exit 64; }
+[[ -f "$runtime_dir/runtime-compose.yml" && -f "$runtime_dir/.env" ]] || {
+  printf 'Runtime directory must contain runtime-compose.yml and .env.\n' >&2
+  exit 66
+}
+for command in podman sha256sum flock mktemp gzip python3; do
+  command -v "$command" >/dev/null 2>&1 || { printf 'Required command not found: %s\n' "$command" >&2; exit 69; }
+done
+
+mkdir -p -- "$backup_dir"
+chmod 700 -- "$backup_dir"
+lock_file="$backup_dir/.runtime-backup.lock"
+exec 9>"$lock_file"
+flock -n 9 || { printf 'Another runtime backup holds %s.\n' "$lock_file" >&2; exit 75; }
+
+compose() {
+  (cd "$runtime_dir" && podman compose --project-name "$compose_project" --env-file .env -f runtime-compose.yml "$@")
+}
+
+service_container() {
+  podman ps --all \
+    --filter "label=io.podman.compose.project=${compose_project}" \
+    --filter "label=io.podman.compose.service=$1" \
+    --format '{{.ID}}'
+}
+
+temporary_dir=$(mktemp -d "$backup_dir/.runtime-backup.XXXXXX")
+chmod 700 -- "$temporary_dir"
+services_to_restart=()
+cleanup() {
+  local status=$?
+  if [[ ${#services_to_restart[@]} -gt 0 ]]; then
+    # A failed dump must not leave the public endpoint intentionally stopped.
+    compose up --detach "${services_to_restart[@]}" >/dev/null || status=1
+  fi
+  if [[ -n "$temporary_dir" ]]; then
+    rm -rf -- "$temporary_dir"
+  fi
+  exit "$status"
+}
+trap cleanup EXIT
+
+mapfile -t running_services < <(
+  podman ps \
+    --filter "label=io.podman.compose.project=${compose_project}" \
+    --format '{{.Label "io.podman.compose.service"}}'
+)
+[[ " ${running_services[*]} " == *" db "* ]] || {
+  printf 'The database service must be running before backup.\n' >&2
+  exit 69
+}
+for service in nginx datapusher ckan; do
+  if [[ " ${running_services[*]} " == *" ${service} "* ]]; then
+    services_to_restart+=("$service")
+  fi
+done
+if [[ ${#services_to_restart[@]} -gt 0 ]]; then
+  compose stop "${services_to_restart[@]}" >/dev/null
+fi
+
+compose exec -T db sh -ec \
+  'exec pg_dump --format=custom --no-owner --no-privileges --username="$POSTGRES_USER" --dbname=ckandb' \
+  >"$temporary_dir/ckandb.dump"
+compose exec -T db sh -ec \
+  'exec pg_dump --format=custom --no-owner --no-privileges --username="$POSTGRES_USER" --dbname=datastore' \
+  >"$temporary_dir/datastore.dump"
+# Export the volume directly. Running the CKAN image solely to invoke tar would
+# execute its entrypoint and could modify the database during the backup.
+uploads_volume="${compose_project}_ckan_storage"
+podman volume exists "$uploads_volume" || {
+  printf 'CKAN storage volume does not exist: %s\n' "$uploads_volume" >&2
+  exit 69
+}
+podman volume export --output "$temporary_dir/uploads.tar" "$uploads_volume"
+gzip --no-name "$temporary_dir/uploads.tar"
+
+created_at=$(date --utc +%Y-%m-%dT%H:%M:%SZ)
+ckan_container=$(service_container ckan)
+[[ -n "$ckan_container" ]] || {
+  printf 'CKAN container not found for project %s.\n' "$compose_project" >&2
+  exit 69
+}
+ckan_image=$(podman inspect --format '{{.Config.Image}}' "$ckan_container")
+ckan_image_id=$(podman inspect --format '{{.Image}}' "$ckan_container")
+postgres_version=$(compose exec -T db postgres --version)
+compose_sha256=$(sha256sum "$runtime_dir/runtime-compose.yml" | cut -d' ' -f1)
+python3 - "$temporary_dir/manifest.json" \
+  "$compose_project" "$created_at" "$ckan_image" "$ckan_image_id" \
+  "$postgres_version" "$compose_sha256" <<'PY'
+import json
+import sys
+
+path, project, created_at, image, image_id, postgres_version, compose_sha256 = sys.argv[1:]
+with open(path, "w", encoding="utf-8") as output:
+    json.dump({
+        "format_version": 1,
+        "created_at": created_at,
+        "source_compose_project": project,
+        "ckan_image": image,
+        "ckan_image_id": image_id,
+        "postgres_version": postgres_version,
+        "runtime_compose_sha256": compose_sha256,
+        "storage_mode": "local-volume",
+        "contents": ["ckandb.dump", "datastore.dump", "uploads.tar.gz"],
+        "rebuild_after_restore": ["solr"],
+        "discard_after_restore": ["redis"],
+        "notes": "Logical PostgreSQL dumps and CKAN local storage; no secrets included.",
+    }, output, indent=2, sort_keys=True)
+    output.write("\n")
+PY
+chmod 600 -- \
+  "$temporary_dir/ckandb.dump" \
+  "$temporary_dir/datastore.dump" \
+  "$temporary_dir/uploads.tar.gz" \
+  "$temporary_dir/manifest.json"
+(cd "$temporary_dir" && sha256sum ckandb.dump datastore.dump uploads.tar.gz manifest.json >SHA256SUMS)
+chmod 600 -- "$temporary_dir/SHA256SUMS"
+
+backup_name="backup-${created_at//[:]/}-${RANDOM}"
+final_dir="$backup_dir/$backup_name"
+mv -- "$temporary_dir" "$final_dir"
+temporary_dir=
+printf 'Created runtime backup: %s\n' "$final_dir"

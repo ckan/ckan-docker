@@ -95,7 +95,9 @@ ansible-playbook playbooks/validate.yml
 
 The check renders integration and production in a temporary directory, runs
 `podman compose config`, verifies the digest, loopback ports, and volume
-contract, then removes its output. AWS, Cloudflare, R2, backups, registry
+contract, then removes its output. The runtime directory also provides
+application-consistent backup and isolated restore-test commands; see the
+Ansible README for their storage boundary. AWS, Cloudflare, R2, registry
 polling, and production promotion remain later automation slices.
 
 ## Local MinIO filestore spike (issue #9, Phase 1)

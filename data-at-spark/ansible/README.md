@@ -87,3 +87,45 @@ systemd-run --user \
   --collect \
   /absolute/path/to/data-at-spark/ansible/bin/hourly-smoke-check
 ```
+
+## Backup and disposable restore test
+
+`bin/runtime-backup` creates an application-consistent backup for the current
+local-storage runtime. It briefly stops CKAN, DataPusher, and nginx while
+PostgreSQL remains available. The resulting private directory contains custom
+format dumps of `ckandb` and `datastore`, an export of the `ckan_storage`
+volume, a secret-free manifest, and checksums. It never copies `.env`.
+
+```bash
+bin/runtime-backup \
+  --runtime-dir /srv/data-at-spark/production \
+  --compose-project data-at-spark-prod \
+  --backup-dir /srv/data-at-spark/backups/production
+```
+
+An archive on the application host is not disaster recovery. Copy completed
+backup directories to independently managed storage under a separate
+retention policy.
+
+Prove an archive with a project name that contains `restore` and differs from
+the source project recorded in its manifest:
+
+```bash
+bin/runtime-restore-test \
+  --runtime-dir /srv/data-at-spark/production \
+  --compose-project data-at-spark-prod-restore-20260729 \
+  --backup-dir /srv/data-at-spark/backups/production/backup-TIMESTAMP
+```
+
+The restore test verifies checksums, creates fresh PostgreSQL, Solr, and CKAN
+storage volumes, restores both databases and local uploads, waits for CKAN,
+and rebuilds the search index. Its exit trap removes the disposable project
+and volumes. It refuses an existing project or volume.
+
+These commands deliberately exclude Redis and Solr data: Redis is disposable,
+and Solr is rebuilt from PostgreSQL. They currently support the local
+`ckan_storage` volume. A deployment that uses R2, BU S3, Globus, or another
+external filestore must add and verify that provider's independent
+versioning, snapshot, or export procedure before treating a backup as
+complete. A future managed PostgreSQL adapter can retain the same logical dump
+format while changing how the commands connect to the databases.

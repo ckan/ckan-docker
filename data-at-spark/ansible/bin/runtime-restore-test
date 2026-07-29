@@ -1,0 +1,173 @@
+#!/usr/bin/env bash
+# Verify a runtime backup by restoring it into an isolated, disposable project.
+#
+# Assumptions: --runtime-dir contains a rendered runtime-compose.yml and .env;
+# its images are available locally or can be pulled. The test destroys only the
+# project named by --compose-project and its newly created named volumes.
+set -euo pipefail
+umask 077
+
+usage() {
+  printf 'Usage: %s --runtime-dir DIR --compose-project NAME --backup-dir DIR\n' "$(basename "$0")" >&2
+}
+
+runtime_dir=
+compose_project=
+backup_dir=
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --runtime-dir) runtime_dir=${2:?missing value for --runtime-dir}; shift 2 ;;
+    --compose-project) compose_project=${2:?missing value for --compose-project}; shift 2 ;;
+    --backup-dir) backup_dir=${2:?missing value for --backup-dir}; shift 2 ;;
+    --help) usage; exit 0 ;;
+    *) usage; exit 64 ;;
+  esac
+done
+
+[[ -n "$runtime_dir" && -n "$compose_project" && -n "$backup_dir" ]] || { usage; exit 64; }
+[[ -f "$runtime_dir/runtime-compose.yml" && -f "$runtime_dir/.env" ]] || {
+  printf 'Runtime directory must contain runtime-compose.yml and .env.\n' >&2
+  exit 66
+}
+for command in podman sha256sum flock mktemp python3; do
+  command -v "$command" >/dev/null 2>&1 || { printf 'Required command not found: %s\n' "$command" >&2; exit 69; }
+done
+[[ -f "$backup_dir/SHA256SUMS" && -f "$backup_dir/manifest.json" ]] || {
+  printf 'Backup directory does not contain SHA256SUMS and manifest.json.\n' >&2
+  exit 66
+}
+
+source_project=$(python3 - "$backup_dir/manifest.json" <<'PY'
+import json
+import sys
+with open(sys.argv[1], encoding="utf-8") as source:
+    document = json.load(source)
+if document.get("format_version") != 1:
+    raise SystemExit("unsupported backup format")
+print(document["source_compose_project"])
+PY
+)
+[[ "$compose_project" != "$source_project" ]] || {
+  printf 'Restore project must differ from source project %s.\n' "$source_project" >&2
+  exit 64
+}
+[[ "$compose_project" == *restore* ]] || {
+  printf 'Restore project name must contain "restore" to make its disposable purpose explicit.\n' >&2
+  exit 64
+}
+
+compose() {
+  (cd "$runtime_dir" && podman compose --project-name "$compose_project" --env-file .env -f runtime-compose.yml "$@")
+}
+
+service_container() {
+  podman ps --all \
+    --filter "label=io.podman.compose.project=${compose_project}" \
+    --filter "label=io.podman.compose.service=$1" \
+    --format '{{.ID}}'
+}
+
+# Refuse reuse: a restore test must create fresh volumes rather than attach a
+# prior test's state. Named volumes are derived from the Compose project.
+if [[ -n "$(podman ps --all \
+  --filter "label=io.podman.compose.project=${compose_project}" -q)" ]]; then
+  printf 'Refusing an existing Compose project: %s\n' "$compose_project" >&2
+  exit 73
+fi
+for volume in \
+  "${compose_project}_ckan_storage" \
+  "${compose_project}_pg_data" \
+  "${compose_project}_solr_data"; do
+  if podman volume exists "$volume"; then
+    printf 'Refusing existing restore-test volume: %s\n' "$volume" >&2
+    exit 73
+  fi
+done
+
+lock_parent=$(dirname -- "$backup_dir")
+mkdir -p -- "$lock_parent"
+chmod 700 -- "$lock_parent"
+exec 9>"$lock_parent/.runtime-restore-test.lock"
+flock -n 9 || { printf 'Another restore test is already running.\n' >&2; exit 75; }
+
+temporary_dir=$(mktemp -d "$lock_parent/.runtime-restore-test.XXXXXX")
+chmod 700 -- "$temporary_dir"
+ckan_volume=
+cleanup() {
+  local status=$?
+  if [[ "$status" -ne 0 ]]; then
+    printf 'Disposable restore logs follow:\n' >&2
+    compose logs db ckan >&2 || true
+  fi
+  compose down --volumes --remove-orphans >/dev/null 2>&1 || status=1
+  if [[ -n "$ckan_volume" ]] && podman volume exists "$ckan_volume"; then
+    podman volume rm "$ckan_volume" >/dev/null || status=1
+  fi
+  rm -rf -- "$temporary_dir"
+  exit "$status"
+}
+trap cleanup EXIT
+
+cp -- "$backup_dir/SHA256SUMS" "$temporary_dir/SHA256SUMS"
+for file in ckandb.dump datastore.dump uploads.tar.gz manifest.json; do
+  cp -- "$backup_dir/$file" "$temporary_dir/$file"
+done
+(cd "$temporary_dir" && sha256sum --check --strict SHA256SUMS)
+
+compose up --detach db >/dev/null
+database_ready=false
+for attempt in $(seq 1 30); do
+  if compose exec -T db sh -ec 'pg_isready --username="$POSTGRES_USER" --dbname=postgres' >/dev/null 2>&1; then
+    database_ready=true
+    break
+  fi
+  sleep 2
+done
+if [[ "$database_ready" != true ]]; then
+  printf 'Timed out waiting for the disposable database to accept connections.\n' >&2
+  exit 70
+fi
+compose exec -T db sh -ec \
+  'export PGPASSWORD="$CKAN_DB_PASSWORD"; exec pg_restore --exit-on-error --clean --if-exists --no-owner --no-privileges --username="$CKAN_DB_USER" --dbname=ckandb' \
+  <"$temporary_dir/ckandb.dump"
+compose exec -T db sh -ec \
+  'export PGPASSWORD="$CKAN_DB_PASSWORD"; exec pg_restore --exit-on-error --clean --if-exists --no-owner --no-privileges --username="$CKAN_DB_USER" --dbname=datastore' \
+  <"$temporary_dir/datastore.dump"
+ckan_tables=$(compose exec -T db sh -ec \
+  'psql --tuples-only --no-align --username="$POSTGRES_USER" --dbname=ckandb -c "select count(*) from information_schema.tables where table_schema = '\''public'\''"')
+datastore_tables=$(compose exec -T db sh -ec \
+  'psql --tuples-only --no-align --username="$POSTGRES_USER" --dbname=datastore -c "select count(*) from information_schema.tables where table_schema = '\''public'\''"')
+[[ "$ckan_tables" -gt 0 && "$datastore_tables" -gt 0 ]] || {
+  printf 'The restored databases do not contain the expected public tables.\n' >&2
+  exit 65
+}
+
+ckan_volume="${compose_project}_ckan_storage"
+podman volume create "$ckan_volume" >/dev/null
+podman volume import "$ckan_volume" "$temporary_dir/uploads.tar.gz"
+
+# Start CKAN only after both database and upload restoration complete. This
+# confirms the restored state is consumable without touching source volumes.
+compose up --detach ckan >/dev/null
+ckan_container=$(service_container ckan)
+[[ -n "$ckan_container" ]] || {
+  printf 'Restored CKAN container not found.\n' >&2
+  exit 70
+}
+ckan_healthy=false
+for attempt in $(seq 1 90); do
+  if [[ "$(podman inspect --format '{{.State.Health.Status}}' \
+    "$ckan_container" 2>/dev/null)" == healthy ]]; then
+    ckan_healthy=true
+    break
+  fi
+  sleep 2
+done
+if [[ "$ckan_healthy" != true ]]; then
+  printf 'Timed out waiting for restored CKAN to become healthy.\n' >&2
+  exit 70
+fi
+compose exec -T ckan ckan search-index rebuild >/dev/null
+compose exec -T ckan wget -qO /dev/null \
+  http://localhost:5000/api/action/status_show
+printf 'Restore test completed successfully for disposable project %s.\n' "$compose_project"

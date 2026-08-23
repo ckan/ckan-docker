@@ -7,6 +7,14 @@ This is the narrow runtime layer for the single-host deployment described in
 the orchestration repository. It excludes AWS, DNS,
 Cloudflare, R2, or credentials.
 
+The project-agnostic host bootstrap and webhook-listener roles
+(`base_host`, `webhook_listener`) live in
+[`BU-Spark/spark-ansible`](https://github.com/BU-Spark/spark-ansible), not
+here — per ADR-0004 (spark-herbaria-dev) / ADR-0010 (this repo). Install them
+with `ansible-galaxy collection install -r requirements.yml` before running
+`playbooks/bootstrap.yml`. Herbaria's own runtime role
+(`herbaria_runtime`) lives in `se-symbiota-private`.
+
 Each environment has its own checked-out runtime source tree, Compose project,
 named volumes, and loopback port. The role verifies that each source checkout
 is at `data_at_spark_runtime_source_sha`; this source is used only for the

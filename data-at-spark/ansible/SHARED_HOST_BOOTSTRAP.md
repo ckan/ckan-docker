@@ -73,26 +73,33 @@ Each host receives one Data@Spark environment only. The integration host must
 not receive production secrets. The production host must not receive
 integration secrets.
 
-Add these roles:
+Add these roles. Per ADR-0004 (spark-herbaria-dev) / ADR-0010 (this repo),
+`base_host` and `webhook_listener` are genuinely project-agnostic and live in
+the neutral [`BU-Spark/spark-ansible`](https://github.com/BU-Spark/spark-ansible)
+collection (`bu_spark.spark_ansible.*`), installed via this directory's
+`requirements.yml`. Each project's own runtime role stays in that project's
+own repo.
 
-1. `base_host`
+1. `bu_spark.spark_ansible.base_host` (spark-ansible)
    - Create the `dataspark` and `symbiota` users.
    - Install Podman, the Compose provider, Caddy, Git, and required packages.
    - Enable user lingering for both service users.
    - Configure the host firewall.
    - Mount the attached Volume and create the data directories.
-2. `webhook_listener`
+2. `bu_spark.spark_ansible.webhook_listener` (spark-ansible)
    - Install one `adnanh/webhook` instance per host.
-   - Load hook definitions for both projects.
+   - Load hook definitions for both projects, aggregated once at the
+     bootstrap playbook's play level — see that playbook's comment for why
+     this role must never be invoked once per project.
    - Keep secrets outside Git.
    - Route requests through TLS.
    - Validate signatures where the registry supports them.
-3. `herbaria_runtime`
+3. `herbaria_runtime` (se-symbiota-private)
    - Clone or install the private deployment configuration.
    - Install the existing `containers/int` or `containers/alpha` launcher.
    - Render environment files from external secrets.
    - Install and enable the rootless systemd service.
-4. `data_at_spark_runtime`
+4. `data_at_spark_runtime` (this repo)
    - Clone each required source checkout at the selected commit SHA.
    - Pass only the environment assigned to the host.
    - Set `data_at_spark_runtime_manage_systemd: true` for deployment runs.

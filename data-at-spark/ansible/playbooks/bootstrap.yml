@@ -1,0 +1,24 @@
+---
+# Composes the shared, project-agnostic roles from spark-ansible with this
+# host's aggregated webhook hooks. Per ADR-0004/ADR-0010, base_host and
+# webhook_listener each run exactly once per host, from one playbook, with
+# the full hook list assembled below before that single invocation —
+# webhook_listener overwrites hooks.json rather than appending, so a
+# per-project role dependency would let one project's hooks silently
+# clobber another's. Install spark-ansible first:
+#   ansible-galaxy collection install -r requirements.yml
+- name: Bootstrap shared Spark hosts
+  hosts: shared_spark_hosts
+  become: true
+  gather_facts: true
+  vars:
+    # Each consuming project supplies its own hook list via inventory/group_vars
+    # (data_at_spark_webhook_hooks here; herbaria_webhook_hooks from Herbaria's
+    # own inventory once wired). Aggregated once, at the play level.
+    webhook_listener_hooks: >-
+      {{ (data_at_spark_webhook_hooks | default([])) +
+         (herbaria_webhook_hooks | default([])) }}
+  roles:
+    - role: bu_spark.spark_ansible.base_host
+    - role: bu_spark.spark_ansible.webhook_listener
+      when: webhook_listener_hooks | length > 0

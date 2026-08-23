@@ -41,3 +41,14 @@ data_at_spark_environments:
 #     smtp_password: REQUIRED_EXTERNAL_VALUE
 #   production:
 #     # Repeat every key above with production-specific values.
+
+# webhook_listener hooks this project owns. Aggregated with Herbaria's own
+# herbaria_webhook_hooks (supplied from se-symbiota-private's inventory) at
+# the bootstrap.yml play level — see that playbook's comment for why this
+# must stay a single aggregated list, not a per-project role dependency.
+# data_at_spark_webhook_hooks:
+#   - id: REQUIRED_EXTERNAL_VALUE   # unguessable token for quay_path_only, or a plain id for github_hmac
+#     execute_command: /srv/data-at-spark/deploy.sh
+#     run_as_user: dataspark
+#     trigger_type: github_hmac
+#     response_message: OK

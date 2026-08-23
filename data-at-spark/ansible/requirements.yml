@@ -1,0 +1,5 @@
+---
+collections:
+  - name: https://github.com/BU-Spark/spark-ansible.git
+    type: git
+    version: main

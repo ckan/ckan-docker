@@ -63,6 +63,90 @@
   loop_control:
     label: "{{ item.name }}"
 
+- name: Set validation state root to a temporary subdirectory
+  ansible.builtin.set_fact:
+    data_at_spark_runtime_state_root: "{{ data_at_spark_runtime_deploy_user_home }}/state"
+    data_at_spark_runtime_postgres_data_dir: "{{ data_at_spark_runtime_deploy_user_home }}/state/postgres"
+    data_at_spark_runtime_ckan_storage_dir: "{{ data_at_spark_runtime_deploy_user_home }}/state/ckan-storage"
+  when: data_at_spark_runtime_validate_only | bool
+
+- name: Resolve the rootless Podman account before managing storage
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ data_at_spark_runtime_deploy_user }}"
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Inspect persistent state directories on the live host
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  loop:
+    - "{{ data_at_spark_runtime_state_root }}"
+    - "{{ data_at_spark_runtime_postgres_data_dir }}"
+    - "{{ data_at_spark_runtime_ckan_storage_dir }}"
+  register: data_at_spark_runtime_state_directories
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Create missing persistent state directories on the live host
+  ansible.builtin.file:
+    path: "{{ item.item }}"
+    state: directory
+    owner: "{{ data_at_spark_runtime_deploy_user }}"
+    group: "{{ data_at_spark_runtime_deploy_user }}"
+    mode: '0700'
+  loop: "{{ data_at_spark_runtime_state_directories.results | default([]) }}"
+  loop_control:
+    label: "{{ item.item }}"
+  when:
+    - not (data_at_spark_runtime_validate_only | bool)
+    - not item.stat.exists
+
+- name: Inspect CKAN storage ownership inside the rootless user namespace
+  ansible.builtin.command:
+    argv:
+      - podman
+      - unshare
+      - stat
+      - --format=%u:%g
+      - "{{ data_at_spark_runtime_ckan_storage_dir }}"
+  become: true
+  become_user: "{{ data_at_spark_runtime_deploy_user }}"
+  environment:
+    HOME: "{{ data_at_spark_runtime_deploy_user_home }}"
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_facts['getent_passwd'][data_at_spark_runtime_deploy_user][1] }}"
+    DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ ansible_facts['getent_passwd'][data_at_spark_runtime_deploy_user][1] }}/bus"
+  register: data_at_spark_runtime_ckan_storage_owner
+  changed_when: false
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Assign CKAN storage to the container user inside the rootless namespace
+  ansible.builtin.command:
+    argv:
+      - podman
+      - unshare
+      - chown
+      - "{{ data_at_spark_runtime_ckan_uid }}:{{ data_at_spark_runtime_ckan_gid }}"
+      - "{{ data_at_spark_runtime_ckan_storage_dir }}"
+  become: true
+  become_user: "{{ data_at_spark_runtime_deploy_user }}"
+  environment:
+    HOME: "{{ data_at_spark_runtime_deploy_user_home }}"
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_facts['getent_passwd'][data_at_spark_runtime_deploy_user][1] }}"
+    DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ ansible_facts['getent_passwd'][data_at_spark_runtime_deploy_user][1] }}/bus"
+  when:
+    - not (data_at_spark_runtime_validate_only | bool)
+    - data_at_spark_runtime_ckan_storage_owner.stdout != (data_at_spark_runtime_ckan_uid | string) ~ ':' ~ (data_at_spark_runtime_ckan_gid | string)
+
+- name: Create validation state directories as the current user
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0700'
+  loop:
+    - "{{ data_at_spark_runtime_state_root }}"
+    - "{{ data_at_spark_runtime_postgres_data_dir }}"
+    - "{{ data_at_spark_runtime_ckan_storage_dir }}"
+  when: data_at_spark_runtime_validate_only | bool
+
 - name: Create validation source-checkout directories
   ansible.builtin.file:
     path: "{{ item.source_checkout }}"
@@ -79,6 +163,8 @@
       - "{{ item.source_checkout }}"
       - rev-parse
       - HEAD
+  become: true
+  become_user: "{{ data_at_spark_runtime_deploy_user }}"
   changed_when: false
   register: data_at_spark_runtime_checkout_revisions
   loop: "{{ data_at_spark_environments }}"
@@ -156,6 +242,7 @@
     owner: root
     group: root
     mode: '0644'
+  notify: Reload Caddy
   when: not (data_at_spark_runtime_validate_only | bool)
 
 - name: Resolve the rootless Podman account
@@ -176,9 +263,9 @@
   become: true
   become_user: "{{ data_at_spark_runtime_deploy_user }}"
   environment:
-    XDG_RUNTIME_DIR: "/run/user/{{ getent_passwd[data_at_spark_runtime_deploy_user][1] }}"
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_facts['getent_passwd'][data_at_spark_runtime_deploy_user][1] }}"
     DBUS_SESSION_BUS_ADDRESS: >-
-      unix:path=/run/user/{{ getent_passwd[data_at_spark_runtime_deploy_user][1] }}/bus
+      unix:path=/run/user/{{ ansible_facts['getent_passwd'][data_at_spark_runtime_deploy_user][1] }}/bus
   loop: "{{ data_at_spark_environments }}"
   loop_control:
     label: "{{ item.name }}"

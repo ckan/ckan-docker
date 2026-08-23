@@ -1,5 +1,8 @@
 # Data@Spark runtime automation
 
+Read [`SHARED_HOST_BOOTSTRAP.md`](SHARED_HOST_BOOTSTRAP.md) before you provision
+or configure the interim DigitalOcean hosts shared with Herbaria.
+
 This is the narrow runtime layer for the single-host deployment described in
 the orchestration repository. It excludes AWS, DNS,
 Cloudflare, R2, or credentials.

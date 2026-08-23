@@ -2,6 +2,7 @@
 Description=Data@Spark {{ item.name }} runtime
 After=network-online.target
 Wants=network-online.target
+ConditionPathIsMountPoint={{ data_at_spark_runtime_state_root | dirname }}
 
 [Service]
 Type=oneshot
@@ -10,6 +11,7 @@ WorkingDirectory={{ item.source_checkout }}
 ExecStartPre=/usr/bin/git -C {{ item.source_checkout }} diff --quiet {{ data_at_spark_runtime_source_sha }} HEAD --
 ExecStartPre=/usr/bin/git -C {{ item.source_checkout }} diff --quiet --
 ExecStartPre=/usr/bin/git -C {{ item.source_checkout }} diff --cached --quiet --
+ExecStartPre=/usr/bin/mountpoint --quiet {{ data_at_spark_runtime_state_root | dirname }}
 ExecStart=/usr/bin/podman compose --project-name {{ item.compose_project_name }} --env-file .env -f runtime-compose.yml up --detach --build
 ExecStop=/usr/bin/podman compose --project-name {{ item.compose_project_name }} --env-file .env -f runtime-compose.yml down
 TimeoutStartSec=10min

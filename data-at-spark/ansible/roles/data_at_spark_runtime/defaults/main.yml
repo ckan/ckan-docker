@@ -4,9 +4,18 @@ data_at_spark_runtime_deploy_user_home: "/home/{{ data_at_spark_runtime_deploy_u
 data_at_spark_runtime_source_sha: ""
 data_at_spark_runtime_validate_only: false
 
+# Persistent state root on the attached Volume. Override this in inventory;
+# the live integration value is /mnt/spark-data/data-at-spark.
+# Validation overrides this to a temporary directory (no root required).
+data_at_spark_runtime_state_root: /mnt/spark-data/data-at-spark
+data_at_spark_runtime_postgres_data_dir: "{{ data_at_spark_runtime_state_root }}/postgres"
+data_at_spark_runtime_ckan_storage_dir: "{{ data_at_spark_runtime_state_root }}/ckan-storage"
+data_at_spark_runtime_ckan_uid: 503
+data_at_spark_runtime_ckan_gid: 502
+
 # These paths are intentionally host-local. The controller never writes secret
 # values to Git; callers supply data_at_spark_secrets from outside this repo.
-data_at_spark_runtime_caddy_fragment_path: /etc/caddy/Caddyfile.d/data-at-spark.caddy
+data_at_spark_runtime_caddy_fragment_path: /etc/caddy/Caddyfile.d/data-at-spark.caddyfile
 data_at_spark_runtime_systemd_user_dir: "{{ data_at_spark_runtime_deploy_user_home }}/.config/systemd/user"
 data_at_spark_runtime_manage_systemd: false
 

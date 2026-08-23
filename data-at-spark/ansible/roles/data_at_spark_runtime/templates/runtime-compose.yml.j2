@@ -1,8 +1,8 @@
 # Managed by Ansible. This deployment-only stack avoids mutable Python-package
 # mounts and does not depend on Compose-specific merge tags.
+# PostgreSQL data and CKAN uploads use host bind mounts on the attached Volume.
+# Solr index is rebuildable and uses a named volume on the root disk.
 volumes:
-  ckan_storage:
-  pg_data:
   solr_data:
 
 services:
@@ -43,7 +43,11 @@ services:
       redis:
         condition: service_healthy
     volumes:
-      - ckan_storage:/var/lib/ckan:Z
+      - type: bind
+        source: {{ data_at_spark_runtime_ckan_storage_dir }}
+        target: /var/lib/ckan
+        bind:
+          selinux: z
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000/api/action/status_show"]
@@ -80,7 +84,11 @@ services:
       DATASTORE_READONLY_PASSWORD: ${DATASTORE_READONLY_PASSWORD}
       DATASTORE_DB: ${DATASTORE_DB}
     volumes:
-      - pg_data:/var/lib/postgresql/data:Z
+      - type: bind
+        source: {{ data_at_spark_runtime_postgres_data_dir }}
+        target: /var/lib/postgresql/data
+        bind:
+          selinux: z
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]

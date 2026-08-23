@@ -8,29 +8,31 @@ set -euo pipefail
 umask 077
 
 usage() {
-  printf 'Usage: %s --runtime-dir DIR --compose-project NAME --backup-dir DIR\n' "$(basename "$0")" >&2
+  printf 'Usage: %s --runtime-dir DIR --compose-project NAME --backup-dir DIR --uploads-dir DIR\n' "$(basename "$0")" >&2
 }
 
 runtime_dir=
 compose_project=
 backup_dir=
+uploads_dir=
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --runtime-dir) runtime_dir=${2:?missing value for --runtime-dir}; shift 2 ;;
     --compose-project) compose_project=${2:?missing value for --compose-project}; shift 2 ;;
     --backup-dir) backup_dir=${2:?missing value for --backup-dir}; shift 2 ;;
+    --uploads-dir) uploads_dir=${2:?missing value for --uploads-dir}; shift 2 ;;
     --help) usage; exit 0 ;;
     *) usage; exit 64 ;;
   esac
 done
 
-[[ -n "$runtime_dir" && -n "$compose_project" && -n "$backup_dir" ]] || { usage; exit 64; }
+[[ -n "$runtime_dir" && -n "$compose_project" && -n "$backup_dir" && -n "$uploads_dir" ]] || { usage; exit 64; }
 [[ -f "$runtime_dir/runtime-compose.yml" && -f "$runtime_dir/.env" ]] || {
   printf 'Runtime directory must contain runtime-compose.yml and .env.\n' >&2
   exit 66
 }
-for command in podman sha256sum flock mktemp gzip python3; do
+for command in podman sha256sum flock mktemp gzip tar python3; do
   command -v "$command" >/dev/null 2>&1 || { printf 'Required command not found: %s\n' "$command" >&2; exit 69; }
 done
 
@@ -91,14 +93,13 @@ compose exec -T db sh -ec \
 compose exec -T db sh -ec \
   'exec pg_dump --format=custom --no-owner --no-privileges --username="$POSTGRES_USER" --dbname=datastore' \
   >"$temporary_dir/datastore.dump"
-# Export the volume directly. Running the CKAN image solely to invoke tar would
-# execute its entrypoint and could modify the database during the backup.
-uploads_volume="${compose_project}_ckan_storage"
-podman volume exists "$uploads_volume" || {
-  printf 'CKAN storage volume does not exist: %s\n' "$uploads_volume" >&2
+# Archive the uploads bind-mount directory directly. The ckan service is
+# stopped before this point, so no writers are active.
+[[ -d "$uploads_dir" ]] || {
+  printf 'CKAN uploads directory does not exist: %s\n' "$uploads_dir" >&2
   exit 69
 }
-podman volume export --output "$temporary_dir/uploads.tar" "$uploads_volume"
+tar --create --file "$temporary_dir/uploads.tar" --directory "$uploads_dir" .
 gzip --no-name "$temporary_dir/uploads.tar"
 
 created_at=$(date --utc +%Y-%m-%dT%H:%M:%SZ)
@@ -127,7 +128,7 @@ with open(path, "w", encoding="utf-8") as output:
         "ckan_image_id": image_id,
         "postgres_version": postgres_version,
         "runtime_compose_sha256": compose_sha256,
-        "storage_mode": "local-volume",
+        "storage_mode": "bind-mount",
         "contents": ["ckandb.dump", "datastore.dump", "uploads.tar.gz"],
         "rebuild_after_restore": ["solr"],
         "discard_after_restore": ["redis"],

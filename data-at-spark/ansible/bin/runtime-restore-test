@@ -8,28 +8,30 @@ set -euo pipefail
 umask 077
 
 usage() {
-  printf 'Usage: %s --runtime-dir DIR --compose-project NAME --backup-dir DIR\n' "$(basename "$0")" >&2
+  printf 'Usage: %s --runtime-dir DIR --compose-project NAME --backup-dir DIR --uploads-dir DIR\n' "$(basename "$0")" >&2
 }
 
 runtime_dir=
 compose_project=
 backup_dir=
+uploads_dir=
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --runtime-dir) runtime_dir=${2:?missing value for --runtime-dir}; shift 2 ;;
     --compose-project) compose_project=${2:?missing value for --compose-project}; shift 2 ;;
     --backup-dir) backup_dir=${2:?missing value for --backup-dir}; shift 2 ;;
+    --uploads-dir) uploads_dir=${2:?missing value for --uploads-dir}; shift 2 ;;
     --help) usage; exit 0 ;;
     *) usage; exit 64 ;;
   esac
 done
 
-[[ -n "$runtime_dir" && -n "$compose_project" && -n "$backup_dir" ]] || { usage; exit 64; }
+[[ -n "$runtime_dir" && -n "$compose_project" && -n "$backup_dir" && -n "$uploads_dir" ]] || { usage; exit 64; }
 [[ -f "$runtime_dir/runtime-compose.yml" && -f "$runtime_dir/.env" ]] || {
   printf 'Runtime directory must contain runtime-compose.yml and .env.\n' >&2
   exit 66
 }
-for command in podman sha256sum flock mktemp python3; do
+for command in podman sha256sum flock mktemp tar python3; do
   command -v "$command" >/dev/null 2>&1 || { printf 'Required command not found: %s\n' "$command" >&2; exit 69; }
 done
 [[ -f "$backup_dir/SHA256SUMS" && -f "$backup_dir/manifest.json" ]] || {
@@ -67,22 +69,21 @@ service_container() {
     --format '{{.ID}}'
 }
 
-# Refuse reuse: a restore test must create fresh volumes rather than attach a
-# prior test's state. Named volumes are derived from the Compose project.
+# Refuse reuse: a restore test must use empty directories and a fresh Solr
+# volume rather than reattach prior state.
 if [[ -n "$(podman ps --all \
   --filter "label=io.podman.compose.project=${compose_project}" -q)" ]]; then
   printf 'Refusing an existing Compose project: %s\n' "$compose_project" >&2
   exit 73
 fi
-for volume in \
-  "${compose_project}_ckan_storage" \
-  "${compose_project}_pg_data" \
-  "${compose_project}_solr_data"; do
-  if podman volume exists "$volume"; then
-    printf 'Refusing existing restore-test volume: %s\n' "$volume" >&2
-    exit 73
-  fi
-done
+if podman volume exists "${compose_project}_solr_data"; then
+  printf 'Refusing existing restore-test Solr volume: %s\n' "${compose_project}_solr_data" >&2
+  exit 73
+fi
+[[ -d "$uploads_dir" && -z "$(ls -A "$uploads_dir")" ]] || {
+  printf 'Uploads directory must exist and be empty for a restore test: %s\n' "$uploads_dir" >&2
+  exit 73
+}
 
 lock_parent=$(dirname -- "$backup_dir")
 mkdir -p -- "$lock_parent"
@@ -92,17 +93,15 @@ flock -n 9 || { printf 'Another restore test is already running.\n' >&2; exit 75
 
 temporary_dir=$(mktemp -d "$lock_parent/.runtime-restore-test.XXXXXX")
 chmod 700 -- "$temporary_dir"
-ckan_volume=
 cleanup() {
   local status=$?
   if [[ "$status" -ne 0 ]]; then
     printf 'Disposable restore logs follow:\n' >&2
     compose logs db ckan >&2 || true
   fi
+  # --volumes removes only named volumes (solr_data); bind-mount dirs are left
+  # for the operator to inspect on failure or remove on success.
   compose down --volumes --remove-orphans >/dev/null 2>&1 || status=1
-  if [[ -n "$ckan_volume" ]] && podman volume exists "$ckan_volume"; then
-    podman volume rm "$ckan_volume" >/dev/null || status=1
-  fi
   rm -rf -- "$temporary_dir"
   exit "$status"
 }
@@ -142,9 +141,7 @@ datastore_tables=$(compose exec -T db sh -ec \
   exit 65
 }
 
-ckan_volume="${compose_project}_ckan_storage"
-podman volume create "$ckan_volume" >/dev/null
-podman volume import "$ckan_volume" "$temporary_dir/uploads.tar.gz"
+tar --extract --file "$temporary_dir/uploads.tar.gz" --directory "$uploads_dir"
 
 # Start CKAN only after both database and upload restoration complete. This
 # confirms the restored state is consumable without touching source volumes.

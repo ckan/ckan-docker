@@ -10,10 +10,16 @@ Cloudflare, R2, or credentials.
 The project-agnostic host bootstrap and webhook-listener roles
 (`base_host`, `webhook_listener`) live in
 [`BU-Spark/spark-ansible`](https://github.com/BU-Spark/spark-ansible), not
-here — per ADR-0004 (spark-herbaria-dev) / ADR-0010 (this repo). Install them
-with `ansible-galaxy collection install -r requirements.yml` before running
-`playbooks/bootstrap.yml`. Herbaria's own runtime role
-(`herbaria_runtime`) lives in `se-symbiota-private`.
+here — per ADR-0004 (spark-herbaria-dev) / ADR-0010 (this repo). Herbaria's
+own runtime role (`herbaria_runtime`) lives in `se-symbiota-private`
+(private), packaged the same way. Install both with
+`ansible-galaxy collection install -r requirements.yml` before running
+`playbooks/bootstrap.yml`, which is now the single composition entry point
+required by both ADRs: `base_host`, `webhook_listener`,
+`data_at_spark_runtime`, and `herbaria_runtime`, each invoked exactly once,
+gated on whether a host's own inventory defines that project's variables.
+See the comment at the top of `bootstrap.yml` for the full reasoning and
+for where each project's inventory lives.
 
 Each environment has its own checked-out runtime source tree, Compose project,
 named volumes, and loopback port. The role verifies that each source checkout

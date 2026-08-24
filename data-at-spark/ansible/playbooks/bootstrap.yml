@@ -1,24 +1,53 @@
 ---
-# Composes the shared, project-agnostic roles from spark-ansible with this
-# host's aggregated webhook hooks. Per ADR-0004/ADR-0010, base_host and
-# webhook_listener each run exactly once per host, from one playbook, with
-# the full hook list assembled below before that single invocation —
-# webhook_listener overwrites hooks.json rather than appending, so a
-# per-project role dependency would let one project's hooks silently
-# clobber another's. Install spark-ansible first:
+# The single top-level composition entry point required by ADR-0004
+# (spark-herbaria-dev) / ADR-0010 (this repo): base_host, webhook_listener,
+# data_at_spark_runtime, and herbaria_runtime, each invoked exactly once,
+# from this one playbook. Install both collections first:
 #   ansible-galaxy collection install -r requirements.yml
-- name: Bootstrap shared Spark hosts
+#
+# Cross-repo roles and where they, and each project's inventory, live:
+#   - bu_spark.spark_ansible.{base_host,webhook_listener}: BU-Spark/spark-ansible
+#     (public). Project-agnostic; no project inventory of its own.
+#   - data_at_spark_runtime: this repo (data-at-spark/ansible/roles/). Its
+#     environments and secrets come from this repo's own inventory (see
+#     inventories/example/group_vars/all.yml for the shape; a real run
+#     supplies data_at_spark_environments and data_at_spark_secrets from an
+#     external inventory outside Git).
+#   - bu_spark.herbaria_ansible.herbaria_runtime: BU-Spark/se-symbiota-private
+#     (private, installed from the containers/ansible/ subdirectory -- see
+#     that repo's containers/ansible/README.md). Its own inventory
+#     (herbaria_runtime_env, herbaria_runtime_secrets, etc.) is Herbaria's,
+#     supplied the same way: an external inventory outside Git, not this
+#     repo's.
+#
+# Both projects currently run on both shared hosts (see
+# SHARED_HOST_BOOTSTRAP.md), so every role below targets the same
+# shared_spark_hosts group; each project's own role is a no-op skip on a
+# host whose inventory doesn't define that project's variables, rather than
+# a separate host pattern -- keeping this one playbook, one play, matching
+# the ADR's "each project's runtime role once" requirement without assuming
+# a specific inventory-group topology this repo doesn't own end to end.
+#
+# webhook_listener overwrites hooks.json rather than appending, so the full
+# hook list is assembled once, below, from both projects' own hook vars,
+# before the single webhook_listener invocation -- never invoked once per
+# project.
+- name: Bootstrap and deploy shared Spark hosts
   hosts: shared_spark_hosts
   become: true
   gather_facts: true
   vars:
-    # Each consuming project supplies its own hook list via inventory/group_vars
-    # (data_at_spark_webhook_hooks here; herbaria_webhook_hooks from Herbaria's
-    # own inventory once wired). Aggregated once, at the play level.
     webhook_listener_hooks: >-
       {{ (data_at_spark_webhook_hooks | default([])) +
          (herbaria_webhook_hooks | default([])) }}
   roles:
     - role: bu_spark.spark_ansible.base_host
+
     - role: bu_spark.spark_ansible.webhook_listener
       when: webhook_listener_hooks | length > 0
+
+    - role: data_at_spark_runtime
+      when: data_at_spark_environments is defined
+
+    - role: bu_spark.herbaria_ansible.herbaria_runtime
+      when: herbaria_runtime_env is defined

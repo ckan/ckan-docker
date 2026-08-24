@@ -148,6 +148,15 @@ creates the resources:
 
 ## Deployment sequence
 
+`playbooks/bootstrap.yml` is now the single composed entry point for steps 3
+and 5-7 together (`base_host`, `webhook_listener`,
+`data_at_spark_runtime`, `herbaria_runtime`, each invoked once). Running it
+before either project's inventory variables are supplied performs only step
+3 — the runtime roles skip themselves on a host whose inventory doesn't
+define their variables yet. Supplying those variables and re-running the
+same playbook (idempotent) is step 5/7; there is no separate deploy
+playbook to invoke for that step.
+
 1. Create both NYC3 Droplets and attach one NYC3 Volume to each Droplet.
 2. Add the hosts and Volume identifiers to the external inventory.
 3. Run the host-bootstrap playbook.

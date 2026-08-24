@@ -1,0 +1,25 @@
+# Bridge between the webhook listener and the host.
+#
+# webhook_listener runs unprivileged with no container runtime access. The
+# hook writes a request file into a shared spool directory and this user's
+# own systemd instance runs the deploy, with no privilege granted to the
+# listener beyond writing one file.
+#
+# Worst case if the listener is compromised: it can ask for a redeploy of
+# whatever image data-at-spark:{{ item.name }}'s deploy_tracking_image
+# currently names. It cannot choose an arbitrary image, cannot reach podman
+# directly, and cannot run anything else.
+
+[Unit]
+Description=Watch for {{ item.name }} redeploy requests from the webhook listener
+
+[Path]
+# systemd deletes nothing here; the deploy script does not care about the
+# file's contents, only that it appeared. PathChanged (not PathExists) so a
+# request that arrives while a deploy is already running still triggers the
+# next one.
+PathChanged=/run/dataspark/{{ item.name }}-deploy.request
+Unit=data-at-spark-{{ item.name }}-deploy.service
+
+[Install]
+WantedBy=default.target

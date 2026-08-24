@@ -19,6 +19,16 @@ data_at_spark_runtime_caddy_fragment_path: /etc/caddy/Caddyfile.d/data-at-spark.
 data_at_spark_runtime_systemd_user_dir: "{{ data_at_spark_runtime_deploy_user_home }}/.config/systemd/user"
 data_at_spark_runtime_manage_systemd: false
 
+# Webhook-triggered redeploy pipeline (GHCR publish -> webhook_listener spool
+# file -> data-at-spark-<env>-deploy.path -> deploy.sh.j2, pulling
+# item.deploy_tracking_image, health-gating, and rolling back on failure).
+# Per-environment: an item in data_at_spark_environments enables this by
+# setting its own deploy_tracking_image (a floating tag, e.g.
+# "ghcr.io/bu-spark/data-at-spark:integration"); an item that omits the key
+# never gets these units. production intentionally has no floating tag to
+# track, matching Herbaria's alpha -- promotion there stays manual.
+data_at_spark_runtime_deploy_health_timeout: 180
+
 data_at_spark_runtime_required_secret_keys:
   - postgres_password
   - ckan_db_password

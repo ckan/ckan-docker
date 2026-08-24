@@ -1,0 +1,205 @@
+#!/usr/bin/env bash
+#
+# Redeploy the {{ item.name }} CKAN stack from the registry. Rendered by the
+# data_at_spark_runtime role from templates/deploy.sh.j2 -- do not edit the
+# installed copy by hand, it will be overwritten on the next Ansible run.
+#
+# Mirrors Herbaria's herbaria_runtime deploy.sh.j2 (bu_spark.herbaria_ansible,
+# BU-Spark/se-symbiota-private): the webhook listener only writes a spool
+# file; it contains none of this logic.
+#
+# item.ckan_image stays the Ansible-pinned, exact @sha256 digest -- the
+# assert task in tasks/main.yml requires that form and this script never
+# changes it. This script instead pulls item.deploy_tracking_image (a
+# floating tag, e.g. :integration), compares its resolved digest against
+# what is currently running, and only reconciles the stack when they differ.
+# A deliberate `ansible-playbook` run always wins on the next apply: it
+# re-renders CKAN_IMAGE in .env back to the pinned digest.
+#
+# Safe to run twice. Concurrent runs are serialised by flock, and a run that
+# finds no new digest exits 0 without touching the stack.
+
+set -euo pipefail
+
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
+
+APP_DIR="${APP_DIR:-{{ item.source_checkout }}}"
+ENV_FILE="${ENV_FILE:-.env}"
+COMPOSE_FILE="${COMPOSE_FILE:-runtime-compose.yml}"
+PROJECT_NAME="{{ item.compose_project_name }}"
+COMPOSE_BIN="${COMPOSE_BIN:-/usr/bin/podman compose}"
+
+TRACKING_IMAGE="{{ item.deploy_tracking_image }}"
+CKAN_CONTAINER="${CKAN_CONTAINER:-{{ item.compose_project_name }}_ckan_1}"
+
+STATE_DIR="${STATE_DIR:-$APP_DIR/deployments}"
+STATE_FILE="$STATE_DIR/{{ item.name }}-deployed.json"
+LOCK_FILE="${LOCK_FILE:-/run/dataspark/{{ item.name }}-deploy.lock}"
+
+HEALTH_TIMEOUT="${HEALTH_TIMEOUT:-{{ data_at_spark_runtime_deploy_health_timeout }}}"
+HEALTH_URL="${HEALTH_URL:-https://127.0.0.1:{{ item.loopback_port }}/api/action/status_show}"
+
+log()  { echo "[deploy-{{ item.name }}] $*"; }
+warn() { echo "[deploy-{{ item.name }}] WARNING: $*" >&2; }
+
+# ---------------------------------------------------------------------------
+# Failure notification
+# ---------------------------------------------------------------------------
+# Set SLACK_WEBHOOK_URL in .env.secrets (untracked, outside this checkout's
+# Ansible-managed files) to get failure alerts. No URL configured => log
+# loudly and carry on; a missing notifier must not be the thing that fails a
+# deploy.
+
+notify_failure() {
+    local msg="$1"
+    log "FAILURE: $msg"
+    if [ -z "${SLACK_WEBHOOK_URL:-}" ]; then
+        warn "no SLACK_WEBHOOK_URL configured; failure not reported anywhere but this log"
+        return 0
+    fi
+    curl -fsS -m 10 -X POST -H 'Content-Type: application/json' \
+        --data "$(printf '{"text":"{{ item.name }} deploy FAILED: %s"}' "${msg//\"/\'}")" \
+        "$SLACK_WEBHOOK_URL" >/dev/null 2>&1 \
+        || warn "failure notification could not be delivered"
+}
+
+on_error() {
+    local line="$1"
+    notify_failure "aborted at line $line on $(hostname -s). See: journalctl -u data-at-spark-{{ item.name }}-deploy"
+}
+trap 'on_error $LINENO' ERR
+
+# ---------------------------------------------------------------------------
+# Serialise concurrent runs
+# ---------------------------------------------------------------------------
+
+exec 9>"$LOCK_FILE"
+if ! flock -n 9; then
+    log "another deploy is in progress; this run is a no-op"
+    exit 0
+fi
+
+cd "$APP_DIR"
+
+compose() { $COMPOSE_BIN --project-name "$PROJECT_NAME" --env-file "$ENV_FILE" -f "$COMPOSE_FILE" "$@"; }
+
+log "requested by: ${CD_REPO:-manual}"
+log "tracking floating tag: $TRACKING_IMAGE"
+
+# ---------------------------------------------------------------------------
+# Record what is running now, so we can detect a no-op and roll back
+# ---------------------------------------------------------------------------
+
+running_digest() {
+    podman inspect --format '{{ '{{' }}.ImageDigest{{ '}}' }}' "$CKAN_CONTAINER" 2>/dev/null || true
+}
+
+PREV_DIGEST="$(running_digest)"
+log "currently running digest: ${PREV_DIGEST:-<none>}"
+
+# ---------------------------------------------------------------------------
+# Pull the floating tag and resolve its digest
+# ---------------------------------------------------------------------------
+# The webhook payload is NOT trusted to name the image. A signed webhook
+# proves who sent it, not that its contents are safe -- so the image always
+# comes from the pinned tracking tag in this file, never from the payload.
+
+if ! podman pull "$TRACKING_IMAGE" 2>&1 | sed 's/^/[deploy-{{ item.name }}]   /'; then
+    notify_failure "could not pull $TRACKING_IMAGE; leaving the running stack untouched"
+    exit 1
+fi
+
+NEW_DIGEST="$(podman image inspect --format '{{ '{{' }}.Digest{{ '}}' }}' "$TRACKING_IMAGE" 2>/dev/null || true)"
+log "registry digest for $TRACKING_IMAGE: ${NEW_DIGEST:-<unknown>}"
+
+if [ -z "$NEW_DIGEST" ]; then
+    notify_failure "pulled $TRACKING_IMAGE but could not resolve its digest; leaving the running stack untouched"
+    exit 1
+fi
+
+if [ -n "$PREV_DIGEST" ] && [ "$PREV_DIGEST" = "$NEW_DIGEST" ]; then
+    log "already running this digest; nothing to do"
+    exit 0
+fi
+
+NEW_REF="${TRACKING_IMAGE%%:*}@${NEW_DIGEST}"
+
+# ---------------------------------------------------------------------------
+# Reconcile
+# ---------------------------------------------------------------------------
+# Override CKAN_IMAGE on the command line, never edit .env: the pinned
+# @sha256 digest Ansible last rendered there stays the source of truth for
+# the next deliberate apply, exactly like Herbaria's SYMBIOTA_IMAGE override.
+
+log "recreating ckan service at $NEW_REF"
+CKAN_IMAGE="$NEW_REF" compose up -d ckan 2>&1 | sed 's/^/[deploy-{{ item.name }}]   /'
+
+# ---------------------------------------------------------------------------
+# Health check
+# ---------------------------------------------------------------------------
+
+health_state() {
+    podman inspect --format '{{ '{{' }}.State.Health.Status{{ '}}' }}' "$CKAN_CONTAINER" 2>/dev/null || echo unknown
+}
+
+wait_for_health() {
+    local deadline state
+    deadline=$(( SECONDS + HEALTH_TIMEOUT ))
+    while [ $SECONDS -lt $deadline ]; do
+        state="$(health_state)"
+        if [ "$state" = "healthy" ] && curl -fsSk -m 10 -o /dev/null "$HEALTH_URL"; then
+            return 0
+        fi
+        if [ "$state" = "unhealthy" ]; then
+            log "container reports unhealthy"
+            return 1
+        fi
+        sleep 5
+    done
+    return 1
+}
+
+log "waiting up to ${HEALTH_TIMEOUT}s for $CKAN_CONTAINER to become healthy..."
+if ! wait_for_health; then
+    log "HEALTH CHECK FAILED (state=$(health_state), url=$HEALTH_URL)"
+    podman logs --tail 40 "$CKAN_CONTAINER" 2>&1 | sed 's/^/[deploy-{{ item.name }}]   /' || true
+
+    if [ -n "$PREV_DIGEST" ]; then
+        ROLLBACK_REF="${TRACKING_IMAGE%%:*}@${PREV_DIGEST}"
+        log "rolling back to $ROLLBACK_REF"
+        if CKAN_IMAGE="$ROLLBACK_REF" compose up -d ckan \
+                2>&1 | sed 's/^/[deploy-{{ item.name }}]   /' && wait_for_health; then
+            notify_failure "health check failed; rollback to ${PREV_DIGEST:0:19} is healthy"
+        else
+            notify_failure "health check failed AND rollback failed -- {{ item.name }} is DOWN, needs a human"
+        fi
+    else
+        notify_failure "health check failed and there is no previous digest to roll back to"
+    fi
+    exit 1
+fi
+
+log "healthy: $HEALTH_URL responding, container state=$(health_state)"
+
+# ---------------------------------------------------------------------------
+# Record the deployed digest
+# ---------------------------------------------------------------------------
+
+mkdir -p "$STATE_DIR"
+tmp="$(mktemp "$STATE_DIR/.{{ item.name }}-deployed.XXXXXX")"
+cat > "$tmp" <<EOF
+{
+  "image": "$NEW_REF",
+  "digest": "${NEW_DIGEST:-unknown}",
+  "previous_digest": "${PREV_DIGEST:-none}",
+  "deployed_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "deployed_by": "${CD_REPO:-manual}"
+}
+EOF
+mv "$tmp" "$STATE_FILE"
+log "recorded deployment in $STATE_FILE"
+
+trap - ERR
+log "deploy complete"

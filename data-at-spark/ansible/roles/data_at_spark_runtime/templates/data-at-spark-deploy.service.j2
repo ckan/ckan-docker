@@ -1,0 +1,22 @@
+[Unit]
+Description=Redeploy Data@Spark {{ item.name }} from the registry
+After=data-at-spark-{{ item.name }}.service
+
+[Service]
+Type=oneshot
+WorkingDirectory={{ item.source_checkout }}
+
+# Provenance for the deployment record. Path-unit activation carries nothing
+# from the webhook payload -- deliberately, so no attacker-controlled string
+# reaches this script.
+Environment=CD_REPO=webhook
+
+ExecStart=/usr/local/bin/data-at-spark-{{ item.name }}-deploy.sh
+
+# A failed deploy must not mask the next one. The script rolls back on a
+# failed health check, so a retry starts from a known-good container.
+Restart=no
+
+# Generous: an image pull on a cold cache plus a health wait. Still bounded,
+# so a hung pull cannot wedge the path unit forever.
+TimeoutStartSec=900

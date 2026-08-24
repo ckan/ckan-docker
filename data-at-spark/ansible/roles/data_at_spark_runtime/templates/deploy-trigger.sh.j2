@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# webhook_listener's execute_command contract (spark-ansible) is one
+# absolute-path script, no arguments, no inline shell. This script is that
+# one-liner. The payload never reaches this script -- all it does is ask
+# data-at-spark-{{ item.name }}-deploy.sh (via the spool file +
+# data-at-spark-{{ item.name }}-deploy.path) to run; it decides nothing
+# about what gets deployed.
+
+date -u +%FT%TZ > /run/dataspark/{{ item.name }}-deploy.request

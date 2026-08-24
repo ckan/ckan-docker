@@ -1,0 +1,8 @@
+# /run is tmpfs, so the spool directory the webhook listener writes into has
+# to be recreated on every boot. Without this the path unit watches a
+# directory that does not exist and no webhook ever triggers a deploy.
+#
+# Group-writable because the listener writes here as
+# {{ data_at_spark_runtime_deploy_user }} via --userns=keep-id.
+
+d /run/dataspark 0770 {{ data_at_spark_runtime_deploy_user }} {{ data_at_spark_runtime_deploy_user }} -

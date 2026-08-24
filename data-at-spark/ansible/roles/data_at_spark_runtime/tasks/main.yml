@@ -63,6 +63,18 @@
   loop_control:
     label: "{{ item.name }}"
 
+- name: Validate each environment's optional deploy tracking tag
+  ansible.builtin.assert:
+    that:
+      - item.deploy_tracking_image is match('^ghcr\\.io/bu-spark/data-at-spark:[A-Za-z0-9._-]+$')
+    fail_msg: >-
+      {{ item.name }}.deploy_tracking_image, when set, must be a floating tag
+      on the public Data@Spark image (not a @sha256 digest -- the redeploy
+      pipeline needs a tag it can re-resolve on every publish).
+  loop: "{{ data_at_spark_environments | selectattr('deploy_tracking_image', 'defined') | list }}"
+  loop_control:
+    label: "{{ item.name }}"
+
 - name: Set validation state root to a temporary subdirectory
   ansible.builtin.set_fact:
     data_at_spark_runtime_state_root: "{{ data_at_spark_runtime_deploy_user_home }}/state"
@@ -267,6 +279,100 @@
     DBUS_SESSION_BUS_ADDRESS: >-
       unix:path=/run/user/{{ ansible_facts['getent_passwd'][data_at_spark_runtime_deploy_user][1] }}/bus
   loop: "{{ data_at_spark_environments }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - data_at_spark_runtime_manage_systemd | bool
+    - not (data_at_spark_runtime_validate_only | bool)
+
+# ---------------------------------------------------------------------------
+# Webhook-triggered redeploy pipeline (opt-in per environment)
+# ---------------------------------------------------------------------------
+
+- name: Install the spool directory tmpfiles rule
+  ansible.builtin.template:
+    src: data-at-spark-deploy.tmpfiles.conf.j2
+    dest: /etc/tmpfiles.d/data-at-spark-deploy.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: data_at_spark_runtime_deploy_tmpfiles
+  when:
+    - not (data_at_spark_runtime_validate_only | bool)
+    - data_at_spark_environments | selectattr('deploy_tracking_image', 'defined') | list | length > 0
+
+- name: Apply the spool directory tmpfiles rule now
+  ansible.builtin.command:
+    argv:
+      - systemd-tmpfiles
+      - --create
+      - /etc/tmpfiles.d/data-at-spark-deploy.conf
+  when:
+    - not (data_at_spark_runtime_validate_only | bool)
+    - data_at_spark_runtime_deploy_tmpfiles.changed | default(false)
+
+- name: Render the webhook-triggered redeploy script
+  ansible.builtin.template:
+    src: deploy.sh.j2
+    dest: "/usr/local/bin/data-at-spark-{{ item.name }}-deploy.sh"
+    owner: root
+    group: root
+    mode: '0755'
+  loop: "{{ data_at_spark_environments | selectattr('deploy_tracking_image', 'defined') | list }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Render the webhook spool-write trigger script
+  ansible.builtin.template:
+    src: deploy-trigger.sh.j2
+    dest: "/usr/local/bin/data-at-spark-{{ item.name }}-deploy-trigger.sh"
+    owner: root
+    group: root
+    mode: '0755'
+  loop: "{{ data_at_spark_environments | selectattr('deploy_tracking_image', 'defined') | list }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Install the redeploy service unit
+  ansible.builtin.template:
+    src: data-at-spark-deploy.service.j2
+    dest: "{{ data_at_spark_runtime_systemd_user_dir }}/data-at-spark-{{ item.name }}-deploy.service"
+    owner: "{{ data_at_spark_runtime_deploy_user }}"
+    group: "{{ data_at_spark_runtime_deploy_user }}"
+    mode: '0644'
+  loop: "{{ data_at_spark_environments | selectattr('deploy_tracking_image', 'defined') | list }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Install the redeploy path unit
+  ansible.builtin.template:
+    src: data-at-spark-deploy.path.j2
+    dest: "{{ data_at_spark_runtime_systemd_user_dir }}/data-at-spark-{{ item.name }}-deploy.path"
+    owner: "{{ data_at_spark_runtime_deploy_user }}"
+    group: "{{ data_at_spark_runtime_deploy_user }}"
+    mode: '0644'
+  loop: "{{ data_at_spark_environments | selectattr('deploy_tracking_image', 'defined') | list }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: not (data_at_spark_runtime_validate_only | bool)
+
+- name: Enable and start the redeploy path unit
+  ansible.builtin.systemd_service:
+    name: "data-at-spark-{{ item.name }}-deploy.path"
+    scope: user
+    daemon_reload: true
+    enabled: true
+    state: started
+  become: true
+  become_user: "{{ data_at_spark_runtime_deploy_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_facts['getent_passwd'][data_at_spark_runtime_deploy_user][1] }}"
+    DBUS_SESSION_BUS_ADDRESS: >-
+      unix:path=/run/user/{{ ansible_facts['getent_passwd'][data_at_spark_runtime_deploy_user][1] }}/bus
+  loop: "{{ data_at_spark_environments | selectattr('deploy_tracking_image', 'defined') | list }}"
   loop_control:
     label: "{{ item.name }}"
   when:

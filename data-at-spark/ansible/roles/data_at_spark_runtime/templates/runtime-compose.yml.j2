@@ -22,7 +22,7 @@ services:
 
   ckan:
     platform: linux/amd64
-    image: {{ item.ckan_image }}
+    image: ${CKAN_IMAGE}
     networks:
       - ckannet
       - dbnet

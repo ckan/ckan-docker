@@ -18,7 +18,10 @@ collections:
   # do with. Pinned to an exact commit SHA, not a branch -- a branch name
   # is not a pin: a future install could silently retrieve different
   # privileged runtime code with no change here. Bump this SHA deliberately
-  # -- this one is se-symbiota-private#20's merge commit into
-  # dev-all-features (GHCR image defaults, landed after #19).
-  - name: git+ssh://git@github.com/BU-Spark/se-symbiota-private.git#/containers/ansible/,eaebdff3c2ea5aeac975eed89cbde9da0cfbab6a
+  # -- this one is se-symbiota-private#26's merge commit into
+  # dev-all-features: fixes symbiota.service.j2/herbaria-data.mount.j2/
+  # env.j2 to match spark-shared-prod's real, already-working units
+  # (ExecStartPre reconcile, parent-mount ordering, ENV_FILE=), found by
+  # checking against them before the first-ever prod run of this role.
+  - name: git+ssh://git@github.com/BU-Spark/se-symbiota-private.git#/containers/ansible/,7e43b841e57b32663e4a061dc9f91100e4e8864d
     type: git

@@ -3,15 +3,14 @@ collections:
   # base_host, webhook_listener. Pinned to a tag, not `main` -- a floating
   # branch here would mean a routine re-provision could silently pick up
   # unreviewed changes to a role that manages sudo/systemd on a shared host.
-  # v1.1.1: hardens the github_hmac trigger-rule (requires the
-  # X-GitHub-Event: registry_package header and payload action ==
-  # "published", not just a valid signature) and adds
-  # webhook_listener_public_hostname for public Caddy exposure. (v1.1.0
-  # had the same content but a stale galaxy.yml version field; v1.1.1
-  # just fixes that metadata.)
+  # v1.2.0: installs webhook from its pinned, sha256-verified GitHub
+  # release binary instead of `dnf install webhook` -- that package
+  # doesn't exist for Fedora at all, discovered when the real int
+  # deploy run actually failed on it. Also carries v1.1.x's
+  # github_hmac trigger-rule hardening and webhook_listener_public_hostname.
   - name: https://github.com/BU-Spark/spark-ansible.git
     type: git
-    version: v1.1.1
+    version: v1.2.0
   # herbaria_runtime, from se-symbiota-private (private -- requires an SSH
   # identity with read access). Installed from a subdirectory of that repo,
   # not the repo root: se-symbiota-private also holds the Symbiota PHP

@@ -3,9 +3,15 @@ collections:
   # base_host, webhook_listener. Pinned to a tag, not `main` -- a floating
   # branch here would mean a routine re-provision could silently pick up
   # unreviewed changes to a role that manages sudo/systemd on a shared host.
+  # v1.1.1: hardens the github_hmac trigger-rule (requires the
+  # X-GitHub-Event: registry_package header and payload action ==
+  # "published", not just a valid signature) and adds
+  # webhook_listener_public_hostname for public Caddy exposure. (v1.1.0
+  # had the same content but a stale galaxy.yml version field; v1.1.1
+  # just fixes that metadata.)
   - name: https://github.com/BU-Spark/spark-ansible.git
     type: git
-    version: v1.0.0
+    version: v1.1.1
   # herbaria_runtime, from se-symbiota-private (private -- requires an SSH
   # identity with read access). Installed from a subdirectory of that repo,
   # not the repo root: se-symbiota-private also holds the Symbiota PHP
@@ -13,8 +19,8 @@ collections:
   # do with. Pinned to an exact commit SHA, not a branch -- a branch name
   # is not a pin: a future install could silently retrieve different
   # privileged runtime code with no change here. Bump this SHA deliberately
-  # (e.g. after se-symbiota-private#19 merges and containers/ansible/ moves
-  # to a promoted branch) rather than switching to a branch name for
-  # convenience.
-  - name: git+ssh://git@github.com/BU-Spark/se-symbiota-private.git#/containers/ansible/,a346317fce634bd6044d59a06a0baf87fb724844
+  # (this one is se-symbiota-private#19's merge commit into
+  # dev-all-features, now that it's merged) rather than switching to a
+  # branch name for convenience.
+  - name: git+ssh://git@github.com/BU-Spark/se-symbiota-private.git#/containers/ansible/,78089886ce8dee2dee1c1041432195367445d337
     type: git

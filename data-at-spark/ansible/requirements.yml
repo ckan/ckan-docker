@@ -10,11 +10,11 @@ collections:
   # identity with read access). Installed from a subdirectory of that repo,
   # not the repo root: se-symbiota-private also holds the Symbiota PHP
   # config overlay and app content this ansible/ directory has nothing to
-  # do with. Pinned to the branch this repo's own environments are promoted
-  # through (dev-all-features), not a release tag -- se-symbiota-private
-  # doesn't cut tags; its promotion model (dev -> int -> alpha) is its
-  # equivalent of a pin. Bump to int-all-features or alpha-all-features
-  # explicitly if a host run needs a specific promoted environment instead
-  # of the rolling branch.
-  - name: git+ssh://git@github.com/BU-Spark/se-symbiota-private.git#/containers/ansible/,dev-all-features
+  # do with. Pinned to an exact commit SHA, not a branch -- a branch name
+  # is not a pin: a future install could silently retrieve different
+  # privileged runtime code with no change here. Bump this SHA deliberately
+  # (e.g. after se-symbiota-private#19 merges and containers/ansible/ moves
+  # to a promoted branch) rather than switching to a branch name for
+  # convenience.
+  - name: git+ssh://git@github.com/BU-Spark/se-symbiota-private.git#/containers/ansible/,a346317fce634bd6044d59a06a0baf87fb724844
     type: git

@@ -19,8 +19,7 @@ collections:
   # do with. Pinned to an exact commit SHA, not a branch -- a branch name
   # is not a pin: a future install could silently retrieve different
   # privileged runtime code with no change here. Bump this SHA deliberately
-  # (this one is se-symbiota-private#19's merge commit into
-  # dev-all-features, now that it's merged) rather than switching to a
-  # branch name for convenience.
-  - name: git+ssh://git@github.com/BU-Spark/se-symbiota-private.git#/containers/ansible/,78089886ce8dee2dee1c1041432195367445d337
+  # -- this one is se-symbiota-private#20's merge commit into
+  # dev-all-features (GHCR image defaults, landed after #19).
+  - name: git+ssh://git@github.com/BU-Spark/se-symbiota-private.git#/containers/ansible/,eaebdff3c2ea5aeac975eed89cbde9da0cfbab6a
     type: git

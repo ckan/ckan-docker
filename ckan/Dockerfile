@@ -1,7 +1,20 @@
 FROM ckan/ckan-base:2.11
 
+# The base image switches to the unprivileged `ckan` user; pip needs root to
+# write to site-packages. Dropped back to `ckan` further down.
+USER root
+
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples
+
+### Geoview - map previews for GeoJSON (and WMS/KML/SHP) resources ###
+# Editable install into SRC_DIR, mirroring Dockerfile.dev - a plain wheel install
+# lands outside CKAN's `ckanext` namespace package and fails to import.
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-geoview.git@v0.3.1#egg=ckanext-geoview'
+
+### Sofia - portal theme, installed from GitHub ###
+RUN pip install --no-cache-dir -e \
+    git+https://github.com/sofia-municipality/ckanext-sofia.git@main#egg=ckanext-sofia
 
 # Copy custom initialization scripts
 COPY --chown=ckan-sys:ckan-sys docker-entrypoint.d/* /docker-entrypoint.d/

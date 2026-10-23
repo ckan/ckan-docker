@@ -1,0 +1,3 @@
+[submodule "src/ckanext-sofia"]
+	path = src/ckanext-sofia
+	url = https://github.com/sofia-municipality/ckanext-sofia.git

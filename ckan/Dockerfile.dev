@@ -24,6 +24,11 @@ FROM ckan/ckan-dev:2.11
 ### Scheming ###
 #RUN  pip3 install -e 'git+https://github.com/ckan/ckanext-scheming.git@master#egg=ckanext-scheming'
 
+### Geoview - map previews for GeoJSON (and WMS/KML/SHP) resources ###
+# Must be an editable install into SRC_DIR: a plain wheel install lands outside
+# CKAN's `ckanext` namespace package and fails to import (ModuleNotFoundError).
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-geoview.git@v0.3.1#egg=ckanext-geoview'
+
 ### Pages ###
 #RUN  pip3 install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
 

@@ -8,3 +8,7 @@ _solr/schema.xml
 _src/*
 local/*
 .env
+
+# Local extension checkouts
+/src/ckanext-geoview/
+/src/ckanext-spatial/
